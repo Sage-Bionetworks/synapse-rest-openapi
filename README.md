@@ -3,7 +3,7 @@
 The OpenAPI specification for Synapse Rest Services.
 
 ## Releases
-* https://sage-bionetworks.github.io/.../edge/docs/
+* https://sage-bionetworks.github.io/synapse-rest-openapi/edge/docs/
 
 
 ## Working on your OpenAPI Definition
