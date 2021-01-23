@@ -176,6 +176,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Challenge'
+    put:
+      tags:
+        - ChallengeController
+      summary: Update a Challenge.
+      description: |
+        Update a Challenge.  The caller must have UPDATE permission on the
+        project associated with the Challenge.  It is not permitted to
+        change the project associated with a Challenge.
+      operationId: updateChallenge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Challenge'
+      responses:
+        '200':
+          description: Settings for a Challenge Project.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+    delete:
+      tags:
+        - ChallengeController
+      summary: Delete a Challenge.
+      description: |
+        Delete a Challenge.  The caller must have DELETE permission on the
+        project associated with the Challenge.
+      operationId: deleteChallenge
+      responses:
+        '204':
+          description: The resource was deleted successfully.
 components:
   schemas:
     Challenge:

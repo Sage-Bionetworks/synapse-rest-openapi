@@ -239,6 +239,48 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "ChallengeController"
+        ],
+        "summary": "Update a Challenge.",
+        "description": "Update a Challenge.  The caller must have UPDATE permission on the\nproject associated with the Challenge.  It is not permitted to\nchange the project associated with a Challenge.\n",
+        "operationId": "updateChallenge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Challenge"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Settings for a Challenge Project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ChallengeController"
+        ],
+        "summary": "Delete a Challenge.",
+        "description": "Delete a Challenge.  The caller must have DELETE permission on the\nproject associated with the Challenge.\n",
+        "operationId": "deleteChallenge",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          }
+        }
       }
     }
   },
