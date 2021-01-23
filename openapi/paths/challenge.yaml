@@ -14,7 +14,6 @@ post:
           $ref: '../components/schemas/Challenge.yaml'
   responses:
     201:
-      description: "Challenge response"
       content:
         application/json:
           schema:
@@ -29,18 +28,23 @@ get:
     project associated with the Challenge.
   operationId: listChallengesForParticipant
   parameters:
-  - name: limit
-    in: query
-    description: "Maximum number of results returned"
-    schema:
-      type: integer
-      default: 10
-  - name: offset
-    in: query
-    description: "Index of the first result that must be returned"
-    schema:
-      type: integer
-      default: 0
+    - name: limit
+      in: query
+      description: "Maximum number of results returned"
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 10
+        maximum: 100
+    - name: offset
+      in: query
+      description: "Index of the first result that must be returned"
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   responses:
     200:
       content:
