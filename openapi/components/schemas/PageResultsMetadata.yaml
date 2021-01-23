@@ -1,0 +1,12 @@
+type: object
+description: A page of results
+properties:
+  offset:
+    description: Index of the first result that must be returned
+    type: integer
+  limit:
+    description: Maximum number of results returned
+    type: integer
+required:
+  - offset
+  - limit
