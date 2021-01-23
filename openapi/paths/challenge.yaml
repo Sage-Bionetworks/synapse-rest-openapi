@@ -19,3 +19,31 @@ post:
         application/json:
           schema:
             $ref: '../components/schemas/Challenge.yaml'
+get:
+  tags:
+  - ChallengeController
+  summary: List the Challenges for which the given participant is registered.
+  description: |
+    List the Challenges for which the given participant is registered.
+    To be in the returned list the caller must have READ permission on the
+    project associated with the Challenge.
+  operationId: listChallengesForParticipant
+  parameters:
+  - name: limit
+    in: query
+    description: "Maximum number of results returned"
+    schema:
+      type: integer
+      default: 10
+  - name: offset
+    in: query
+    description: "Index of the first result that must be returned"
+    schema:
+      type: integer
+      default: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/ChallengePagedResults.yaml'

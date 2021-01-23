@@ -1,0 +1,75 @@
+get:
+  tags:
+  - ChallengeController
+  summary: List the Teams registered for a Challenge.
+  description: |-
+    List the Teams registered for a Challenge.  You must have READ permission
+    in the associated Project to make this request.
+  operationId: listChallengeTeams
+  parameters:
+  - name: challengeId
+    in: path
+    required: true
+    schema:
+      type: number
+  - name: limit
+    in: query
+    schema:
+      type: number
+      default: 10.0
+  - name: offset
+    in: query
+    schema:
+      type: number
+      default: 0.0
+  - name: userId
+    in: query
+    required: true
+    schema:
+      type: number
+  responses:
+    200:
+      description: ""
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/json_ChallengeTeamPagedResults'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/json_ChallengeTeamPagedResults'
+post:
+  tags:
+  - ChallengeController
+  summary: Register a Team with a Challenge.
+  description: |-
+    Register a Team with a Challenge. You must be a member of the Challenge's
+    participant Team (i.e. you must be already registered for the Challenge)
+    and be an administrator on the Team being registered.
+  operationId: createChallengeTeam
+  parameters:
+  - name: challengeId
+    in: path
+    required: true
+    schema:
+      type: number
+  - name: userId
+    in: query
+    required: true
+    schema:
+      type: number
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/json_ChallengeTeam'
+      application/xml:
+        schema:
+          $ref: '#/components/schemas/json_ChallengeTeam'
+    required: false
+  responses:
+    201:
+      description: ""
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/json_ChallengeTeam'
