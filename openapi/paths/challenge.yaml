@@ -35,9 +35,6 @@ get:
         application/json:
           schema:
             $ref: '../components/schemas/ChallengePagedResults.yaml'
-        application/xml:
-          schema:
-            $ref: '../components/schemas/ChallengePagedResults.yaml'
 post:
   tags:
   - ChallengeController
@@ -58,17 +55,10 @@ post:
       application/json:
         schema:
           $ref: '../components/schemas/Challenge.yaml'
-      application/xml:
-        schema:
-          $ref: '../components/schemas/Challenge.yaml'
   responses:
     201:
       description: ""
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/json_Challenge'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/json_Challenge'
-  x-codegen-request-body-name: body
+            $ref: '../components/schemas/Challenge.yaml'
