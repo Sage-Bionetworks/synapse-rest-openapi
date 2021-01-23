@@ -243,6 +243,11 @@ paths:
         '204':
           description: The resource was deleted successfully.
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     PageResultsMetadata:
       type: object
@@ -315,3 +320,5 @@ components:
             projectId: syn33333
             participantTeamId: '4444'
             id: '4322'
+security:
+  - bearerAuth: []
