@@ -113,3 +113,5 @@ tags:
 paths:
   /challenge:
     $ref: paths/challenge.yaml
+  /challenge/{challengeId}:
+    $ref: paths/challenge@{challengeId}.yaml
