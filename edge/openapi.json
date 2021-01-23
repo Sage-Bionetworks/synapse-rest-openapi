@@ -207,6 +207,39 @@
           }
         }
       }
+    },
+    "/challenge/{challengeId}": {
+      "parameters": [
+        {
+          "name": "challengeId",
+          "in": "path",
+          "description": "The ID of the challenge.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "ChallengeController"
+        ],
+        "summary": "Retrieve a Challenge given its ID.",
+        "description": "Retrieve a Challenge given its ID.  To retrieve a\nChallenge one must have READ permission on the associated Project.\n",
+        "operationId": "getChallenge",
+        "responses": {
+          "200": {
+            "description": "Settings for a Challenge Project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
