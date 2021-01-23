@@ -15,7 +15,7 @@ get:
   operationId: getChallenge
   responses:
     200:
-      description: "Settings for a Challenge Project."
+      description: Success
       content:
         application/json:
           schema:
@@ -36,7 +36,7 @@ put:
           $ref: '../components/schemas/Challenge.yaml'
   responses:
     200:
-      description: "Settings for a Challenge Project."
+      description: Success
       content:
         application/json:
           schema:

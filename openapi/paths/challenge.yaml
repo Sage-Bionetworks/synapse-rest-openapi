@@ -14,6 +14,7 @@ post:
           $ref: '../components/schemas/Challenge.yaml'
   responses:
     201:
+      description: Success
       content:
         application/json:
           schema:
@@ -47,6 +48,7 @@ get:
         minimum: 0
   responses:
     200:
+      description: Success
       content:
         application/json:
           schema:
