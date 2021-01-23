@@ -148,11 +148,45 @@ paths:
               $ref: '#/components/schemas/Challenge'
       responses:
         '201':
-          description: Challenge response
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Challenge'
+    get:
+      tags:
+        - ChallengeController
+      summary: List the Challenges for which the given participant is registered.
+      description: |
+        List the Challenges for which the given participant is registered.
+        To be in the returned list the caller must have READ permission on the
+        project associated with the Challenge.
+      operationId: listChallengesForParticipant
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - name: offset
+          in: query
+          description: Index of the first result that must be returned
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChallengePagedResults'
   '/challenge/{challengeId}':
     parameters:
       - name: challengeId
@@ -171,7 +205,7 @@ paths:
       operationId: getChallenge
       responses:
         '200':
-          description: Settings for a Challenge Project.
+          description: Success
           content:
             application/json:
               schema:
@@ -192,7 +226,7 @@ paths:
               $ref: '#/components/schemas/Challenge'
       responses:
         '200':
-          description: Settings for a Challenge Project.
+          description: Success
           content:
             application/json:
               schema:
@@ -210,6 +244,19 @@ paths:
           description: The resource was deleted successfully.
 components:
   schemas:
+    PageResultsMetadata:
+      type: object
+      description: A page of results
+      properties:
+        offset:
+          description: Index of the first result that must be returned
+          type: integer
+        limit:
+          description: Maximum number of results returned
+          type: integer
+      required:
+        - offset
+        - limit
     Challenge:
       title: Challenge
       type: object
@@ -236,3 +283,35 @@ components:
         projectId: syn22222
         participantTeamId: '333333'
         id: '4321'
+    ChallengePagedResults:
+      title: ChallengePagedResults
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PageResultsMetadata'
+        - type: object
+          properties:
+            totalNumberOfResults:
+              type: integer
+              description: The total number of results
+            results:
+              type: array
+              description: The list of results for this page
+              items:
+                $ref: '#/components/schemas/Challenge'
+          description: >-
+            List the Challenges for which the given participant is registered.
+            To be in the returned list the caller must have READ permission on
+            the project associated with the Challenge.
+      example:
+        offset: 10
+        limit: 0
+        totalNumberOfResults: 12345
+        results:
+          - etag: 32439w3qsdfw
+            projectId: syn22222
+            participantTeamId: '333333'
+            id: '4321'
+          - etag: 32439w3qsdfwasd
+            projectId: syn33333
+            participantTeamId: '4444'
+            id: '4322'
