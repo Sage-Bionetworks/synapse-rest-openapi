@@ -1,0 +1,21 @@
+title: Challenge
+type: object
+properties:
+  etag:
+    type: string
+    description: ""
+  projectId:
+    type: string
+    description: ""
+  participantTeamId:
+    type: string
+    description: ""
+  id:
+    type: string
+    description: ""
+description: ""
+example:
+  etag: '...'
+  projectId: '...'
+  participantTeamId: '...'
+  id: '...'

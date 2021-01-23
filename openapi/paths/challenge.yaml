@@ -1,0 +1,74 @@
+get:
+  tags:
+  - ChallengeController
+  summary: List the Challenges for which the given participant is registered.
+  description: |
+    List the Challenges for which the given participant is registered.
+    To be in the returned list the caller must have READ permission on the
+    project associated with the Challenge.
+  operationId: listChallengesForParticipant
+  parameters:
+  - name: limit
+    in: query
+    schema:
+      type: number
+      default: 10.0
+  - name: offset
+    in: query
+    schema:
+      type: number
+      default: 0.0
+  - name: participantId
+    in: query
+    required: true
+    schema:
+      type: number
+  - name: userId
+    in: query
+    required: true
+    schema:
+      type: number
+  responses:
+    200:
+      description: ""
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/ChallengePagedResults.yaml'
+        application/xml:
+          schema:
+            $ref: '../components/schemas/ChallengePagedResults.yaml'
+post:
+  tags:
+  - ChallengeController
+  summary: Create a Challenge object, associated with a Project.
+  description: |-
+    Create a Challenge object, associated with a Project.  A participant Team must
+    be specified.  To create a Challenge one must have CREATE permission on the
+    associated Project.
+  operationId: createChallenge
+  parameters:
+  - name: userId
+    in: query
+    required: true
+    schema:
+      type: number
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Challenge.yaml'
+      application/xml:
+        schema:
+          $ref: '../components/schemas/Challenge.yaml'
+  responses:
+    201:
+      description: ""
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/json_Challenge'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/json_Challenge'
+  x-codegen-request-body-name: body
