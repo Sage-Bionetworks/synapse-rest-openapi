@@ -14,7 +14,7 @@ post:
           $ref: '../components/schemas/Challenge.yaml'
   responses:
     201:
-      description: ""
+      description: "Challenge response"
       content:
         application/json:
           schema:
