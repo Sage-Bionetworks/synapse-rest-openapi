@@ -8,7 +8,7 @@ properties:
     type: array
     description: ""
     items:
-      $ref: '#/components/schemas/json_Challenge'
+      $ref: 'Challenge.yaml'
 description: ""
 example:
   totalNumberOfResults: 12345
