@@ -397,7 +397,7 @@ paths:
     get:
       tags:
         - ChallengeController
-      summary: 'List the Teams that caller can register for the Challenge, i.'
+      summary: List the Teams that caller can register for the Challenge.
       description: >
         List the Teams that caller can register for the Challenge, i.e. Teams on
         which
