@@ -18,6 +18,7 @@ get:
   parameters:
   - in: query
     name: accessType
+    description: Synapse access type
     required: true
     schema:
       type: string
