@@ -309,6 +309,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChallengeTeam'
+  '/challenge/{challengeId}/challengeTeam/{challengeTeamId}':
+    parameters:
+      - name: challengeId
+        in: path
+        description: The ID of the challenge.
+        required: true
+        schema:
+          type: integer
+      - name: challengeTeamId
+        in: path
+        required: true
+        description: The ID of the challenge team.
+        schema:
+          type: integer
+    put:
+      tags:
+        - ChallengeController
+      summary: Update a Challenge Team.
+      description: |
+        Update a Challenge Team. You must be a member of the Challenge's
+        participant Team (i.e. you must be already registered for the Challenge)
+        and be an administrator on the associated Team.
+      operationId: updateChallengeTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeTeam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChallengeTeam'
 components:
   securitySchemes:
     bearerAuth:
