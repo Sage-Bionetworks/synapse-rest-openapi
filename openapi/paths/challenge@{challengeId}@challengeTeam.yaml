@@ -1,42 +1,44 @@
+parameters:
+- name: challengeId
+  in: path
+  description: The ID of the challenge.
+  required: true
+  schema:
+    type: integer
 get:
   tags:
   - ChallengeController
   summary: List the Teams registered for a Challenge.
-  description: |-
+  description: |
     List the Teams registered for a Challenge.  You must have READ permission
     in the associated Project to make this request.
   operationId: listChallengeTeams
   parameters:
-  - name: challengeId
-    in: path
-    required: true
-    schema:
-      type: number
-  - name: limit
-    in: query
-    schema:
-      type: number
-      default: 10.0
-  - name: offset
-    in: query
-    schema:
-      type: number
-      default: 0.0
-  - name: userId
-    in: query
-    required: true
-    schema:
-      type: number
+    - name: limit
+      in: query
+      description: "Maximum number of results returned"
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 10
+        maximum: 100
+    - name: offset
+      in: query
+      description: "Index of the first result that must be returned"
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   responses:
     200:
       description: Success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/json_ChallengeTeamPagedResults'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/json_ChallengeTeamPagedResults'
+            $ref: '../components/schemas/ChallengeTeamPagedResults.yaml'
+
 post:
   tags:
   - ChallengeController
@@ -46,30 +48,15 @@ post:
     participant Team (i.e. you must be already registered for the Challenge)
     and be an administrator on the Team being registered.
   operationId: createChallengeTeam
-  parameters:
-  - name: challengeId
-    in: path
-    required: true
-    schema:
-      type: number
-  - name: userId
-    in: query
-    required: true
-    schema:
-      type: number
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/json_ChallengeTeam'
-      application/xml:
-        schema:
-          $ref: '#/components/schemas/json_ChallengeTeam'
-    required: false
+          $ref: '../components/schemas/ChallengeTeam.yaml'
   responses:
     201:
       description: Success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/json_ChallengeTeam'
+            $ref: '../components/schemas/ChallengeTeam.yaml'

@@ -1,0 +1,30 @@
+title: ChallengeTeamPagedResults
+type: object
+allOf:
+  - $ref: PageResultsMetadata.yaml
+  - type: object
+    properties:
+      totalNumberOfResults:
+        type: integer
+        description: "The total number of results"
+      results:
+        type: array
+        description: "The list of results for this page"
+        items:
+          $ref: 'ChallengeTeam.yaml'
+description: ""
+example:
+  offset: 10
+  limit: 0
+  totalNumberOfResults: 12345
+  results:
+  - id: '1111'
+    teamId: '222222'
+    challengeId: '3423'
+    message: 'Testing'
+    etag: '33492273ssdf'
+  - id: '1112'
+    teamId: '222233'
+    challengeId: '3421'
+    message: 'Testing foo'
+    etag: '33492273ssdddf'
