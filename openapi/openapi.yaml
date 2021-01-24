@@ -135,6 +135,8 @@ paths:
     $ref: paths/evaluation@{evalId}.yaml
   /evaluation/{evalId}/access:
     $ref: paths/evaluation@{evalId}@access.yaml
+  /evaluation/{evalId}/acl:
+    $ref: paths/evaluation@{evalId}@acl.yaml
 
 components:
   securitySchemes:

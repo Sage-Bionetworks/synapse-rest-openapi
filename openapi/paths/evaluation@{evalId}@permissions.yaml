@@ -1,0 +1,23 @@
+parameters:
+  - in: path
+    name: evalId
+    description: |
+      The ID of the evaluation over which the user permission are being
+      retrieved.
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    'Gets the <a href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">user
+    permissions</a> for the specified evaluation.'
+  operationId: getUserPermissionsForEvaluation
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserEvaluationPermissions.yaml
+      description: Success
+  tags:
+  - EvaluationController

@@ -1,0 +1,49 @@
+title: UserEvaluationPermissions
+type: object
+description: 'The permission a User has for a given Evaluation'
+example:
+  canChangePermissions: true
+  canDelete: true
+  canDeleteSubmissions: true
+  canEdit: true
+  canEditSubmissionStatuses: true
+  canParticipate: true
+  canPublicRead: true
+  canSubmit: true
+  canView: true
+  canViewPrivateSubmissionStatusAnnotations: true
+  ownerPrincipalId: 12345
+properties:
+  canChangePermissions:
+    description: 'Can the user change the permissions of this evaluation?'
+    type: boolean
+  canDelete:
+    description: 'Can the user delete this evaluation?'
+    type: boolean
+  canDeleteSubmissions:
+    description: 'Can the user view delete Submissions from this evaluation?'
+    type: boolean
+  canEdit:
+    description: 'Can the user edit this evaluation?'
+    type: boolean
+  canEditSubmissionStatuses:
+    description: 'Can the user update SubmissionStatuses for this evaluation?'
+    type: boolean
+  canParticipate:
+    description: 'This field is deprecated and should not being used.'
+    type: boolean
+  canPublicRead:
+    description: 'Is this evaluation considered public?'
+    type: boolean
+  canSubmit:
+    description: 'Can the user submit to this evaluation?'
+    type: boolean
+  canView:
+    description: 'Can the user view this evaluation?'
+    type: boolean
+  canViewPrivateSubmissionStatusAnnotations:
+    description: 'Can the user view private Annotations on SubmissionStatuses for this evaluation?'
+    type: boolean
+  ownerPrincipalId:
+    description: 'The principal ID of the evaluation's owner (i.e. the evaluation's 'createdBy')'
+    type: integer
