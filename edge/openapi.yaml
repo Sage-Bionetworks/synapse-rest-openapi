@@ -386,6 +386,98 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedIds'
+  '/challenge/{challengeId}/registratableTeam':
+    parameters:
+      - name: challengeId
+        in: path
+        description: The ID of the challenge.
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - ChallengeController
+      summary: 'List the Teams that caller can register for the Challenge, i.'
+      description: >
+        List the Teams that caller can register for the Challenge, i.e. Teams on
+        which
+
+        the caller is an administrator and which are not already registered.
+
+        The caller must have READ permission on the
+
+        project associated with the Challenge to make this request.
+      operationId: listRegistratableTeams
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - name: offset
+          in: query
+          description: Index of the first result that must be returned
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedIds'
+  '/challenge/{challengeId}/submissionTeams':
+    parameters:
+      - name: challengeId
+        in: path
+        description: The ID of the challenge.
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - ChallengeController
+      summary: >-
+        List the Teams under which the given submitter may submit to the
+        Challenge.
+      description: >
+        List the Teams under which the given submitter may submit to the
+        Challenge, i.e. the Teams on which
+
+        the user is a member and which are registered for the Challenge.
+      operationId: listSubmissionTeams
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - name: offset
+          in: query
+          description: Index of the first result that must be returned
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedIds'
 components:
   securitySchemes:
     bearerAuth:
