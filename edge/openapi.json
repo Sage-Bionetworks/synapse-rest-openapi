@@ -665,6 +665,39 @@
           }
         }
       }
+    },
+    "/entity/{id}/challenge": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Synapse Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "ChallengeController"
+        ],
+        "summary": "Retrieve a Challenge given the ID of its associated Project.",
+        "description": "Retrieve a Challenge given the ID of its associated Project.  To retrieve a\nChallenge one must have READ permission on the Project.\n",
+        "operationId": "getChallengeByProjectId",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
