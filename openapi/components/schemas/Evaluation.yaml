@@ -28,7 +28,10 @@ properties:
     description: 'A text description of this Evaluation.'
     type: string
   etag:
-    description: 'Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent updates. The eTag changes every time an Evaluation is updated; it is used to detect when a client's copy of an Evaluation is out-of-date.'
+    description: |
+      Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent updates.
+      The eTag changes every time an Evaluation is updated; it is used to detect when a client's
+      copy of an Evaluation is out-of-date.
     type: string
   id:
     description: 'The unique immutable ID for this Evaluation.'

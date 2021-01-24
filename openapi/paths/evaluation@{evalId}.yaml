@@ -90,7 +90,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/json_Evaluation'
+          $ref: '../components/schemas/Evaluation.yaml'
     required: false
   responses:
     200:
