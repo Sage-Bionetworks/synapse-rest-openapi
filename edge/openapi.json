@@ -1045,6 +1045,88 @@
           "Evaluation Services"
         ]
       }
+    },
+    "/evaluation/{evalId}/round/{roundId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the evaluation over which the user permission are being\nretrieved.\n",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "roundId",
+          "description": "The ID of the evaluation round",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "deprecated": true,
+        "operationId": "deleteEvaluationRound",
+        "responses": {
+          "204": {
+            "description": "The resouce has been deleted"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "get": {
+        "deprecated": true,
+        "operationId": "getEvaluationRound",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationRound"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "put": {
+        "deprecated": true,
+        "operationId": "updateEvaluationRound",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationRound"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationRound"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
     }
   },
   "components": {
