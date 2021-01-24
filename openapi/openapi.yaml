@@ -141,6 +141,8 @@ paths:
     $ref: paths/evaluation@{evalId}@round.yaml
   /evaluation/{evalId}/round/{roundId}:
     $ref: paths/evaluation@{evalId}@round@{roundId}.yaml
+  /evaluation/{evalId}/round/list:
+    $ref: paths/evaluation@{evalId}@round@list.yaml
 
 components:
   securitySchemes:

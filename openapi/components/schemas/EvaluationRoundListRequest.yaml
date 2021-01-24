@@ -1,0 +1,9 @@
+description: ''
+example:
+  nextPageToken: '...'
+properties:
+  nextPageToken:
+    description: ''
+    type: string
+title: EvaluationRoundListRequest
+type: object

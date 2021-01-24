@@ -1,0 +1,27 @@
+parameters:
+  - in: path
+    name: evalId
+    description: |
+      The ID of the evaluation over which the user permission are being
+      retrieved.
+    required: true
+    schema:
+      type: string
+post:
+  deprecated: true
+  operationId: getAllEvaluationRounds
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/EvaluationRoundListRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EvaluationRoundListResponse.yaml
+      description: Success
+  tags:
+  - Evaluation Services
