@@ -1,0 +1,927 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Platform Repository Service",
+    "contact": {
+      "email": "thomas.yu@sagebionetworks.org"
+    },
+    "license": {
+      "name": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "Platform Repository Service - Sage Bionetworks Platform\n",
+    "version": "develop-SNAPSHOT"
+  },
+  "servers": [
+    {
+      "url": "https://repo-prod.prod.sagebase.org/repo/v1/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Access Approval Services",
+      "description": "The Access Approval services manage the fulfillment of Access Requirements, on a per-user basis."
+    },
+    {
+      "name": "Access Requirement Services",
+      "description": "These services manage the Access Requirements/Restrictions (ARs) which may be placed on Entities,\nor Teams.\n"
+    },
+    {
+      "name": "Activity Services",
+      "description": "."
+    },
+    {
+      "name": "Administration Services",
+      "description": "Since this controller is for internal use only we removed the ControllerInfo annotation."
+    },
+    {
+      "name": "Asynchronous Job Services",
+      "description": "This is a generic set of services that provides support for both launching\nasynchronous jobs and monitoring the progress of jobs.\n"
+    },
+    {
+      "name": "Certified User Services",
+      "description": "To become a Synapse Certified User you must pass a test."
+    },
+    {
+      "name": "Challenge Services",
+      "description": "A Challenge is a special object that supplements a project, providing additional features\nspecific to challenges.\n"
+    },
+    {
+      "name": "Data Access Services",
+      "description": "."
+    },
+    {
+      "name": "Discussion Services",
+      "description": "."
+    },
+    {
+      "name": "Docker Authorization Services",
+      "description": "These services allow Synapse to act as an authorization service for a Docker Registry."
+    },
+    {
+      "name": "Docker Commit Services",
+      "description": "These services relate to the 'commits' to Docker repositories."
+    },
+    {
+      "name": "Docker Registry Event Services",
+      "description": "These services process events from the Docker Registry."
+    },
+    {
+      "name": "Doi Services",
+      "description": "Provides REST APIs for managing Synapse DOIs."
+    },
+    {
+      "name": "Entity Bundle Services",
+      "description": "."
+    },
+    {
+      "name": "Entity Bundle V2 Services",
+      "description": "."
+    },
+    {
+      "name": "Entity Services",
+      "description": "."
+    },
+    {
+      "name": "Evaluation Services",
+      "description": "."
+    },
+    {
+      "name": "Form Services",
+      "description": "Collection of APIs from managing and submitting form data."
+    },
+    {
+      "name": "Health Check Services"
+    },
+    {
+      "name": "Json Schema Services",
+      "description": "This set of services provide project designers with tools to define their own\nschemas to control and validate metadata applied to Projects, Folders, and\nFiles.\n"
+    },
+    {
+      "name": "Log Services",
+      "description": "https://sagebionetworks."
+    },
+    {
+      "name": "Membership Invitation Services",
+      "description": "The Membership Invitation Services create, retrieve and delete\nmembership invitations.\n"
+    },
+    {
+      "name": "Membership Request Services",
+      "description": "The Membership Request Services create, retrieve and delete\nmembership requests.\n"
+    },
+    {
+      "name": "Message Services",
+      "description": "."
+    },
+    {
+      "name": "Migration Services",
+      "description": "Services for Migrating data between stacks."
+    },
+    {
+      "name": "Principal Services",
+      "description": "A."
+    },
+    {
+      "name": "Project Settings Services",
+      "description": "The project settings services provide configuration options that can be applied to projects."
+    },
+    {
+      "name": "Search Services",
+      "description": "Search for Entities on Synapse."
+    },
+    {
+      "name": "Statistics Services",
+      "description": "Services that expose statistics computed by the backend."
+    },
+    {
+      "name": "Storage Report Services",
+      "description": "Provides REST APIs for generating Storage Reports."
+    },
+    {
+      "name": "Subscription Services",
+      "description": "."
+    },
+    {
+      "name": "Synapse Version Info Services"
+    },
+    {
+      "name": "Table Services",
+      "description": "."
+    },
+    {
+      "name": "Team Services",
+      "description": "Teams are groups of users."
+    },
+    {
+      "name": "Trash Services",
+      "description": "The recycle bin (or trash can) is the special folder that holds the deleted entities for users."
+    },
+    {
+      "name": "User Group Service"
+    },
+    {
+      "name": "User Profile Services",
+      "description": "Every Synapse user has an associated."
+    },
+    {
+      "name": "V2 Wiki Services",
+      "description": "."
+    },
+    {
+      "name": "Verification Services",
+      "description": "Identity verification is a service offered by the Synapse Access and Compliance Team\nto add an additional layer of legitimacy to a user account, beyond the basic\nrequirements for creating an account in Synapse.\n"
+    },
+    {
+      "name": "Wiki Services",
+      "description": "."
+    }
+  ],
+  "paths": {
+    "/challenge": {
+      "post": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "Create a Challenge object, associated with a Project.",
+        "description": "Create a Challenge object, associated with a Project.  A participant Team must\nbe specified.  To create a Challenge one must have CREATE permission on the\nassociated Project.\n",
+        "operationId": "createChallenge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Challenge"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "List the Challenges for which the given participant is registered.",
+        "description": "List the Challenges for which the given participant is registered.\nTo be in the returned list the caller must have READ permission on the\nproject associated with the Challenge.\n",
+        "operationId": "listChallengesForParticipant",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengePagedResults"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenge/{challengeId}": {
+      "parameters": [
+        {
+          "name": "challengeId",
+          "in": "path",
+          "description": "The ID of the challenge.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "Retrieve a Challenge given its ID.",
+        "description": "Retrieve a Challenge given its ID.  To retrieve a\nChallenge one must have READ permission on the associated Project.\n",
+        "operationId": "getChallenge",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ChallengeController"
+        ],
+        "summary": "Update a Challenge.",
+        "description": "Update a Challenge.  The caller must have UPDATE permission on the\nproject associated with the Challenge.  It is not permitted to\nchange the project associated with a Challenge.\n",
+        "operationId": "updateChallenge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Challenge"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "Delete a Challenge.",
+        "description": "Delete a Challenge.  The caller must have DELETE permission on the\nproject associated with the Challenge.\n",
+        "operationId": "deleteChallenge",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          }
+        }
+      }
+    },
+    "/challenge/{challengeId}/challengeTeam": {
+      "parameters": [
+        {
+          "name": "challengeId",
+          "in": "path",
+          "description": "The ID of the challenge.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "List the Teams registered for a Challenge.",
+        "description": "List the Teams registered for a Challenge.  You must have READ permission\nin the associated Project to make this request.\n",
+        "operationId": "listChallengeTeams",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeTeamPagedResults"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "Register a Team with a Challenge.",
+        "description": "Register a Team with a Challenge. You must be a member of the Challenge's\nparticipant Team (i.e. you must be already registered for the Challenge)\nand be an administrator on the Team being registered.\n",
+        "operationId": "createChallengeTeam",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeTeam"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeTeam"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenge/{challengeId}/challengeTeam/{challengeTeamId}": {
+      "parameters": [
+        {
+          "name": "challengeId",
+          "in": "path",
+          "description": "The ID of the challenge.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "challengeTeamId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the challenge team.",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "Update a Challenge Team.",
+        "description": "Update a Challenge Team. You must be a member of the Challenge's\nparticipant Team (i.e. you must be already registered for the Challenge)\nand be an administrator on the associated Team.\n",
+        "operationId": "updateChallengeTeam",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeTeam"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeTeam"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenge/{challengeId}/participant": {
+      "parameters": [
+        {
+          "name": "challengeId",
+          "in": "path",
+          "description": "The ID of the challenge.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "List the participants registered for a Challenge.",
+        "description": "List the participants registered for a Challenge.\nThe caller must have READ permission on the\nproject associated with the Challenge.",
+        "operationId": "listParticipantsInChallenge",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedIds"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenge/{challengeId}/registratableTeam": {
+      "parameters": [
+        {
+          "name": "challengeId",
+          "in": "path",
+          "description": "The ID of the challenge.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "List the Teams that caller can register for the Challenge.",
+        "description": "List the Teams that caller can register for the Challenge, i.e. Teams on which\nthe caller is an administrator and which are not already registered.\nThe caller must have READ permission on the\nproject associated with the Challenge to make this request.\n",
+        "operationId": "listRegistratableTeams",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedIds"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenge/{challengeId}/submissionTeams": {
+      "parameters": [
+        {
+          "name": "challengeId",
+          "in": "path",
+          "description": "The ID of the challenge.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "List the Teams under which the given submitter may submit to the Challenge.",
+        "description": "List the Teams under which the given submitter may submit to the Challenge, i.e. the Teams on which\nthe user is a member and which are registered for the Challenge.\n",
+        "operationId": "listSubmissionTeams",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedIds"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challengeTeam/{challengeTeamId}": {
+      "parameters": [
+        {
+          "name": "challengeTeamId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the challenge team.",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "De-register a Team from a Challenge.",
+        "description": "De-register a Team from a Challenge. You must be a member of the Challenge's\nparticipant Team (i.e. you must be already registered for the Challenge)\nand be an administrator on the Team being de-registered.\n",
+        "operationId": "deleteChallengeTeam",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          }
+        }
+      }
+    },
+    "/entity/{id}/challenge": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Synapse Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Challenge Services"
+        ],
+        "summary": "Retrieve a Challenge given the ID of its associated Project.",
+        "description": "Retrieve a Challenge given the ID of its associated Project.  To retrieve a\nChallenge one must have READ permission on the Project.\n",
+        "operationId": "getChallengeByProjectId",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "PageResultsMetadata": {
+        "type": "object",
+        "description": "A page of results",
+        "properties": {
+          "offset": {
+            "description": "Index of the first result that must be returned",
+            "type": "integer"
+          },
+          "limit": {
+            "description": "Maximum number of results returned",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "offset",
+          "limit"
+        ]
+      },
+      "Challenge": {
+        "title": "Challenge",
+        "type": "object",
+        "properties": {
+          "etag": {
+            "type": "string",
+            "description": "Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent updates. Since the E-Tag changes every time an entity is updated it is used to detect when a client's current representation of an entity is out-of-date."
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The ID of the Project the challenge is used with."
+          },
+          "participantTeamId": {
+            "type": "string",
+            "description": "The ID of the Team which users join to participate in the Challenge"
+          },
+          "id": {
+            "type": "string",
+            "description": "The ID of this Challenge object"
+          }
+        },
+        "description": "Settings for a Challenge Project.",
+        "example": {
+          "etag": "32439w3qsdfw",
+          "projectId": "syn22222",
+          "participantTeamId": "333333",
+          "id": "4321"
+        }
+      },
+      "ChallengePagedResults": {
+        "title": "ChallengePagedResults",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PageResultsMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalNumberOfResults": {
+                "type": "integer",
+                "description": "The total number of results"
+              },
+              "results": {
+                "type": "array",
+                "description": "The list of results for this page",
+                "items": {
+                  "$ref": "#/components/schemas/Challenge"
+                }
+              }
+            },
+            "description": "List the Challenges for which the given participant is registered. To be in the returned list the caller must have READ permission on the project associated with the Challenge."
+          }
+        ],
+        "example": {
+          "offset": 10,
+          "limit": 0,
+          "totalNumberOfResults": 12345,
+          "results": [
+            {
+              "etag": "32439w3qsdfw",
+              "projectId": "syn22222",
+              "participantTeamId": "333333",
+              "id": "4321"
+            },
+            {
+              "etag": "32439w3qsdfwasd",
+              "projectId": "syn33333",
+              "participantTeamId": "4444",
+              "id": "4322"
+            }
+          ]
+        }
+      },
+      "ChallengeTeam": {
+        "title": "ChallengeTeam",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of this ChallengeTeam object"
+          },
+          "teamId": {
+            "type": "string",
+            "description": "The ID of the Team"
+          },
+          "challengeId": {
+            "type": "string",
+            "description": "The ID of the Challenge"
+          },
+          "message": {
+            "type": "string",
+            "description": "A descriptive message for the Team in the context of the Challenge. Limited to 500 characters."
+          },
+          "etag": {
+            "type": "string",
+            "description": "Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent updates. Since the E-Tag changes every time an entity is updated it is used to detect when a client's current representation of an entity is out-of-date."
+          }
+        },
+        "description": "Relationship between a Challenge and registered Team",
+        "example": {
+          "id": "1111",
+          "teamId": "222222",
+          "challengeId": "3423",
+          "message": "Testing",
+          "etag": "33492273ssdf"
+        }
+      },
+      "ChallengeTeamPagedResults": {
+        "title": "ChallengeTeamPagedResults",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PageResultsMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalNumberOfResults": {
+                "type": "integer",
+                "description": "The total number of results"
+              },
+              "results": {
+                "type": "array",
+                "description": "The list of results for this page",
+                "items": {
+                  "$ref": "#/components/schemas/ChallengeTeam"
+                }
+              }
+            }
+          }
+        ],
+        "description": "List the Teams registered for a Challenge. You must have READ permission in the associated Project to make this request.",
+        "example": {
+          "offset": 10,
+          "limit": 0,
+          "totalNumberOfResults": 12345,
+          "results": [
+            {
+              "id": "1111",
+              "teamId": "222222",
+              "challengeId": "3423",
+              "message": "Testing",
+              "etag": "33492273ssdf"
+            },
+            {
+              "id": "1112",
+              "teamId": "222233",
+              "challengeId": "3421",
+              "message": "Testing foo",
+              "etag": "33492273ssdddf"
+            }
+          ]
+        }
+      },
+      "PaginatedIds": {
+        "title": "PaginatedIds",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PageResultsMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalNumberOfResults": {
+                "type": "integer",
+                "description": "The total number of results"
+              },
+              "results": {
+                "type": "array",
+                "description": "The list of Object Ids for this page",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Paginated results of strings",
+        "example": {
+          "limit": 10,
+          "offset": 0,
+          "totalNumberOfResults": 12345,
+          "results": [
+            "test1",
+            "test2"
+          ]
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
