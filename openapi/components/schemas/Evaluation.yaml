@@ -3,14 +3,14 @@ type: object
 description: 'An Evaluation is the core object of the Evaluation API, used to support collaborative data analysis challenges in Synapse.'
 example:
   contentSource: 'syn234444'
-  createdOn: 12345
+  createdOn: '12345'
   description: 'Evaluation Queue'
   etag: 'aaaaa'
   id: '12345'
   name: 'Test Evaluation'
   ownerId: '22222'
   quota:
-    firstRoundStart: 12345
+    firstRoundStart: '12345'
     numberOfRounds: 12345
     roundDurationMillis: 12345
     submissionLimit: 12345
@@ -23,7 +23,7 @@ properties:
     type: string
   createdOn:
     description: 'The date on which Evaluation was created.'
-    type: STRING
+    type: string
   description:
     description: 'A text description of this Evaluation.'
     type: string

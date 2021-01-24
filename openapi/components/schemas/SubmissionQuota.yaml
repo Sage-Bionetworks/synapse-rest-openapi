@@ -2,7 +2,7 @@ title: SubmissionQuota
 type: object
 description: 'Maximum submissions per team/participant per submission round. If round information is omitted, then this indicates the overall submission limit per team/participant.'
 example:
-  firstRoundStart: 33333333
+  firstRoundStart: '33333333'
   numberOfRounds: 1
   roundDurationMillis: 12345
   submissionLimit: 2
