@@ -16,6 +16,8 @@ parameters:
 delete:
   deprecated: true
   operationId: deleteEvaluationRound
+  summary: Delete Evaluation Round
+  description: Delete Evaluation Round
   responses:
     204:
       description: The resouce has been deleted
@@ -34,6 +36,8 @@ get:
   tags:
   - Evaluation Services
 put:
+  summary: Update Evaluation Round
+  description: Update Evaluation Round
   deprecated: true
   operationId: updateEvaluationRound
   requestBody:

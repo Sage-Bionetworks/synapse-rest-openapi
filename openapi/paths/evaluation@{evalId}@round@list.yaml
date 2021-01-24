@@ -8,6 +8,8 @@ parameters:
     schema:
       type: string
 post:
+  summary: Get all rounds of an Evaluation
+  description: Get all rounds of an Evaluation
   deprecated: true
   operationId: getAllEvaluationRounds
   requestBody:

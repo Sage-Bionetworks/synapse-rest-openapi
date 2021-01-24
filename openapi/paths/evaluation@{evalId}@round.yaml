@@ -9,6 +9,8 @@ parameters:
       type: string
 post:
   deprecated: true
+  summary: Create Evaluation Round
+  description: Create Evaluation Round
   operationId: createEvaluationRound
   requestBody:
     content:

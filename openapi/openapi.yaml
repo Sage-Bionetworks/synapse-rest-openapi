@@ -10,7 +10,7 @@ info:
     Platform Repository Service - Sage Bionetworks Platform
   version: develop-SNAPSHOT
 servers:
-  - url: https://repo-prod.prod.sagebase.org/repo/v1/
+  - url: https://repo-prod.prod.sagebase.org/repo/v1
 tags:
   - name: Access Approval Services
     description: The Access Approval services manage the fulfillment of Access Requirements,
