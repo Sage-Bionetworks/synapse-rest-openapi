@@ -786,7 +786,7 @@
         },
         "summary": "Gets a collection of Evaluations, within a given range.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       },
       "post": {
@@ -816,7 +816,7 @@
         },
         "summary": "Creates a new Evaluation.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       }
     },
