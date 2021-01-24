@@ -104,11 +104,7 @@ post:
 
     <p>
 
-    <b>Note:</b> The caller must be granted the <a
-
-    href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
-
-    >ACCESS_TYPE.CREATE</a> on the contentSource Entity.
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.CREATE</a> on the contentSource Entity.
 
     </p>
   operationId: createEvaluation

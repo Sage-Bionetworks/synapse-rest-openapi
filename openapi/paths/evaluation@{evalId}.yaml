@@ -11,11 +11,7 @@ delete:
 
     <p>
 
-    <b>Note:</b> The caller must be granted the <a
-
-    href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
-
-    >ACCESS_TYPE.DELETE</a> on the specified Evaluation.
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.DELETE</a> on the specified Evaluation.
 
     </p>
   operationId: deleteEvaluation
@@ -24,7 +20,7 @@ delete:
       description: The resource was deleted.
   summary: Deletes an Evaluation.
   tags:
-  - EvaluationController
+  - Evaluation Services
 get:
   description: |
     Gets an Evaluation.
@@ -49,7 +45,7 @@ get:
       description: Success
   summary: Gets an Evaluation.
   tags:
-  - EvaluationController
+  - Evaluation Services
 put:
   description: |
     'Updates an Evaluation.
@@ -101,4 +97,4 @@ put:
       description: Success
   summary: Updates an Evaluation.
   tags:
-  - EvaluationController
+  - Evaluation Services

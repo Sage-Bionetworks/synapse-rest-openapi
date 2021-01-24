@@ -8,12 +8,8 @@ parameters:
 get:
   description: |
     Determines whether a specified Synapse user has a certain
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE</a> on the specified Evaluation.
 
-    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE</a>
-
-    on the specified Evaluation.
-
-    </p>
   operationId: hasAccess2
   parameters:
   - in: query
@@ -31,4 +27,4 @@ get:
       description: Success
   summary: Determines whether a specified Synapse user has a certain.
   tags:
-  - EvaluationController
+  - Evaluation Services
