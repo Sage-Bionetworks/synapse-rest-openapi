@@ -9,8 +9,9 @@ parameters:
       type: string
 get:
   description: |
-    'Gets the <a href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">user
-    permissions</a> for the specified evaluation.'
+    Gets the
+    <a href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">user permissions</a>
+    for the specified evaluation.'
   operationId: getUserPermissionsForEvaluation
   responses:
     200:
