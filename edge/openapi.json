@@ -639,6 +639,32 @@
           }
         }
       }
+    },
+    "/challengeTeam/{challengeTeamId}": {
+      "parameters": [
+        {
+          "name": "challengeTeamId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the challenge team.",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "delete": {
+        "tags": [
+          "ChallengeController"
+        ],
+        "summary": "De-register a Team from a Challenge.",
+        "description": "De-register a Team from a Challenge. You must be a member of the Challenge's\nparticipant Team (i.e. you must be already registered for the Challenge)\nand be an administrator on the Team being de-registered.\n",
+        "operationId": "deleteChallengeTeam",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          }
+        }
+      }
     }
   },
   "components": {
