@@ -526,6 +526,383 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Challenge'
+  /evaluation:
+    get:
+      description: >
+        Gets a collection of Evaluations, within a given range.
+
+
+
+        <p>
+
+
+        <b>Note:</b> The response will contain only those Evaluations on which
+        the caller
+
+        is
+
+
+        granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+
+
+        permission, unless specified otherwise with the accessType parameter.
+
+
+        </p>
+      operationId: getEvaluationsPaginated
+      parameters:
+        - name: accessType
+          description: >
+            The type of access for the user to filter for, optional and defaults
+
+            to <a
+            href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+          in: query
+          schema:
+            default: READ
+            enum:
+              - CHANGE_PERMISSIONS
+              - CHANGE_SETTINGS
+              - CREATE
+              - DELETE
+              - DELETE_SUBMISSION
+              - DOWNLOAD
+              - MODERATE
+              - PARTICIPATE
+              - READ
+              - READ_PRIVATE_SUBMISSION
+              - SEND_MESSAGE
+              - SUBMIT
+              - TEAM_MEMBERSHIP_UPDATE
+              - UPDATE
+              - UPDATE_SUBMISSION
+              - UPLOAD
+            type: string
+        - name: activeOnly
+          description: |
+            If 'true' then return only those evaluations with rounds defined
+            and for which the current time is in one of the rounds.
+          in: query
+          schema:
+            default: false
+            type: boolean
+        - name: evaluationIds
+          description: |
+            an optional, comma-delimited list of evaluation IDs to which the
+            response is limited
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - name: offset
+          in: query
+          description: >
+            The index of the pagination offset. For a page size of 10, the
+
+            first page would be at offset = 0, and the second page would be at
+            offset =
+
+            10.
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfEvaluation'
+          description: Success
+      summary: 'Gets a collection of Evaluations, within a given range.'
+      tags:
+        - EvaluationController
+    post:
+      description: >
+        'Creates a new Evaluation. The passed request body should contain the
+
+        following fields:
+
+
+        <ul>
+
+
+        <li>name - Give your new Evaluation a name.</li>
+
+
+        <li>contentSource - The ID of the parent Entity, such as a Folder or
+        Project.</li>
+
+
+        <li>status - The initial state of the Evaluation, an
+
+
+        <a
+        href="${org.sagebionetworks.evaluation.model.EvaluationStatus}">EvaluationStatus</a></li>
+
+
+        </ul>
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+
+
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+
+        >ACCESS_TYPE.CREATE</a> on the contentSource Entity.
+
+
+        </p>
+      operationId: createEvaluation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evaluation'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+          description: Success
+      summary: Creates a new Evaluation.
+      tags:
+        - EvaluationController
+  '/evaluation/{evalId}':
+    parameters:
+      - description: The ID of the requested Evaluation
+        in: path
+        name: evalId
+        required: true
+        schema:
+          type: string
+    delete:
+      description: |
+        Deletes an Evaluation.
+
+        <p>
+
+        <b>Note:</b> The caller must be granted the <a
+
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+        >ACCESS_TYPE.DELETE</a> on the specified Evaluation.
+
+        </p>
+      operationId: deleteEvaluation
+      responses:
+        '204':
+          description: The resource was deleted.
+      summary: Deletes an Evaluation.
+      tags:
+        - EvaluationController
+    get:
+      description: |
+        Gets an Evaluation.
+
+
+        <p>
+
+        <b>Note:</b> The caller must be granted the <a
+
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+        >ACCESS_TYPE.READ</a> on the specified Evaluation.
+
+        </p>
+      operationId: getEvaluation
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+          description: Success
+      summary: Gets an Evaluation.
+      tags:
+        - EvaluationController
+    put:
+      description: >
+        'Updates an Evaluation.
+
+
+
+        <p>
+
+
+        Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
+
+
+        concurrent updates. Each time an Evaluation is updated a new etag will
+        be
+
+
+        issued to the Evaluation. When an update is requested, Synapse will
+        compare the
+
+
+        etag of the passed Evaluation with the current etag of the Evaluation.
+        If the
+
+
+        etags do not match, then the update will be rejected with a
+
+
+        PRECONDITION_FAILED (412) response. When this occurs, the caller should
+
+
+        fetch the latest copy of the Evaluation and re-apply any changes, then
+        re-attempt
+
+
+        the Evaluation update.
+
+
+        </p>
+
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+
+
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+
+        >ACCESS_TYPE.UPDATE</a> on the specified Evaluation.
+
+
+        </p>
+      operationId: updateEvaluation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evaluation'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+          description: Success
+      summary: Updates an Evaluation.
+      tags:
+        - EvaluationController
+  '/evaluation/{evalId}/access':
+    parameters:
+      - in: path
+        name: evalId
+        description: Evaluation Id.
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Determines whether a specified Synapse user has a certain
+
+        <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE</a>
+
+        on the specified Evaluation.
+
+        </p>
+      operationId: hasAccess2
+      parameters:
+        - in: query
+          name: accessType
+          description: Synapse access type
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BooleanResult'
+          description: Success
+      summary: Determines whether a specified Synapse user has a certain.
+      tags:
+        - EvaluationController
+  '/evaluation/{evalId}/acl':
+    parameters:
+      - in: path
+        name: evalId
+        description: |
+          The ID of the evaluation over which the user permission are being
+          retrieved.
+        required: true
+        schema:
+          type: string
+    delete:
+      deprecated: true
+      description: >
+        This method is deprecated and should be removed from future versions
+
+        of the API.
+
+
+        Deletes the ACL (access control list) of the specified evaluation. The
+        user should
+
+        have the proper
+
+
+        <a
+        href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
+
+
+        to delete the ACL.
+      operationId: deleteAcl
+      responses:
+        '204':
+          description: The resource was deleted
+      summary: >-
+        This method is deprecated and should be removed from future versions of
+        the API.
+      tags:
+        - EvaluationController
+    get:
+      description: >
+        Gets the access control list (ACL) governing the given evaluation.
+
+        The user should have the proper
+
+
+        <a
+        href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
+
+        to read the ACL.'
+      operationId: getAcl
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlList'
+          description: Success
+      summary: Gets the access control list (ACL) governing the given evaluation.
+      tags:
+        - EvaluationController
 components:
   securitySchemes:
     bearerAuth:
@@ -692,5 +1069,242 @@ components:
         results:
           - test1
           - test2
+    SubmissionQuota:
+      title: SubmissionQuota
+      type: object
+      description: >-
+        Maximum submissions per team/participant per submission round. If round
+        information is omitted, then this indicates the overall submission limit
+        per team/participant.
+      example:
+        firstRoundStart: '33333333'
+        numberOfRounds: 1
+        roundDurationMillis: 12345
+        submissionLimit: 2
+      properties:
+        firstRoundStart:
+          description: The date/time at which the first round begins.
+          type: string
+        numberOfRounds:
+          description: 'The number of rounds, or null if there is no end.'
+          type: integer
+        roundDurationMillis:
+          description: The duration of each round in milliseconds
+          type: integer
+        submissionLimit:
+          description: the maximum number of submissions per team/participant per round.
+          type: integer
+    EvaluationStatus:
+      title: EvaluationStatus
+      type: string
+      description: The possible states of a Synapse Evaluation.
+      enum:
+        - PLANNED
+        - OPEN
+        - CLOSED
+        - COMPLETED
+    Evaluation:
+      title: Evaluation
+      type: object
+      description: >-
+        An Evaluation is the core object of the Evaluation API, used to support
+        collaborative data analysis challenges in Synapse.
+      example:
+        contentSource: syn234444
+        createdOn: '12345'
+        description: Evaluation Queue
+        etag: aaaaa
+        id: '12345'
+        name: Test Evaluation
+        ownerId: '22222'
+        quota:
+          firstRoundStart: '12345'
+          numberOfRounds: 12345
+          roundDurationMillis: 12345
+          submissionLimit: 12345
+        status: PLANNED
+        submissionInstructionsMessage: Instructions
+        submissionReceiptMessage: Received
+      properties:
+        contentSource:
+          description: >-
+            The Synapse ID of the Entity to which this Evaluation belongs, e.g.
+            a reference to a Synapse project.
+          type: string
+        createdOn:
+          description: The date on which Evaluation was created.
+          type: string
+        description:
+          description: A text description of this Evaluation.
+          type: string
+        etag:
+          description: >
+            Synapse employs an Optimistic Concurrency Control (OCC) scheme to
+            handle concurrent updates.
+
+            The eTag changes every time an Evaluation is updated; it is used to
+            detect when a client's
+
+            copy of an Evaluation is out-of-date.
+          type: string
+        id:
+          description: The unique immutable ID for this Evaluation.
+          type: string
+        name:
+          description: The name of this Evaluation
+          type: string
+        ownerId:
+          description: The ID of the Synapse user who created this Evaluation.
+          type: string
+        quota:
+          $ref: '#/components/schemas/SubmissionQuota'
+        status:
+          $ref: '#/components/schemas/EvaluationStatus'
+        submissionInstructionsMessage:
+          description: >-
+            Message to display to users detailing acceptable formatting for
+            Submissions to this Evaluation.
+          type: string
+        submissionReceiptMessage:
+          description: >-
+            Message to display to users upon successful submission to this
+            Evaluation.
+          type: string
+    PaginatedResultsOfEvaluation:
+      title: PaginatedResultsOfEvaluation
+      type: object
+      description: 'Gets a collection of Evaluations, within a given range.'
+      allOf:
+        - $ref: '#/components/schemas/PageResultsMetadata'
+        - type: object
+          properties:
+            accessType:
+              description: >-
+                The type of access for the user to filter for, optional and
+                defaults to ACCESS_TYPE.READ
+              type: string
+            activeOnly:
+              description: >
+                If 'true' then return only those evaluations with rounds defined
+                and for
+
+                which the current time is in one of the rounds.
+              type: string
+            evaluationIds:
+              description: >-
+                an optional, comma-delimited list of evaluation IDs to which the
+                response is limited
+              type: string
+            results:
+              type: array
+              description: List of evaluations
+              items:
+                $ref: '#/components/schemas/Evaluation'
+            totalNumberOfResults:
+              description: Number of results per page
+              type: integer
+    BooleanResult:
+      description: Boolean result
+      example:
+        result: true
+      properties:
+        result:
+          description: Boolean result
+          type: boolean
+      title: BooleanResult
+      type: object
+    ACCESS_TYPE:
+      title: ACCESS_TYPE
+      type: string
+      description: The enumeration of possible permission.
+      enum:
+        - CREATE
+        - READ
+        - UPDATE
+        - DELETE
+        - CHANGE_PERMISSIONS
+        - DOWNLOAD
+        - UPLOAD
+        - PARTICIPATE
+        - SUBMIT
+        - READ_PRIVATE_SUBMISSION
+        - UPDATE_SUBMISSION
+        - DELETE_SUBMISSION
+        - TEAM_MEMBERSHIP_UPDATE
+        - SEND_MESSAGE
+        - CHANGE_SETTINGS
+        - MODERATE
+    ResourceAccess:
+      title: ResourceAccess
+      type: object
+      description: JSON schema for a ResourceAccess POJO
+      example:
+        accessType:
+          - UPDATE
+          - DELETE_SUBMISSION
+        principalId: 12345
+      properties:
+        accessType:
+          description: A list of types of access granted to the given principal
+          type: array
+          items:
+            $ref: '#/components/schemas/ACCESS_TYPE'
+        principalId:
+          description: The id of the principal who is granted access
+          type: integer
+    AccessControlList:
+      title: AccessControlList
+      type: object
+      description: >-
+        Contains list of principals who can access the data with the allowed
+        types of access for each.
+      properties:
+        createdBy:
+          description: >-
+            UNUSED -- maintained only for backwards compatibility with archived
+            objects
+          type: string
+        creationDate:
+          description: Created Date
+          type: string
+        etag:
+          description: Synapse etag value
+          type: string
+        id:
+          description: The entity id
+          type: string
+        modifiedBy:
+          description: >-
+            UNUSED -- maintained only for backwards compatibility with archived
+            objects
+          type: string
+        modifiedOn:
+          description: >-
+            UNUSED -- maintained only for backwards compatibility with archived
+            objects
+          type: string
+        resourceAccess:
+          description: >-
+            The list of principals who can access the data with the allowed
+            types of access for each.
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceAccess'
+      example:
+        createdBy: ...
+        creationDate: '12345'
+        etag: ...
+        id: ...
+        modifiedBy: ...
+        modifiedOn: '12345'
+        resourceAccess:
+          - accessType:
+              - UPDATE_SUBMISSION
+              - CHANGE_PERMISSIONS
+            principalId: 12345
+          - accessType:
+              - UPDATE
+              - SEND_MESSAGE
+            principalId: 12345
 security:
   - bearerAuth: []
