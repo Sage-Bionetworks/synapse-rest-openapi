@@ -12,7 +12,7 @@ allOf:
         description: "The list of results for this page"
         items:
           $ref: 'ChallengeTeam.yaml'
-description: ""
+description: "List the Teams registered for a Challenge. You must have READ permission in the associated Project to make this request."
 example:
   offset: 10
   limit: 0
