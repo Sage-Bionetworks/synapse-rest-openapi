@@ -344,6 +344,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChallengeTeam'
+  '/challenge/{challengeId}/participant':
+    parameters:
+      - name: challengeId
+        in: path
+        description: The ID of the challenge.
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - ChallengeController
+      summary: List the participants registered for a Challenge.
+      description: |-
+        List the participants registered for a Challenge.
+        The caller must have READ permission on the
+        project associated with the Challenge.
+      operationId: listParticipantsInChallenge
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - name: offset
+          in: query
+          description: Index of the first result that must be returned
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedIds'
 components:
   securitySchemes:
     bearerAuth:
@@ -487,5 +529,28 @@ components:
             challengeId: '3421'
             message: Testing foo
             etag: 33492273ssdddf
+    PaginatedIds:
+      title: PaginatedIds
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PageResultsMetadata'
+        - type: object
+          properties:
+            totalNumberOfResults:
+              type: integer
+              description: The total number of results
+            results:
+              type: array
+              description: The list of Object Ids for this page
+              items:
+                type: string
+      description: Paginated results of strings
+      example:
+        limit: 10
+        offset: 0
+        totalNumberOfResults: 12345
+        results:
+          - test1
+          - test2
 security:
   - bearerAuth: []
