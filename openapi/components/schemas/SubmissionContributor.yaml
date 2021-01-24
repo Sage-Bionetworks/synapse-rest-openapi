@@ -1,0 +1,15 @@
+description: 'A contributor to an evaluation Submission'
+example:
+  createdOn: '...'
+  principalId: '...'
+properties:
+  createdOn:
+    description: |
+      'date when contributor was added to Submission.
+      Normally this will match the creation date of the Submission, but administrative override is allowed.'
+    type: string
+  principalId:
+    description: 'ID of the contributor'
+    type: string
+title: SubmissionContributor
+type: object

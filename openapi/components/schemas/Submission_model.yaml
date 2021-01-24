@@ -22,9 +22,10 @@ example:
   versionNumber: 12345
 properties:
   contributors:
-    description: ''
+    description: |
+      User ids of the submitter and (if a team submission) the team members involved in creating the submission.
     items:
-      $ref: '#/components/schemas/json_SubmissionContributor'
+      $ref: 'SubmissionContributor.yaml'
     type: array
   createdOn:
     description: 'The date on which Submission was created.'
