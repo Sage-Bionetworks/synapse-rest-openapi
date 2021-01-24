@@ -368,6 +368,17 @@ paths:
         project associated with the Challenge.
       operationId: listParticipantsInChallenge
       parameters:
+        - name: affiliated
+          in: query
+          description: >
+            If affiliated=true, return just participants affiliated with some
+
+            registered Team.  If false, return those not affiliated with any
+            registered Team.
+
+            If omitted return all participants.
+          schema:
+            type: boolean
         - name: limit
           in: query
           description: Maximum number of results returned
@@ -1168,35 +1179,15 @@ components:
       title: PaginatedResultsOfEvaluation
       type: object
       description: 'Gets a collection of Evaluations, within a given range.'
-      allOf:
-        - $ref: '#/components/schemas/PageResultsMetadata'
-        - type: object
-          properties:
-            accessType:
-              description: >-
-                The type of access for the user to filter for, optional and
-                defaults to ACCESS_TYPE.READ
-              type: string
-            activeOnly:
-              description: >
-                If 'true' then return only those evaluations with rounds defined
-                and for
-
-                which the current time is in one of the rounds.
-              type: string
-            evaluationIds:
-              description: >-
-                an optional, comma-delimited list of evaluation IDs to which the
-                response is limited
-              type: string
-            results:
-              type: array
-              description: List of evaluations
-              items:
-                $ref: '#/components/schemas/Evaluation'
-            totalNumberOfResults:
-              description: Number of results per page
-              type: integer
+      properties:
+        results:
+          type: array
+          description: List of evaluations
+          items:
+            $ref: '#/components/schemas/Evaluation'
+        totalNumberOfResults:
+          description: Number of results per page
+          type: integer
     BooleanResult:
       description: Boolean result
       example:
