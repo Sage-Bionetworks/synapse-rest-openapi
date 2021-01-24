@@ -66,16 +66,16 @@ example:
     versionNumber: 12345
 properties:
   batchToken:
-    description: ''
+    description: 'A token required to accept a batch submission for all but the first batch.'
     type: string
   isFirstBatch:
-    description: ''
+    description: 'true if and only if this is the first batch to upload'
     type: boolean
   isLastBatch:
-    description: ''
+    description: 'true if and only if this is the last batch to upload'
     type: boolean
   statuses:
-    description: ''
+    description: 'A collection of Submission Statuses'
     items:
       $ref: 'SubmissionStatus_model.yaml'
     type: array
