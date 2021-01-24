@@ -1,0 +1,83 @@
+description: ''
+example:
+  batchToken: '...'
+  isFirstBatch: true
+  isLastBatch: true
+  statuses:
+  - annotations:
+      doubleAnnos:
+      - {}
+      - {}
+      longAnnos:
+      - {}
+      - {}
+      objectId: '...'
+      scopeId: '...'
+      stringAnnos:
+      - {}
+      - {}
+      version: 12345
+    canCancel: true
+    cancelRequested: true
+    entityId: '...'
+    etag: '...'
+    id: '...'
+    modifiedOn: 12345
+    report: '...'
+    score: 12345
+    status: RECEIVED
+    statusVersion: 12345
+    submissionAnnotations:
+      annotations:
+        property1: {}
+        property2: {}
+      etag: '...'
+      id: '...'
+    versionNumber: 12345
+  - annotations:
+      doubleAnnos:
+      - {}
+      - {}
+      longAnnos:
+      - {}
+      - {}
+      objectId: '...'
+      scopeId: '...'
+      stringAnnos:
+      - {}
+      - {}
+      version: 12345
+    canCancel: true
+    cancelRequested: true
+    entityId: '...'
+    etag: '...'
+    id: '...'
+    modifiedOn: 12345
+    report: '...'
+    score: 12345
+    status: CLOSED
+    statusVersion: 12345
+    submissionAnnotations:
+      annotations:
+        property1: {}
+        property2: {}
+      etag: '...'
+      id: '...'
+    versionNumber: 12345
+properties:
+  batchToken:
+    description: ''
+    type: string
+  isFirstBatch:
+    description: ''
+    type: boolean
+  isLastBatch:
+    description: ''
+    type: boolean
+  statuses:
+    description: ''
+    items:
+      $ref: 'SubmissionStatus_model.yaml'
+    type: array
+title: SubmissionStatusBatch
+type: object

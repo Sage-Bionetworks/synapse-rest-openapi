@@ -1,0 +1,13 @@
+description: 'The possible states of a Synapse Submission.'
+enum:
+- OPEN
+- CLOSED
+- SCORED
+- INVALID
+- VALIDATED
+- EVALUATION_IN_PROGRESS
+- RECEIVED
+- REJECTED
+- ACCEPTED
+title: SubmissionStatusEnum
+type: string
