@@ -15,14 +15,14 @@ get:
     project associated with the Challenge.
   operationId: listParticipantsInChallenge
   parameters:
-  # - name: affiliated
-  #   in: query
-  #   description: |
-  #     If affiliated=true, return just participants affiliated with some
-  #     registered Team.  If false, return those not affiliated with any registered Team.
-  #     If omitted return all participants.
-  #   schema:
-  #     type: boolean
+  - name: affiliated
+    in: query
+    description: |
+      If affiliated=true, return just participants affiliated with some
+      registered Team.  If false, return those not affiliated with any registered Team.
+      If omitted return all participants.
+    schema:
+      type: boolean
   - name: limit
     in: query
     description: "Maximum number of results returned"
