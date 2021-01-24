@@ -1,6 +1,6 @@
 title: EvaluationRoundListRequest
 type: object
-description: ''
+description: 'Round list request'
 example:
   nextPageToken: '...'
 properties:
