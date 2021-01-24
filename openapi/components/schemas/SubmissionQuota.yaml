@@ -1,0 +1,21 @@
+title: SubmissionQuota
+type: object
+description: 'Maximum submissions per team/participant per submission round. If round information is omitted, then this indicates the overall submission limit per team/participant.'
+example:
+  firstRoundStart: 33333333
+  numberOfRounds: 1
+  roundDurationMillis: 12345
+  submissionLimit: 2
+properties:
+  firstRoundStart:
+    description: 'The date/time at which the first round begins.'
+    type: string
+  numberOfRounds:
+    description: 'The number of rounds, or null if there is no end.'
+    type: integer
+  roundDurationMillis:
+    description: 'The duration of each round in milliseconds'
+    type: integer
+  submissionLimit:
+    description: 'the maximum number of submissions per team/participant per round.'
+    type: integer

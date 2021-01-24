@@ -1,0 +1,52 @@
+title: Evaluation
+type: object
+description: 'An Evaluation is the core object of the Evaluation API, used to support collaborative data analysis challenges in Synapse.'
+example:
+  contentSource: 'syn234444'
+  createdOn: 12345
+  description: 'Evaluation Queue'
+  etag: 'aaaaa'
+  id: '12345'
+  name: 'Test Evaluation'
+  ownerId: '22222'
+  quota:
+    firstRoundStart: 12345
+    numberOfRounds: 12345
+    roundDurationMillis: 12345
+    submissionLimit: 12345
+  status: PLANNED
+  submissionInstructionsMessage: 'Instructions'
+  submissionReceiptMessage: 'Received'
+properties:
+  contentSource:
+    description: 'The Synapse ID of the Entity to which this Evaluation belongs, e.g. a reference to a Synapse project.'
+    type: string
+  createdOn:
+    description: 'The date on which Evaluation was created.'
+    type: STRING
+  description:
+    description: 'A text description of this Evaluation.'
+    type: string
+  etag:
+    description: 'Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent updates. The eTag changes every time an Evaluation is updated; it is used to detect when a client's copy of an Evaluation is out-of-date.'
+    type: string
+  id:
+    description: 'The unique immutable ID for this Evaluation.'
+    type: string
+  name:
+    description: 'The name of this Evaluation'
+    type: string
+  ownerId:
+    description: 'The ID of the Synapse user who created this Evaluation.'
+    type: string
+  quota:
+    $ref: SubmissionQuota.yaml
+  status:
+    $ref: EvaluationStatus.yaml
+  submissionInstructionsMessage:
+    description: 'Message to display to users detailing acceptable formatting for Submissions to this Evaluation.'
+    type: string
+  submissionReceiptMessage:
+    description: 'Message to display to users upon successful submission to this Evaluation.'
+    type: string
+

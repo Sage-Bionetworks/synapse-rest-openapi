@@ -1,0 +1,102 @@
+parameters:
+- description: 'The ID of the requested Evaluation'
+  in: path
+  name: evalId
+  required: true
+  schema:
+    type: string
+delete:
+  description: 'Deletes an Evaluation.
+
+
+    <p>
+
+    <b>Note:</b> The caller must be granted the <a
+
+    href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+    >ACCESS_TYPE.DELETE</a> on the specified Evaluation.
+
+    </p>'
+  operationId: deleteEvaluation
+  responses:
+    204:
+      description: The resource was deleted.
+  summary: Deletes an Evaluation.
+  tags:
+  - EvaluationController
+get:
+  description: 'Gets an Evaluation.
+
+
+    <p>
+
+    <b>Note:</b> The caller must be granted the <a
+
+    href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+    >ACCESS_TYPE.READ</a> on the specified Evaluation.
+
+    </p>'
+  operationId: getEvaluation
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Evaluation.yaml
+      description: Success
+  summary: Gets an Evaluation.
+  tags:
+  - EvaluationController
+put:
+  description: 'Updates an Evaluation.
+
+
+    <p>
+
+    Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
+
+    concurrent updates. Each time an Evaluation is updated a new etag will be
+
+    issued to the Evaluation. When an update is requested, Synapse will compare the
+
+    etag of the passed Evaluation with the current etag of the Evaluation. If the
+
+    etags do not match, then the update will be rejected with a
+
+    PRECONDITION_FAILED (412) response. When this occurs, the caller should
+
+    fetch the latest copy of the Evaluation and re-apply any changes, then re-attempt
+
+    the Evaluation update.
+
+    </p>
+
+
+    <p>
+
+    <b>Note:</b> The caller must be granted the <a
+
+    href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+    >ACCESS_TYPE.UPDATE</a> on the specified Evaluation.
+
+    </p>'
+  operationId: updateEvaluation
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/json_Evaluation'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Evaluation.yaml
+      description: Success
+  summary: Updates an Evaluation.
+  tags:
+  - EvaluationController
