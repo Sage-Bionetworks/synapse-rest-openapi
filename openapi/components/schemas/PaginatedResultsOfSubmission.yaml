@@ -4,9 +4,9 @@ description: 'Paginated Results of submissions'
 example:
   results:
   - contributors:
-    - createdOn: 12345
+    - createdOn: '...'
       principalId: '...'
-    - createdOn: 12345
+    - createdOn: '...'
       principalId: '...'
     createdOn: '...'
     dockerDigest: '...'
@@ -22,9 +22,9 @@ example:
     userId: '...'
     versionNumber: 12345
   - contributors:
-    - createdOn: 12345
+    - createdOn: '...'
       principalId: '...'
-    - createdOn: 12345
+    - createdOn: '...'
       principalId: '...'
     createdOn: '...'
     dockerDigest: '...'

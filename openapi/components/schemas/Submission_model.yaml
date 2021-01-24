@@ -3,9 +3,9 @@ description: |
   Submissions are immutable, so we archive a copy of the EntityBundle at the time of submission.
 example:
   contributors:
-  - createdOn: 12345
+  - createdOn: '...'
     principalId: '...'
-  - createdOn: 12345
+  - createdOn: '...'
     principalId: '...'
   createdOn: '...'
   dockerDigest: '...'
