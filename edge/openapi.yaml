@@ -212,7 +212,7 @@ paths:
                 $ref: '#/components/schemas/Challenge'
     put:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: Update a Challenge.
       description: |
         Update a Challenge.  The caller must have UPDATE permission on the
