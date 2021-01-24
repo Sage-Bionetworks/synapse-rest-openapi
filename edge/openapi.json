@@ -790,7 +790,7 @@
         ]
       },
       "post": {
-        "description": "'Creates a new Evaluation. The passed request body should contain the\nfollowing fields:\n\n<ul>\n\n<li>name - Give your new Evaluation a name.</li>\n\n<li>contentSource - The ID of the parent Entity, such as a Folder or Project.</li>\n\n<li>status - The initial state of the Evaluation, an\n\n<a href=\"${org.sagebionetworks.evaluation.model.EvaluationStatus}\">EvaluationStatus</a></li>\n\n</ul>\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a\n\nhref=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\"\n\n>ACCESS_TYPE.CREATE</a> on the contentSource Entity.\n\n</p>\n",
+        "description": "'Creates a new Evaluation. The passed request body should contain the\nfollowing fields:\n\n<ul>\n\n<li>name - Give your new Evaluation a name.</li>\n\n<li>contentSource - The ID of the parent Entity, such as a Folder or Project.</li>\n\n<li>status - The initial state of the Evaluation, an\n\n<a href=\"${org.sagebionetworks.evaluation.model.EvaluationStatus}\">EvaluationStatus</a></li>\n\n</ul>\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.CREATE</a> on the contentSource Entity.\n\n</p>\n",
         "operationId": "createEvaluation",
         "requestBody": {
           "content": {
@@ -833,7 +833,7 @@
         }
       ],
       "delete": {
-        "description": "Deletes an Evaluation.\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a\n\nhref=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\"\n\n>ACCESS_TYPE.DELETE</a> on the specified Evaluation.\n\n</p>\n",
+        "description": "Deletes an Evaluation.\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.DELETE</a> on the specified Evaluation.\n\n</p>\n",
         "operationId": "deleteEvaluation",
         "responses": {
           "204": {
@@ -842,7 +842,7 @@
         },
         "summary": "Deletes an Evaluation.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       },
       "get": {
@@ -862,7 +862,7 @@
         },
         "summary": "Gets an Evaluation.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       },
       "put": {
@@ -892,7 +892,7 @@
         },
         "summary": "Updates an Evaluation.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       }
     },
@@ -909,7 +909,7 @@
         }
       ],
       "get": {
-        "description": "Determines whether a specified Synapse user has a certain\n\n<a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE</a>\n\non the specified Evaluation.\n\n</p>\n",
+        "description": "Determines whether a specified Synapse user has a certain\n<a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE</a> on the specified Evaluation.\n",
         "operationId": "hasAccess2",
         "parameters": [
           {
@@ -936,7 +936,7 @@
         },
         "summary": "Determines whether a specified Synapse user has a certain.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       }
     },
@@ -954,7 +954,7 @@
       ],
       "delete": {
         "deprecated": true,
-        "description": "This method is deprecated and should be removed from future versions\nof the API.\n\nDeletes the ACL (access control list) of the specified evaluation. The user should\nhave the proper\n\n<a href=\"${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}\">permissions</a>\n\nto delete the ACL.\n",
+        "description": "This method is deprecated and should be removed from future versions\nof the API.\n\nDeletes the ACL (access control list) of the specified evaluation. The user should\nhave the proper <a href=\"${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}\">permissions</a>\nto delete the ACL.\n",
         "operationId": "deleteAcl",
         "responses": {
           "204": {
@@ -963,11 +963,11 @@
         },
         "summary": "This method is deprecated and should be removed from future versions of the API.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       },
       "get": {
-        "description": "Gets the access control list (ACL) governing the given evaluation.\nThe user should have the proper\n\n<a href=\"${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}\">permissions</a>\nto read the ACL.'\n",
+        "description": "Gets the access control list (ACL) governing the given evaluation.\nThe user should have the proper\n<a href=\"${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}\">permissions</a>\nto read the ACL.\n",
         "operationId": "getAcl",
         "responses": {
           "200": {
@@ -983,7 +983,7 @@
         },
         "summary": "Gets the access control list (ACL) governing the given evaluation.",
         "tags": [
-          "EvaluationController"
+          "Evaluation Services"
         ]
       }
     }

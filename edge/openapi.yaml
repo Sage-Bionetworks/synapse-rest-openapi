@@ -658,12 +658,8 @@ paths:
 
 
         <b>Note:</b> The caller must be granted the <a
-
-
-        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
-
-
-        >ACCESS_TYPE.CREATE</a> on the contentSource Entity.
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.CREATE</a>
+        on the contentSource Entity.
 
 
         </p>
@@ -693,16 +689,17 @@ paths:
         schema:
           type: string
     delete:
-      description: |
+      description: >
         Deletes an Evaluation.
+
 
         <p>
 
+
         <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.DELETE</a>
+        on the specified Evaluation.
 
-        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
-
-        >ACCESS_TYPE.DELETE</a> on the specified Evaluation.
 
         </p>
       operationId: deleteEvaluation
@@ -711,7 +708,7 @@ paths:
           description: The resource was deleted.
       summary: Deletes an Evaluation.
       tags:
-        - EvaluationController
+        - Evaluation Services
     get:
       description: |
         Gets an Evaluation.
@@ -736,7 +733,7 @@ paths:
           description: Success
       summary: Gets an Evaluation.
       tags:
-        - EvaluationController
+        - Evaluation Services
     put:
       description: >
         'Updates an Evaluation.
@@ -807,7 +804,7 @@ paths:
           description: Success
       summary: Updates an Evaluation.
       tags:
-        - EvaluationController
+        - Evaluation Services
   '/evaluation/{evalId}/access':
     parameters:
       - in: path
@@ -817,14 +814,11 @@ paths:
         schema:
           type: string
     get:
-      description: |
+      description: >
         Determines whether a specified Synapse user has a certain
 
         <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE</a>
-
         on the specified Evaluation.
-
-        </p>
       operationId: hasAccess2
       parameters:
         - in: query
@@ -842,7 +836,7 @@ paths:
           description: Success
       summary: Determines whether a specified Synapse user has a certain.
       tags:
-        - EvaluationController
+        - Evaluation Services
   '/evaluation/{evalId}/acl':
     parameters:
       - in: path
@@ -864,12 +858,8 @@ paths:
         Deletes the ACL (access control list) of the specified evaluation. The
         user should
 
-        have the proper
-
-
-        <a
+        have the proper <a
         href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
-
 
         to delete the ACL.
       operationId: deleteAcl
@@ -880,18 +870,17 @@ paths:
         This method is deprecated and should be removed from future versions of
         the API.
       tags:
-        - EvaluationController
+        - Evaluation Services
     get:
       description: >
         Gets the access control list (ACL) governing the given evaluation.
 
         The user should have the proper
 
-
         <a
         href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
 
-        to read the ACL.'
+        to read the ACL.
       operationId: getAcl
       responses:
         '200':
@@ -902,7 +891,7 @@ paths:
           description: Success
       summary: Gets the access control list (ACL) governing the given evaluation.
       tags:
-        - EvaluationController
+        - Evaluation Services
 components:
   securitySchemes:
     bearerAuth:
