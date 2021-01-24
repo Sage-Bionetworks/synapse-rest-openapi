@@ -121,6 +121,10 @@ paths:
     $ref: paths/challenge@{challengeId}@challengeTeam@{challengeTeamId}.yaml
   /challenge/{challengeId}/participant:
     $ref: paths/challenge@{challengeId}@participant.yaml
+  /challenge/{challengeId}/registratableTeam:
+    $ref: paths/challenge@{challengeId}@registratableTeam.yaml
+  /challenge/{challengeId}/submissionTeams:
+    $ref: paths/challenge@{challengeId}@submissionTeams.yaml
 
 components:
   securitySchemes:
