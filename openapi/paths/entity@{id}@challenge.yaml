@@ -1,0 +1,22 @@
+parameters:
+  - name: id
+    in: path
+    description: Synapse Project id
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+  - ChallengeController
+  summary: Retrieve a Challenge given the ID of its associated Project.
+  description: |
+    Retrieve a Challenge given the ID of its associated Project.  To retrieve a
+    Challenge one must have READ permission on the Project.
+  operationId: getChallengeByProjectId
+  responses:
+    200:
+      description: "Success"
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Challenge.yaml'
