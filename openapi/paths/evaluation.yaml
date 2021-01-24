@@ -84,7 +84,7 @@ get:
       description: Success
   summary: Gets a collection of Evaluations, within a given range.
   tags:
-  - EvaluationController
+  - Evaluation Services
 post:
   description: |
     'Creates a new Evaluation. The passed request body should contain the
@@ -127,4 +127,4 @@ post:
       description: Success
   summary: Creates a new Evaluation.
   tags:
-  - EvaluationController
+  - Evaluation Services
