@@ -216,6 +216,15 @@
         "operationId": "listChallengesForParticipant",
         "parameters": [
           {
+            "name": "participantId",
+            "in": "query",
+            "description": "Synapse user id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "limit",
             "in": "query",
             "description": "Maximum number of results returned",
