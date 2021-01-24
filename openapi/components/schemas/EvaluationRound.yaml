@@ -1,0 +1,35 @@
+title: EvaluationRound
+type: object
+description: Evaluation Round
+example:
+  etag: '...'
+  evaluationId: '...'
+  id: '...'
+  limits:
+  - limitType: TOTAL
+    maximumSubmissions: 12345
+  - limitType: WEEKLY
+    maximumSubmissions: 12345
+  roundEnd: '12345'
+  roundStart: '12345'
+properties:
+  etag:
+    description: 'Synapse etag'
+    type: string
+  evaluationId:
+    description: 'The unique immutable ID for this Evaluation.'
+    type: string
+  id:
+    description: 'Evaluation round Id'
+    type: string
+  limits:
+    description: "List of round limits"
+    type: array
+    items:
+      $ref: 'EvaluationRoundLimit.yaml'
+  roundEnd:
+    description: 'End of round'
+    type: string
+  roundStart:
+    description: 'Start of round'
+    type: string

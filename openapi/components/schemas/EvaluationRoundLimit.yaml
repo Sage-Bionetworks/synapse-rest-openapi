@@ -1,0 +1,12 @@
+title: EvaluationRoundLimit
+type: object
+description: 'Round limit'
+example:
+  limitType: MONTHLY
+  maximumSubmissions: 2
+properties:
+  limitType:
+    $ref: 'EvaluationRoundLimitType.yaml'
+  maximumSubmissions:
+    description: 'Max number of submissions'
+    type: integer

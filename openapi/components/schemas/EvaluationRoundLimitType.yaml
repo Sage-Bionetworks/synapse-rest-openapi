@@ -1,0 +1,8 @@
+title: EvaluationRoundLimitType
+type: string
+description: Round limit type
+enum:
+- TOTAL
+- DAILY
+- WEEKLY
+- MONTHLY
