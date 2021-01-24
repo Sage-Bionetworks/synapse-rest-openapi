@@ -1182,27 +1182,19 @@
       "PaginatedIds": {
         "title": "PaginatedIds",
         "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/PageResultsMetadata"
+        "properties": {
+          "totalNumberOfResults": {
+            "type": "integer",
+            "description": "The total number of results"
           },
-          {
-            "type": "object",
-            "properties": {
-              "totalNumberOfResults": {
-                "type": "integer",
-                "description": "The total number of results"
-              },
-              "results": {
-                "type": "array",
-                "description": "The list of Object Ids for this page",
-                "items": {
-                  "type": "string"
-                }
-              }
+          "results": {
+            "type": "array",
+            "description": "The list of Object Ids for this page",
+            "items": {
+              "type": "string"
             }
           }
-        ],
+        },
         "description": "Paginated results of strings",
         "example": {
           "limit": 10,
