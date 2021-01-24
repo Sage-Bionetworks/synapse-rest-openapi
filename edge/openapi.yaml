@@ -918,19 +918,6 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
-    PageResultsMetadata:
-      type: object
-      description: A page of results
-      properties:
-        offset:
-          description: Index of the first result that must be returned
-          type: integer
-        limit:
-          description: Maximum number of results returned
-          type: integer
-      required:
-        - offset
-        - limit
     Challenge:
       title: Challenge
       type: object
@@ -960,25 +947,20 @@ components:
     ChallengePagedResults:
       title: ChallengePagedResults
       type: object
-      allOf:
-        - $ref: '#/components/schemas/PageResultsMetadata'
-        - type: object
-          properties:
-            totalNumberOfResults:
-              type: integer
-              description: The total number of results
-            results:
-              type: array
-              description: The list of results for this page
-              items:
-                $ref: '#/components/schemas/Challenge'
-          description: >-
-            List the Challenges for which the given participant is registered.
-            To be in the returned list the caller must have READ permission on
-            the project associated with the Challenge.
+      properties:
+        totalNumberOfResults:
+          type: integer
+          description: The total number of results
+        results:
+          type: array
+          description: The list of results for this page
+          items:
+            $ref: '#/components/schemas/Challenge'
+      description: >-
+        List the Challenges for which the given participant is registered. To be
+        in the returned list the caller must have READ permission on the project
+        associated with the Challenge.
       example:
-        offset: 10
-        limit: 0
         totalNumberOfResults: 12345
         results:
           - etag: 32439w3qsdfw
@@ -1024,24 +1006,19 @@ components:
     ChallengeTeamPagedResults:
       title: ChallengeTeamPagedResults
       type: object
-      allOf:
-        - $ref: '#/components/schemas/PageResultsMetadata'
-        - type: object
-          properties:
-            totalNumberOfResults:
-              type: integer
-              description: The total number of results
-            results:
-              type: array
-              description: The list of results for this page
-              items:
-                $ref: '#/components/schemas/ChallengeTeam'
+      properties:
+        totalNumberOfResults:
+          type: integer
+          description: The total number of results
+        results:
+          type: array
+          description: The list of results for this page
+          items:
+            $ref: '#/components/schemas/ChallengeTeam'
       description: >-
         List the Teams registered for a Challenge. You must have READ permission
         in the associated Project to make this request.
       example:
-        offset: 10
-        limit: 0
         totalNumberOfResults: 12345
         results:
           - id: '1111'
