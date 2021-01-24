@@ -1,0 +1,9 @@
+title: EvaluationStatus
+type: string
+description: 'The possible states of a Synapse Evaluation.'
+enum:
+- PLANNED
+- OPEN
+- CLOSED
+- COMPLETED
+

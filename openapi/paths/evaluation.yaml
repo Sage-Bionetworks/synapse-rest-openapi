@@ -1,0 +1,130 @@
+get:
+  description: |
+    Gets a collection of Evaluations, within a given range.
+
+
+    <p>
+
+    <b>Note:</b> The response will contain only those Evaluations on which the caller
+    is
+
+    granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+
+    permission, unless specified otherwise with the accessType parameter.
+
+    </p>
+  operationId: getEvaluationsPaginated
+  parameters:
+  - name: accessType
+    description: |
+      The type of access for the user to filter for, optional and defaults
+      to <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+    in: query
+    schema:
+      default: READ
+      enum:
+      - CHANGE_PERMISSIONS
+      - CHANGE_SETTINGS
+      - CREATE
+      - DELETE
+      - DELETE_SUBMISSION
+      - DOWNLOAD
+      - MODERATE
+      - PARTICIPATE
+      - READ
+      - READ_PRIVATE_SUBMISSION
+      - SEND_MESSAGE
+      - SUBMIT
+      - TEAM_MEMBERSHIP_UPDATE
+      - UPDATE
+      - UPDATE_SUBMISSION
+      - UPLOAD
+      type: string
+  - name: activeOnly
+    description: |
+      If 'true' then return only those evaluations with rounds defined
+      and for which the current time is in one of the rounds.
+    in: query
+    schema:
+      default: false
+      type: boolean
+  - name: evaluationIds
+    description: |
+      an optional, comma-delimited list of evaluation IDs to which the
+      response is limited
+    in: query
+    schema:
+      type: string
+  - name: limit
+    in: query
+    description: "Maximum number of results returned"
+    required: false
+    schema:
+      type: integer
+      default: 10
+      minimum: 10
+      maximum: 100
+  - name: offset
+    in: query
+    description: |
+      The index of the pagination offset. For a page size of 10, the
+      first page would be at offset = 0, and the second page would be at offset =
+      10.
+    required: false
+    schema:
+      type: integer
+      default: 0
+      minimum: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfEvaluation.yaml
+      description: Success
+  summary: Gets a collection of Evaluations, within a given range.
+  tags:
+  - EvaluationController
+post:
+  description: |
+    'Creates a new Evaluation. The passed request body should contain the
+    following fields:
+
+    <ul>
+
+    <li>name - Give your new Evaluation a name.</li>
+
+    <li>contentSource - The ID of the parent Entity, such as a Folder or Project.</li>
+
+    <li>status - The initial state of the Evaluation, an
+
+    <a href="${org.sagebionetworks.evaluation.model.EvaluationStatus}">EvaluationStatus</a></li>
+
+    </ul>
+
+    <p>
+
+    <b>Note:</b> The caller must be granted the <a
+
+    href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+
+    >ACCESS_TYPE.CREATE</a> on the contentSource Entity.
+
+    </p>
+  operationId: createEvaluation
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Evaluation.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Evaluation.yaml
+      description: Success
+  summary: Creates a new Evaluation.
+  tags:
+  - EvaluationController

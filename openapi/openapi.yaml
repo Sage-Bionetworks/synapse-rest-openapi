@@ -129,6 +129,14 @@ paths:
     $ref: paths/challengeTeam@{challengeTeamId}.yaml
   /entity/{id}/challenge:
     $ref: paths/entity@{id}@challenge.yaml
+  /evaluation:
+    $ref: paths/evaluation.yaml
+  /evaluation/{evalId}:
+    $ref: paths/evaluation@{evalId}.yaml
+  /evaluation/{evalId}/access:
+    $ref: paths/evaluation@{evalId}@access.yaml
+  /evaluation/{evalId}/acl:
+    $ref: paths/evaluation@{evalId}@acl.yaml
 
 components:
   securitySchemes:

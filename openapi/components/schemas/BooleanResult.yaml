@@ -1,0 +1,9 @@
+description: 'Boolean result'
+example:
+  result: true
+properties:
+  result:
+    description: 'Boolean result'
+    type: boolean
+title: BooleanResult
+type: object

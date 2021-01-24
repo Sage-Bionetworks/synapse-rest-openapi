@@ -1,0 +1,46 @@
+parameters:
+  - in: path
+    name: evalId
+    description: |
+      The ID of the evaluation over which the user permission are being
+      retrieved.
+    required: true
+    schema:
+      type: string
+delete:
+  deprecated: true
+  description: |
+    This method is deprecated and should be removed from future versions
+    of the API.
+
+    Deletes the ACL (access control list) of the specified evaluation. The user should
+    have the proper
+
+    <a href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
+
+    to delete the ACL.
+  operationId: deleteAcl
+  responses:
+    204:
+      description: The resource was deleted
+  summary: This method is deprecated and should be removed from future versions of the API.
+  tags:
+  - EvaluationController
+get:
+  description: |
+    Gets the access control list (ACL) governing the given evaluation.
+    The user should have the proper
+
+    <a href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
+    to read the ACL.'
+  operationId: getAcl
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Gets the access control list (ACL) governing the given evaluation.
+  tags:
+  - EvaluationController
