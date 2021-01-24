@@ -1,82 +1,86 @@
-# get:
-#   description: 'Gets a collection of Evaluations, within a given range.
+get:
+  description: |
+    Gets a collection of Evaluations, within a given range.
 
 
-#     <p>
+    <p>
 
-#     <b>Note:</b> The response will contain only those Evaluations on which the caller
-#     is
+    <b>Note:</b> The response will contain only those Evaluations on which the caller
+    is
 
-#     granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+    granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
 
-#     permission, unless specified otherwise with the accessType parameter.
+    permission, unless specified otherwise with the accessType parameter.
 
-#     </p>'
-#   operationId: getEvaluationsPaginated
-#   parameters:
-#   - description: The type of access for the user to filter for, optional and defaults
-#       to <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
-#     in: query
-#     name: accessType
-#     schema:
-#       default: READ
-#       enum:
-#       - CHANGE_PERMISSIONS
-#       - CHANGE_SETTINGS
-#       - CREATE
-#       - DELETE
-#       - DELETE_SUBMISSION
-#       - DOWNLOAD
-#       - MODERATE
-#       - PARTICIPATE
-#       - READ
-#       - READ_PRIVATE_SUBMISSION
-#       - SEND_MESSAGE
-#       - SUBMIT
-#       - TEAM_MEMBERSHIP_UPDATE
-#       - UPDATE
-#       - UPDATE_SUBMISSION
-#       - UPLOAD
-#       type: string
-#   - description: If 'true' then return only those evaluations with rounds defined
-#       and for which the current time is in one of the rounds.
-#     in: query
-#     name: activeOnly
-#     schema:
-#       default: false
-#       type: boolean
-#   - description: an optional, comma-delimited list of evaluation IDs to which the
-#       response is limited
-#     in: query
-#     name: evaluationIds
-#     schema:
-#       type: string
-#   - name: limit
-#     in: query
-#     description: "Maximum number of results returned"
-#     required: false
-#     schema:
-#       type: integer
-#       default: 10
-#       minimum: 10
-#       maximum: 100
-#   - name: offset
-#     in: query
-#     description: "Index of the first result that must be returned"
-#     required: false
-#     schema:
-#       type: integer
-#       default: 0
-#   responses:
-#     200:
-#       content:
-#         application/json:
-#           schema:
-#             $ref: ../components/schemas/PaginatedResultsOfEvaluation.yaml
-#       description: Success
-#   summary: Gets a collection of Evaluations, within a given range.
-#   tags:
-#   - EvaluationController
+    </p>
+  operationId: getEvaluationsPaginated
+  parameters:
+  - name: accessType
+    description: |
+      The type of access for the user to filter for, optional and defaults
+      to <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+    in: query
+    schema:
+      default: READ
+      enum:
+      - CHANGE_PERMISSIONS
+      - CHANGE_SETTINGS
+      - CREATE
+      - DELETE
+      - DELETE_SUBMISSION
+      - DOWNLOAD
+      - MODERATE
+      - PARTICIPATE
+      - READ
+      - READ_PRIVATE_SUBMISSION
+      - SEND_MESSAGE
+      - SUBMIT
+      - TEAM_MEMBERSHIP_UPDATE
+      - UPDATE
+      - UPDATE_SUBMISSION
+      - UPLOAD
+      type: string
+  - name: activeOnly
+    description: |
+      If 'true' then return only those evaluations with rounds defined
+      and for which the current time is in one of the rounds.
+    in: query
+    schema:
+      default: false
+      type: boolean
+  - name: evaluationIds
+    description: |
+      an optional, comma-delimited list of evaluation IDs to which the
+      response is limited
+    in: query
+    schema:
+      type: string
+  - name: limit
+    in: query
+    description: "Maximum number of results returned"
+    required: false
+    schema:
+      type: integer
+      default: 10
+      minimum: 10
+      maximum: 100
+  - name: offset
+    in: query
+    description: "Index of the first result that must be returned"
+    required: false
+    schema:
+      type: integer
+      default: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfEvaluation.yaml
+      description: Success
+  summary: Gets a collection of Evaluations, within a given range.
+  tags:
+  - EvaluationController
 post:
   description: |
     'Creates a new Evaluation. The passed request body should contain the
