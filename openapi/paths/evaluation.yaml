@@ -78,7 +78,8 @@
 #   tags:
 #   - EvaluationController
 post:
-  description: 'Creates a new Evaluation. The passed request body should contain the
+  description: |
+    'Creates a new Evaluation. The passed request body should contain the
     following fields:
 
     <ul>
@@ -101,7 +102,7 @@ post:
 
     >ACCESS_TYPE.CREATE</a> on the contentSource Entity.
 
-    </p>'
+    </p>
   operationId: createEvaluation
   requestBody:
     content:
