@@ -34,7 +34,7 @@ tags:
       asynchronous jobs and monitoring the progress of jobs.
   - name: CertifiedUserController
     description: To become a Synapse Certified User you must pass a test.
-  - name: ChallengeController
+  - name: Challenge Services
     description: >
       A Challenge is a special object that supplements a project, providing
       additional features
@@ -130,7 +130,7 @@ paths:
   /challenge:
     post:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: 'Create a Challenge object, associated with a Project.'
       description: >
         Create a Challenge object, associated with a Project.  A participant
@@ -155,7 +155,7 @@ paths:
                 $ref: '#/components/schemas/Challenge'
     get:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: List the Challenges for which the given participant is registered.
       description: |
         List the Challenges for which the given participant is registered.
@@ -197,7 +197,7 @@ paths:
           type: integer
     get:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: Retrieve a Challenge given its ID.
       description: |
         Retrieve a Challenge given its ID.  To retrieve a
@@ -233,7 +233,7 @@ paths:
                 $ref: '#/components/schemas/Challenge'
     delete:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: Delete a Challenge.
       description: |
         Delete a Challenge.  The caller must have DELETE permission on the
@@ -252,7 +252,7 @@ paths:
           type: integer
     get:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: List the Teams registered for a Challenge.
       description: >
         List the Teams registered for a Challenge.  You must have READ
@@ -287,7 +287,7 @@ paths:
                 $ref: '#/components/schemas/ChallengeTeamPagedResults'
     post:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: Register a Team with a Challenge.
       description: >
         Register a Team with a Challenge. You must be a member of the
@@ -325,7 +325,7 @@ paths:
           type: integer
     put:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: Update a Challenge Team.
       description: |
         Update a Challenge Team. You must be a member of the Challenge's
@@ -354,7 +354,7 @@ paths:
           type: integer
     get:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: List the participants registered for a Challenge.
       description: |-
         List the participants registered for a Challenge.
@@ -396,7 +396,7 @@ paths:
           type: integer
     get:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: List the Teams that caller can register for the Challenge.
       description: >
         List the Teams that caller can register for the Challenge, i.e. Teams on
@@ -443,7 +443,7 @@ paths:
           type: integer
     get:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: >-
         List the Teams under which the given submitter may submit to the
         Challenge.
@@ -488,7 +488,7 @@ paths:
           type: integer
     delete:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: De-register a Team from a Challenge.
       description: >
         De-register a Team from a Challenge. You must be a member of the
@@ -511,7 +511,7 @@ paths:
           type: string
     get:
       tags:
-        - ChallengeController
+        - Challenge Services
       summary: Retrieve a Challenge given the ID of its associated Project.
       description: >
         Retrieve a Challenge given the ID of its associated Project.  To

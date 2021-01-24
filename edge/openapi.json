@@ -43,7 +43,7 @@
       "description": "To become a Synapse Certified User you must pass a test."
     },
     {
-      "name": "ChallengeController",
+      "name": "Challenge Services",
       "description": "A Challenge is a special object that supplements a project, providing additional features\nspecific to challenges.\n"
     },
     {
@@ -180,7 +180,7 @@
     "/challenge": {
       "post": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "Create a Challenge object, associated with a Project.",
         "description": "Create a Challenge object, associated with a Project.  A participant Team must\nbe specified.  To create a Challenge one must have CREATE permission on the\nassociated Project.\n",
@@ -209,7 +209,7 @@
       },
       "get": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "List the Challenges for which the given participant is registered.",
         "description": "List the Challenges for which the given participant is registered.\nTo be in the returned list the caller must have READ permission on the\nproject associated with the Challenge.\n",
@@ -267,7 +267,7 @@
       ],
       "get": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "Retrieve a Challenge given its ID.",
         "description": "Retrieve a Challenge given its ID.  To retrieve a\nChallenge one must have READ permission on the associated Project.\n",
@@ -316,7 +316,7 @@
       },
       "delete": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "Delete a Challenge.",
         "description": "Delete a Challenge.  The caller must have DELETE permission on the\nproject associated with the Challenge.\n",
@@ -342,7 +342,7 @@
       ],
       "get": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "List the Teams registered for a Challenge.",
         "description": "List the Teams registered for a Challenge.  You must have READ permission\nin the associated Project to make this request.\n",
@@ -387,7 +387,7 @@
       },
       "post": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "Register a Team with a Challenge.",
         "description": "Register a Team with a Challenge. You must be a member of the Challenge's\nparticipant Team (i.e. you must be already registered for the Challenge)\nand be an administrator on the Team being registered.\n",
@@ -438,7 +438,7 @@
       ],
       "put": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "Update a Challenge Team.",
         "description": "Update a Challenge Team. You must be a member of the Challenge's\nparticipant Team (i.e. you must be already registered for the Challenge)\nand be an administrator on the associated Team.\n",
@@ -480,7 +480,7 @@
       ],
       "get": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "List the participants registered for a Challenge.",
         "description": "List the participants registered for a Challenge.\nThe caller must have READ permission on the\nproject associated with the Challenge.",
@@ -538,7 +538,7 @@
       ],
       "get": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "List the Teams that caller can register for the Challenge.",
         "description": "List the Teams that caller can register for the Challenge, i.e. Teams on which\nthe caller is an administrator and which are not already registered.\nThe caller must have READ permission on the\nproject associated with the Challenge to make this request.\n",
@@ -596,7 +596,7 @@
       ],
       "get": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "List the Teams under which the given submitter may submit to the Challenge.",
         "description": "List the Teams under which the given submitter may submit to the Challenge, i.e. the Teams on which\nthe user is a member and which are registered for the Challenge.\n",
@@ -654,7 +654,7 @@
       ],
       "delete": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "De-register a Team from a Challenge.",
         "description": "De-register a Team from a Challenge. You must be a member of the Challenge's\nparticipant Team (i.e. you must be already registered for the Challenge)\nand be an administrator on the Team being de-registered.\n",
@@ -680,7 +680,7 @@
       ],
       "get": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "Retrieve a Challenge given the ID of its associated Project.",
         "description": "Retrieve a Challenge given the ID of its associated Project.  To retrieve a\nChallenge one must have READ permission on the Project.\n",
