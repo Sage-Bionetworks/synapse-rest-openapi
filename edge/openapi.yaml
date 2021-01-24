@@ -815,7 +815,7 @@ paths:
           type: string
     get:
       description: >
-        Determines whether a specified Synapse user has a certain
+        Determines whether the logged in user has a certain
 
         <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE</a>
         on the specified Evaluation.
@@ -834,7 +834,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/BooleanResult'
           description: Success
-      summary: Determines whether a specified Synapse user has a certain.
+      summary: >-
+        Determines whether a specified Synapse user has a certain access type on
+        evaluation.
       tags:
         - Evaluation Services
   '/evaluation/{evalId}/acl':

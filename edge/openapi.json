@@ -909,7 +909,7 @@
         }
       ],
       "get": {
-        "description": "Determines whether a specified Synapse user has a certain\n<a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE</a> on the specified Evaluation.\n",
+        "description": "Determines whether the logged in user has a certain\n<a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE</a> on the specified Evaluation.\n",
         "operationId": "hasAccess2",
         "parameters": [
           {
@@ -934,7 +934,7 @@
             "description": "Success"
           }
         },
-        "summary": "Determines whether a specified Synapse user has a certain.",
+        "summary": "Determines whether a specified Synapse user has a certain access type on evaluation.",
         "tags": [
           "Evaluation Services"
         ]
