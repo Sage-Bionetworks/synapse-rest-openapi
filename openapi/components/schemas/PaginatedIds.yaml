@@ -1,8 +1,5 @@
 title: PaginatedIds
 type: object
-# allOf:
-#   - $ref: PageResultsMetadata.yaml
-#   - type: object
 properties:
   totalNumberOfResults:
     type: integer
@@ -14,8 +11,6 @@ properties:
       type: string
 description: "Paginated results of strings"
 example:
-  limit: 10
-  offset: 0
   totalNumberOfResults: 12345
   results:
   - test1
