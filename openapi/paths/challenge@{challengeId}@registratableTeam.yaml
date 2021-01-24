@@ -7,7 +7,7 @@ parameters:
     type: integer
 get:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: List the Teams that caller can register for the Challenge.
   description: |
     List the Teams that caller can register for the Challenge, i.e. Teams on which

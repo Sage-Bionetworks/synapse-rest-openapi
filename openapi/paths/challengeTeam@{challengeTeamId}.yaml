@@ -7,7 +7,7 @@ parameters:
     type: integer
 delete:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: De-register a Team from a Challenge.
   description: |
     De-register a Team from a Challenge. You must be a member of the Challenge's

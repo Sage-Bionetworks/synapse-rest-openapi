@@ -7,7 +7,7 @@ parameters:
       type: string
 get:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: Retrieve a Challenge given the ID of its associated Project.
   description: |
     Retrieve a Challenge given the ID of its associated Project.  To retrieve a

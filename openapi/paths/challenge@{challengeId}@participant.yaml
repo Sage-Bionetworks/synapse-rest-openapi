@@ -7,7 +7,7 @@ parameters:
     type: integer
 get:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: List the participants registered for a Challenge.
   description: |-
     List the participants registered for a Challenge.

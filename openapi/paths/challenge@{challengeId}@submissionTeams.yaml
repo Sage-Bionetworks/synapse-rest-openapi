@@ -7,7 +7,7 @@ parameters:
     type: integer
 get:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: List the Teams under which the given submitter may submit to the Challenge.
   description: |
     List the Teams under which the given submitter may submit to the Challenge, i.e. the Teams on which

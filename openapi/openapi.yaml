@@ -30,7 +30,7 @@ tags:
       asynchronous jobs and monitoring the progress of jobs.
   - name: CertifiedUserController
     description: To become a Synapse Certified User you must pass a test.
-  - name: ChallengeController
+  - name: Challenge Services
     description: |
       A Challenge is a special object that supplements a project, providing additional features
       specific to challenges.

@@ -1,6 +1,6 @@
 post:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: Create a Challenge object, associated with a Project.
   description: |
     Create a Challenge object, associated with a Project.  A participant Team must
@@ -21,7 +21,7 @@ post:
             $ref: '../components/schemas/Challenge.yaml'
 get:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: List the Challenges for which the given participant is registered.
   description: |
     List the Challenges for which the given participant is registered.

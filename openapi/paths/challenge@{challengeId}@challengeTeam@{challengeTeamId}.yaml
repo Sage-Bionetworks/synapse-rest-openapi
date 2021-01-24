@@ -13,7 +13,7 @@ parameters:
     type: integer
 put:
   tags:
-  - ChallengeController
+  - Challenge Services
   summary: Update a Challenge Team.
   description: |
     Update a Challenge Team. You must be a member of the Challenge's
