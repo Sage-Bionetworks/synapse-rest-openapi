@@ -12,27 +12,27 @@ info:
 servers:
   - url: 'https://repo-prod.prod.sagebase.org/repo/v1/'
 tags:
-  - name: AccessApprovalController
+  - name: Access Approval Services
     description: >-
       The Access Approval services manage the fulfillment of Access
       Requirements, on a per-user basis.
-  - name: AccessRequirementController
+  - name: Access Requirement Services
     description: >
       These services manage the Access Requirements/Restrictions (ARs) which may
       be placed on Entities,
 
       or Teams.
-  - name: ActivityController
+  - name: Activity Services
     description: .
-  - name: AdministrationController
+  - name: Administration Services
     description: >-
       Since this controller is for internal use only we removed the
       ControllerInfo annotation.
-  - name: AsynchronousJobController
+  - name: Asynchronous Job Services
     description: |
       This is a generic set of services that provides support for both launching
       asynchronous jobs and monitoring the progress of jobs.
-  - name: CertifiedUserController
+  - name: Certified User Services
     description: To become a Synapse Certified User you must pass a test.
   - name: Challenge Services
     description: >
@@ -40,32 +40,32 @@ tags:
       additional features
 
       specific to challenges.
-  - name: DataAccessController
+  - name: Data Access Services
     description: .
-  - name: DiscussionController
+  - name: Discussion Services
     description: .
-  - name: DockerAuthorizationController
+  - name: Docker Authorization Services
     description: >-
       These services allow Synapse to act as an authorization service for a
       Docker Registry.
-  - name: DockerCommitController
+  - name: Docker Commit Services
     description: These services relate to the 'commits' to Docker repositories.
-  - name: DockerRegistryEventController
+  - name: Docker Registry Event Services
     description: These services process events from the Docker Registry.
-  - name: DoiController
+  - name: Doi Services
     description: Provides REST APIs for managing Synapse DOIs.
-  - name: EntityBundleController
+  - name: Entity Bundle Services
     description: .
-  - name: EntityBundleV2Controller
+  - name: Entity Bundle V2 Services
     description: .
-  - name: EntityController
+  - name: Entity Services
     description: .
-  - name: EvaluationController
+  - name: Evaluation Services
     description: .
-  - name: FormController
+  - name: Form Services
     description: Collection of APIs from managing and submitting form data.
-  - name: HealthCheckController
-  - name: JsonSchemaController
+  - name: Health Check Services
+  - name: Json Schema Services
     description: >
       This set of services provide project designers with tools to define their
       own
@@ -73,49 +73,49 @@ tags:
       schemas to control and validate metadata applied to Projects, Folders, and
 
       Files.
-  - name: LogController
+  - name: Log Services
     description: 'https://sagebionetworks.'
-  - name: MembershipInvitationController
+  - name: Membership Invitation Services
     description: |
       The Membership Invitation Services create, retrieve and delete
       membership invitations.
-  - name: MembershipRequestController
+  - name: Membership Request Services
     description: |
       The Membership Request Services create, retrieve and delete
       membership requests.
-  - name: MessageController
+  - name: Message Services
     description: .
-  - name: MigrationController
-    description: Controller for Migrating data between stacks.
-  - name: PrincipalController
+  - name: Migration Services
+    description: Services for Migrating data between stacks.
+  - name: Principal Services
     description: A.
-  - name: ProjectSettingsController
+  - name: Project Settings Services
     description: >-
       The project settings services provide configuration options that can be
       applied to projects.
-  - name: SearchController
+  - name: Search Services
     description: Search for Entities on Synapse.
-  - name: StatisticsController
+  - name: Statistics Services
     description: Services that expose statistics computed by the backend.
-  - name: StorageReportController
+  - name: Storage Report Services
     description: Provides REST APIs for generating Storage Reports.
-  - name: SubscriptionController
+  - name: Subscription Services
     description: .
-  - name: SynapseVersionInfoController
-  - name: TableController
+  - name: Synapse Version Info Services
+  - name: Table Services
     description: .
-  - name: TeamController
+  - name: Team Services
     description: Teams are groups of users.
-  - name: TrashController
+  - name: Trash Services
     description: >-
       The recycle bin (or trash can) is the special folder that holds the
       deleted entities for users.
-  - name: UserGroupController
-  - name: UserProfileController
+  - name: User Group Service
+  - name: User Profile Services
     description: Every Synapse user has an associated.
-  - name: V2WikiController
+  - name: V2 Wiki Services
     description: .
-  - name: VerificationController
+  - name: Verification Services
     description: >
       Identity verification is a service offered by the Synapse Access and
       Compliance Team
@@ -124,7 +124,7 @@ tags:
       basic
 
       requirements for creating an account in Synapse.
-  - name: WikiController
+  - name: Wiki Services
     description: .
 paths:
   /challenge:
