@@ -32,9 +32,7 @@ example:
   entityId: '...'
   etag: '...'
   id: '...'
-  modifiedOn: 12345
-  report: '...'
-  score: 12345
+  modifiedOn: '12345'
   status: ACCEPTED
   statusVersion: 12345
   submissionAnnotations:
@@ -77,9 +75,6 @@ properties:
     type: string
   modifiedOn:
     description: 'The date on which this SubmissionStatus was last modified.'
-    type: string
-  report:
-    description: ''
     type: string
   status:
     $ref: 'SubmissionStatusEnum.yaml'

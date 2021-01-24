@@ -22,9 +22,7 @@ example:
     entityId: '...'
     etag: '...'
     id: '...'
-    modifiedOn: 12345
-    report: '...'
-    score: 12345
+    modifiedOn: '12345'
     status: RECEIVED
     statusVersion: 12345
     submissionAnnotations:
@@ -52,9 +50,7 @@ example:
     entityId: '...'
     etag: '...'
     id: '...'
-    modifiedOn: 12345
-    report: '...'
-    score: 12345
+    modifiedOn: '12345'
     status: CLOSED
     statusVersion: 12345
     submissionAnnotations:
