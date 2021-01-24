@@ -1,4 +1,4 @@
-description: ''
+description: 'A batch of status objects, to be updated en masse.'
 example:
   batchToken: '...'
   isFirstBatch: true
