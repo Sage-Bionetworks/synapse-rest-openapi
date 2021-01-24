@@ -145,6 +145,8 @@ paths:
     $ref: paths/evaluation@{evalId}@round@list.yaml
   /evaluation/{evalId}/statusBatch:
     $ref: paths/evaluation@{evalId}@statusBatch.yaml
+  /evaluation/{evalId}/submission:
+    $ref: paths/evaluation@{evalId}@submission.yaml
 
 components:
   securitySchemes:
