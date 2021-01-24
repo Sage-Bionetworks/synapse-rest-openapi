@@ -1205,8 +1205,6 @@
         },
         "description": "Paginated results of strings",
         "example": {
-          "limit": 10,
-          "offset": 0,
           "totalNumberOfResults": 12345,
           "results": [
             "test1",
