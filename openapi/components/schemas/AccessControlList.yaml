@@ -1,0 +1,43 @@
+title: AccessControlList
+type: object
+description: 'Contains list of principals who can access the data with the allowed types of access for each.'
+properties:
+  createdBy:
+    description: 'UNUSED -- maintained only for backwards compatibility with archived objects'
+    type: string
+  creationDate:
+    description: 'Created Date'
+    type: string
+  etag:
+    description: 'Synapse etag value'
+    type: string
+  id:
+    description: 'The entity id'
+    type: string
+  modifiedBy:
+    description: 'UNUSED -- maintained only for backwards compatibility with archived objects'
+    type: string
+  modifiedOn:
+    description: 'UNUSED -- maintained only for backwards compatibility with archived objects'
+    type: string
+  resourceAccess:
+    description: 'The list of principals who can access the data with the allowed types of access for each.'
+    type: array
+    items:
+      $ref: 'ResourceAccess.yaml'
+example:
+  createdBy: '...'
+  creationDate: '12345'
+  etag: '...'
+  id: '...'
+  modifiedBy: '...'
+  modifiedOn: '12345'
+  resourceAccess:
+  - accessType:
+    - UPDATE_SUBMISSION
+    - CHANGE_PERMISSIONS
+    principalId: 12345
+  - accessType:
+    - UPDATE
+    - SEND_MESSAGE
+    principalId: 12345

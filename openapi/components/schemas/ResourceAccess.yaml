@@ -1,0 +1,17 @@
+title: ResourceAccess
+type: object
+description: 'JSON schema for a ResourceAccess POJO'
+example:
+  accessType:
+  - UPDATE
+  - DELETE_SUBMISSION
+  principalId: 12345
+properties:
+  accessType:
+    description: 'A list of types of access granted to the given principal'
+    type: array
+    items:
+      $ref: ACCESS_TYPE.yaml
+  principalId:
+    description: 'The id of the principal who is granted access'
+    type: integer
