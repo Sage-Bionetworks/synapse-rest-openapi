@@ -1,9 +1,9 @@
+title: EvaluationRoundListRequest
+type: object
 description: ''
 example:
   nextPageToken: '...'
 properties:
   nextPageToken:
-    description: ''
+    description: 'The token required to be sent with the subsequent batch.'
     type: string
-title: EvaluationRoundListRequest
-type: object

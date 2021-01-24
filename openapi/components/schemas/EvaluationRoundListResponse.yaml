@@ -26,10 +26,10 @@ example:
     roundStart: '12345'
 properties:
   nextPageToken:
-    description: 'Next page token'
+    description: 'The token required to be sent with the subsequent batch.'
     type: string
   page:
     description: 'Evaluation round'
     items:
-      $ref: '../components/schemas/EvaluationRound.yaml'
+      $ref: 'EvaluationRound.yaml'
     type: array
