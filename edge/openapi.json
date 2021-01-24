@@ -1003,6 +1003,48 @@
           "Evaluation Services"
         ]
       }
+    },
+    "/evaluation/{evalId}/round": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the evaluation over which the user permission are being\nretrieved.\n",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "deprecated": true,
+        "operationId": "createEvaluationRound",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationRound"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationRound"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
     }
   },
   "components": {
@@ -1421,6 +1463,86 @@
               "principalId": 12345
             }
           ]
+        }
+      },
+      "EvaluationRoundLimitType": {
+        "title": "EvaluationRoundLimitType",
+        "type": "string",
+        "description": "Round limit type",
+        "enum": [
+          "TOTAL",
+          "DAILY",
+          "WEEKLY",
+          "MONTHLY"
+        ]
+      },
+      "EvaluationRoundLimit": {
+        "title": "EvaluationRoundLimit",
+        "type": "object",
+        "description": "Round limit",
+        "example": {
+          "limitType": "MONTHLY",
+          "maximumSubmissions": 2
+        },
+        "properties": {
+          "limitType": {
+            "$ref": "#/components/schemas/EvaluationRoundLimitType"
+          },
+          "maximumSubmissions": {
+            "description": "Max number of submissions",
+            "type": "integer"
+          }
+        }
+      },
+      "EvaluationRound": {
+        "title": "EvaluationRound",
+        "type": "object",
+        "description": "Evaluation Round",
+        "example": {
+          "etag": "...",
+          "evaluationId": "...",
+          "id": "...",
+          "limits": [
+            {
+              "limitType": "TOTAL",
+              "maximumSubmissions": 12345
+            },
+            {
+              "limitType": "WEEKLY",
+              "maximumSubmissions": 12345
+            }
+          ],
+          "roundEnd": "12345",
+          "roundStart": "12345"
+        },
+        "properties": {
+          "etag": {
+            "description": "Synapse etag",
+            "type": "string"
+          },
+          "evaluationId": {
+            "description": "The unique immutable ID for this Evaluation.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Evaluation round Id",
+            "type": "string"
+          },
+          "limits": {
+            "description": "List of round limits",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvaluationRoundLimit"
+            }
+          },
+          "roundEnd": {
+            "description": "End of round",
+            "type": "string"
+          },
+          "roundStart": {
+            "description": "Start of round",
+            "type": "string"
+          }
         }
       }
     }
