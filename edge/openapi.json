@@ -3026,7 +3026,7 @@
       ],
       "put": {
         "description": "Flags the specified entity for priority purge. The entity will be\ndeleted as soon as possible. Once purging is done, the entity\nwill be permanently deleted from the system.\n",
-        "operationId": "deleteEntity",
+        "operationId": "flagForPurge",
         "requestBody": {
           "content": {
             "application/json": {}
@@ -3046,6 +3046,183 @@
           }
         },
         "summary": "Flags the specified entity for priority purge.",
+        "tags": [
+          "Trash Services"
+        ]
+      }
+    },
+    "/trashcan/restore/{id}": {
+      "parameters": [
+        {
+          "description": "The ID of an entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Moves an entity and its descendants out of the trash can back to its\noriginal parent. An exception is thrown if the original parent does not exist any more.\nIn that case, please use <a href=\"#operation/restoreFromTrash\">PUT /trashcan/restored/{id}/{parentId}</a>\nto restore to a new parent.  In such a case you must be a member of the Synapse Access\nand Compliance Team.\n",
+        "operationId": "restoreFromTrash",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Moves an entity and its descendants out of the trash can back to its original\nparent.\n",
+        "tags": [
+          "Trash Services"
+        ]
+      }
+    },
+    "/trashcan/restore/{id}/{parentId}": {
+      "parameters": [
+        {
+          "description": "The ID of a deleted entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The ID of the new parent entity.",
+          "in": "path",
+          "name": "parentId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Moves an entity and its descendants out of the trash can to a new\nparent.\n\nNOTE:  This operation cannot be completed if the original parent has been\ndeleted (unless the caller is a member of the Synapse Access and Compliance\nTeam).\nThe service will return a NotFoundException.  This is because of the potential\nsecurity hole arising from allowing access requirements\non folders:  If an entity is in a restricted folder and then deleted, it cannot\nbe restored unless the new parent has the same restriction level as the original\none.\n",
+        "operationId": "restoreFromTrashToParent",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Moves an entity and its descendants out of the trash can to a new parent.",
+        "tags": [
+          "Trash Services"
+        ]
+      }
+    },
+    "/trashcan/trash/{id}": {
+      "parameters": [
+        {
+          "description": "The ID of an entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Moves an entity and its descendants to the trash can.",
+        "operationId": "moveToTrash",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Moves an entity and its descendants to the trash can.",
+        "tags": [
+          "Trash Services"
+        ]
+      }
+    },
+    "/trashcan/view": {
+      "get": {
+        "description": "Retrieves the paginated list of trash entities deleted by the current\nuser.\n",
+        "operationId": "viewTrash",
+        "parameters": [
+          {
+            "description": "The maximum number of entities to retrieve per page.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "description": "Paginated results. Offset to the current page.",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfTrashedEntity"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieves the paginated list of trash entities deleted by the current user.",
         "tags": [
           "Trash Services"
         ]
@@ -5889,6 +6066,77 @@
           }
         },
         "title": "Count",
+        "type": "object"
+      },
+      "TrashedEntity": {
+        "description": "JSON schema for the TrashEntity POJO. A trashed entity is an entity in the trash can.",
+        "example": {
+          "deletedByPrincipalId": "...",
+          "deletedOn": "...",
+          "entityId": "...",
+          "entityName": "...",
+          "originalParentId": "..."
+        },
+        "properties": {
+          "deletedByPrincipalId": {
+            "description": "The ID of the user who deleted the entity.",
+            "type": "string"
+          },
+          "deletedOn": {
+            "description": "The date and time when the deletion occurred.",
+            "type": "string"
+          },
+          "entityId": {
+            "description": "The id of the entity.",
+            "type": "string"
+          },
+          "entityName": {
+            "description": "The name of this entity",
+            "type": "string"
+          },
+          "originalParentId": {
+            "description": "The ID of the original parent before deletion.",
+            "type": "string"
+          }
+        },
+        "title": "TrashedEntity",
+        "type": "object"
+      },
+      "PaginatedResultsOfTrashedEntity": {
+        "description": "List of trashed entities",
+        "example": {
+          "effectiveSchema": "...",
+          "results": [
+            {
+              "deletedByPrincipalId": "...",
+              "deletedOn": "...",
+              "entityId": "...",
+              "entityName": "...",
+              "originalParentId": "..."
+            },
+            {
+              "deletedByPrincipalId": "...",
+              "deletedOn": "...",
+              "entityId": "...",
+              "entityName": "...",
+              "originalParentId": "..."
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "List of trashed entities.",
+            "items": {
+              "$ref": "#/components/schemas/TrashedEntity"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "$ref": "#/components/schemas/TotalNumberOfResults"
+          }
+        },
+        "title": "PaginatedResultsOfTrashedEntity",
         "type": "object"
       }
     }
