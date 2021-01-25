@@ -6,7 +6,8 @@ parameters:
     schema:
       type: string
 get:
-  description: Retrieve the download URL for the Team icon preview, or receive a redirect
+  description: |
+    Retrieve the download URL for the Team icon preview, or receive a redirect
     response to said URL.
   operationId: filePreviewRedirectUrlForTeamIcon
   parameters:
@@ -24,7 +25,8 @@ get:
           schema:
             $ref: ../components/definitions/String.yaml
       description: Success
-  summary: Retrieve the download URL for the Team icon preview, or receive a redirect
+  summary: |
+    Retrieve the download URL for the Team icon preview, or receive a redirect
     response to said URL.
   tags:
   - Team Services
