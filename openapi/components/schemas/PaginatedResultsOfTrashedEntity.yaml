@@ -1,0 +1,25 @@
+description: 'List of trashed entities'
+example:
+  effectiveSchema: '...'
+  results:
+  - deletedByPrincipalId: '...'
+    deletedOn: '...'
+    entityId: '...'
+    entityName: '...'
+    originalParentId: '...'
+  - deletedByPrincipalId: '...'
+    deletedOn: '...'
+    entityId: '...'
+    entityName: '...'
+    originalParentId: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'List of trashed entities.'
+    items:
+      $ref: 'TrashedEntity.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfTrashedEntity
+type: object
