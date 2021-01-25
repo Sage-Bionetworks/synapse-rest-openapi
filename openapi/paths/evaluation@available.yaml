@@ -1,0 +1,56 @@
+get:
+  description: |
+    Gets a collection of Evaluations in which the user has SUBMIT permission,
+    within a given range.
+    <p>
+    <b>Note:</b> The response will contain only those Evaluations on which the caller
+    must is
+    granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.SUBMIT</a>
+    permission.
+    </p>
+  operationId: getAvailableEvaluationsPaginated
+  parameters:
+  - in: query
+    name: activeOnly
+    description: Retrieve active only evaluation queues
+    schema:
+      default: false
+      type: boolean
+  - description: |
+      an optional, comma-delimited list of evaluation IDs to which the
+      response is limited
+    in: query
+    name: evaluationIds
+    schema:
+      type: string
+  - description: |
+      Limits the number of entities that will be fetched for this
+      page. When null it will default to 10.'
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+      maximum: 100
+  - description: |
+      The offset index determines where this page will start from.
+      An index of 0 is the first entity. When null it will default
+      to 0.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfEvaluation.yaml
+      description: Success
+  summary: |
+    Gets a collection of Evaluations in which the user has SUBMIT permission,
+    within a given range.
+  tags:
+  - Evaluation Services
