@@ -1,11 +1,13 @@
-description: 'Gets the requesting user's bundled Submissions and SubmissionStatuses to a specified Evaluation.'
+description: |
+  Gets the requesting user's bundled Submissions and SubmissionStatuses
+  to a specified Evaluation.
 example:
   results:
   - submission:
       contributors:
       - {}
       - {}
-      createdOn: 12345
+      createdOn: '...'
       dockerDigest: '...'
       dockerRepositoryName: '...'
       entityBundleJSON: '...'
@@ -25,9 +27,7 @@ example:
       entityId: '...'
       etag: '...'
       id: '...'
-      modifiedOn: 12345
-      report: '...'
-      score: 12345
+      modifiedOn: '...'
       status: REJECTED
       statusVersion: 12345
       submissionAnnotations: {}
@@ -36,7 +36,7 @@ example:
       contributors:
       - {}
       - {}
-      createdOn: 12345
+      createdOn: '...'
       dockerDigest: '...'
       dockerRepositoryName: '...'
       entityBundleJSON: '...'
@@ -56,9 +56,7 @@ example:
       entityId: '...'
       etag: '...'
       id: '...'
-      modifiedOn: 12345
-      report: '...'
-      score: 12345
+      modifiedOn: '...'
       status: VALIDATED
       statusVersion: 12345
       submissionAnnotations: {}
