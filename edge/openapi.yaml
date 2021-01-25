@@ -10,7 +10,7 @@ info:
     Platform Repository Service - Sage Bionetworks Platform
   version: develop-SNAPSHOT
 servers:
-  - url: 'https://repo-prod.prod.sagebase.org/repo/v1/'
+  - url: 'https://repo-prod.prod.sagebase.org/repo/v1'
 tags:
   - name: Challenge Services
     description: >
@@ -443,7 +443,6 @@ paths:
         Gets a collection of Evaluations, within a given range.
 
 
-
         <p>
 
 
@@ -593,7 +592,7 @@ paths:
         - Evaluation Services
   '/evaluation/{evalId}':
     parameters:
-      - description: The ID of the requested Evaluation
+      - description: The ID of the specified Evaluation.
         in: path
         name: evalId
         required: true
@@ -720,7 +719,7 @@ paths:
     parameters:
       - in: path
         name: evalId
-        description: Evaluation Id.
+        description: The ID of the specified Evaluation.
         required: true
         schema:
           type: string
@@ -754,9 +753,7 @@ paths:
     parameters:
       - in: path
         name: evalId
-        description: |
-          The ID of the evaluation over which the user permission are being
-          retrieved.
+        description: The ID of the specified Evaluation.
         required: true
         schema:
           type: string
@@ -809,14 +806,14 @@ paths:
     parameters:
       - in: path
         name: evalId
-        description: |
-          The ID of the evaluation over which the user permission are being
-          retrieved.
+        description: The ID of the specified Evaluation.
         required: true
         schema:
           type: string
     post:
       deprecated: true
+      summary: Create Evaluation Round
+      description: Create Evaluation Round
       operationId: createEvaluationRound
       requestBody:
         content:
@@ -837,9 +834,7 @@ paths:
     parameters:
       - in: path
         name: evalId
-        description: |
-          The ID of the evaluation over which the user permission are being
-          retrieved.
+        description: The ID of the specified Evaluation.
         required: true
         schema:
           type: string
@@ -852,6 +847,8 @@ paths:
     delete:
       deprecated: true
       operationId: deleteEvaluationRound
+      summary: Delete Evaluation Round
+      description: Delete Evaluation Round
       responses:
         '204':
           description: The resouce has been deleted
@@ -859,6 +856,8 @@ paths:
         - Evaluation Services
     get:
       deprecated: true
+      summary: Get Evaluation Round
+      description: Get Evaluation Round
       operationId: getEvaluationRound
       responses:
         '200':
@@ -870,6 +869,8 @@ paths:
       tags:
         - Evaluation Services
     put:
+      summary: Update Evaluation Round
+      description: Update Evaluation Round
       deprecated: true
       operationId: updateEvaluationRound
       requestBody:
@@ -885,6 +886,1020 @@ paths:
               schema:
                 $ref: '#/components/schemas/EvaluationRound'
           description: Success
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/round/list':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Get all rounds of an Evaluation
+      description: Get all rounds of an Evaluation
+      deprecated: true
+      operationId: getAllEvaluationRounds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluationRoundListRequest'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationRoundListResponse'
+          description: Success
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/statusBatch':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    put:
+      description: >
+        Update multiple SubmissionStatuses. The maximum batch size is 500.  To
+
+        allow upload of more than this maximum, the system supports uploading of
+        a <i>series</i> of
+
+        batches. Synapse employs optimistic concurrency on the series in the
+        form of a batch token.
+
+        Each request (except the first) must include the ''batch token''
+        returned in the
+
+        response to the previous batch. If another client begins batch upload
+        simultaneously,
+
+        a PRECONDITION_FAILED (412) response will be generated and upload must
+        restart
+
+        from the first batch.  After the final batch is uploaded, the data for
+        the Evaluation queue
+
+        will be mirrored to the tables which support querying.  Therefore
+        uploaded data will
+
+        not appear in Evaluation queries until after the final batch is
+        successfully uploaded.  It
+
+        is the client''s responsibility to note in each batch request (1)
+        whether it is the first
+
+        batch in the series and (2) whether it is the last batch.  (For a single
+        batch both
+
+        are set to ''true''.)
+
+
+        Failure to use the flags correctly risks corrupted data (due to
+        simultaneous,
+
+        conflicting uploads by multiple clients) or data not appearing in query
+        results.
+
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.UPDATE_SUBMISSION</a>
+        on the specified Evaluation.
+
+
+        </p>
+      operationId: updateSubmissionStatusBatch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionStatusBatch'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchUploadResponse'
+          description: Success
+      summary: Update multiple SubmissionStatuses.
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/submission':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Gets the requesting user's Submissions to a specified Evaluation.
+      operationId: getMySubmissions
+      parameters:
+        - description: >-
+            Limits the number of entities that will be fetched for this page.
+            When null it will default to 10.
+          in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - description: |
+            The offset index determines where this page will start from.
+            An index of 0 is the first entity. When null it will default to 0.'
+          in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfSubmission'
+          description: Success
+      summary: Gets the requesting user's Submissions to a specified Evaluation.
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/submission/all':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        'Gets a collection of Submissions to a specified Evaluation.
+
+        <p>
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>
+        on the specified Evaluation.
+
+        </p>
+      operationId: getAllSubmissions
+      parameters:
+        - description: |
+            Limits the number of entities that will be fetched for this
+            page. When null it will default to 10, max value 100.
+          in: query
+          name: limit
+          schema:
+            default: 10
+            minimum: 10
+            maximum: 100
+            type: integer
+        - description: |
+            The offset index determines where this page will start from.
+            An index of 0 is the first entity. When null it will default
+            to 0.
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+        - in: query
+          name: status
+          description: Status of submission.
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfSubmission'
+          description: Success
+      summary: Gets a collection of Submissions to a specified Evaluation.
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/submission/bundle':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Gets the requesting user's bundled Submissions and SubmissionStatuses
+        to a specified Evaluation.
+      operationId: getMySubmissionBundles
+      parameters:
+        - description: |
+            Limits the number of entities that will be fetched for this
+            page. When null it will default to 10.'
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 100
+        - description: |
+            The offset index determines where this page will start from.
+            An index of 0 is the first entity. When null it will default
+            to 0.
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfSubmissionBundle'
+          description: Success
+      summary: |
+        Gets the requesting users bundled Submissions and SubmissionStatuses
+        to a specified Evaluation.'
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/submission/bundle/all':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Gets a collection of bundled Submissions and SubmissionStatuses to
+
+        a given Evaluation.
+
+
+        <p>
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>
+        on the specified Evaluation.
+
+        </p>
+      operationId: getAllSubmissionBundles
+      parameters:
+        - description: |
+            Limits the number of entities that will be fetched for this
+            page. When null it will default to 10.'
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 100
+        - description: |
+            The offset index determines where this page will start from.
+            An index of 0 is the first entity. When null it will default
+            to 0.
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+        - in: query
+          name: status
+          description: Submission Status
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfSubmissionBundle'
+          description: Success
+      summary: >-
+        Gets a collection of bundled Submissions and SubmissionStatuses to a
+        given Evaluation.
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/submission/count':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Gets the number of Submissions to a specified Evaluation.
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>
+        on the specified Evaluation.
+
+        </p>
+      operationId: getSubmissionCount
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integer'
+          description: Success
+      summary: Gets the number of Submissions to a specified Evaluation.
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/submission/status/all':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        'Gets a collection of SubmissionStatuses to a specified Evaluation.
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+        on the specified Evaluation.
+
+        Furthermore, the caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>
+        to see all
+
+        data marked as "private" in the SubmissionStatuses.
+
+
+        </p>
+      operationId: getAllSubmissionStatuses
+      parameters:
+        - description: |
+            Limits the number of entities that will be fetched for this
+            page. When null it will default to 10.'
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 100
+        - description: |
+            The offset index determines where this page will start from.
+            An index of 0 is the first entity. When null it will default
+            to 0.
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+        - in: query
+          name: status
+          description: Submission status
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfSubmissionStatus'
+          description: Success
+      summary: Gets a collection of SubmissionStatuses to a specified Evaluation.
+      tags:
+        - Evaluation Services
+  '/evaluation/{evalId}/team/{id}/SubmissionEligibility':
+    parameters:
+      - in: path
+        name: evalId
+        description: The ID of the specified Evaluation.
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        description: The ID of a Team.
+        schema:
+          type: string
+    get:
+      description: >
+        Find out whether a Team and its members are eligible to submit to
+
+        a given Evaluation queue (at the current time).  The request must
+        include
+
+        an Evaluation ID and a Team ID.   The 'eligibilityStateHash'
+
+        field of the returned object is a required parameter of the subsequent
+        Team Submission
+
+        request made for the given Evaluation and Team.
+
+        (See: <a
+        href="${POST.evaluation.submission}">POST/evaluation/submission</a>)'
+      operationId: getTeamSubmissionEligibility
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamSubmissionEligibility'
+          description: Success
+      summary: >
+        Find out whether a Team and its members are eligible to submit to a
+        given
+
+        Evaluation queue (at the current time).'
+      tags:
+        - Evaluation Services
+  /evaluation/acl:
+    put:
+      description: >
+        Updates the supplied access control list (ACL) for an evaluation.
+
+        The <a
+        href="${org.sagebionetworks.repo.model.AccessControlList}">ACL</a>
+
+        to be updated should have the ID of the evaluation. The user should have
+        the proper
+
+        <a
+        href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
+
+        in order to update the ACL.
+      operationId: updateAcl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessControlList'
+        description: The ACL being updated.
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlList'
+          description: Success
+      summary: Updates the supplied access control list (ACL) for an evaluation.
+      tags:
+        - Evaluation Services
+  /evaluation/available:
+    get:
+      description: >
+        Gets a collection of Evaluations in which the user has SUBMIT
+        permission,
+
+        within a given range.
+
+        <p>
+
+        <b>Note:</b> The response will contain only those Evaluations on which
+        the caller
+
+        must is
+
+        granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.SUBMIT</a>
+
+        permission.
+
+        </p>
+      operationId: getAvailableEvaluationsPaginated
+      parameters:
+        - in: query
+          name: activeOnly
+          description: Retrieve active only evaluation queues
+          schema:
+            default: false
+            type: boolean
+        - description: |
+            an optional, comma-delimited list of evaluation IDs to which the
+            response is limited
+          in: query
+          name: evaluationIds
+          schema:
+            type: string
+        - description: |
+            Limits the number of entities that will be fetched for this
+            page. When null it will default to 10.'
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 100
+        - description: |
+            The offset index determines where this page will start from.
+            An index of 0 is the first entity. When null it will default
+            to 0.
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfEvaluation'
+          description: Success
+      summary: >
+        Gets a collection of Evaluations in which the user has SUBMIT
+        permission,
+
+        within a given range.
+      tags:
+        - Evaluation Services
+  '/evaluation/name/{name}':
+    parameters:
+      - in: path
+        name: name
+        description: The name of the desired Evaluation.
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Finds an Evaluation by name.
+
+        <p>
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+        on the specified Evaluation.
+
+        </p>
+      operationId: findEvaluation
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+          description: Success
+      summary: Finds an Evaluation by name.
+      tags:
+        - Evaluation Services
+  /evaluation/submission:
+    post:
+      description: >
+        Creates a Submission and sends a submission notification email to
+
+        the submitter's team members.
+
+
+        The passed request body should contain the following fields:
+
+
+        <ul>
+
+
+        <li>evaluationId - The ID of the Evaluation to which this Submission
+        belongs.</li>
+
+
+        <li>entityId - The ID of the Entity being submitted.</li>
+
+
+        <li>versionNumber - The specific version of the Entity being
+        submitted.</li>
+
+
+        </ul>
+
+
+        <p>
+
+
+        A Submission must be either a Team or an Individual submission.  A Team
+        submission
+
+        must include a Team ID in the teamId field and the request must include
+        a submissionEligibilityHash
+
+        request parameter.  A Team submission may also include a list of
+        submission contributors.
+
+        (The submitter is taken to be a contributor and need not be included in
+        the list.)
+
+        An individual submission must have a null teamId, a null or empty
+        contributor
+
+        list, and no submissionEligibilityHash parameter.
+
+
+        </p>
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.SUBMIT</a>.
+
+
+        </p>
+
+
+        <p>
+
+
+        This call also creates an associated <a
+        href="${org.sagebionetworks.evaluation.model.SubmissionStatus}">SubmissionStatus</a>,
+
+        initialized with a SubmissionStatusEnum value of RECEIVED.
+
+
+        </p>
+      operationId: createSubmission
+      parameters:
+        - description: >
+            The portal endpoint prefix to the an entity/challenge page. The
+
+            entity ID of the challenge project is appended to create the
+            complete URL. In normal operation,
+
+            this parameter should be omitted.'
+          in: query
+          name: challengeEndpoint
+          schema:
+            description: >
+              The portal endpoint prefix to the an entity/challenge page.
+
+              The entity ID of the challenge project is appended to create the
+              complete URL.
+
+              In normal operation, this parameter should be omitted.'
+            type: string
+        - description: The current eTag of the Entity being submitted
+          in: query
+          name: etag
+          schema:
+            type: string
+        - description: >
+            The portal endpoint prefix for one-click email unsubscription.
+
+            A signed, serialized token is appended to create the complete URL:
+
+            <a
+            href="${org.sagebionetworks.repo.model.message.NotificationSettingsSignedToken}">NotificationSettingsSignedToken</a>.
+
+            In normal operation, this parameter should be omitted.'
+          in: query
+          name: notificationUnsubscribeEndpoint
+          schema:
+            type: string
+        - description: >
+            The hash provided by the
+
+            <a
+            href="${org.sagebionetworks.evaluation.model.TeamSubmissionEligibility}">TeamSubmissionEligibility</a>
+
+            object.
+          in: query
+          name: submissionEligibilityHash
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Submission_model'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission_model'
+          description: Success
+      summary: >
+        Creates a Submission and sends a submission notification email to the
+        submitter's
+
+        team members.
+      tags:
+        - Evaluation Services
+  '/evaluation/submission/{subId}':
+    parameters:
+      - description: The ID of the Submission
+        in: path
+        name: subId
+        required: true
+        schema:
+          type: string
+    delete:
+      description: >
+        Deletes a Submission and its accompanying SubmissionStatus.
+
+
+        <b>This service is intended to only be used by ChallengesInfrastructure
+        service
+
+        account.</b>
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.DELETE_SUBMISSION</a>
+        on the specified Evaluation.
+
+
+        </p>
+      operationId: deleteSubmission
+      responses:
+        '204':
+          description: The resource has been deleted.
+      summary: Deletes a Submission and its accompanying SubmissionStatus.
+      tags:
+        - Evaluation Services
+    get:
+      description: >
+        Gets a Submission.
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>
+        on the specified Evaluation.
+
+
+        </p>
+      operationId: getSubmission
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission_model'
+          description: Success
+      summary: Gets a Submission.
+      tags:
+        - Evaluation Services
+  '/evaluation/submission/{subId}/cancellation':
+    parameters:
+      - description: The ID of the Submission
+        in: path
+        name: subId
+        required: true
+        schema:
+          type: string
+    put:
+      description: |
+        User requests to cancel their submission. Only the user who submitted
+        a submission can make this request.
+      operationId: requestToCancelSubmission
+      responses:
+        '204':
+          description: The request has been made.
+      summary: User requests to cancel their submission.
+      tags:
+        - Evaluation Services
+  '/evaluation/submission/{subId}/file/{fileHandleId}':
+    parameters:
+      - description: the ID of the requested FileHandle contained in the Submission.
+        in: path
+        name: fileHandleId
+        required: true
+        schema:
+          type: string
+      - description: The ID of the Submission
+        in: path
+        name: subId
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Gets a pre-signed URL to access a requested File contained within
+
+        a specified Submission.
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>
+        on the specified Evaluation.
+
+        </p>
+      operationId: redirectUrlForFileHandle
+      parameters:
+        - in: query
+          name: redirect
+          description: To redirect
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: >
+        Gets a pre-signed URL to access a requested File contained within a
+        specified
+
+        Submission.
+      tags:
+        - Evaluation Services
+  '/evaluation/submission/{subId}/status':
+    parameters:
+      - description: The ID of the Submission
+        in: path
+        name: subId
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Gets the SubmissionStatus object associated with a specified Submission.
+
+        <p>
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+        on the specified Evaluation.
+
+        Furthermore, the caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>
+
+        to see all data marked as "private" in the SubmissionStatus. 
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum frequency this method can be called</td>
+
+
+        <td>1 calls per second</td>
+
+
+        </tr>
+
+
+        </table>
+
+
+        </p>
+      operationId: getSubmissionStatus
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionStatus_model'
+          description: Success
+      summary: Gets the SubmissionStatus object associated with a specified Submission.
+      tags:
+        - Evaluation Services
+    put:
+      description: >
+        Updates a SubmissionStatus object.
+
+
+
+        <p>
+
+
+        Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
+
+        concurrent updates. Each time an SubmissionStatus is updated a new etag
+        will be
+
+        issued to the SubmissionStatus. When an update is requested, Synapse
+        will compare
+
+        the etag of the passed SubmissionStatus with the current etag of the
+        SubmissionStatus.
+
+        If the etags do not match, then the update will be rejected with a
+
+        PRECONDITION_FAILED (412) response. When this occurs, the caller should
+
+        fetch the latest copy of the SubmissionStatus and re-apply any changes,
+        then re-attempt
+
+        the SubmissionStatus update.
+
+
+        </p>
+
+
+        <p>
+
+
+        <b>Note:</b> The caller must be granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.UPDATE_SUBMISSION</a>
+        on the specified Evaluation.
+
+
+        </p>
+
+
+        </p>
+
+
+        <p>
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum frequency this method can be called</td>
+
+
+        <td>1 calls per second</td>
+
+
+        </tr>
+
+
+        </table>
+
+
+        </p>
+      operationId: updateSubmissionStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionStatus_model'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionStatus_model'
+          description: Success
+      summary: Updates a SubmissionStatus object.
       tags:
         - Evaluation Services
 components:
@@ -1300,5 +2315,945 @@ components:
         roundStart:
           description: Start of round
           type: string
+    EvaluationRoundListRequest:
+      title: EvaluationRoundListRequest
+      type: object
+      description: Round list request
+      example:
+        nextPageToken: ...
+      properties:
+        nextPageToken:
+          description: The token required to be sent with the subsequent batch.
+          type: string
+    EvaluationRoundListResponse:
+      title: EvaluationRoundListResponse
+      type: object
+      description: List of evaluation rounds
+      example:
+        nextPageToken: ...
+        page:
+          - etag: ...
+            evaluationId: ...
+            id: ...
+            limits:
+              - limitType: TOTAL
+                maximumSubmissions: 12345
+              - limitType: TOTAL
+                maximumSubmissions: 12345
+            roundEnd: '12345'
+            roundStart: '12345'
+          - etag: ...
+            evaluationId: ...
+            id: ...
+            limits:
+              - limitType: TOTAL
+                maximumSubmissions: 12345
+              - limitType: MONTHLY
+                maximumSubmissions: 12345
+            roundEnd: '12345'
+            roundStart: '12345'
+      properties:
+        nextPageToken:
+          description: The token required to be sent with the subsequent batch.
+          type: string
+        page:
+          description: Evaluation round
+          items:
+            $ref: '#/components/schemas/EvaluationRound'
+          type: array
+    DoubleAnnotation:
+      description: An Annotation containing a Float value
+      example:
+        isPrivate: true
+        key: ...
+        value: 1.2
+      properties:
+        isPrivate:
+          description: Flag denoting whether this Annotation should be private.
+          type: boolean
+        key:
+          description: The key of this Annotation
+          type: string
+        value:
+          description: The value of this Annotation
+          type: number
+      title: DoubleAnnotation
+      type: object
+    LongAnnotation:
+      description: An Annotation containing a Integer value
+      example:
+        isPrivate: true
+        key: ...
+        value: 12345
+      properties:
+        isPrivate:
+          description: Flag denoting whether this Annotation should be private.
+          type: boolean
+        key:
+          description: The key of this Annotation
+          type: string
+        value:
+          description: The value of this Annotation
+          type: integer
+      title: LongAnnotation
+      type: object
+    StringAnnotation:
+      title: StringAnnotation
+      type: object
+      description: An Annotation containing a String value
+      example:
+        isPrivate: true
+        key: ...
+        value: ...
+      properties:
+        isPrivate:
+          description: Flag denoting whether this Annotation should be private.
+          type: boolean
+        key:
+          description: The key of this Annotation
+          type: string
+        value:
+          description: The value of this Annotation
+          type: string
+    Annotations_annotation:
+      title: Annotations
+      type: object
+      description: Primary container object for Annotations on a Synapse object
+      example:
+        doubleAnnos:
+          - isPrivate: true
+            key: ...
+            value: 12345
+          - isPrivate: true
+            key: ...
+            value: 12345
+        longAnnos:
+          - isPrivate: true
+            key: ...
+            value: 12345
+          - isPrivate: true
+            key: ...
+            value: 12345
+        objectId: ...
+        scopeId: ...
+        stringAnnos:
+          - isPrivate: true
+            key: ...
+            value: ...
+          - isPrivate: true
+            key: ...
+            value: ...
+        version: 12345
+      properties:
+        doubleAnnos:
+          description: A list of DoubleAnnnotations
+          items:
+            $ref: '#/components/schemas/DoubleAnnotation'
+          type: array
+        longAnnos:
+          description: A list of LongAnnnotations
+          items:
+            $ref: '#/components/schemas/LongAnnotation'
+          type: array
+        objectId:
+          description: >-
+            The Synapse ID of the object with which these Annotations are
+            associated
+          type: string
+        scopeId:
+          description: >-
+            The Synapse ID of the umbrella object above the object with which
+            these Annotations are associated
+          type: string
+        stringAnnos:
+          description: A list of StringAnnnotations
+          items:
+            $ref: '#/components/schemas/StringAnnotation'
+          type: array
+        version:
+          description: The system controlled version of this collection of annotations
+          type: integer
+    SubmissionStatusEnum:
+      description: The possible states of a Synapse Submission.
+      enum:
+        - OPEN
+        - CLOSED
+        - SCORED
+        - INVALID
+        - VALIDATED
+        - EVALUATION_IN_PROGRESS
+        - RECEIVED
+        - REJECTED
+        - ACCEPTED
+      title: SubmissionStatusEnum
+      type: string
+    AnnotationsValueType:
+      title: AnnotationsValueType
+      type: string
+      description: |
+        describes the type of a AnnotationV2's value
+      enum:
+        - STRING
+        - DOUBLE
+        - LONG
+        - TIMESTAMP_MS
+    AnnotationsValue:
+      description: |
+        Contains a AnnotationV2's value and its type
+      example:
+        type: DOUBLE
+        value:
+          - ...
+          - ...
+      properties:
+        type:
+          $ref: '#/components/schemas/AnnotationsValueType'
+        value:
+          description: >
+            List of values as strings. Clients should use the "type" field to
+            determine how to
+
+            interpret the strings. Single values Annotations are represented as
+            a list of size 1,
+
+            and multiple values size > 1. Empty list or null is not allowed
+          items:
+            type: string
+          type: array
+      title: AnnotationsValue
+      type: object
+    Annotations_v2:
+      description: >-
+        Annotations are additional key-value pair metadata that are associated
+        with an object.
+      example:
+        annotations:
+          property1:
+            type: STRING
+            value:
+              - ...
+              - ...
+          property2:
+            type: STRING
+            value:
+              - ...
+              - ...
+        etag: ...
+        id: ...
+      properties:
+        annotations:
+          additionalProperties:
+            $ref: '#/components/schemas/AnnotationsValue'
+          description: >-
+            Additional metadata associated with the object. The key is the name
+            of your desired annotations. The value is an object containing a
+            list of string values (use empty list to represent no values for
+            key) and the value type associated with all values in the list
+          type: object
+        etag:
+          description: >-
+            Etag of the object to which this annotation belongs. To update an
+            AnnotationV2, this field must match the current etag on the object.
+          type: string
+        id:
+          description: ID of the object to which this annotation belongs
+          type: string
+      title: Annotations
+      type: object
+    SubmissionStatus_model:
+      description: >
+        A SubmissionStatus is a secondary, mutable object associated with a
+        Submission.
+
+        This object should be used to contain scoring data about the Submission.
+      example:
+        annotations:
+          doubleAnnos:
+            - isPrivate: true
+              key: ...
+              value: 12345
+            - isPrivate: true
+              key: ...
+              value: 12345
+          longAnnos:
+            - isPrivate: true
+              key: ...
+              value: 12345
+            - isPrivate: true
+              key: ...
+              value: 12345
+          objectId: ...
+          scopeId: ...
+          stringAnnos:
+            - isPrivate: true
+              key: ...
+              value: ...
+            - isPrivate: true
+              key: ...
+              value: ...
+          version: 12345
+        canCancel: true
+        cancelRequested: true
+        entityId: ...
+        etag: ...
+        id: ...
+        modifiedOn: '12345'
+        status: ACCEPTED
+        statusVersion: 12345
+        submissionAnnotations:
+          annotations:
+            property1:
+              type: TIMESTAMP_MS
+              value:
+                - ...
+                - ...
+            property2:
+              type: TIMESTAMP_MS
+              value:
+                - ...
+                - ...
+          etag: ...
+          id: ...
+        versionNumber: 12345
+      properties:
+        annotations:
+          $ref: '#/components/schemas/Annotations_annotation'
+        canCancel:
+          description: >
+            Can this submission be cancelled? By default, this will be set to
+            False.
+
+            Users can read this value. Only the queue's scoring application can
+            change this value.
+          type: boolean
+        cancelRequested:
+          description: >-
+            Has user requested to cancel this submission? By default, this will
+            be set to False. Submission owner can read and request to change
+            this value.
+          type: boolean
+        entityId:
+          description: The Synapse ID of the Entity in this Submission.
+          type: string
+        etag:
+          description: >
+            Synapse employs an Optimistic Concurrency Control (OCC) scheme to
+            handle concurrent updates.
+
+            The eTag changes every time an SubmissionStatus is updated; it is
+            used to detect when a client's
+
+            copy of an SubmissionStatus is out-of-date.
+          type: string
+        id:
+          description: 'The unique, immutable Synapse ID of the Submission.'
+          type: string
+        modifiedOn:
+          description: The date on which this SubmissionStatus was last modified.
+          type: string
+        status:
+          $ref: '#/components/schemas/SubmissionStatusEnum'
+        statusVersion:
+          description: >-
+            A version of the status, auto-generated and auto-incremented by the
+            system and read-only to the client.
+          type: number
+        submissionAnnotations:
+          $ref: '#/components/schemas/Annotations_v2'
+        versionNumber:
+          description: The version number of the Entity in this Submission.
+          type: integer
+      title: SubmissionStatus
+      type: object
+    SubmissionStatusBatch:
+      description: 'A batch of status objects, to be updated en masse.'
+      example:
+        batchToken: ...
+        isFirstBatch: true
+        isLastBatch: true
+        statuses:
+          - annotations:
+              doubleAnnos:
+                - {}
+                - {}
+              longAnnos:
+                - {}
+                - {}
+              objectId: ...
+              scopeId: ...
+              stringAnnos:
+                - {}
+                - {}
+              version: 12345
+            canCancel: true
+            cancelRequested: true
+            entityId: ...
+            etag: ...
+            id: ...
+            modifiedOn: '12345'
+            status: RECEIVED
+            statusVersion: 12345
+            submissionAnnotations:
+              annotations:
+                property1: {}
+                property2: {}
+              etag: ...
+              id: ...
+            versionNumber: 12345
+          - annotations:
+              doubleAnnos:
+                - {}
+                - {}
+              longAnnos:
+                - {}
+                - {}
+              objectId: ...
+              scopeId: ...
+              stringAnnos:
+                - {}
+                - {}
+              version: 12345
+            canCancel: true
+            cancelRequested: true
+            entityId: ...
+            etag: ...
+            id: ...
+            modifiedOn: '12345'
+            status: CLOSED
+            statusVersion: 12345
+            submissionAnnotations:
+              annotations:
+                property1: {}
+                property2: {}
+              etag: ...
+              id: ...
+            versionNumber: 12345
+      properties:
+        batchToken:
+          description: >-
+            A token required to accept a batch submission for all but the first
+            batch.
+          type: string
+        isFirstBatch:
+          description: true if and only if this is the first batch to upload
+          type: boolean
+        isLastBatch:
+          description: true if and only if this is the last batch to upload
+          type: boolean
+        statuses:
+          description: A collection of Submission Statuses
+          items:
+            $ref: '#/components/schemas/SubmissionStatus_model'
+          type: array
+      title: SubmissionStatusBatch
+      type: object
+    BatchUploadResponse:
+      title: BatchUploadResponse
+      type: object
+      description: The response for a batch SubmissionStatus upload.
+      example:
+        nextUploadToken: ...
+      properties:
+        nextUploadToken:
+          description: The token required to be sent with the subsequent batch.
+          type: string
+    SubmissionContributor:
+      description: A contributor to an evaluation Submission
+      example:
+        createdOn: ...
+        principalId: ...
+      properties:
+        createdOn:
+          description: >
+            'date when contributor was added to Submission.
+
+            Normally this will match the creation date of the Submission, but
+            administrative override is allowed.'
+          type: string
+        principalId:
+          description: ID of the contributor
+          type: string
+      title: SubmissionContributor
+      type: object
+    Submission_model:
+      description: >
+        A Submission to a Synapse Evaluation is a pointer to a versioned Entity.
+
+        Submissions are immutable, so we archive a copy of the EntityBundle at
+        the time of submission.
+      example:
+        contributors:
+          - createdOn: ...
+            principalId: ...
+          - createdOn: ...
+            principalId: ...
+        createdOn: ...
+        dockerDigest: ...
+        dockerRepositoryName: ...
+        entityBundleJSON: ...
+        entityId: ...
+        evaluationId: ...
+        evaluationRoundId: ...
+        id: ...
+        name: ...
+        submitterAlias: ...
+        teamId: ...
+        userId: ...
+        versionNumber: 12345
+      properties:
+        contributors:
+          description: >
+            User ids of the submitter and (if a team submission) the team
+            members involved in creating the submission.
+          items:
+            $ref: '#/components/schemas/SubmissionContributor'
+          type: array
+        createdOn:
+          description: The date on which Submission was created.
+          type: string
+        dockerDigest:
+          description: >-
+            For Docker repositories, the digest from the commit. Null for other
+            entity types.
+          type: string
+        dockerRepositoryName:
+          description: >-
+            For Docker repositories, the name of the submitted repository. Null
+            for other entity types.
+          type: string
+        entityBundleJSON:
+          description: The Bundled Entity and Annotations JSON at the time of submission.
+          type: string
+        entityId:
+          description: The Synapse ID of the Entity in this Submission.
+          type: string
+        evaluationId:
+          description: The Synapse ID of the Evaluation this Submission is for.
+          type: string
+        evaluationRoundId:
+          description: >-
+            The Synapse ID of the EvaluationRound to which this was submitted.
+            DO NOT specify a value for this. It will be filled in automatically
+            upon creation of the Submission if the Evaluation is configured with
+            an EvaluationRound.
+          type: string
+        id:
+          description: 'The unique, immutable Synapse ID of this Submission.'
+          type: string
+        name:
+          description: The title of this Submission.
+          type: string
+        submitterAlias:
+          description: The alias for the user or team creating the submission.
+          type: string
+        teamId:
+          description: optional Team which collaborated on the submission
+          type: string
+        userId:
+          description: The Synapse ID of the user who created this Submission.
+          type: string
+        versionNumber:
+          description: The submitted version number of the Entity.
+          type: integer
+      title: Submission
+      type: object
+    PaginatedResultsOfSubmission:
+      title: PaginatedResultsOfSubmission
+      type: object
+      description: Paginated Results of submissions
+      example:
+        results:
+          - contributors:
+              - createdOn: ...
+                principalId: ...
+              - createdOn: ...
+                principalId: ...
+            createdOn: ...
+            dockerDigest: ...
+            dockerRepositoryName: ...
+            entityBundleJSON: ...
+            entityId: ...
+            evaluationId: ...
+            evaluationRoundId: ...
+            id: ...
+            name: ...
+            submitterAlias: ...
+            teamId: ...
+            userId: ...
+            versionNumber: 12345
+          - contributors:
+              - createdOn: ...
+                principalId: ...
+              - createdOn: ...
+                principalId: ...
+            createdOn: ...
+            dockerDigest: ...
+            dockerRepositoryName: ...
+            entityBundleJSON: ...
+            entityId: ...
+            evaluationId: ...
+            evaluationRoundId: ...
+            id: ...
+            name: ...
+            submitterAlias: ...
+            teamId: ...
+            userId: ...
+            versionNumber: 12345
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: Submission results
+          items:
+            $ref: '#/components/schemas/Submission_model'
+          type: array
+        totalNumberOfResults:
+          description: >
+            Calculating the actual totalNumberOfResults is not longer supported.
+
+            Therefore, for each page, the totalNumberOfResults is estimated
+            using the current page,
+
+            limit, and offset. When the page size equals the limit,
+
+            the totalNumberOfResults will be offset+pageSize+ 1. Otherwise,
+
+            the totalNumberOfResults will be offset+pageSize.'
+          type: integer
+    SubmissionBundle:
+      description: >-
+        A bundle object to contain a Submission and its accompanying
+        SubmissionStatus.
+      example:
+        submission:
+          contributors:
+            - createdOn: ...
+              principalId: ...
+            - createdOn: ...
+              principalId: ...
+          createdOn: ...
+          dockerDigest: ...
+          dockerRepositoryName: ...
+          entityBundleJSON: ...
+          entityId: ...
+          evaluationId: ...
+          evaluationRoundId: ...
+          id: ...
+          name: ...
+          submitterAlias: ...
+          teamId: ...
+          userId: ...
+          versionNumber: 12345
+        submissionStatus:
+          annotations:
+            doubleAnnos:
+              - {}
+              - {}
+            longAnnos:
+              - {}
+              - {}
+            objectId: ...
+            scopeId: ...
+            stringAnnos:
+              - {}
+              - {}
+            version: 12345
+          canCancel: true
+          cancelRequested: true
+          entityId: ...
+          etag: ...
+          id: ...
+          modifiedOn: ...
+          status: RECEIVED
+          statusVersion: 12345
+          submissionAnnotations:
+            annotations:
+              property1: {}
+              property2: {}
+            etag: ...
+            id: ...
+          versionNumber: 12345
+      properties:
+        submission:
+          $ref: '#/components/schemas/Submission_model'
+        submissionStatus:
+          $ref: '#/components/schemas/SubmissionStatus_model'
+      title: SubmissionBundle
+      type: object
+    PaginatedResultsOfSubmissionBundle:
+      description: |
+        Gets the requesting user's bundled Submissions and SubmissionStatuses
+        to a specified Evaluation.
+      example:
+        results:
+          - submission:
+              contributors:
+                - {}
+                - {}
+              createdOn: ...
+              dockerDigest: ...
+              dockerRepositoryName: ...
+              entityBundleJSON: ...
+              entityId: ...
+              evaluationId: ...
+              evaluationRoundId: ...
+              id: ...
+              name: ...
+              submitterAlias: ...
+              teamId: ...
+              userId: ...
+              versionNumber: 12345
+            submissionStatus:
+              annotations: {}
+              canCancel: true
+              cancelRequested: true
+              entityId: ...
+              etag: ...
+              id: ...
+              modifiedOn: ...
+              status: REJECTED
+              statusVersion: 12345
+              submissionAnnotations: {}
+              versionNumber: 12345
+          - submission:
+              contributors:
+                - {}
+                - {}
+              createdOn: ...
+              dockerDigest: ...
+              dockerRepositoryName: ...
+              entityBundleJSON: ...
+              entityId: ...
+              evaluationId: ...
+              evaluationRoundId: ...
+              id: ...
+              name: ...
+              submitterAlias: ...
+              teamId: ...
+              userId: ...
+              versionNumber: 12345
+            submissionStatus:
+              annotations: {}
+              canCancel: true
+              cancelRequested: true
+              entityId: ...
+              etag: ...
+              id: ...
+              modifiedOn: ...
+              status: VALIDATED
+              statusVersion: 12345
+              submissionAnnotations: {}
+              versionNumber: 12345
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: The the id of the entity to which this reference refers
+          items:
+            $ref: '#/components/schemas/SubmissionBundle'
+          type: array
+        totalNumberOfResults:
+          description: >
+            Calculating the actual totalNumberOfResults is not longer supported.
+            Therefore,
+
+            for each page, the totalNumberOfResults is estimated using the
+            current page,
+
+            limit, and offset. When the page size equals the limit, the
+            totalNumberOfResults
+
+            will be offset+pageSize+ 1. Otherwise, the totalNumberOfResults will
+            be offset+pageSize.
+          type: integer
+      title: PaginatedResultsOfSubmissionBundle
+      type: object
+    Integer:
+      description: Integer value
+      type: integer
+    PaginatedResultsOfSubmissionStatus:
+      description: Gets a collection of SubmissionStatuses to a specified Evaluation.
+      example:
+        results:
+          - annotations:
+              doubleAnnos:
+                - {}
+                - {}
+              longAnnos:
+                - {}
+                - {}
+              objectId: ...
+              scopeId: ...
+              stringAnnos:
+                - {}
+                - {}
+              version: 12345
+            canCancel: true
+            cancelRequested: true
+            entityId: ...
+            etag: ...
+            id: ...
+            modifiedOn: ...
+            status: ACCEPTED
+            statusVersion: 12345
+            submissionAnnotations:
+              annotations:
+                property1: {}
+                property2: {}
+              etag: ...
+              id: ...
+            versionNumber: 12345
+          - annotations:
+              doubleAnnos:
+                - {}
+                - {}
+              longAnnos:
+                - {}
+                - {}
+              objectId: ...
+              scopeId: ...
+              stringAnnos:
+                - {}
+                - {}
+              version: 12345
+            canCancel: true
+            cancelRequested: true
+            entityId: ...
+            etag: ...
+            id: ...
+            modifiedOn: ...
+            status: ACCEPTED
+            statusVersion: 12345
+            submissionAnnotations:
+              annotations:
+                property1: {}
+                property2: {}
+              etag: ...
+              id: ...
+            versionNumber: 12345
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: The the id of the entity to which this reference refers
+          items:
+            $ref: '#/components/schemas/SubmissionStatus_model'
+          type: array
+        totalNumberOfResults:
+          description: >
+            Calculating the actual totalNumberOfResults is not longer supported.
+
+            Therefore, for each page, the totalNumberOfResults is estimated
+            using
+
+            the current page, limit, and offset. When the page size equals the
+            limit,
+
+            the totalNumberOfResults will be offset+pageSize+ 1.
+
+            Otherwise, the totalNumberOfResults will be offset+pageSize.
+          type: integer
+      title: PaginatedResultsOfSubmissionStatus
+      type: object
+    MemberSubmissionEligibility:
+      description: >
+        Describes the eligibility of an indivdiual to submit to an Evaluation
+        queue,
+
+        reflecting the queue's submission quotas and current submissions.
+      example:
+        hasConflictingSubmission: true
+        isEligible: true
+        isQuotaFilled: true
+        isRegistered: true
+        principalId: 12345
+      properties:
+        hasConflictingSubmission:
+          description: true if the individual has submitted alone or with another team
+          type: boolean
+        isEligible:
+          description: true if all criteria are met
+          type: boolean
+        isQuotaFilled:
+          description: >-
+            true if team/individual has reached the submission quota (for the
+            given submission round)
+          type: boolean
+        isRegistered:
+          description: true if team/individual is registered for challenge
+          type: boolean
+        principalId:
+          description: Synapse user id
+          type: number
+      title: MemberSubmissionEligibility
+      type: object
+    SubmissionEligibility:
+      description: |
+        Describes the eligibility of a to submit to an Evaluation queue,
+        reflecting the queue's submission quotas and current submissions.
+      example:
+        isEligible: true
+        isQuotaFilled: true
+        isRegistered: true
+      properties:
+        isEligible:
+          description: true if all criteria are met
+          type: boolean
+        isQuotaFilled:
+          description: >-
+            true if team/individual has reached the submission quota (for the
+            given submission round)
+          type: boolean
+        isRegistered:
+          description: true if team/individual is registered for challenge
+          type: boolean
+      title: SubmissionEligibility
+      type: object
+    TeamSubmissionEligibility:
+      description: >
+        Describes the eligibility of a Challenge Team to submit to an Evalution
+        queue,
+
+        reflecting the queue's submission quotas and current submissions.
+      example:
+        eligibilityStateHash: 12345
+        evaluationId: ...
+        membersEligibility:
+          - hasConflictingSubmission: true
+            isEligible: true
+            isQuotaFilled: true
+            isRegistered: true
+            principalId: 12345
+          - hasConflictingSubmission: true
+            isEligible: true
+            isQuotaFilled: true
+            isRegistered: true
+            principalId: 12345
+        teamEligibility:
+          isEligible: true
+          isQuotaFilled: true
+          isRegistered: true
+        teamId: ...
+      properties:
+        eligibilityStateHash:
+          description: 'A hash of this object, used for optimistic concurrency.'
+          type: integer
+        evaluationId:
+          description: The ID of the Evaluation of interest
+          type: string
+        membersEligibility:
+          description: >-
+            Describes the submission eligibility of the contributors to the
+            Submission.
+          items:
+            $ref: '#/components/schemas/MemberSubmissionEligibility'
+          type: array
+        teamEligibility:
+          $ref: '#/components/schemas/SubmissionEligibility'
+        teamId:
+          description: The ID of the Team of interest
+          type: string
+      title: TeamSubmissionEligibility
+      type: object
+    String:
+      description: String value
+      type: string
 security:
   - bearerAuth: []
