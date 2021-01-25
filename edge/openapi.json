@@ -3007,6 +3007,45 @@
           "Team Services"
         ]
       }
+    },
+    "/trashcan/purge/{id}": {
+      "parameters": [
+        {
+          "description": "The ID of an entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Flags the specified entity for priority purge. The entity will be\ndeleted as soon as possible. Once purging is done, the entity\nwill be permanently deleted from the system.\n",
+        "operationId": "flagForPurge",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Flags the specified entity for priority purge.",
+        "tags": [
+          "TrashController"
+        ]
+      }
     }
   },
   "components": {
