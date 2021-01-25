@@ -163,6 +163,8 @@ paths:
     $ref: paths/evaluation@acl.yaml
   /evaluation/available:
     $ref: paths/evaluation@available.yaml
+  /evaluation/name/{name}:
+    $ref: paths/evaluation@name@{name}.yaml
 
 components:
   securitySchemes:
