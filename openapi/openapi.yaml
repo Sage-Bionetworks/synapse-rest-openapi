@@ -153,6 +153,8 @@ paths:
     $ref: paths/evaluation@{evalId}@submission@bundle.yaml
   /evaluation/{evalId}/submission/bundle/all:
     $ref: paths/evaluation@{evalId}@submission@bundle@all.yaml
+  /evaluation/{evalId}/submission/bundle/all:
+    $ref: paths/evaluation@{evalId}@submission@count.yaml
 
 components:
   securitySchemes:
