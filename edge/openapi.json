@@ -3022,7 +3022,7 @@
       ],
       "put": {
         "description": "Flags the specified entity for priority purge. The entity will be\ndeleted as soon as possible. Once purging is done, the entity\nwill be permanently deleted from the system.\n",
-        "operationId": "flagForPurge",
+        "operationId": "deleteEntity",
         "requestBody": {
           "content": {
             "application/json": {}
