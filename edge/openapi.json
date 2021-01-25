@@ -45,6 +45,10 @@
     {
       "name": "Team Services",
       "description": "Teams are groups of users."
+    },
+    {
+      "name": "Trash Services",
+      "description": "The recycle bin (or trash can) is the special folder that holds the\ndeleted entities for users.\n"
     }
   ],
   "paths": {
@@ -3043,7 +3047,7 @@
         },
         "summary": "Flags the specified entity for priority purge.",
         "tags": [
-          "TrashController"
+          "Trash Services"
         ]
       }
     }
