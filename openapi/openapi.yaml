@@ -207,6 +207,8 @@ paths:
     $ref: paths/team@{id}@member@{principalId}.yaml
   /team/{id}/member/{principalId}/membershipStatus:
     $ref: paths/team@{id}@member@{principalId}@membershipStatus.yaml
+  /team/{id}/memberList:
+    $ref: paths/team@{id}@memberList.yaml
 
 components:
   securitySchemes:

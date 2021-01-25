@@ -1,0 +1,31 @@
+description: 'A list of Teams'
+example:
+  list:
+  - isAdmin: true
+    member:
+      displayName: '...'
+      email: '...'
+      firstName: '...'
+      isIndividual: true
+      lastName: '...'
+      ownerId: '...'
+      userName: '...'
+    teamId: '...'
+  - isAdmin: true
+    member:
+      displayName: '...'
+      email: '...'
+      firstName: '...'
+      isIndividual: true
+      lastName: '...'
+      ownerId: '...'
+      userName: '...'
+    teamId: '...'
+properties:
+  list:
+    description: ''
+    items:
+      $ref: 'TeamMember.yaml'
+    type: array
+title: ListWrapperOfTeamMember
+type: object

@@ -1,0 +1,13 @@
+description: 'List of IDs'
+example:
+  list:
+  - 12345
+  - 12345
+properties:
+  list:
+    description: 'List of IDs'
+    items:
+      type: integer
+    type: array
+title: IdList
+type: object
