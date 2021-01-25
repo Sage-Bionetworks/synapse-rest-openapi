@@ -46,7 +46,7 @@ properties:
   updatedOn:
     description: 'The date time this DOI is last updated. Provided by Synapse.'
     type: string
-require:
+required:
 - objectId
 title: DoiAssociation
 type: object
