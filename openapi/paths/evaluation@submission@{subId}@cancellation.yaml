@@ -1,0 +1,18 @@
+parameters:
+  - description: 'The ID of the Submission'
+    in: path
+    name: subId
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    User requests to cancel their submission. Only the user who submitted
+    a submission can make this request.
+  operationId: requestToCancelSubmission
+  responses:
+    204:
+      description: The request has been made.
+  summary: User requests to cancel their submission.
+  tags:
+  - Evaluation Services

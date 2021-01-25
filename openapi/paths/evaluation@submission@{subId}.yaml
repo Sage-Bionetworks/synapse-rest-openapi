@@ -1,0 +1,46 @@
+parameters:
+  - description: 'The ID of the Submission'
+    in: path
+    name: subId
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Deletes a Submission and its accompanying SubmissionStatus.
+
+    <b>This service is intended to only be used by ChallengesInfrastructure service
+    account.</b>
+  
+    <p>
+
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.DELETE_SUBMISSION</a> on the specified Evaluation.
+
+    </p>
+  operationId: deleteSubmission
+  responses:
+    204:
+      description: The resource has been deleted.
+  summary: Deletes a Submission and its accompanying SubmissionStatus.
+  tags:
+  - Evaluation Services
+get:
+  description: |
+    Gets a Submission.
+
+    <p>
+
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.
+
+    </p>
+  operationId: getSubmission
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Submission_model.yaml
+      description: Success
+  summary: Gets a Submission.
+  tags:
+  - Evaluation Services

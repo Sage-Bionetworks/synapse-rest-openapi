@@ -165,7 +165,16 @@ paths:
     $ref: paths/evaluation@available.yaml
   /evaluation/name/{name}:
     $ref: paths/evaluation@name@{name}.yaml
-
+  /evaluation/submission:
+    $ref: paths/evaluation@submission.yaml
+  /evaluation/submission/{subId}:
+    $ref: paths/evaluation@submission@{subId}.yaml
+  /evaluation/submission/{subId}/cancellation:
+    $ref: paths/evaluation@submission@{subId}@cancellation.yaml
+  /evaluation/submission/{subId}/file/{fileHandleId}:
+    $ref: paths/evaluation@submission@{subId}@file@{fileHandleId}.yaml
+  /evaluation/submission/{subId}/status:
+    $ref: paths/evaluation@submission@{subId}@status.yaml
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
