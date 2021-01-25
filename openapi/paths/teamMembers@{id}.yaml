@@ -1,0 +1,59 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieve a paginated list of Team members matching the supplied name
+    prefix.  If the prefix is omitted then all members are returned.
+
+    <br>
+
+    Note:  This service has JSONP support:  If the request parameter "callback=jsMethod"
+    is included (where 'jsMethod' is any function name you wish), then the response body will be wrapped
+    in "jsMethod(...);".
+  operationId: getTeamMembers
+  parameters:
+  - description: a prefix of the user's first or last name or email address
+    in: query
+    name: fragment
+    schema:
+      type: string
+  - description: the maximum number of members to return.
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+      maximum: 50
+  - description: the type of team user to retrieve
+    in: query
+    name: memberType
+    schema:
+      enum:
+      - ADMIN
+      - ALL
+      - MEMBER
+      type: string
+      default: ALL
+  - description: the starting index of the returned results
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfTeamMember.yaml
+      description: Success
+  summary: Retrieve a paginated list of Team members matching the supplied name prefix.
+  tags:
+  - Team Services

@@ -1,0 +1,34 @@
+description: 'List of Team Members'
+example:
+  results:
+  - isAdmin: true
+    member:
+      displayName: '...'
+      email: '...'
+      firstName: '...'
+      isIndividual: true
+      lastName: '...'
+      ownerId: '...'
+      userName: '...'
+    teamId: '...'
+  - isAdmin: true
+    member:
+      displayName: '...'
+      email: '...'
+      firstName: '...'
+      isIndividual: true
+      lastName: '...'
+      ownerId: '...'
+      userName: '...'
+    teamId: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'List of Team Members'
+    items:
+      $ref: 'TeamMember.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfTeamMember
+type: object

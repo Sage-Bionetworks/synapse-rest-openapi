@@ -221,6 +221,8 @@ paths:
     $ref: paths/teamList.yaml
   /teamMember:
     $ref: paths/teamMember.yaml
+  /teamMembers/{id}:
+    $ref: paths/teamMembers@{id}.yaml
 
 components:
   securitySchemes:
