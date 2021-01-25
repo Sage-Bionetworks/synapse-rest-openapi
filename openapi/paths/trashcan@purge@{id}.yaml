@@ -24,4 +24,4 @@ put:
       description: Success
   summary: Flags the specified entity for priority purge.
   tags:
-  - TrashController
+  - Trash Services

@@ -99,9 +99,10 @@ tags:
   #   description: "."
   - name: Team Services
     description: Teams are groups of users.
-  # - name: Trash Services
-  #   description: The recycle bin (or trash can) is the special folder that holds the
-  #     deleted entities for users.
+  - name: Trash Services
+    description: |
+      The recycle bin (or trash can) is the special folder that holds the
+      deleted entities for users.
   # - name: User Group Service
   # - name: User Profile Services
   #   description: Every Synapse user has an associated.
