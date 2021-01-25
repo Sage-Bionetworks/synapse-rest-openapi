@@ -10,7 +10,9 @@ put:
   operationId: moveToTrash
   requestBody:
     content:
-      application/json: {}
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
     required: false
   responses:
     200:
