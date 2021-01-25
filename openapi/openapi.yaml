@@ -12,13 +12,14 @@ info:
 servers:
   - url: https://repo-prod.prod.sagebase.org/repo/v1
 tags:
-  # - name: Access Approval Services
-  #   description: The Access Approval services manage the fulfillment of Access Requirements,
-  #     on a per-user basis.
-  # - name: Access Requirement Services
-  #   description: |
-  #     These services manage the Access Requirements/Restrictions (ARs) which may be placed on Entities,
-  #     or Teams.
+  - name: Access Approval Services
+    description: |
+      The Access Approval services manage the fulfillment of Access Requirements,
+      on a per-user basis.
+  - name: Access Requirement Services
+    description: |
+      These services manage the Access Requirements/Restrictions (ARs) which may be placed on Entities,
+      or Teams.
   # - name: Activity Services
   #   description: "."
   # - name: Administration Services
@@ -192,8 +193,10 @@ paths:
     $ref: paths/team.yaml
   /team/{id}:
     $ref: paths/team@{id}.yaml
-  /team/{id}/accessApproval.yaml:
+  /team/{id}/accessApproval:
     $ref: paths/team@{id}@accessApproval.yaml
+  /team/{id}/accessRequirement:
+    $ref: paths/team@{id}@accessRequirement.yaml
 
 components:
   securitySchemes:

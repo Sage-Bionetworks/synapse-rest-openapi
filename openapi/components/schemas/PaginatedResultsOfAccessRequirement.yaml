@@ -1,0 +1,50 @@
+description: 'Retrieve paginated list of ALL Access Requirements associated with a Team.'
+example:
+  results:
+  - accessType: READ
+    concreteType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    id: 12345
+    modifiedBy: '...'
+    modifiedOn: '...'
+    subjectIds:
+    - id: '...'
+      type: EVALUATION
+    - id: '...'
+      type: TEAM
+    versionNumber: 12345
+  - accessType: UPLOAD
+    concreteType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    id: 12345
+    modifiedBy: '...'
+    modifiedOn: '...'
+    subjectIds:
+    - id: '...'
+      type: ENTITY
+    - id: '...'
+      type: TEAM
+    versionNumber: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'The the id of the entity to which this reference refers'
+    items:
+      $ref: 'AccessRequirement.yaml'
+    type: array
+  totalNumberOfResults:
+    description: |
+      Calculating the actual totalNumberOfResults is not longer supported.
+      Therefore, for each page, the totalNumberOfResults is estimated using
+      the current page, limit, and offset. When the page size equals the limit,
+      the totalNumberOfResults will be offset+pageSize+ 1. Otherwise, the
+      totalNumberOfResults will be offset+pageSize.
+    type: integer
+title: PaginatedResultsOfAccessRequirement
+type: object
