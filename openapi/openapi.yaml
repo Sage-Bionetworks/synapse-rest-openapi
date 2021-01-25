@@ -201,6 +201,8 @@ paths:
     $ref: paths/team@{id}@acl.yaml
   /team/{id}/icon:
     $ref: paths/team@{id}@icon.yaml
+  /team/{id}/icon/preview:
+    $ref: paths/team@{id}@icon@preview.yaml
 
 components:
   securitySchemes:
