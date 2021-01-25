@@ -69,10 +69,10 @@ tags:
   #     Files.
   # - name: Log Services
   #   description: https://sagebionetworks.
-  # - name: Membership Invitation Services
-  #   description: |
-  #     The Membership Invitation Services create, retrieve and delete
-  #     membership invitations.
+  - name: Membership Invitation Services
+    description: |
+      The Membership Invitation Services create, retrieve and delete
+      membership invitations.
   # - name: Membership Request Services
   #   description: |
   #     The Membership Request Services create, retrieve and delete
