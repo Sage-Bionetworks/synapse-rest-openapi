@@ -1,9 +1,10 @@
-- description: the ID of the Team.
-  in: path
-  name: id
-  required: true
-  schema:
-    type: string
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
 delete:
   description: |
     Delete the Team.
