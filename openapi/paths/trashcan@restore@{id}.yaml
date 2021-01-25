@@ -1,0 +1,31 @@
+parameters:
+  - description: The ID of an entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    Moves an entity and its descendants out of the trash can back to its
+    original parent. An exception is thrown if the original parent does not exist any more.
+    In that case, please use <a href="#operation/restoreFromTrash">PUT /trashcan/restored/{id}/{parentId}</a>
+    to restore to a new parent.  In such a case you must be a member of the Synapse Access
+    and Compliance Team.
+  operationId: restoreFromTrash
+  requestBody:
+    content:
+      application/json: {}
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: |
+    Moves an entity and its descendants out of the trash can back to its original
+    parent.
+  tags:
+  - Trash Services

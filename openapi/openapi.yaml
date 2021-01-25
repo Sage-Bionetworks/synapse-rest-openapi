@@ -228,6 +228,14 @@ paths:
     $ref: paths/teamMembers@count@{id}.yaml
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
+  /trashcan/restore/{id}:
+    $ref: paths/trashcan@restore@{id}.yaml
+  /trashcan/restore/{id}/{parentId}:
+    $ref: paths/trashcan@restore@{id}@{parentId}.yaml
+  /trashcan/trash/{id}:
+    $ref: paths/trashcan@trash@{id}.yaml
+  /trashcan/view:
+    $ref: paths/trashcan@view.yaml
 
 components:
   securitySchemes:

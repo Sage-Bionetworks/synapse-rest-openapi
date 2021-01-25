@@ -6,11 +6,8 @@ parameters:
     schema:
       type: string
 put:
-  description: |
-    Flags the specified entity for priority purge. The entity will be
-    deleted as soon as possible. Once purging is done, the entity
-    will be permanently deleted from the system.
-  operationId: flagForPurge
+  description: Moves an entity and its descendants to the trash can.
+  operationId: moveToTrash
   requestBody:
     content:
       application/json: {}
@@ -22,6 +19,6 @@ put:
           schema:
             $ref: ../components/definitions/String.yaml
       description: Success
-  summary: Flags the specified entity for priority purge.
+  summary: Moves an entity and its descendants to the trash can.
   tags:
   - Trash Services

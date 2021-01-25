@@ -1,0 +1,41 @@
+parameters:
+  - description: The ID of a deleted entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: The ID of the new parent entity.
+    in: path
+    name: parentId
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+      Moves an entity and its descendants out of the trash can to a new
+      parent.
+
+      NOTE:  This operation cannot be completed if the original parent has been
+      deleted (unless the caller is a member of the Synapse Access and Compliance
+      Team).
+      The service will return a NotFoundException.  This is because of the potential
+      security hole arising from allowing access requirements
+      on folders:  If an entity is in a restricted folder and then deleted, it cannot
+      be restored unless the new parent has the same restriction level as the original
+      one.
+  operationId: restoreFromTrashToParent
+  requestBody:
+    content:
+      application/json: {}
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Moves an entity and its descendants out of the trash can to a new parent.
+  tags:
+  - Trash Services

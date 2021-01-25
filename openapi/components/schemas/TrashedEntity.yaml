@@ -1,0 +1,25 @@
+description: 'JSON schema for the TrashEntity POJO. A trashed entity is an entity in the trash can.'
+example:
+  deletedByPrincipalId: '...'
+  deletedOn: '...'
+  entityId: '...'
+  entityName: '...'
+  originalParentId: '...'
+properties:
+  deletedByPrincipalId:
+    description: 'The ID of the user who deleted the entity.'
+    type: string
+  deletedOn:
+    description: 'The date and time when the deletion occurred.'
+    type: string
+  entityId:
+    description: 'The id of the entity.'
+    type: string
+  entityName:
+    description: 'The name of this entity'
+    type: string
+  originalParentId:
+    description: 'The ID of the original parent before deletion.'
+    type: string
+title: TrashedEntity
+type: object
