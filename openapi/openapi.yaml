@@ -203,6 +203,8 @@ paths:
     $ref: paths/team@{id}@icon.yaml
   /team/{id}/icon/preview:
     $ref: paths/team@{id}@icon@preview.yaml
+  /team/{id}/member/{principalId}:
+    $ref: paths/team@{id}@member@{principalId}.yaml
 
 components:
   securitySchemes:

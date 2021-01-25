@@ -1,0 +1,93 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: the member's principal ID
+    in: path
+    name: principalId
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Remove the given member from the specified Team.
+    Note:  The client must either be a Team administrator or the member being removed.
+  operationId: removeTeamMember
+  responses:
+    204:
+      description: The resource has been deleted.
+  summary: Remove the given member from the specified Team.
+  tags:
+  - Team Services
+get:
+  description: |
+    '<p>
+
+    <b>Service Limits</b>
+
+    <table border="1">
+
+    <tr>
+
+    <th>resource</th>
+
+    <th>limit</th>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum frequency this method can be called</td>
+
+    <td>1 calls per second</td>
+
+    </tr>
+
+    </table>
+
+    </p>'
+  operationId: getTeamMember
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/TeamMember.yaml
+      description: Success
+  summary: .
+  tags:
+  - Team Services
+put:
+  description: |
+    Add a member to the Team.
+
+    If the one making the request is the user to be added, then the user must have
+    an open invitation from the Team.  If the one making the request is an administrator
+    on the Team, then there must be a pending request from the user to the Team, asking
+    to be added. If both teamEndpoint and notificationUnsubscribeEndpoint are provided,
+    notification email(s) will be sent to the appropriate parties.
+  operationId: addTeamMember
+  - description: |
+      the portal prefix for one-click email unsubscription.
+      A signed, serialized token is appended to create the complete URL:
+      <ahref="${org.sagebionetworks.repo.model.message.NotificationSettingsSignedToken}">NotificationSettingsSignedToken</a>'
+    in: query
+    name: notificationUnsubscribeEndpoint
+    schema:
+      type: string
+  - description: |
+      the portal prefix for the Team URL. The team ID is appended to create
+      the complete URL.
+    in: query
+    name: teamEndpoint
+    schema:
+      type: string
+  responses:
+    204:
+      description: The resource has been added.
+  summary: Add a member to the Team.
+  tags:
+  - Team Services

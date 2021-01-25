@@ -1,0 +1,23 @@
+description: 'JSON schema for Team Member, which bundles UserGroupHeader and isAdmin'
+example:
+  isAdmin: true
+  member:
+    displayName: '...'
+    email: '...'
+    firstName: '...'
+    isIndividual: true
+    lastName: '...'
+    ownerId: '...'
+    userName: '...'
+  teamId: '...'
+properties:
+  isAdmin:
+    description: 'True if the user is an administrator in the Team.'
+    type: boolean
+  member:
+    $ref: 'UserGroupHeader.yaml'
+  teamId:
+    description: 'The id of the Team.'
+    type: string
+title: TeamMember
+type: object
