@@ -28,7 +28,7 @@ properties:
     description: 'The ID of the Evaluation of interest'
     type: string
   membersEligibility:
-    description: ''
+    description: 'Describes the submission eligibility of the contributors to the Submission.'
     items:
       $ref: 'MemberSubmissionEligibility.yaml'
     type: array
