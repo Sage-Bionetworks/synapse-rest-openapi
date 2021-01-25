@@ -1,0 +1,77 @@
+description: 'Gets the requesting user's bundled Submissions and SubmissionStatuses to a specified Evaluation.'
+example:
+  results:
+  - submission:
+      contributors:
+      - {}
+      - {}
+      createdOn: 12345
+      dockerDigest: '...'
+      dockerRepositoryName: '...'
+      entityBundleJSON: '...'
+      entityId: '...'
+      evaluationId: '...'
+      evaluationRoundId: '...'
+      id: '...'
+      name: '...'
+      submitterAlias: '...'
+      teamId: '...'
+      userId: '...'
+      versionNumber: 12345
+    submissionStatus:
+      annotations: {}
+      canCancel: true
+      cancelRequested: true
+      entityId: '...'
+      etag: '...'
+      id: '...'
+      modifiedOn: 12345
+      report: '...'
+      score: 12345
+      status: REJECTED
+      statusVersion: 12345
+      submissionAnnotations: {}
+      versionNumber: 12345
+  - submission:
+      contributors:
+      - {}
+      - {}
+      createdOn: 12345
+      dockerDigest: '...'
+      dockerRepositoryName: '...'
+      entityBundleJSON: '...'
+      entityId: '...'
+      evaluationId: '...'
+      evaluationRoundId: '...'
+      id: '...'
+      name: '...'
+      submitterAlias: '...'
+      teamId: '...'
+      userId: '...'
+      versionNumber: 12345
+    submissionStatus:
+      annotations: {}
+      canCancel: true
+      cancelRequested: true
+      entityId: '...'
+      etag: '...'
+      id: '...'
+      modifiedOn: 12345
+      report: '...'
+      score: 12345
+      status: VALIDATED
+      statusVersion: 12345
+      submissionAnnotations: {}
+      versionNumber: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: ''
+    items:
+      $ref: 'SubmissionBundle.yaml'
+    type: array
+  totalNumberOfResults:
+    description: ''
+    type: integer
+title: PaginatedResultsOfSubmissionBundle
+type: object

@@ -1,0 +1,57 @@
+description: 'A bundle object to contain a Submission and its accompanying SubmissionStatus.'
+example:
+  submission:
+    contributors:
+    - createdOn: ''...''
+      principalId: '...'
+    - createdOn: ''...''
+      principalId: '...'
+    createdOn: '...'
+    dockerDigest: '...'
+    dockerRepositoryName: '...'
+    entityBundleJSON: '...'
+    entityId: '...'
+    evaluationId: '...'
+    evaluationRoundId: '...'
+    id: '...'
+    name: '...'
+    submitterAlias: '...'
+    teamId: '...'
+    userId: '...'
+    versionNumber: 12345
+  submissionStatus:
+    annotations:
+      doubleAnnos:
+      - {}
+      - {}
+      longAnnos:
+      - {}
+      - {}
+      objectId: '...'
+      scopeId: '...'
+      stringAnnos:
+      - {}
+      - {}
+      version: 12345
+    canCancel: true
+    cancelRequested: true
+    entityId: '...'
+    etag: '...'
+    id: '...'
+    modifiedOn: '...'
+    status: RECEIVED
+    statusVersion: 12345
+    submissionAnnotations:
+      annotations:
+        property1: {}
+        property2: {}
+      etag: '...'
+      id: '...'
+    versionNumber: 12345
+properties:
+  submission:
+    $ref: 'Submission_model.yaml'
+  submissionStatus:
+    $ref: 'SubmissionStatus_model.yaml'
+title: SubmissionBundle
+type: object
