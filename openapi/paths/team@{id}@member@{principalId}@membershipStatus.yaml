@@ -1,0 +1,30 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: the member's principal ID
+    in: path
+    name: principalId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieve the Team Membership Status bundle for a team and user.  This
+    says whether a user is a member of a Team, whether there are outstanding
+    membership requests or invitations, and whether the client making the request
+    can add the given user to the given Team.
+  operationId: getTeamMembershipStatus
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/TeamMembershipStatus.yaml
+      description: Success
+  summary: Retrieve the Team Membership Status bundle for a team and user.
+  tags:
+  - Team Services
