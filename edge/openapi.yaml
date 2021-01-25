@@ -3041,7 +3041,9 @@ paths:
       operationId: flagForPurge
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
         required: false
       responses:
         '200':
@@ -3078,7 +3080,9 @@ paths:
       operationId: restoreFromTrash
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
         required: false
       responses:
         '200':
@@ -3138,7 +3142,9 @@ paths:
       operationId: restoreFromTrashToParent
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
         required: false
       responses:
         '200':
@@ -3165,7 +3171,9 @@ paths:
       operationId: moveToTrash
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
         required: false
       responses:
         '200':
@@ -3201,7 +3209,9 @@ paths:
             minimum: 0
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
         required: false
       responses:
         '200':
@@ -5617,6 +5627,8 @@ components:
           description: Count of items
           type: integer
       title: Count
+      type: object
+    Empty:
       type: object
     TrashedEntity:
       description: >-

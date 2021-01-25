@@ -3029,7 +3029,11 @@
         "operationId": "flagForPurge",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
           },
           "required": false
         },
@@ -3068,7 +3072,11 @@
         "operationId": "restoreFromTrash",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
           },
           "required": false
         },
@@ -3116,7 +3124,11 @@
         "operationId": "restoreFromTrashToParent",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
           },
           "required": false
         },
@@ -3155,7 +3167,11 @@
         "operationId": "moveToTrash",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
           },
           "required": false
         },
@@ -3206,7 +3222,11 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
           },
           "required": false
         },
@@ -6066,6 +6086,9 @@
           }
         },
         "title": "Count",
+        "type": "object"
+      },
+      "Empty": {
         "type": "object"
       },
       "TrashedEntity": {
