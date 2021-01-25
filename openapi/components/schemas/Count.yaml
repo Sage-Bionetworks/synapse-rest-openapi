@@ -1,0 +1,9 @@
+description: 'Count of items'
+example:
+  count: 12345
+properties:
+  count:
+    description: 'Count of items'
+    type: integer
+title: Count
+type: object
