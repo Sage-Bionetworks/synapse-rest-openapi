@@ -36,6 +36,7 @@ get:
       type: integer
   - in: query
     name: status
+    description: Status of submission.
     schema:
       type: string
   responses:
