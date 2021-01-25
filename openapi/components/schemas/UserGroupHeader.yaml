@@ -12,7 +12,8 @@ properties:
     description: 'This is deprecated and will always be null'
     type: string
   email:
-    description: 'User's current email address'
+    description: |
+      User's current email address
     type: string
   firstName:
     description: 'First Name'
