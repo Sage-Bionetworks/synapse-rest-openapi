@@ -2,7 +2,6 @@ get:
   description: |
     Gets a collection of Evaluations, within a given range.
 
-
     <p>
 
     <b>Note:</b> The response will contain only those Evaluations on which the caller

@@ -1,5 +1,5 @@
 parameters:
-- description: 'The ID of the requested Evaluation'
+- description: The ID of the specified Evaluation.
   in: path
   name: evalId
   required: true

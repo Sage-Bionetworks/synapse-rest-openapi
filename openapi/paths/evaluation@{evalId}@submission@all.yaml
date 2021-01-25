@@ -1,9 +1,7 @@
 parameters:
   - in: path
     name: evalId
-    description: |
-      The ID of the evaluation over which the user permission are being
-      retrieved.
+    description: The ID of the specified Evaluation.
     required: true
     schema:
       type: string
