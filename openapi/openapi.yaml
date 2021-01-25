@@ -158,7 +158,7 @@ paths:
   /evaluation/{evalId}/submission/status/all:
     $ref: paths/evaluation@{evalId}@submission@status@all.yaml
   /evaluation/{evalId}/team/{id}/SubmissionEligibility:
-    $ref: paths/evaluation@{evalId}@steam@{id}@submissionEligibility:.yaml
+    $ref: paths/evaluation@{evalId}@team@{id}@submissionEligibility.yaml
 
 components:
   securitySchemes:

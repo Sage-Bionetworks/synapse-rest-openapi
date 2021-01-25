@@ -1,4 +1,6 @@
-description: 'Describes the eligibility of an indivdiual to submit to an Evaluation queue, reflecting the queue's submission quotas and current submissions.'
+description: |
+  Describes the eligibility of an indivdiual to submit to an Evaluation queue,
+  reflecting the queue's submission quotas and current submissions.
 example:
   hasConflictingSubmission: true
   isEligible: true

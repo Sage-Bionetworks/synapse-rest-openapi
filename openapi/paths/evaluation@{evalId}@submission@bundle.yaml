@@ -20,7 +20,7 @@ get:
       default: 10
       type: integer
       minimum: 10
-      maxmium: 100
+      maximum: 100
   - description: |
       The offset index determines where this page will start from.
       An index of 0 is the first entity. When null it will default

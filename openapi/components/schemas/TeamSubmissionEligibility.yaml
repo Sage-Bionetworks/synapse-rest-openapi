@@ -1,4 +1,6 @@
-description: ''
+description: |
+  Describes the eligibility of a Challenge Team to submit to an Evalution queue,
+  reflecting the queue's submission quotas and current submissions.
 example:
   eligibilityStateHash: 12345
   evaluationId: '...'

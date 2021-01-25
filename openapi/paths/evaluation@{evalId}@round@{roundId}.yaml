@@ -23,6 +23,7 @@ delete:
   - Evaluation Services
 get:
   deprecated: true
+  summary: Get Evaluation Round
   operationId: getEvaluationRound
   responses:
     200:
