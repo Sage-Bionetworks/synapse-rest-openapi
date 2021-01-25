@@ -1,0 +1,44 @@
+get:
+  description: |
+    Retrieve a paginated list of Teams matching the supplied name fragment
+    (optional), in alphabetical order by Team name.
+
+    <br>
+
+    Note:  This service has JSONP support:  If the request parameter "callback=jsMethod"
+    is included (where 'jsMethod' is any function name you wish), then the response body will be wrapped
+    in "jsMethod(...);".
+  operationId: getTeamsByNameFragment
+  parameters:
+  - description: |
+      a prefix of the Team name, or a prefix of any sub-string in the
+      name preceded by a space. If omitted, all Teams are returned.
+    in: query
+    name: fragment
+    schema:
+      type: string
+  - description: the maximum number of Teams to return.
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+      maximum: 50
+  - description: the starting index of the returned results (default 0)
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfTeam.yaml
+      description: Success
+  summary: 'Retrieve a paginated list of Teams in alphabetical order by Team name.'
+  tags:
+  - Team Services
