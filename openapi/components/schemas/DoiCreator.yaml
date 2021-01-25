@@ -1,0 +1,21 @@
+description: 'JSON schema for DOI Metadata Creator.'
+example:
+  creatorName: '...'
+  nameIdentifiers:
+  - identifier: '...'
+    nameIdentifierScheme: ISNI
+  - identifier: '...'
+    nameIdentifierScheme: ORCID
+properties:
+  creatorName:
+    description: 'May be a corporate/institutional or personal name ("Family, Given").'
+    type: string
+  nameIdentifiers:
+    description: 'Uniquely identifies an individual or legal entity, according to various schemas.'
+    items:
+      $ref: 'DoiNameIdentifier.yaml'
+    type: array
+required:
+  - creatorName
+title: DoiCreator
+type: object

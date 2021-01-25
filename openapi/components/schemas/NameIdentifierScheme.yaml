@@ -1,0 +1,6 @@
+description: 'Describes the scheme of the nameIdentifier. Required if nameIdentifier is used.'
+enum:
+- ORCID
+- ISNI
+title: NameIdentifierScheme
+type: string

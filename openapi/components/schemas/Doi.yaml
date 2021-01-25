@@ -1,0 +1,27 @@
+allOf:
+- $ref: 'DoiAssociation.yaml'
+- properties:
+    creators:
+      description: |
+        The main researchers involved in producing the data, or the authors
+        of the publication, in priority order.
+      items:
+        $ref: 'DoiCreator.yaml'
+      type: array
+    publicationYear:
+      description: 'The year that this resource became publicly accessible. Must be in YYYY format.'
+      type: integer
+    resourceType:
+      $ref: 'DoiResourceType.yaml'
+    titles:
+      description: 'A name or title by which a resource is known.'
+      items:
+        $ref: 'DoiTitle.yaml'
+      type: array
+  type: object
+required:
+  - publicationYear
+  - titles
+  - creators
+description: 'JSON schema for fields associated with a DOI and its metadata.'
+title: Doi

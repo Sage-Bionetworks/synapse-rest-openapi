@@ -1,0 +1,9 @@
+description: 'JSON schema for DOI Metadata Title.'
+example:
+  title: '...'
+properties:
+  title:
+    description: 'A name or title by which a resource is known'
+    type: string
+title: DoiTitle
+type: object

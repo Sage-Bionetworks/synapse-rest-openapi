@@ -1,0 +1,39 @@
+get:
+  description: |
+    Retrieves the Synapse web portal URL to the object entered.
+    Note: This call does not check to see if the object exists in Synapse.
+  operationId: locate
+  parameters:
+  - description: The ID of the object to retrieve
+    in: query
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: Whether to return the URL or redirect to the URL
+    in: query
+    name: redirect
+    schema:
+      default: true
+      type: boolean
+  - description: The type of the object
+    in: query
+    name: type
+    required: true
+    schema:
+      $ref: ../components/schemas/ObjectType.yaml
+  - description: The version number of the object
+    in: query
+    name: version
+    schema:
+      type: integer
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Retrieves the Synapse web portal URL to the object entered.
+  tags:
+  - Doi Services

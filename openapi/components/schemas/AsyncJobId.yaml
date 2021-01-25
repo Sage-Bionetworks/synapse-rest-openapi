@@ -1,0 +1,9 @@
+description: 'Object used to track the status of an asynchronous job.'
+example:
+  token: '...'
+properties:
+  token:
+    description: 'Token'
+    type: string
+title: AsyncJobId
+type: object
