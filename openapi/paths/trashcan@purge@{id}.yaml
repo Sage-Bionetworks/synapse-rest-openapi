@@ -10,7 +10,7 @@ put:
     Flags the specified entity for priority purge. The entity will be
     deleted as soon as possible. Once purging is done, the entity
     will be permanently deleted from the system.
-  operationId: deleteEntity
+  operationId: flagForPurge
   requestBody:
     content:
       application/json: {}
