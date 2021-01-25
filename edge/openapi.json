@@ -2686,7 +2686,7 @@
             "schema": {
               "default": 0,
               "type": "integer",
-              "mimimum": 0
+              "minimum": 0
             }
           }
         ],
