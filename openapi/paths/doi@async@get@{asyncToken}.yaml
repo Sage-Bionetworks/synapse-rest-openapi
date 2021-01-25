@@ -1,0 +1,21 @@
+get:
+  description: |
+    Get the results of a call to POST /doi/async/start
+  operationId: getCreateOrUpdateDoiResults
+  parameters:
+  - description: The async job token from the create/update call
+    in: path
+    name: asyncToken
+    required: true
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/DoiResponse.yaml
+      description: Success
+  summary: Get the results of a call to POST /doi/async/start
+  tags:
+  - Doi Services

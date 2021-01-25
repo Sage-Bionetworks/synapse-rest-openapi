@@ -1,0 +1,15 @@
+description: 'Uniquely identifies an individual or legal entity, according to various schemas.'
+example:
+  identifier: '...'
+  nameIdentifierScheme: ISNI
+properties:
+  identifier:
+    description: 'The identifier belonging to the creator.'
+    type: string
+  nameIdentifierScheme:
+    $ref: 'NameIdentifierScheme.yaml'
+required:
+  - identifier
+  - nameIdentifierScheme
+title: DoiNameIdentifier
+type: object

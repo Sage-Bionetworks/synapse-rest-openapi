@@ -1,0 +1,8 @@
+description: 'Describes the type of media that the DOI Metadata refers to.'
+example:
+  resourceTypeGeneral: Image
+properties:
+  resourceTypeGeneral:
+    $ref: 'DoiResourceTypeGeneral.yaml'
+title: DoiResourceType
+type: object

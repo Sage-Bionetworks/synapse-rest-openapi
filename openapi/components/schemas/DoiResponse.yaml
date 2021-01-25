@@ -1,0 +1,40 @@
+description: 'An response to a DOI mint or update request.'
+example:
+  concreteType: '...'
+  doi:
+    associatedBy: '...'
+    associatedOn: '...'
+    associationId: '...'
+    creators:
+    - creatorName: '...'
+      nameIdentifiers:
+      - identifier: '...'
+        nameIdentifierScheme: ORCID
+      - identifier: '...'
+        nameIdentifierScheme: ORCID
+    - creatorName: '...'
+      nameIdentifiers:
+      - identifier: '...'
+        nameIdentifierScheme: ORCID
+    doiUri: '...'
+    doiUrl: '...'
+    etag: '...'
+    objectId: '...'
+    objectType: FORM_GROUP
+    objectVersion: 12345
+    publicationYear: 12345
+    resourceType:
+      resourceTypeGeneral: Sound
+    titles:
+    - title: '...'
+    - title: '...'
+    updatedBy: '...'
+    updatedOn: '...'
+properties:
+  concreteType:
+    description: 'concrete type'
+    type: string
+  doi:
+    $ref: 'Doi.yaml'
+title: DoiResponse
+type: object

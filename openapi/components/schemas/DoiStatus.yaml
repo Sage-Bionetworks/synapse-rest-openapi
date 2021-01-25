@@ -1,0 +1,8 @@
+description: ''
+enum:
+- IN_PROCESS
+- CREATED
+- READY
+- ERROR
+title: DoiStatus
+type: string
