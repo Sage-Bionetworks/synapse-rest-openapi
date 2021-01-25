@@ -24,6 +24,7 @@ delete:
 get:
   deprecated: true
   summary: Get Evaluation Round
+  description: Get Evaluation Round
   operationId: getEvaluationRound
   responses:
     200:
