@@ -215,6 +215,8 @@ paths:
     $ref: paths/team@{id}@openInvitation.yaml
   /team/{id}/openRequest:
     $ref: paths/team@{id}@openRequest.yaml
+  /team/acl:
+    $ref: paths/team@acl.yaml
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
