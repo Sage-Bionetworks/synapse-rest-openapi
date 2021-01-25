@@ -1,0 +1,35 @@
+description: ''
+example:
+  effectiveSchema: '...'
+  results:
+  - createdBy: '...'
+    createdOn: 12345
+    expiresOn: 12345
+    id: '...'
+    message: '...'
+    teamId: '...'
+    userId: '...'
+  - createdBy: '...'
+    createdOn: 12345
+    expiresOn: 12345
+    id: '...'
+    message: '...'
+    teamId: '...'
+    userId: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: |
+      List of membership requests
+    items:
+      $ref: 'MembershipRequest.yaml'
+    type: array
+  totalNumberOfResults:
+    description: |
+      Calculating the actual totalNumberOfResults is not longer supported. Therefore,
+      for each page, the totalNumberOfResults is estimated using the current page, limit,
+      and offset. When the page size equals the limit, the totalNumberOfResults will be
+      offset+pageSize+ 1. Otherwise, the totalNumberOfResults will be offset+pageSize.
+    type: integer
+title: PaginatedResultsOfMembershipRequest
+type: object

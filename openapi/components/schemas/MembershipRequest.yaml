@@ -1,0 +1,33 @@
+description: ''
+example:
+  createdBy: '...'
+  createdOn: '...'
+  expiresOn: '...'
+  id: '...'
+  message: '...'
+  teamId: '...'
+  userId: '...'
+properties:
+  createdBy:
+    description: 'The ID of the user that created this MembershipRequest.'
+    type: string
+  createdOn:
+    description: 'The date this MembershipRequest was created.'
+    type: string
+  expiresOn:
+    description: 'The date this MembershipRequest expires (optional).'
+    type: string
+  id:
+    description: 'The id of the MembershipRequest.'
+    type: string
+  message:
+    description: 'The request message (optional).'
+    type: string
+  teamId:
+    description: 'The id of the Team to which the request is sent.'
+    type: string
+  userId:
+    description: 'The id of the user for whom membership is requested.'
+    type: string
+title: MembershipRequest
+type: object

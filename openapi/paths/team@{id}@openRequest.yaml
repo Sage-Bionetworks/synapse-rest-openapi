@@ -1,0 +1,72 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieve the open requests submitted to a Team, optionally filtering
+    by the requester.
+    An request is only open if it has not expired and if the requester has not been
+    added the Team.
+
+    <p>
+
+    <b>Service Limits</b>
+
+    <table border="1">
+
+    <tr>
+
+    <th>resource</th>
+
+    <th>limit</th>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum frequency this method can be called</td>
+
+    <td>40 calls per minute</td>
+
+    </tr>
+
+    </table>
+
+    </p>'
+  operationId: getOpenRequestsByTeam
+  parameters:
+  - description: the maximum number of requests to return (default 10)
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+      maximum: 100
+  - description: the starting index of the returned results (default 0)
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  - description: the ID of the user requesting admission to the Team
+    in: query
+    name: requestorId
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfMembershipRequest.yaml
+      description: Success
+  summary: Retrieve the open requests submitted to a Team, optionally filtering by
+    the requester.
+  tags:
+  - Membership Request Services
