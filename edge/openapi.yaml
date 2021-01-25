@@ -12,6 +12,18 @@ info:
 servers:
   - url: 'https://repo-prod.prod.sagebase.org/repo/v1'
 tags:
+  - name: Access Approval Services
+    description: >
+      The Access Approval services manage the fulfillment of Access
+      Requirements,
+
+      on a per-user basis.
+  - name: Access Requirement Services
+    description: >
+      These services manage the Access Requirements/Restrictions (ARs) which may
+      be placed on Entities,
+
+      or Teams.
   - name: Challenge Services
     description: >
       A Challenge is a special object that supplements a project, providing
@@ -30,6 +42,12 @@ tags:
 
       and analyze data models from Synapse users created for a specific goal or
       purpose.
+  - name: Membership Invitation Services
+    description: |
+      The Membership Invitation Services create, retrieve and delete
+      membership invitations.
+  - name: Team Services
+    description: Teams are groups of users.
 paths:
   /challenge:
     post:
@@ -2088,6 +2106,921 @@ paths:
       summary: Updates a SubmissionStatus object.
       tags:
         - Evaluation Services
+  /team:
+    post:
+      description: >
+        Create a new Team. The passed request body may contain the following
+
+        fields:
+
+
+        <ul>
+
+
+        <li>name - Give your new Team a name.  The name must be unique, not used
+        by an
+
+        existing Team (required).</li>
+
+
+        <li>description - a short text description of the Team''s purpose
+        (optional).</li>
+
+
+        <li>icon - a fileHandle ID for an icon image file previously uploaded to
+        Synapse
+
+        (optional).</li>
+
+
+        </ul>
+
+
+        <p>
+
+
+        To specify a Team icon, the icon file must first be uploaded to Synapse
+        as
+
+        <a
+        href="${org.sagebionetworks.repo.model.file.FileHandle}">FileHandle</a>
+        (see
+
+        <a href="${org.sagebionetworks.file.controller.UploadController}">File
+        Services</a>).
+
+        The FileHandle ID can then be put into the Team''s icon field.
+      operationId: createTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Success
+      summary: Create a new Team.
+      tags:
+        - Team Services
+    put:
+      description: |
+        Update the Team metadata for the specified Team.
+        Note: The client must be a Team administrator to make this request.
+      operationId: updateTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+        description: the new metadata for the Team
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Success
+      summary: Update the Team metadata for the specified Team.
+      tags:
+        - Team Services
+  /teams:
+    get:
+      description: >
+        Retrieve a paginated list of Teams matching the supplied name fragment
+
+        (optional), in alphabetical order by Team name.
+
+
+        <br>
+
+
+        Note:  This service has JSONP support:  If the request parameter
+        "callback=jsMethod"
+
+        is included (where 'jsMethod' is any function name you wish), then the
+        response body will be wrapped
+
+        in "jsMethod(...);".
+      operationId: getTeamsByNameFragment
+      parameters:
+        - description: |
+            a prefix of the Team name, or a prefix of any sub-string in the
+            name preceded by a space. If omitted, all Teams are returned.
+          in: query
+          name: fragment
+          schema:
+            type: string
+        - description: the maximum number of Teams to return.
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 50
+        - description: the starting index of the returned results (default 0)
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfTeam'
+          description: Success
+      summary: Retrieve a paginated list of Teams in alphabetical order by Team name.
+      tags:
+        - Team Services
+  '/team/{id}':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    delete:
+      description: |
+        Delete the Team.
+        Note: The client must be a Team administrator to make this request.
+      operationId: deleteTeam
+      responses:
+        '204':
+          description: The resource has been deleted.
+      summary: Delete the Team.
+      tags:
+        - Team Services
+    get:
+      description: |
+        Retrieve the metadata for a specified Team.
+
+        <p>
+
+        <b>Service Limits</b>
+
+        <table border="1">
+
+        <tr>
+
+        <th>resource</th>
+
+        <th>limit</th>
+
+        </tr>
+
+        <tr>
+
+        <td>The maximum frequency this method can be called</td>
+
+        <td>1 calls per second</td>
+
+        </tr>
+
+        </table>
+
+        </p>
+      operationId: getTeam
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Success
+      summary: Retrieve the metadata for a specified Team.
+      tags:
+        - Team Services
+  '/team/{id}/accessApproval':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      deprecated: true
+      description: >-
+        Retrieve the Access Approvals for the given Team.  This service is only
+        available to the ACT.
+      operationId: getTeamAccessApprovals
+      parameters:
+        - description: |
+            Limits the size of the page returned. For example, a page size
+            of 10 require limit = 10. The maximum limit for this call is 50.
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 50
+            default: 10
+        - description: >
+            The index of the pagination offset. For a page size of 10, the
+
+            first page would be at offset = 0, and the second page would be at
+            offset =
+
+            10.
+          in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+        '410':
+          content: {}
+          description: Success
+      summary: Retrieve the Access Approvals for the given Team.
+      tags:
+        - Access Approval Services
+  '/team/{id}/accessRequirement':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Retrieve paginated list of ALL Access Requirements associated with
+        a Team.
+      operationId: getTeamAccessRequirements
+      parameters:
+        - description: |
+            Limits the size of the page returned. For example, a page size
+            of 10 require limit = 10. The maximum limit for this call is 50.
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 50
+            default: 10
+        - description: >
+            The index of the pagination offset. For a page size of 10, the
+
+            first page would be at offset = 0, and the second page would be at
+            offset =
+
+            10.
+          in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfAccessRequirement'
+          description: Success
+      summary: >-
+        Retrieve paginated list of ALL Access Requirements associated with a
+        Team.
+      tags:
+        - Access Requirement Services
+  '/team/{id}/acl':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: Retrieve the AccessControlList for a specified Team.
+      operationId: getTeamAcl
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlList'
+          description: Success
+      summary: Retrieve the AccessControlList for a specified Team.
+      tags:
+        - Team Services
+  '/team/{id}/icon':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >-
+        Retrieve the download URL for the Team icon, or receive a redirect
+        response to said URL.
+      operationId: fileRedirectUrlForTeamIcon
+      parameters:
+        - description: |
+            if true or omitted, then redirect to the URL.  If false then simply
+            return the URL.
+          in: query
+          name: redirect
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: >
+        Retrieve the download URL for the Team icon, or receive a redirect
+        response
+
+        to said URL
+      tags:
+        - Team Services
+  '/team/{id}/icon/preview':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Retrieve the download URL for the Team icon preview, or receive a
+        redirect
+
+        response to said URL.
+      operationId: filePreviewRedirectUrlForTeamIcon
+      parameters:
+        - description: |
+            if true or omitted, then redirect to the URL.  If false then simply
+            return the URL.
+          in: query
+          name: redirect
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: >
+        Retrieve the download URL for the Team icon preview, or receive a
+        redirect
+
+        response to said URL.
+      tags:
+        - Team Services
+  '/team/{id}/member/{principalId}':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: the member's principal ID
+        in: path
+        name: principalId
+        required: true
+        schema:
+          type: string
+    delete:
+      description: >
+        Remove the given member from the specified Team.
+
+        Note:  The client must either be a Team administrator or the member
+        being removed.
+      operationId: removeTeamMember
+      responses:
+        '204':
+          description: The resource has been deleted.
+      summary: Remove the given member from the specified Team.
+      tags:
+        - Team Services
+    get:
+      description: |
+        '<p>
+
+        <b>Service Limits</b>
+
+        <table border="1">
+
+        <tr>
+
+        <th>resource</th>
+
+        <th>limit</th>
+
+        </tr>
+
+        <tr>
+
+        <td>The maximum frequency this method can be called</td>
+
+        <td>1 calls per second</td>
+
+        </tr>
+
+        </table>
+
+        </p>'
+      operationId: getTeamMember
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+          description: Success
+      summary: .
+      tags:
+        - Team Services
+    put:
+      description: >
+        Add a member to the Team.
+
+
+        If the one making the request is the user to be added, then the user
+        must have
+
+        an open invitation from the Team.  If the one making the request is an
+        administrator
+
+        on the Team, then there must be a pending request from the user to the
+        Team, asking
+
+        to be added. If both teamEndpoint and notificationUnsubscribeEndpoint
+        are provided,
+
+        notification email(s) will be sent to the appropriate parties.
+      operationId: addTeamMember
+      parameters:
+        - description: >
+            the portal prefix for one-click email unsubscription.
+
+            A signed, serialized token is appended to create the complete URL:
+
+            <ahref="${org.sagebionetworks.repo.model.message.NotificationSettingsSignedToken}">NotificationSettingsSignedToken</a>'
+          in: query
+          name: notificationUnsubscribeEndpoint
+          schema:
+            type: string
+        - description: >
+            the portal prefix for the Team URL. The team ID is appended to
+            create
+
+            the complete URL.
+          in: query
+          name: teamEndpoint
+          schema:
+            type: string
+      responses:
+        '204':
+          description: The resource has been added.
+      summary: Add a member to the Team.
+      tags:
+        - Team Services
+  '/team/{id}/member/{principalId}/membershipStatus':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: the member's principal ID
+        in: path
+        name: principalId
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Retrieve the Team Membership Status bundle for a team and user.  This
+
+        says whether a user is a member of a Team, whether there are outstanding
+
+        membership requests or invitations, and whether the client making the
+        request
+
+        can add the given user to the given Team.
+      operationId: getTeamMembershipStatus
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMembershipStatus'
+          description: Success
+      summary: Retrieve the Team Membership Status bundle for a team and user.
+      tags:
+        - Team Services
+  '/team/{id}/memberList':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: |
+        Returns the TeamMember info for a team and a given list of members'
+        principal IDs.
+        Invalid IDs in the list are ignored:  The results list is simply
+        smaller than the list of IDs passed in.
+      operationId: listTeamMembersGivenTeamandUserList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdList'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWrapperOfTeamMember'
+          description: Success
+      summary: >
+        Returns the TeamMember info for a team and a given list of members'
+        principal
+
+        IDs.
+      tags:
+        - Team Services
+  '/team/{id}/openInvitation':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Retrieve the open invitations from a Team, optionally filtering by
+
+        the invitee.
+
+        An invitation is only open if it has not expired and if the user has not
+        joined
+
+        the Team.
+
+        Note: certain fields may be omitted when returned if the field value is
+        null
+      operationId: getOpenInvitationsByTeam
+      parameters:
+        - description: the ID of the Synapse user to which invitations have been extended
+          in: query
+          name: inviteeId
+          schema:
+            type: string
+        - description: the maximum number of invitations to return
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 100
+        - description: the starting index of the returned results
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+            mimimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfMembershipInvitation'
+          description: Success
+      summary: |
+        Retrieve the open invitations from a Team, optionally filtering by the
+        invitee.
+      tags:
+        - Membership Invitation Services
+  '/team/{id}/openRequest':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Retrieve the open requests submitted to a Team, optionally filtering
+
+        by the requester.
+
+        An request is only open if it has not expired and if the requester has
+        not been
+
+        added the Team.
+
+
+        <p>
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum frequency this method can be called</td>
+
+
+        <td>40 calls per minute</td>
+
+
+        </tr>
+
+
+        </table>
+
+
+        </p>'
+      operationId: getOpenRequestsByTeam
+      parameters:
+        - description: the maximum number of requests to return (default 10)
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 100
+        - description: the starting index of the returned results (default 0)
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+        - description: the ID of the user requesting admission to the Team
+          in: query
+          name: requestorId
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfMembershipRequest'
+          description: Success
+      summary: >-
+        Retrieve the open requests submitted to a Team, optionally filtering by
+        the requester.
+      tags:
+        - Membership Request Services
+  /team/acl:
+    put:
+      description: Update the Access Control List for the specified Team.
+      operationId: updateTeamAcl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessControlList'
+        description: the updated Access Control List
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlList'
+          description: Success
+      summary: Update the Access Control List for the specified Team.
+      tags:
+        - Team Services
+  /teamList:
+    post:
+      description: |
+        Retrieve a list of Teams given their IDs.
+        Invalid IDs in the list are ignored:  The results list is simply
+        smaller than the list of IDs passed in.
+      operationId: listTeams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdList'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWrapperOfTeam'
+          description: Success
+      summary: Retrieve a list of Teams given their IDs.
+      tags:
+        - Team Services
+  /teamMember:
+    put:
+      description: >
+        Add a member to the Team.  Note: The request is authenticated by a
+
+        hash message authentication code in the request body, generated by
+        Synapse.  The intended
+
+        use of this service is by the portal, completing a round trip with a
+        'one-click join-team'
+
+        link provided to the user by Synapse via email. If both teamEndpoint and
+
+        notificationUnsubscribeEndpoint are provided, notification email(s) will
+
+        be sent to the appropriate parties.
+      operationId: addTeamMemberViaSignedToken
+      parameters:
+        - in: query
+          name: notificationUnsubscribeEndpoint
+          description: notification unsubscribe endpoint
+          schema:
+            type: string
+        - in: query
+          name: teamEndpoint
+          description: Team end point
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinTeamSignedToken'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+          description: Success
+      summary: Add a member to the Team.
+      tags:
+        - Team Services
+  '/teamMembers/{id}':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Retrieve a paginated list of Team members matching the supplied name
+
+        prefix.  If the prefix is omitted then all members are returned.
+
+
+        <br>
+
+
+        Note:  This service has JSONP support:  If the request parameter
+        "callback=jsMethod"
+
+        is included (where 'jsMethod' is any function name you wish), then the
+        response body will be wrapped
+
+        in "jsMethod(...);".
+      operationId: getTeamMembers
+      parameters:
+        - description: a prefix of the user's first or last name or email address
+          in: query
+          name: fragment
+          schema:
+            type: string
+        - description: the maximum number of members to return.
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 50
+        - description: the type of team user to retrieve
+          in: query
+          name: memberType
+          schema:
+            enum:
+              - ADMIN
+              - ALL
+              - MEMBER
+            type: string
+            default: ALL
+        - description: the starting index of the returned results
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfTeamMember'
+          description: Success
+      summary: >-
+        Retrieve a paginated list of Team members matching the supplied name
+        prefix.
+      tags:
+        - Team Services
+  '/teamMembers/count/{id}':
+    parameters:
+      - description: the ID of the Team.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Retrieve the number of Team members matching the supplied name prefix. 
+        If
+
+        the prefix is omitted then the number of members in the team is
+        returned.
+
+
+        <br>
+
+
+        Note:  This service has JSONP support:  If the request parameter
+        "callback=jsMethod"
+
+        is included (where 'jsMethod' is any function name you wish), then the
+        response body will be wrapped
+
+        in "jsMethod(...);".
+      operationId: getTeamMemberCount
+      parameters:
+        - description: |
+            a prefix of the user's first or last name or email address
+          in: query
+          name: fragment
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Count'
+          description: Success
+      summary: Retrieve the number of Team members matching the supplied name prefix.
+      tags:
+        - Team Services
 components:
   securitySchemes:
     bearerAuth:
@@ -2310,7 +3243,6 @@ components:
           description: >-
             The ID of the digital object in Synapse for which this DOI is
             created.
-          require: true
           type: string
         objectType:
           $ref: '#/components/schemas/ObjectType'
@@ -2325,6 +3257,8 @@ components:
         updatedOn:
           description: The date time this DOI is last updated. Provided by Synapse.
           type: string
+      required:
+        - objectId
       title: DoiAssociation
       type: object
     NameIdentifierScheme:
@@ -3753,6 +4687,742 @@ components:
           description: The ID of the Team of interest
           type: string
       title: TeamSubmissionEligibility
+      type: object
+    Team:
+      description: JSON schema for Team POJO
+      example:
+        canPublicJoin: true
+        createdBy: ...
+        createdOn: ...
+        description: ...
+        etag: ...
+        icon: ...
+        id: ...
+        modifiedBy: ...
+        modifiedOn: ...
+        name: ...
+      properties:
+        canPublicJoin:
+          description: >-
+            true for teams which members can join without an invitation or
+            approval
+          type: boolean
+        createdBy:
+          description: The ID of the user that created this Team.
+          type: string
+        createdOn:
+          description: The date this Team was created.
+          type: string
+        description:
+          description: A short description of this Team.
+          type: string
+        etag:
+          description: >
+            Synapse employs an Optimistic Concurrency Control (OCC) scheme to
+            handle
+
+            concurrent updates. Since the E-Tag changes every time a Team is
+            updated
+
+            it is used to detect when a client's current representation of a
+            Team is out-of-date.
+          type: string
+        icon:
+          description: fileHandleId for icon image of the Team
+          type: string
+        id:
+          description: The id of the Team.
+          type: string
+        modifiedBy:
+          description: The ID of the user that last modified this Team.
+          type: string
+        modifiedOn:
+          description: The date this Team was last modified.
+          type: string
+        name:
+          description: The name of the Team.
+          type: string
+      title: Team
+      type: object
+    TotalNumberOfResults:
+      description: >
+        Calculating the actual totalNumberOfResults is not longer supported.
+
+        Therefore, for each page, the totalNumberOfResults is estimated using
+        the current page,
+
+        limit, and offset. When the page size equals the limit, the
+        totalNumberOfResults will
+
+        be offset+pageSize+ 1. Otherwise, the totalNumberOfResults will be
+        offset+pageSize.
+      type: integer
+    PaginatedResultsOfTeam:
+      description: List of Teams
+      example:
+        results:
+          - canPublicJoin: true
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            icon: ...
+            id: ...
+            modifiedBy: ...
+            modifiedOn: ...
+            name: ...
+          - canPublicJoin: true
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            icon: ...
+            id: ...
+            modifiedBy: ...
+            modifiedOn: ...
+            name: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: List of Teams
+          items:
+            $ref: '#/components/schemas/Team'
+          type: array
+        totalNumberOfResults:
+          $ref: '#/components/schemas/TotalNumberOfResults'
+      title: PaginatedResultsOfTeam
+      type: object
+    RestrictableObjectType:
+      description: >-
+        JSON enum for the types of objects which can be restricted by an
+        AccessRequirement.
+      enum:
+        - ENTITY
+        - EVALUATION
+        - TEAM
+      title: RestrictableObjectType
+      type: string
+    RestrictableObjectDescriptor:
+      description: Restrictable object descriptor
+      example:
+        id: ...
+        type: EVALUATION
+      properties:
+        id:
+          description: Id
+          type: string
+        type:
+          $ref: '#/components/schemas/RestrictableObjectType'
+      title: RestrictableObjectDescriptor
+      type: object
+    AccessRequirement:
+      description: >
+        Interface for JSON schema for AccessRequirement. The Access Requirement
+        mechanism is
+
+        distinct from the access control list in that it is controlled not by
+        the entity
+
+        owner but by a separate authority: Access Requirements are created and
+        maintained
+
+        by the Synapse Access and Compliance Team (ACT). ACTAccessRequirements
+        can only be
+
+        approved by the ACT. Self-sign Access Requirements can be approved by
+        the user
+
+        desiring access, but said user first has to meet 'terms of use'
+        associated with the requirement.
+      example:
+        accessType: SUBMIT
+        concreteType: ...
+        createdBy: ...
+        createdOn: ...
+        description: ...
+        etag: ...
+        id: 12345
+        modifiedBy: ...
+        modifiedOn: ...
+        subjectIds:
+          - id: ...
+            type: EVALUATION
+          - id: ...
+            type: TEAM
+        versionNumber: 12345
+      properties:
+        accessType:
+          $ref: '#/components/schemas/ACCESS_TYPE'
+        concreteType:
+          description: >-
+            Indicates which type of AccessRequirement this object represents.
+            Provided by the system, the user may not set this field.
+          type: string
+        createdBy:
+          description: >-
+            The user that created this object. Provided by the system, the user
+            may not set this field.
+          type: string
+        createdOn:
+          description: >-
+            The date this object was created. Provided by the system, the user
+            may not set this field.
+          type: string
+        description:
+          description: Short optional description for the AR. Limited to 50 characters.
+          type: string
+        etag:
+          description: >
+            Synapse employs an Optimistic Concurrency Control (OCC) scheme to
+            handle concurrent
+
+            updates. Since the E-Tag changes every time an entity is updated it
+            is used to
+
+            detect when a client's current representation of an object is
+            out-of-date.
+          type: string
+        id:
+          description: >-
+            The unique immutable ID. Provided by the system, the user may not
+            set this field.
+          type: number
+        modifiedBy:
+          description: >-
+            The user that last modified this object. Provided by the system, the
+            user may not set this field.
+          type: string
+        modifiedOn:
+          description: >-
+            The date this object was last modified. Provided by the system, the
+            user may not set this field.
+          type: string
+        subjectIds:
+          description: >-
+            The IDs of the items controlled by this Access Requirement. Required
+            when creating or updating.
+          items:
+            $ref: '#/components/schemas/RestrictableObjectDescriptor'
+          type: array
+        versionNumber:
+          description: The version number issued to this version on the object.
+          type: integer
+      title: AccessRequirement
+      type: object
+    PaginatedResultsOfAccessRequirement:
+      description: >-
+        Retrieve paginated list of ALL Access Requirements associated with a
+        Team.
+      example:
+        results:
+          - accessType: READ
+            concreteType: ...
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            id: 12345
+            modifiedBy: ...
+            modifiedOn: ...
+            subjectIds:
+              - id: ...
+                type: EVALUATION
+              - id: ...
+                type: TEAM
+            versionNumber: 12345
+          - accessType: UPLOAD
+            concreteType: ...
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            id: 12345
+            modifiedBy: ...
+            modifiedOn: ...
+            subjectIds:
+              - id: ...
+                type: ENTITY
+              - id: ...
+                type: TEAM
+            versionNumber: 12345
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: The the id of the entity to which this reference refers
+          items:
+            $ref: '#/components/schemas/AccessRequirement'
+          type: array
+        totalNumberOfResults:
+          description: >
+            Calculating the actual totalNumberOfResults is not longer supported.
+
+            Therefore, for each page, the totalNumberOfResults is estimated
+            using
+
+            the current page, limit, and offset. When the page size equals the
+            limit,
+
+            the totalNumberOfResults will be offset+pageSize+ 1. Otherwise, the
+
+            totalNumberOfResults will be offset+pageSize.
+          type: integer
+      title: PaginatedResultsOfAccessRequirement
+      type: object
+    UserGroupHeader:
+      description: JSON schema for UserHeader POJO
+      example:
+        displayName: ...
+        email: ...
+        firstName: ...
+        isIndividual: true
+        lastName: ...
+        ownerId: ...
+        userName: ...
+      properties:
+        displayName:
+          description: This is deprecated and will always be null
+          type: string
+        email:
+          description: |
+            User's current email address
+          type: string
+        firstName:
+          description: First Name
+          type: string
+        isIndividual:
+          description: 'True if this is a user, false if it is a group'
+          type: boolean
+        lastName:
+          description: Last Name
+          type: string
+        ownerId:
+          description: |
+            A foreign key to the ID of the 'principal' object for the user.
+          type: string
+        userName:
+          description: A name chosen by the user that uniquely identifies them.
+          type: string
+      title: UserGroupHeader
+      type: object
+    TeamMember:
+      description: 'JSON schema for Team Member, which bundles UserGroupHeader and isAdmin'
+      example:
+        isAdmin: true
+        member:
+          displayName: ...
+          email: ...
+          firstName: ...
+          isIndividual: true
+          lastName: ...
+          ownerId: ...
+          userName: ...
+        teamId: ...
+      properties:
+        isAdmin:
+          description: True if the user is an administrator in the Team.
+          type: boolean
+        member:
+          $ref: '#/components/schemas/UserGroupHeader'
+        teamId:
+          description: The id of the Team.
+          type: string
+      title: TeamMember
+      type: object
+    TeamMembershipStatus:
+      description: >-
+        JSON schema for the possible status of a User with respect to Team
+        membership.
+      example:
+        canJoin: true
+        canSendEmail: true
+        hasOpenInvitation: true
+        hasOpenRequest: true
+        hasUnmetAccessRequirement: true
+        isMember: true
+        membershipApprovalRequired: true
+        teamId: ...
+        userId: ...
+      properties:
+        canJoin:
+          description: >-
+            true if and only if the user requesting this status information can
+            join the user to the team
+          type: boolean
+        canSendEmail:
+          description: true if and only if the user can send an email to the team
+          type: boolean
+        hasOpenInvitation:
+          description: true if and only if the user has an open invitation to join the team
+          type: boolean
+        hasOpenRequest:
+          description: true if and only if the user has an open request to join the team
+          type: boolean
+        hasUnmetAccessRequirement:
+          description: >-
+            true if and only if there is at least one unmet access requirement
+            for the user on the team
+          type: boolean
+        isMember:
+          description: true if and only if the user is a member of the team
+          type: boolean
+        membershipApprovalRequired:
+          description: >-
+            true if and only if team admin approval is required for the user to
+            join the team
+          type: boolean
+        teamId:
+          description: The id of the Team.
+          type: string
+        userId:
+          description: The principal id of the user.
+          type: string
+      title: TeamMembershipStatus
+      type: object
+    IdList:
+      description: List of IDs
+      example:
+        list:
+          - 12345
+          - 12345
+      properties:
+        list:
+          description: List of IDs
+          items:
+            type: integer
+          type: array
+      title: IdList
+      type: object
+    ListWrapperOfTeamMember:
+      description: A list of Teams
+      example:
+        list:
+          - isAdmin: true
+            member:
+              displayName: ...
+              email: ...
+              firstName: ...
+              isIndividual: true
+              lastName: ...
+              ownerId: ...
+              userName: ...
+            teamId: ...
+          - isAdmin: true
+            member:
+              displayName: ...
+              email: ...
+              firstName: ...
+              isIndividual: true
+              lastName: ...
+              ownerId: ...
+              userName: ...
+            teamId: ...
+      properties:
+        list:
+          description: List of teams
+          items:
+            $ref: '#/components/schemas/TeamMember'
+          type: array
+      title: ListWrapperOfTeamMember
+      type: object
+    MembershipInvitation:
+      description: JSON schema for MembershipInvitation POJO
+      example:
+        createdBy: ...
+        createdOn: ...
+        expiresOn: ...
+        id: ...
+        inviteeEmail: ...
+        inviteeId: ...
+        message: ...
+        teamId: ...
+      properties:
+        createdBy:
+          description: The ID of the user that created this MembershipInvitation.
+          type: string
+        createdOn:
+          description: The date this MembershipInvitation was created.
+          type: string
+        expiresOn:
+          description: The date this invitation expires (optional).
+          type: string
+        id:
+          description: The id of the MembershipInvitation.
+          type: string
+        inviteeEmail:
+          description: The email address of the user being invited to join the Team.
+          type: string
+        inviteeId:
+          description: The principal ID of the user being invited to join the Team.
+          type: string
+        message:
+          description: The invitation message (optional).
+          type: string
+        teamId:
+          description: The id of the Team which the user is invited to join.
+          type: string
+      title: MembershipInvitation
+      type: object
+    PaginatedResultsOfMembershipInvitation:
+      description: >
+        Retrieve the open invitations from a Team, optionally filtering by the
+        invitee.
+
+        An invitation is only open if it has not expired and if the user has not
+        joined
+
+        the Team. Note: certain fields may be omitted when returned if the field
+        value is null
+      example:
+        effectiveSchema: ...
+        results:
+          - createdBy: ...
+            createdOn: ...
+            expiresOn: ...
+            id: ...
+            inviteeEmail: ...
+            inviteeId: ...
+            message: ...
+            teamId: ...
+          - createdBy: ...
+            createdOn: ...
+            expiresOn: ...
+            id: ...
+            inviteeEmail: ...
+            inviteeId: ...
+            message: ...
+            teamId: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: The the id of the entity to which this reference refers
+          items:
+            $ref: '#/components/schemas/MembershipInvitation'
+          type: array
+        totalNumberOfResults:
+          description: >
+            Calculating the actual totalNumberOfResults is not longer supported.
+
+            Therefore, for each page, the totalNumberOfResults is estimated
+            using
+
+            the current page, limit, and offset. When the page size equals the
+            limit,
+
+            the totalNumberOfResults will be offset+pageSize+ 1. Otherwise, the
+
+            totalNumberOfResults will be offset+pageSize.
+          type: integer
+      title: PaginatedResultsOfMembershipInvitation
+      type: object
+    MembershipRequest:
+      description: JSON schema for MembershipRequest POJO
+      example:
+        createdBy: ...
+        createdOn: ...
+        expiresOn: ...
+        id: ...
+        message: ...
+        teamId: ...
+        userId: ...
+      properties:
+        createdBy:
+          description: The ID of the user that created this MembershipRequest.
+          type: string
+        createdOn:
+          description: The date this MembershipRequest was created.
+          type: string
+        expiresOn:
+          description: The date this MembershipRequest expires (optional).
+          type: string
+        id:
+          description: The id of the MembershipRequest.
+          type: string
+        message:
+          description: The request message (optional).
+          type: string
+        teamId:
+          description: The id of the Team to which the request is sent.
+          type: string
+        userId:
+          description: The id of the user for whom membership is requested.
+          type: string
+      title: MembershipRequest
+      type: object
+    PaginatedResultsOfMembershipRequest:
+      description: List of Membership Requests
+      example:
+        effectiveSchema: ...
+        results:
+          - createdBy: ...
+            createdOn: ...
+            expiresOn: ...
+            id: ...
+            message: ...
+            teamId: ...
+            userId: ...
+          - createdBy: ...
+            createdOn: ...
+            expiresOn: ...
+            id: ...
+            message: ...
+            teamId: ...
+            userId: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: |
+            List of membership requests
+          items:
+            $ref: '#/components/schemas/MembershipRequest'
+          type: array
+        totalNumberOfResults:
+          description: >
+            Calculating the actual totalNumberOfResults is not longer supported.
+            Therefore,
+
+            for each page, the totalNumberOfResults is estimated using the
+            current page, limit,
+
+            and offset. When the page size equals the limit, the
+            totalNumberOfResults will be
+
+            offset+pageSize+ 1. Otherwise, the totalNumberOfResults will be
+            offset+pageSize.
+          type: integer
+      title: PaginatedResultsOfMembershipRequest
+      type: object
+    ListWrapperOfTeam:
+      description: List of Teams.
+      example:
+        list:
+          - canPublicJoin: true
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            icon: ...
+            id: ...
+            modifiedBy: ...
+            modifiedOn: ...
+            name: ...
+          - canPublicJoin: true
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            icon: ...
+            id: ...
+            modifiedBy: ...
+            modifiedOn: ...
+            name: ...
+      properties:
+        list:
+          description: List of Teams.
+          items:
+            $ref: '#/components/schemas/Team'
+          type: array
+      title: ListWrapperOfTeam
+      type: object
+    JoinTeamSignedToken:
+      description: >-
+        Signed token containing the information needed to join a new user to a
+        team.
+      example:
+        concreteType: ...
+        createdOn: ...
+        expiresOn: ...
+        hmac: ...
+        memberId: ...
+        teamId: ...
+        userId: ...
+        version: 12345
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        createdOn:
+          description: The date-time the token was generated.
+          type: string
+        expiresOn:
+          description: The date-time when this token expires.
+          type: string
+        hmac:
+          description: The hash message authentication code for the message.
+          type: string
+        memberId:
+          description: The ID of the new team member.
+          type: string
+        teamId:
+          description: The ID of the team which the user was invited to join.
+          type: string
+        userId:
+          description: >
+            The ID of the user who is acting to add the new member to the Team.
+
+            The HMAC in the token authenticates that the request is being made
+            by this user.'
+          type: string
+        version:
+          description: The version of the key used to generate the HMAC.
+          type: integer
+      title: JoinTeamSignedToken
+      type: object
+    ResponseMessage:
+      description: >-
+        JSON schema for a user-readable message describing the response to a
+        request.
+      example:
+        message: ...
+      properties:
+        message:
+          description: a user-readable message describing the response to a request
+          type: string
+      title: ResponseMessage
+      type: object
+    PaginatedResultsOfTeamMember:
+      description: List of Team Members
+      example:
+        results:
+          - isAdmin: true
+            member:
+              displayName: ...
+              email: ...
+              firstName: ...
+              isIndividual: true
+              lastName: ...
+              ownerId: ...
+              userName: ...
+            teamId: ...
+          - isAdmin: true
+            member:
+              displayName: ...
+              email: ...
+              firstName: ...
+              isIndividual: true
+              lastName: ...
+              ownerId: ...
+              userName: ...
+            teamId: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: List of Team Members
+          items:
+            $ref: '#/components/schemas/TeamMember'
+          type: array
+        totalNumberOfResults:
+          $ref: '#/components/schemas/TotalNumberOfResults'
+      title: PaginatedResultsOfTeamMember
+      type: object
+    Count:
+      description: Count of items
+      example:
+        count: 12345
+      properties:
+        count:
+          description: Count of items
+          type: integer
+      title: Count
       type: object
 security:
   - bearerAuth: []
