@@ -197,6 +197,8 @@ paths:
     $ref: paths/team@{id}@accessApproval.yaml
   /team/{id}/accessRequirement:
     $ref: paths/team@{id}@accessRequirement.yaml
+  /team/{id}/acl:
+    $ref: paths/team@{id}@acl.yaml
 
 components:
   securitySchemes:
