@@ -1,0 +1,58 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Delete the Team.
+    Note: The client must be a Team administrator to make this request.
+  operationId: deleteTeam
+  responses:
+    204:
+      description: The resource has been deleted.
+  summary: Delete the Team.
+  tags:
+  - Team Services
+get:
+  description: |
+    Retrieve the metadata for a specified Team.
+
+    <p>
+
+    <b>Service Limits</b>
+
+    <table border="1">
+
+    <tr>
+
+    <th>resource</th>
+
+    <th>limit</th>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum frequency this method can be called</td>
+
+    <td>1 calls per second</td>
+
+    </tr>
+
+    </table>
+
+    </p>
+  operationId: getTeam
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Team.yaml
+      description: Success
+  summary: Retrieve the metadata for a specified Team.
+  tags:
+  - Team Services

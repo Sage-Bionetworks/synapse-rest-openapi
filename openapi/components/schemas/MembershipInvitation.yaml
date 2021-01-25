@@ -1,0 +1,37 @@
+description: 'JSON schema for MembershipInvitation POJO'
+example:
+  createdBy: '...'
+  createdOn: '...'
+  expiresOn: '...'
+  id: '...'
+  inviteeEmail: '...'
+  inviteeId: '...'
+  message: '...'
+  teamId: '...'
+properties:
+  createdBy:
+    description: 'The ID of the user that created this MembershipInvitation.'
+    type: string
+  createdOn:
+    description: 'The date this MembershipInvitation was created.'
+    type: string
+  expiresOn:
+    description: 'The date this invitation expires (optional).'
+    type: string
+  id:
+    description: 'The id of the MembershipInvitation.'
+    type: string
+  inviteeEmail:
+    description: 'The email address of the user being invited to join the Team.'
+    type: string
+  inviteeId:
+    description: 'The principal ID of the user being invited to join the Team.'
+    type: string
+  message:
+    description: 'The invitation message (optional).'
+    type: string
+  teamId:
+    description: 'The id of the Team which the user is invited to join.'
+    type: string
+title: MembershipInvitation
+type: object

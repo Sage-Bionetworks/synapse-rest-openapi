@@ -1,0 +1,41 @@
+description: 'JSON schema for the possible status of a User with respect to Team membership.'
+example:
+  canJoin: true
+  canSendEmail: true
+  hasOpenInvitation: true
+  hasOpenRequest: true
+  hasUnmetAccessRequirement: true
+  isMember: true
+  membershipApprovalRequired: true
+  teamId: '...'
+  userId: '...'
+properties:
+  canJoin:
+    description: 'true if and only if the user requesting this status information can join the user to the team'
+    type: boolean
+  canSendEmail:
+    description: 'true if and only if the user can send an email to the team'
+    type: boolean
+  hasOpenInvitation:
+    description: 'true if and only if the user has an open invitation to join the team'
+    type: boolean
+  hasOpenRequest:
+    description: 'true if and only if the user has an open request to join the team'
+    type: boolean
+  hasUnmetAccessRequirement:
+    description: 'true if and only if there is at least one unmet access requirement for the user on the team'
+    type: boolean
+  isMember:
+    description: 'true if and only if the user is a member of the team'
+    type: boolean
+  membershipApprovalRequired:
+    description: 'true if and only if team admin approval is required for the user to join the team'
+    type: boolean
+  teamId:
+    description: 'The id of the Team.'
+    type: string
+  userId:
+    description: 'The principal id of the user.'
+    type: string
+title: TeamMembershipStatus
+type: object

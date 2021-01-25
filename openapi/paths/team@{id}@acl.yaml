@@ -1,0 +1,20 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: Retrieve the AccessControlList for a specified Team.
+  operationId: getTeamAcl
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Retrieve the AccessControlList for a specified Team.
+  tags:
+  - Team Services

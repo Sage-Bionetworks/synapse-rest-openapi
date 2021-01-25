@@ -1,0 +1,20 @@
+put:
+  description: Update the Access Control List for the specified Team.
+  operationId: updateTeamAcl
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessControlList.yaml'
+    description: the updated Access Control List
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Update the Access Control List for the specified Team.
+  tags:
+  - Team Services

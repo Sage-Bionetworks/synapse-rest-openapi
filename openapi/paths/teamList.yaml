@@ -1,0 +1,22 @@
+post:
+  description: |
+    Retrieve a list of Teams given their IDs.
+    Invalid IDs in the list are ignored:  The results list is simply
+    smaller than the list of IDs passed in.
+  operationId: listTeams
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/IdList.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListWrapperOfTeam.yaml
+      description: Success
+  summary: Retrieve a list of Teams given their IDs.
+  tags:
+  - Team Services

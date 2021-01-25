@@ -1,0 +1,34 @@
+description: 'List of Teams'
+example:
+  results:
+  - canPublicJoin: true
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    icon: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+  - canPublicJoin: true
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    icon: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'List of Teams'
+    items:
+      $ref: 'Team.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: '../definitions/TotalNumberOfResults.yaml'
+title: PaginatedResultsOfTeam
+type: object

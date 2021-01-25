@@ -1,0 +1,32 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Returns the TeamMember info for a team and a given list of members'
+    principal IDs.
+    Invalid IDs in the list are ignored:  The results list is simply
+    smaller than the list of IDs passed in.
+  operationId: listTeamMembersGivenTeamandUserList
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/IdList.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListWrapperOfTeamMember.yaml
+      description: Success
+  summary: |
+    Returns the TeamMember info for a team and a given list of members' principal
+    IDs.
+  tags:
+  - Team Services

@@ -1,0 +1,39 @@
+description: 'Signed token containing the information needed to join a new user to a team.'
+example:
+  concreteType: '...'
+  createdOn: '...'
+  expiresOn: '...'
+  hmac: '...'
+  memberId: '...'
+  teamId: '...'
+  userId: '...'
+  version: 12345
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  createdOn:
+    description: 'The date-time the token was generated.'
+    type: string
+  expiresOn:
+    description: 'The date-time when this token expires.'
+    type: string
+  hmac:
+    description: 'The hash message authentication code for the message.'
+    type: string
+  memberId:
+    description: 'The ID of the new team member.'
+    type: string
+  teamId:
+    description: 'The ID of the team which the user was invited to join.'
+    type: string
+  userId:
+    description: |
+      The ID of the user who is acting to add the new member to the Team.
+      The HMAC in the token authenticates that the request is being made by this user.'
+    type: string
+  version:
+    description: 'The version of the key used to generate the HMAC.'
+    type: integer
+title: JoinTeamSignedToken
+type: object

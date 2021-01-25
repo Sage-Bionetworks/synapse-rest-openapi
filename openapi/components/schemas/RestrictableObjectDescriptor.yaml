@@ -1,0 +1,12 @@
+description: 'Restrictable object descriptor'
+example:
+  id: '...'
+  type: EVALUATION
+properties:
+  id:
+    description: 'Id'
+    type: string
+  type:
+    $ref: 'RestrictableObjectType.yaml'
+title: RestrictableObjectDescriptor
+type: object

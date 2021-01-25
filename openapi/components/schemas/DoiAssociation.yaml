@@ -34,7 +34,6 @@ properties:
     type: string
   objectId:
     description: 'The ID of the digital object in Synapse for which this DOI is created.'
-    require: true
     type: string
   objectType:
     $ref: 'ObjectType.yaml'
@@ -47,5 +46,7 @@ properties:
   updatedOn:
     description: 'The date time this DOI is last updated. Provided by Synapse.'
     type: string
+required:
+- objectId
 title: DoiAssociation
 type: object

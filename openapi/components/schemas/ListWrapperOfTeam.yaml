@@ -1,0 +1,31 @@
+description: 'List of Teams.'
+example:
+  list:
+  - canPublicJoin: true
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    icon: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+  - canPublicJoin: true
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    icon: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+properties:
+  list:
+    description: 'List of Teams.'
+    items:
+      $ref: 'Team.yaml'
+    type: array
+title: ListWrapperOfTeam
+type: object

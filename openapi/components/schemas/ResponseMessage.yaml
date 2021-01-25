@@ -1,0 +1,9 @@
+description: 'JSON schema for a user-readable message describing the response to a request.'
+example:
+  message: '...'
+properties:
+  message:
+    description: 'a user-readable message describing the response to a request'
+    type: string
+title: ResponseMessage
+type: object

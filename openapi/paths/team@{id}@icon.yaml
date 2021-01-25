@@ -1,0 +1,31 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: Retrieve the download URL for the Team icon, or receive a redirect
+    response to said URL.
+  operationId: fileRedirectUrlForTeamIcon
+  parameters:
+  - description: |
+      if true or omitted, then redirect to the URL.  If false then simply
+      return the URL.
+    in: query
+    name: redirect
+    schema:
+      type: boolean
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: | 
+    Retrieve the download URL for the Team icon, or receive a redirect response
+    to said URL
+  tags:
+  - Team Services
