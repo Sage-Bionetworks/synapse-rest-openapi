@@ -16,8 +16,7 @@ get:
       content:
         application/json:
           schema:
-            description: ''
-            type: integer
+            $ref: ../components/definitions/Integer.yaml
       description: Success
   summary: Gets the number of Submissions to a specified Evaluation.
   tags:
