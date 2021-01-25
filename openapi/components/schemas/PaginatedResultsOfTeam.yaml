@@ -1,4 +1,4 @@
-description: ''
+description: 'List of Teams'
 example:
   results:
   - canPublicJoin: true
@@ -30,6 +30,5 @@ properties:
     type: array
   totalNumberOfResults:
     $ref: '../definitions/TotalNumberOfResults.yaml'
-
 title: PaginatedResultsOfTeam
 type: object

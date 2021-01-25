@@ -191,6 +191,8 @@ paths:
     $ref: paths/evaluation@submission@{subId}@status.yaml
   /team:
     $ref: paths/team.yaml
+  /teams:
+    $ref: paths/teams.yaml
   /team/{id}:
     $ref: paths/team@{id}.yaml
   /team/{id}/accessApproval:
