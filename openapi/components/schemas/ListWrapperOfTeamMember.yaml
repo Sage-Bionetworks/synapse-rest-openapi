@@ -23,7 +23,7 @@ example:
     teamId: '...'
 properties:
   list:
-    description: ''
+    description: 'List of teams'
     items:
       $ref: 'TeamMember.yaml'
     type: array

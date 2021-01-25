@@ -1,4 +1,4 @@
-description: ''
+description: 'JSON schema for MembershipRequest POJO'
 example:
   createdBy: '...'
   createdOn: '...'

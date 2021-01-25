@@ -1,17 +1,17 @@
-description: ''
+description: 'List of Membership Requests'
 example:
   effectiveSchema: '...'
   results:
   - createdBy: '...'
-    createdOn: 12345
-    expiresOn: 12345
+    createdOn: '...'
+    expiresOn: '...'
     id: '...'
     message: '...'
     teamId: '...'
     userId: '...'
   - createdBy: '...'
-    createdOn: 12345
-    expiresOn: 12345
+    createdOn: '...'
+    expiresOn: '...'
     id: '...'
     message: '...'
     teamId: '...'
