@@ -1,0 +1,25 @@
+description: 'Describes the eligibility of an indivdiual to submit to an Evaluation queue, reflecting the queue's submission quotas and current submissions.'
+example:
+  hasConflictingSubmission: true
+  isEligible: true
+  isQuotaFilled: true
+  isRegistered: true
+  principalId: 12345
+properties:
+  hasConflictingSubmission:
+    description: 'true if the individual has submitted alone or with another team'
+    type: boolean
+  isEligible:
+    description: 'true if all criteria are met'
+    type: boolean
+  isQuotaFilled:
+    description: 'true if team/individual has reached the submission quota (for the given submission round)'
+    type: boolean
+  isRegistered:
+    description: 'true if team/individual is registered for challenge'
+    type: boolean
+  principalId:
+    description: 'Synapse user id'
+    type: number
+title: MemberSubmissionEligibility
+type: object
