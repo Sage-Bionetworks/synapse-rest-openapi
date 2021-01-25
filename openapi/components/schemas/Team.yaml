@@ -1,0 +1,48 @@
+description: 'JSON schema for Team POJO'
+example:
+  canPublicJoin: true
+  createdBy: '...'
+  createdOn: '...'
+  description: '...'
+  etag: '...'
+  icon: '...'
+  id: '...'
+  modifiedBy: '...'
+  modifiedOn: '...'
+  name: '...'
+properties:
+  canPublicJoin:
+    description: 'true for teams which members can join without an invitation or approval'
+    type: boolean
+  createdBy:
+    description: 'The ID of the user that created this Team.'
+    type: string
+  createdOn:
+    description: 'The date this Team was created.'
+    type: string
+  description:
+    description: 'A short description of this Team.'
+    type: string
+  etag:
+    description: |
+      Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
+      concurrent updates. Since the E-Tag changes every time a Team is updated
+      it is used to detect when a client's current representation of a Team is out-of-date.
+    type: string
+  icon:
+    description: 'fileHandleId for icon image of the Team'
+    type: string
+  id:
+    description: 'The id of the Team.'
+    type: string
+  modifiedBy:
+    description: 'The ID of the user that last modified this Team.'
+    type: string
+  modifiedOn:
+    description: 'The date this Team was last modified.'
+    type: string
+  name:
+    description: 'The name of the Team.'
+    type: string
+title: Team
+type: object
