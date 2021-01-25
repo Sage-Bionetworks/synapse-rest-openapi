@@ -225,6 +225,8 @@ paths:
     $ref: paths/teamMembers@{id}.yaml
   /teamMembers/count/{id}:
     $ref: paths/teamMembers@count@{id}.yaml
+  /trashcan/purge/{id}:
+    $ref: paths/trashcan@purge@{id}.yaml
 
 components:
   securitySchemes:

@@ -1,0 +1,27 @@
+parameters:
+  - description: The ID of an entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    Flags the specified entity for priority purge. The entity will be
+    deleted as soon as possible. Once purging is done, the entity
+    will be permanently deleted from the system.
+  operationId: flagForPurge
+  requestBody:
+    content:
+      application/json: {}
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Flags the specified entity for priority purge.
+  tags:
+  - TrashController
