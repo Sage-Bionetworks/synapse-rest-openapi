@@ -1,0 +1,50 @@
+parameters:
+  - in: path
+    name: evalId
+    description: |
+      The ID of the evaluation over which the user permission are being
+      retrieved.
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    'Gets a collection of Submissions to a specified Evaluation.
+    <p>
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.
+    </p>
+  operationId: getAllSubmissions
+  parameters:
+  - description: |
+      Limits the number of entities that will be fetched for this
+      page. When null it will default to 10, max value 100.
+    in: query
+    name: limit
+    schema:
+      default: 10
+      minimum: 10
+      maximum: 100
+      type: integer
+  - description: |
+      The offset index determines where this page will start from.
+      An index of 0 is the first entity. When null it will default
+      to 0.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+  - in: query
+    name: status
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfSubmission.yaml
+      description: Success
+  summary: Gets a collection of Submissions to a specified Evaluation.
+  tags:
+  - Evaluation Services

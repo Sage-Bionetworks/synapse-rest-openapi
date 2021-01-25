@@ -147,6 +147,8 @@ paths:
     $ref: paths/evaluation@{evalId}@statusBatch.yaml
   /evaluation/{evalId}/submission:
     $ref: paths/evaluation@{evalId}@submission.yaml
+  /evaluation/{evalId}/submission/all:
+    $ref: paths/evaluation@{evalId}@submission@all.yaml
 
 components:
   securitySchemes:
