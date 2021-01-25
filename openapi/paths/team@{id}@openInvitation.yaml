@@ -1,0 +1,48 @@
+parameters:
+  - description: the ID of the Team.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieve the open invitations from a Team, optionally filtering by
+    the invitee.
+    An invitation is only open if it has not expired and if the user has not joined
+    the Team.
+    Note: certain fields may be omitted when returned if the field value is null
+  operationId: getOpenInvitationsByTeam
+  parameters:
+  - description: the ID of the Synapse user to which invitations have been extended
+    in: query
+    name: inviteeId
+    schema:
+      type: string
+  - description: the maximum number of invitations to return
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+      maximum: 100
+  - description: the starting index of the returned results
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      mimimum: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfMembershipInvitation.yaml
+      description: Success
+  summary: |
+    Retrieve the open invitations from a Team, optionally filtering by the
+    invitee.
+  tags:
+  - Membership Invitation Services

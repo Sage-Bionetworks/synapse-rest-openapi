@@ -209,6 +209,8 @@ paths:
     $ref: paths/team@{id}@member@{principalId}@membershipStatus.yaml
   /team/{id}/memberList:
     $ref: paths/team@{id}@memberList.yaml
+  /team/{id}/openInvitation:
+    $ref: paths/team@{id}@openInvitation.yaml
 
 components:
   securitySchemes:
