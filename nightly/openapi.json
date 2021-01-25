@@ -14,166 +14,21 @@
   },
   "servers": [
     {
-      "url": "https://repo-prod.prod.sagebase.org/repo/v1/"
+      "url": "https://repo-prod.prod.sagebase.org/repo/v1"
     }
   ],
   "tags": [
     {
-      "name": "Access Approval Services",
-      "description": "The Access Approval services manage the fulfillment of Access Requirements, on a per-user basis."
-    },
-    {
-      "name": "Access Requirement Services",
-      "description": "These services manage the Access Requirements/Restrictions (ARs) which may be placed on Entities,\nor Teams.\n"
-    },
-    {
-      "name": "Activity Services",
-      "description": "."
-    },
-    {
-      "name": "Administration Services",
-      "description": "Since this controller is for internal use only we removed the ControllerInfo annotation."
-    },
-    {
-      "name": "Asynchronous Job Services",
-      "description": "This is a generic set of services that provides support for both launching\nasynchronous jobs and monitoring the progress of jobs.\n"
-    },
-    {
-      "name": "Certified User Services",
-      "description": "To become a Synapse Certified User you must pass a test."
-    },
-    {
       "name": "Challenge Services",
       "description": "A Challenge is a special object that supplements a project, providing additional features\nspecific to challenges.\n"
-    },
-    {
-      "name": "Data Access Services",
-      "description": "."
-    },
-    {
-      "name": "Discussion Services",
-      "description": "."
-    },
-    {
-      "name": "Docker Authorization Services",
-      "description": "These services allow Synapse to act as an authorization service for a Docker Registry."
-    },
-    {
-      "name": "Docker Commit Services",
-      "description": "These services relate to the 'commits' to Docker repositories."
-    },
-    {
-      "name": "Docker Registry Event Services",
-      "description": "These services process events from the Docker Registry."
     },
     {
       "name": "Doi Services",
       "description": "Provides REST APIs for managing Synapse DOIs."
     },
     {
-      "name": "Entity Bundle Services",
-      "description": "."
-    },
-    {
-      "name": "Entity Bundle V2 Services",
-      "description": "."
-    },
-    {
-      "name": "Entity Services",
-      "description": "."
-    },
-    {
       "name": "Evaluation Services",
-      "description": "."
-    },
-    {
-      "name": "Form Services",
-      "description": "Collection of APIs from managing and submitting form data."
-    },
-    {
-      "name": "Health Check Services"
-    },
-    {
-      "name": "Json Schema Services",
-      "description": "This set of services provide project designers with tools to define their own\nschemas to control and validate metadata applied to Projects, Folders, and\nFiles.\n"
-    },
-    {
-      "name": "Log Services",
-      "description": "https://sagebionetworks."
-    },
-    {
-      "name": "Membership Invitation Services",
-      "description": "The Membership Invitation Services create, retrieve and delete\nmembership invitations.\n"
-    },
-    {
-      "name": "Membership Request Services",
-      "description": "The Membership Request Services create, retrieve and delete\nmembership requests.\n"
-    },
-    {
-      "name": "Message Services",
-      "description": "."
-    },
-    {
-      "name": "Migration Services",
-      "description": "Services for Migrating data between stacks."
-    },
-    {
-      "name": "Principal Services",
-      "description": "A."
-    },
-    {
-      "name": "Project Settings Services",
-      "description": "The project settings services provide configuration options that can be applied to projects."
-    },
-    {
-      "name": "Search Services",
-      "description": "Search for Entities on Synapse."
-    },
-    {
-      "name": "Statistics Services",
-      "description": "Services that expose statistics computed by the backend."
-    },
-    {
-      "name": "Storage Report Services",
-      "description": "Provides REST APIs for generating Storage Reports."
-    },
-    {
-      "name": "Subscription Services",
-      "description": "."
-    },
-    {
-      "name": "Synapse Version Info Services"
-    },
-    {
-      "name": "Table Services",
-      "description": "."
-    },
-    {
-      "name": "Team Services",
-      "description": "Teams are groups of users."
-    },
-    {
-      "name": "Trash Services",
-      "description": "The recycle bin (or trash can) is the special folder that holds the deleted entities for users."
-    },
-    {
-      "name": "User Group Service"
-    },
-    {
-      "name": "User Profile Services",
-      "description": "Every Synapse user has an associated."
-    },
-    {
-      "name": "V2 Wiki Services",
-      "description": "."
-    },
-    {
-      "name": "Verification Services",
-      "description": "Identity verification is a service offered by the Synapse Access and Compliance Team\nto add an additional layer of legitimacy to a user account, beyond the basic\nrequirements for creating an account in Synapse.\n"
-    },
-    {
-      "name": "Wiki Services",
-      "description": "."
+      "description": "The Evaluation API is designed to support open-access data analysis and modeling\nchallenges in Synapse. This framework provides tools for administrators to collect\nand analyze data models from Synapse users created for a specific goal or purpose.\n"
     }
   ],
   "paths": {
@@ -215,6 +70,15 @@
         "description": "List the Challenges for which the given participant is registered.\nTo be in the returned list the caller must have READ permission on the\nproject associated with the Challenge.\n",
         "operationId": "listChallengesForParticipant",
         "parameters": [
+          {
+            "name": "participantId",
+            "in": "query",
+            "description": "Synapse user id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "limit",
             "in": "query",
@@ -287,7 +151,7 @@
       },
       "put": {
         "tags": [
-          "ChallengeController"
+          "Challenge Services"
         ],
         "summary": "Update a Challenge.",
         "description": "Update a Challenge.  The caller must have UPDATE permission on the\nproject associated with the Challenge.  It is not permitted to\nchange the project associated with a Challenge.\n",
@@ -487,6 +351,14 @@
         "operationId": "listParticipantsInChallenge",
         "parameters": [
           {
+            "name": "affiliated",
+            "in": "query",
+            "description": "If affiliated=true, return just participants affiliated with some\nregistered Team.  If false, return those not affiliated with any registered Team.\nIf omitted return all participants.\n",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "limit",
             "in": "query",
             "description": "Maximum number of results returned",
@@ -666,6 +538,231 @@
         }
       }
     },
+    "/doi": {
+      "get": {
+        "description": "Retrieves the DOI for the object and its associated DOI metadata.\nNote: this call calls an external API, which may impact performance\nTo just retrieve the DOI association, see: <a href=\"${GET.doi.association}\">GET /doi/association</a>\n",
+        "operationId": "getDoiV2",
+        "parameters": [
+          {
+            "description": "The ID of the object to retrieve",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The type of the object",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectType"
+            }
+          },
+          {
+            "description": "The version number of the object",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Doi"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieves the DOI for the object and its associated DOI metadata.",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/association": {
+      "get": {
+        "description": "Retrieves the DOI for the object.\nNote: this call only retrieves the DOI association, if it exists. To retrieve\nthe metadata for the object,\nsee <a href=\"${GET.doi}\">GET /doi</a>'\n",
+        "operationId": "getDoiAssociation",
+        "parameters": [
+          {
+            "description": "The ID of the object to retrieve",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The type of the object",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectType"
+            }
+          },
+          {
+            "description": "The version number of the object",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoiAssociation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieves the DOI for the object.",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/async/start": {
+      "post": {
+        "description": "Asynchronously creates or updates a DOI in Synapse, with input metadata.\nRetrieve the results with\n<a href=\"${GET.doi.async.get.asyncToken}\">GET /doi/async/get/{asyncToken}</a>.\nThis call may fail if the external\nDataCite API is down. If the failure is recoverable, it will retry automatically.'\n",
+        "operationId": "startCreateOrUpdateDoi",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoiRequest"
+              }
+            }
+          },
+          "description": "A request containing a DOI and its metadata to associate with a Synapse\nobject\n",
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsyncJobId"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Asynchronously creates or updates a DOI in Synapse, with input metadata.",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/async/get/{asyncToken}": {
+      "get": {
+        "description": "Get the results of a call to POST /doi/async/start\n",
+        "operationId": "getCreateOrUpdateDoiResults",
+        "parameters": [
+          {
+            "description": "The async job token from the create/update call",
+            "in": "path",
+            "name": "asyncToken",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoiResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the results of a call to POST /doi/async/start",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/locate": {
+      "get": {
+        "description": "Retrieves the Synapse web portal URL to the object entered.\nNote: This call does not check to see if the object exists in Synapse.\n",
+        "operationId": "locate",
+        "parameters": [
+          {
+            "description": "The ID of the object to retrieve",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Whether to return the URL or redirect to the URL",
+            "in": "query",
+            "name": "redirect",
+            "schema": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The type of the object",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectType"
+            }
+          },
+          {
+            "description": "The version number of the object",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieves the Synapse web portal URL to the object entered.",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
     "/entity/{id}/challenge": {
       "parameters": [
         {
@@ -698,6 +795,1269 @@
           }
         }
       }
+    },
+    "/evaluation": {
+      "get": {
+        "description": "Gets a collection of Evaluations, within a given range.\n\n<p>\n\n<b>Note:</b> The response will contain only those Evaluations on which the caller\nis\n\ngranted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ</a>\n\npermission, unless specified otherwise with the accessType parameter.\n\n</p>\n",
+        "operationId": "getEvaluationsPaginated",
+        "parameters": [
+          {
+            "name": "accessType",
+            "description": "The type of access for the user to filter for, optional and defaults\nto <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ</a>\n",
+            "in": "query",
+            "schema": {
+              "default": "READ",
+              "enum": [
+                "CHANGE_PERMISSIONS",
+                "CHANGE_SETTINGS",
+                "CREATE",
+                "DELETE",
+                "DELETE_SUBMISSION",
+                "DOWNLOAD",
+                "MODERATE",
+                "PARTICIPATE",
+                "READ",
+                "READ_PRIVATE_SUBMISSION",
+                "SEND_MESSAGE",
+                "SUBMIT",
+                "TEAM_MEMBERSHIP_UPDATE",
+                "UPDATE",
+                "UPDATE_SUBMISSION",
+                "UPLOAD"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "activeOnly",
+            "description": "If 'true' then return only those evaluations with rounds defined\nand for which the current time is in one of the rounds.\n",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "evaluationIds",
+            "description": "an optional, comma-delimited list of evaluation IDs to which the\nresponse is limited\n",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The index of the pagination offset. For a page size of 10, the\nfirst page would be at offset = 0, and the second page would be at offset =\n10.\n",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfEvaluation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets a collection of Evaluations, within a given range.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "post": {
+        "description": "'Creates a new Evaluation. The passed request body should contain the\nfollowing fields:\n\n<ul>\n\n<li>name - Give your new Evaluation a name.</li>\n\n<li>contentSource - The ID of the parent Entity, such as a Folder or Project.</li>\n\n<li>status - The initial state of the Evaluation, an\n\n<a href=\"${org.sagebionetworks.evaluation.model.EvaluationStatus}\">EvaluationStatus</a></li>\n\n</ul>\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.CREATE</a> on the contentSource Entity.\n\n</p>\n",
+        "operationId": "createEvaluation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Evaluation"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evaluation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Creates a new Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}": {
+      "parameters": [
+        {
+          "description": "The ID of the specified Evaluation.",
+          "in": "path",
+          "name": "evalId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "description": "Deletes an Evaluation.\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.DELETE</a> on the specified Evaluation.\n\n</p>\n",
+        "operationId": "deleteEvaluation",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted."
+          }
+        },
+        "summary": "Deletes an Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "get": {
+        "description": "Gets an Evaluation.\n\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a\n\nhref=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\"\n\n>ACCESS_TYPE.READ</a> on the specified Evaluation.\n\n</p>\n",
+        "operationId": "getEvaluation",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evaluation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets an Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "put": {
+        "description": "'Updates an Evaluation.\n\n\n<p>\n\nSynapse employs an Optimistic Concurrency Control (OCC) scheme to handle\n\nconcurrent updates. Each time an Evaluation is updated a new etag will be\n\nissued to the Evaluation. When an update is requested, Synapse will compare the\n\netag of the passed Evaluation with the current etag of the Evaluation. If the\n\netags do not match, then the update will be rejected with a\n\nPRECONDITION_FAILED (412) response. When this occurs, the caller should\n\nfetch the latest copy of the Evaluation and re-apply any changes, then re-attempt\n\nthe Evaluation update.\n\n</p>\n\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a\n\nhref=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\"\n\n>ACCESS_TYPE.UPDATE</a> on the specified Evaluation.\n\n</p>\n",
+        "operationId": "updateEvaluation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Evaluation"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evaluation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Updates an Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/access": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Determines whether the logged in user has a certain\n<a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE</a> on the specified Evaluation.\n",
+        "operationId": "hasAccess2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "accessType",
+            "description": "Synapse access type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanResult"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Determines whether a specified Synapse user has a certain access type on evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/acl": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "deprecated": true,
+        "description": "This method is deprecated and should be removed from future versions\nof the API.\n\nDeletes the ACL (access control list) of the specified evaluation. The user should\nhave the proper <a href=\"${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}\">permissions</a>\nto delete the ACL.\n",
+        "operationId": "deleteAcl",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted"
+          }
+        },
+        "summary": "This method is deprecated and should be removed from future versions of the API.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "get": {
+        "description": "Gets the access control list (ACL) governing the given evaluation.\nThe user should have the proper\n<a href=\"${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}\">permissions</a>\nto read the ACL.\n",
+        "operationId": "getAcl",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessControlList"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets the access control list (ACL) governing the given evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/round": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "deprecated": true,
+        "summary": "Create Evaluation Round",
+        "description": "Create Evaluation Round",
+        "operationId": "createEvaluationRound",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationRound"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationRound"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/round/{roundId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "roundId",
+          "description": "The ID of the evaluation round",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "deprecated": true,
+        "operationId": "deleteEvaluationRound",
+        "summary": "Delete Evaluation Round",
+        "description": "Delete Evaluation Round",
+        "responses": {
+          "204": {
+            "description": "The resouce has been deleted"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "get": {
+        "deprecated": true,
+        "summary": "Get Evaluation Round",
+        "description": "Get Evaluation Round",
+        "operationId": "getEvaluationRound",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationRound"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "put": {
+        "summary": "Update Evaluation Round",
+        "description": "Update Evaluation Round",
+        "deprecated": true,
+        "operationId": "updateEvaluationRound",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationRound"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationRound"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/round/list": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Get all rounds of an Evaluation",
+        "description": "Get all rounds of an Evaluation",
+        "deprecated": true,
+        "operationId": "getAllEvaluationRounds",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationRoundListRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationRoundListResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/statusBatch": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Update multiple SubmissionStatuses. The maximum batch size is 500.  To\nallow upload of more than this maximum, the system supports uploading of a <i>series</i> of\nbatches. Synapse employs optimistic concurrency on the series in the form of a batch token.\nEach request (except the first) must include the ''batch token'' returned in the\nresponse to the previous batch. If another client begins batch upload simultaneously,\na PRECONDITION_FAILED (412) response will be generated and upload must restart\nfrom the first batch.  After the final batch is uploaded, the data for the Evaluation queue\nwill be mirrored to the tables which support querying.  Therefore uploaded data will\nnot appear in Evaluation queries until after the final batch is successfully uploaded.  It\nis the client''s responsibility to note in each batch request (1) whether it is the first\nbatch in the series and (2) whether it is the last batch.  (For a single batch both\nare set to ''true''.)\n\nFailure to use the flags correctly risks corrupted data (due to simultaneous,\nconflicting uploads by multiple clients) or data not appearing in query results.\n\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.UPDATE_SUBMISSION</a> on the specified Evaluation.\n\n</p>\n",
+        "operationId": "updateSubmissionStatusBatch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmissionStatusBatch"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchUploadResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Update multiple SubmissionStatuses.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/submission": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Gets the requesting user's Submissions to a specified Evaluation.\n",
+        "operationId": "getMySubmissions",
+        "parameters": [
+          {
+            "description": "Limits the number of entities that will be fetched for this page. When null it will default to 10.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from.\nAn index of 0 is the first entity. When null it will default to 0.'\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfSubmission"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets the requesting user's Submissions to a specified Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/submission/all": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "'Gets a collection of Submissions to a specified Evaluation.\n<p>\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.\n</p>\n",
+        "operationId": "getAllSubmissions",
+        "parameters": [
+          {
+            "description": "Limits the number of entities that will be fetched for this\npage. When null it will default to 10, max value 100.\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from.\nAn index of 0 is the first entity. When null it will default\nto 0.\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "Status of submission.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfSubmission"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets a collection of Submissions to a specified Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/submission/bundle": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Gets the requesting user's bundled Submissions and SubmissionStatuses\nto a specified Evaluation.\n",
+        "operationId": "getMySubmissionBundles",
+        "parameters": [
+          {
+            "description": "Limits the number of entities that will be fetched for this\npage. When null it will default to 10.'\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from.\nAn index of 0 is the first entity. When null it will default\nto 0.\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfSubmissionBundle"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets the requesting users bundled Submissions and SubmissionStatuses\nto a specified Evaluation.'\n",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/submission/bundle/all": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Gets a collection of bundled Submissions and SubmissionStatuses to\na given Evaluation.\n\n<p>\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.\n</p>\n",
+        "operationId": "getAllSubmissionBundles",
+        "parameters": [
+          {
+            "description": "Limits the number of entities that will be fetched for this\npage. When null it will default to 10.'\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from.\nAn index of 0 is the first entity. When null it will default\nto 0.\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "Submission Status",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfSubmissionBundle"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets a collection of bundled Submissions and SubmissionStatuses to a given Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/submission/count": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Gets the number of Submissions to a specified Evaluation.\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.\n</p>\n",
+        "operationId": "getSubmissionCount",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integer"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets the number of Submissions to a specified Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/submission/status/all": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "'Gets a collection of SubmissionStatuses to a specified Evaluation.\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ</a> on the specified Evaluation.\nFurthermore, the caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> to see all\ndata marked as \"private\" in the SubmissionStatuses.\n\n</p>\n",
+        "operationId": "getAllSubmissionStatuses",
+        "parameters": [
+          {
+            "description": "Limits the number of entities that will be fetched for this\npage. When null it will default to 10.'\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from.\nAn index of 0 is the first entity. When null it will default\nto 0.\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "Submission status",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfSubmissionStatus"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets a collection of SubmissionStatuses to a specified Evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/{evalId}/team/{id}/SubmissionEligibility": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "evalId",
+          "description": "The ID of the specified Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "The ID of a Team.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Find out whether a Team and its members are eligible to submit to\na given Evaluation queue (at the current time).  The request must include\nan Evaluation ID and a Team ID.   The 'eligibilityStateHash'\nfield of the returned object is a required parameter of the subsequent Team Submission\nrequest made for the given Evaluation and Team.\n(See: <a href=\"${POST.evaluation.submission}\">POST/evaluation/submission</a>)'\n",
+        "operationId": "getTeamSubmissionEligibility",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamSubmissionEligibility"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Find out whether a Team and its members are eligible to submit to a given\nEvaluation queue (at the current time).'\n",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/acl": {
+      "put": {
+        "description": "Updates the supplied access control list (ACL) for an evaluation.\nThe <a href=\"${org.sagebionetworks.repo.model.AccessControlList}\">ACL</a>\nto be updated should have the ID of the evaluation. The user should have the proper\n<a href=\"${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}\">permissions</a>\nin order to update the ACL.\n",
+        "operationId": "updateAcl",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessControlList"
+              }
+            }
+          },
+          "description": "The ACL being updated.",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessControlList"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Updates the supplied access control list (ACL) for an evaluation.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/available": {
+      "get": {
+        "description": "Gets a collection of Evaluations in which the user has SUBMIT permission,\nwithin a given range.\n<p>\n<b>Note:</b> The response will contain only those Evaluations on which the caller\nmust is\ngranted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.SUBMIT</a>\npermission.\n</p>\n",
+        "operationId": "getAvailableEvaluationsPaginated",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "activeOnly",
+            "description": "Retrieve active only evaluation queues",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "an optional, comma-delimited list of evaluation IDs to which the\nresponse is limited\n",
+            "in": "query",
+            "name": "evaluationIds",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Limits the number of entities that will be fetched for this\npage. When null it will default to 10.'\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from.\nAn index of 0 is the first entity. When null it will default\nto 0.\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfEvaluation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets a collection of Evaluations in which the user has SUBMIT permission,\nwithin a given range.\n",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/name/{name}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "name",
+          "description": "The name of the desired Evaluation.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Finds an Evaluation by name.\n<p>\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ</a> on the specified Evaluation.\n</p>\n",
+        "operationId": "findEvaluation",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evaluation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Finds an Evaluation by name.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/submission": {
+      "post": {
+        "description": "Creates a Submission and sends a submission notification email to\nthe submitter's team members.\n\nThe passed request body should contain the following fields:\n\n<ul>\n\n<li>evaluationId - The ID of the Evaluation to which this Submission belongs.</li>\n\n<li>entityId - The ID of the Entity being submitted.</li>\n\n<li>versionNumber - The specific version of the Entity being submitted.</li>\n\n</ul>\n\n<p>\n\nA Submission must be either a Team or an Individual submission.  A Team submission\nmust include a Team ID in the teamId field and the request must include a submissionEligibilityHash\nrequest parameter.  A Team submission may also include a list of submission contributors.\n(The submitter is taken to be a contributor and need not be included in the list.)\nAn individual submission must have a null teamId, a null or empty contributor\nlist, and no submissionEligibilityHash parameter.\n\n</p>\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.SUBMIT</a>.\n\n</p>\n\n<p>\n\nThis call also creates an associated <a href=\"${org.sagebionetworks.evaluation.model.SubmissionStatus}\">SubmissionStatus</a>,\ninitialized with a SubmissionStatusEnum value of RECEIVED.\n\n</p>\n",
+        "operationId": "createSubmission",
+        "parameters": [
+          {
+            "description": "The portal endpoint prefix to the an entity/challenge page. The\nentity ID of the challenge project is appended to create the complete URL. In normal operation,\nthis parameter should be omitted.'\n",
+            "in": "query",
+            "name": "challengeEndpoint",
+            "schema": {
+              "description": "The portal endpoint prefix to the an entity/challenge page.\nThe entity ID of the challenge project is appended to create the complete URL.\nIn normal operation, this parameter should be omitted.'\n",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The current eTag of the Entity being submitted",
+            "in": "query",
+            "name": "etag",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The portal endpoint prefix for one-click email unsubscription.\nA signed, serialized token is appended to create the complete URL:\n<a href=\"${org.sagebionetworks.repo.model.message.NotificationSettingsSignedToken}\">NotificationSettingsSignedToken</a>.\nIn normal operation, this parameter should be omitted.'\n",
+            "in": "query",
+            "name": "notificationUnsubscribeEndpoint",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The hash provided by the\n<a href=\"${org.sagebionetworks.evaluation.model.TeamSubmissionEligibility}\">TeamSubmissionEligibility</a>\nobject.\n",
+            "in": "query",
+            "name": "submissionEligibilityHash",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Submission_model"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Submission_model"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Creates a Submission and sends a submission notification email to the submitter's\nteam members.\n",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/submission/{subId}": {
+      "parameters": [
+        {
+          "description": "The ID of the Submission",
+          "in": "path",
+          "name": "subId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "description": "Deletes a Submission and its accompanying SubmissionStatus.\n\n<b>This service is intended to only be used by ChallengesInfrastructure service\naccount.</b>\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.DELETE_SUBMISSION</a> on the specified Evaluation.\n\n</p>\n",
+        "operationId": "deleteSubmission",
+        "responses": {
+          "204": {
+            "description": "The resource has been deleted."
+          }
+        },
+        "summary": "Deletes a Submission and its accompanying SubmissionStatus.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "get": {
+        "description": "Gets a Submission.\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.\n\n</p>\n",
+        "operationId": "getSubmission",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Submission_model"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets a Submission.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/submission/{subId}/cancellation": {
+      "parameters": [
+        {
+          "description": "The ID of the Submission",
+          "in": "path",
+          "name": "subId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "User requests to cancel their submission. Only the user who submitted\na submission can make this request.\n",
+        "operationId": "requestToCancelSubmission",
+        "responses": {
+          "204": {
+            "description": "The request has been made."
+          }
+        },
+        "summary": "User requests to cancel their submission.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/submission/{subId}/file/{fileHandleId}": {
+      "parameters": [
+        {
+          "description": "the ID of the requested FileHandle contained in the Submission.",
+          "in": "path",
+          "name": "fileHandleId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The ID of the Submission",
+          "in": "path",
+          "name": "subId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Gets a pre-signed URL to access a requested File contained within\na specified Submission.\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.\n</p>\n",
+        "operationId": "redirectUrlForFileHandle",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "redirect",
+            "description": "To redirect",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets a pre-signed URL to access a requested File contained within a specified\nSubmission.\n",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
+    },
+    "/evaluation/submission/{subId}/status": {
+      "parameters": [
+        {
+          "description": "The ID of the Submission",
+          "in": "path",
+          "name": "subId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Gets the SubmissionStatus object associated with a specified Submission.\n<p>\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ</a> on the specified Evaluation.\nFurthermore, the caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a>\nto see all data marked as \"private\" in the SubmissionStatus. \n\n<b>Service Limits</b>\n\n<table border=\"1\">\n\n<tr>\n\n<th>resource</th>\n\n<th>limit</th>\n\n</tr>\n\n<tr>\n\n<td>The maximum frequency this method can be called</td>\n\n<td>1 calls per second</td>\n\n</tr>\n\n</table>\n\n</p>\n",
+        "operationId": "getSubmissionStatus",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionStatus_model"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets the SubmissionStatus object associated with a specified Submission.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      },
+      "put": {
+        "description": "Updates a SubmissionStatus object.\n\n\n<p>\n\nSynapse employs an Optimistic Concurrency Control (OCC) scheme to handle\nconcurrent updates. Each time an SubmissionStatus is updated a new etag will be\nissued to the SubmissionStatus. When an update is requested, Synapse will compare\nthe etag of the passed SubmissionStatus with the current etag of the SubmissionStatus.\nIf the etags do not match, then the update will be rejected with a\nPRECONDITION_FAILED (412) response. When this occurs, the caller should\nfetch the latest copy of the SubmissionStatus and re-apply any changes, then re-attempt\nthe SubmissionStatus update.\n\n</p>\n\n<p>\n\n<b>Note:</b> The caller must be granted the <a href=\"${org.sagebionetworks.repo.model.ACCESS_TYPE}\">ACCESS_TYPE.UPDATE_SUBMISSION</a> on the specified Evaluation.\n\n</p>\n\n</p>\n\n<p>\n\n<b>Service Limits</b>\n\n<table border=\"1\">\n\n<tr>\n\n<th>resource</th>\n\n<th>limit</th>\n\n</tr>\n\n<tr>\n\n<td>The maximum frequency this method can be called</td>\n\n<td>1 calls per second</td>\n\n</tr>\n\n</table>\n\n</p>\n",
+        "operationId": "updateSubmissionStatus",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmissionStatus_model"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionStatus_model"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Updates a SubmissionStatus object.",
+        "tags": [
+          "Evaluation Services"
+        ]
+      }
     }
   },
   "components": {
@@ -709,24 +2069,6 @@
       }
     },
     "schemas": {
-      "PageResultsMetadata": {
-        "type": "object",
-        "description": "A page of results",
-        "properties": {
-          "offset": {
-            "description": "Index of the first result that must be returned",
-            "type": "integer"
-          },
-          "limit": {
-            "description": "Maximum number of results returned",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "offset",
-          "limit"
-        ]
-      },
       "Challenge": {
         "title": "Challenge",
         "type": "object",
@@ -759,31 +2101,21 @@
       "ChallengePagedResults": {
         "title": "ChallengePagedResults",
         "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/PageResultsMetadata"
+        "properties": {
+          "totalNumberOfResults": {
+            "type": "integer",
+            "description": "The total number of results"
           },
-          {
-            "type": "object",
-            "properties": {
-              "totalNumberOfResults": {
-                "type": "integer",
-                "description": "The total number of results"
-              },
-              "results": {
-                "type": "array",
-                "description": "The list of results for this page",
-                "items": {
-                  "$ref": "#/components/schemas/Challenge"
-                }
-              }
-            },
-            "description": "List the Challenges for which the given participant is registered. To be in the returned list the caller must have READ permission on the project associated with the Challenge."
+          "results": {
+            "type": "array",
+            "description": "The list of results for this page",
+            "items": {
+              "$ref": "#/components/schemas/Challenge"
+            }
           }
-        ],
+        },
+        "description": "List the Challenges for which the given participant is registered. To be in the returned list the caller must have READ permission on the project associated with the Challenge.",
         "example": {
-          "offset": 10,
-          "limit": 0,
           "totalNumberOfResults": 12345,
           "results": [
             {
@@ -838,31 +2170,21 @@
       "ChallengeTeamPagedResults": {
         "title": "ChallengeTeamPagedResults",
         "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/PageResultsMetadata"
+        "properties": {
+          "totalNumberOfResults": {
+            "type": "integer",
+            "description": "The total number of results"
           },
-          {
-            "type": "object",
-            "properties": {
-              "totalNumberOfResults": {
-                "type": "integer",
-                "description": "The total number of results"
-              },
-              "results": {
-                "type": "array",
-                "description": "The list of results for this page",
-                "items": {
-                  "$ref": "#/components/schemas/ChallengeTeam"
-                }
-              }
+          "results": {
+            "type": "array",
+            "description": "The list of results for this page",
+            "items": {
+              "$ref": "#/components/schemas/ChallengeTeam"
             }
           }
-        ],
+        },
         "description": "List the Teams registered for a Challenge. You must have READ permission in the associated Project to make this request.",
         "example": {
-          "offset": 10,
-          "limit": 0,
           "totalNumberOfResults": 12345,
           "results": [
             {
@@ -885,37 +2207,1877 @@
       "PaginatedIds": {
         "title": "PaginatedIds",
         "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/PageResultsMetadata"
+        "properties": {
+          "totalNumberOfResults": {
+            "type": "integer",
+            "description": "The total number of results"
           },
-          {
-            "type": "object",
-            "properties": {
-              "totalNumberOfResults": {
-                "type": "integer",
-                "description": "The total number of results"
-              },
-              "results": {
-                "type": "array",
-                "description": "The list of Object Ids for this page",
-                "items": {
-                  "type": "string"
-                }
-              }
+          "results": {
+            "type": "array",
+            "description": "The list of Object Ids for this page",
+            "items": {
+              "type": "string"
             }
           }
-        ],
+        },
         "description": "Paginated results of strings",
         "example": {
-          "limit": 10,
-          "offset": 0,
           "totalNumberOfResults": 12345,
           "results": [
             "test1",
             "test2"
           ]
         }
+      },
+      "ObjectType": {
+        "description": "JSON enum for the types of objects in Synapse.",
+        "enum": [
+          "ENTITY",
+          "ENTITY_CONTAINER",
+          "PRINCIPAL",
+          "ACTIVITY",
+          "EVALUATION",
+          "EVALUATION_ROUND",
+          "SUBMISSION",
+          "EVALUATION_SUBMISSIONS",
+          "FILE",
+          "MESSAGE",
+          "WIKI",
+          "FAVORITE",
+          "ACCESS_REQUIREMENT",
+          "ACCESS_APPROVAL",
+          "TEAM",
+          "TABLE",
+          "ACCESS_CONTROL_LIST",
+          "PROJECT_SETTING",
+          "VERIFICATION_SUBMISSION",
+          "CERTIFIED_USER_PASSING_RECORD",
+          "FORUM",
+          "THREAD",
+          "REPLY",
+          "FORM_GROUP",
+          "ORGANIZATION",
+          "FORM_DATA",
+          "ENTITY_VIEW",
+          "USER_PROFILE",
+          "DATA_ACCESS_REQUEST",
+          "DATA_ACCESS_SUBMISSION",
+          "DATA_ACCESS_SUBMISSION_STATUS",
+          "MEMBERSHIP_INVITATION"
+        ],
+        "title": "ObjectType",
+        "type": "string"
+      },
+      "DoiAssociation": {
+        "description": "All fields that associate a Synapse object with a DOI.\nThe objectId and objectType are required to create or mint a DOI in all circumstances.\n",
+        "example": {
+          "associatedBy": "...",
+          "associatedOn": "...",
+          "associationId": "...",
+          "doiUri": "...",
+          "doiUrl": "...",
+          "etag": "...",
+          "objectId": "...",
+          "objectType": "WIKI",
+          "objectVersion": 12345,
+          "updatedBy": "...",
+          "updatedOn": "..."
+        },
+        "properties": {
+          "associatedBy": {
+            "description": "The ID of the user that creates this DOI. Provided by Synapse.",
+            "type": "string"
+          },
+          "associatedOn": {
+            "description": "The date time this DOI is first created. Provided by Synapse.",
+            "type": "string"
+          },
+          "associationId": {
+            "description": "The unique ID of this DOI stored in Synapse. Provided by Synapse.",
+            "type": "string"
+          },
+          "doiUri": {
+            "description": "The unique URI of this DOI to which the resource can be resolved. Provided by Synapse.",
+            "type": "string"
+          },
+          "doiUrl": {
+            "description": "The DOI URL that will point to the Synapse object. Provided by Synapse.",
+            "type": "string"
+          },
+          "etag": {
+            "description": "For Optimistic Concurrency Control (OCC). Required to successfully update a DOI.",
+            "type": "string"
+          },
+          "objectId": {
+            "description": "The ID of the digital object in Synapse for which this DOI is created.",
+            "require": true,
+            "type": "string"
+          },
+          "objectType": {
+            "$ref": "#/components/schemas/ObjectType"
+          },
+          "objectVersion": {
+            "description": "The version of the digital object. When null, the DOI is associated with the current version of the object.",
+            "type": "integer"
+          },
+          "updatedBy": {
+            "description": "The ID of the user that last updated this DOI. Provided by Synapse.",
+            "type": "string"
+          },
+          "updatedOn": {
+            "description": "The date time this DOI is last updated. Provided by Synapse.",
+            "type": "string"
+          }
+        },
+        "title": "DoiAssociation",
+        "type": "object"
+      },
+      "NameIdentifierScheme": {
+        "description": "Describes the scheme of the nameIdentifier. Required if nameIdentifier is used.",
+        "enum": [
+          "ORCID",
+          "ISNI"
+        ],
+        "title": "NameIdentifierScheme",
+        "type": "string"
+      },
+      "DoiNameIdentifier": {
+        "description": "Uniquely identifies an individual or legal entity, according to various schemas.",
+        "example": {
+          "identifier": "...",
+          "nameIdentifierScheme": "ISNI"
+        },
+        "properties": {
+          "identifier": {
+            "description": "The identifier belonging to the creator.",
+            "type": "string"
+          },
+          "nameIdentifierScheme": {
+            "$ref": "#/components/schemas/NameIdentifierScheme"
+          }
+        },
+        "required": [
+          "identifier",
+          "nameIdentifierScheme"
+        ],
+        "title": "DoiNameIdentifier",
+        "type": "object"
+      },
+      "DoiCreator": {
+        "description": "JSON schema for DOI Metadata Creator.",
+        "example": {
+          "creatorName": "...",
+          "nameIdentifiers": [
+            {
+              "identifier": "...",
+              "nameIdentifierScheme": "ISNI"
+            },
+            {
+              "identifier": "...",
+              "nameIdentifierScheme": "ORCID"
+            }
+          ]
+        },
+        "properties": {
+          "creatorName": {
+            "description": "May be a corporate/institutional or personal name (\"Family, Given\").",
+            "type": "string"
+          },
+          "nameIdentifiers": {
+            "description": "Uniquely identifies an individual or legal entity, according to various schemas.",
+            "items": {
+              "$ref": "#/components/schemas/DoiNameIdentifier"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "creatorName"
+        ],
+        "title": "DoiCreator",
+        "type": "object"
+      },
+      "DoiResourceTypeGeneral": {
+        "description": "Describes the general type of media that DOI Metadata refers to.",
+        "enum": [
+          "Audiovisual",
+          "Collection",
+          "DataPaper",
+          "Dataset",
+          "Event",
+          "Image",
+          "InteractiveResource",
+          "Model",
+          "PhysicalObject",
+          "Service",
+          "Software",
+          "Sound",
+          "Text",
+          "Workflow",
+          "Other"
+        ],
+        "title": "DoiResourceTypeGeneral",
+        "type": "string"
+      },
+      "DoiResourceType": {
+        "description": "Describes the type of media that the DOI Metadata refers to.",
+        "example": {
+          "resourceTypeGeneral": "Image"
+        },
+        "properties": {
+          "resourceTypeGeneral": {
+            "$ref": "#/components/schemas/DoiResourceTypeGeneral"
+          }
+        },
+        "title": "DoiResourceType",
+        "type": "object"
+      },
+      "DoiTitle": {
+        "description": "JSON schema for DOI Metadata Title.",
+        "example": {
+          "title": "..."
+        },
+        "properties": {
+          "title": {
+            "description": "A name or title by which a resource is known",
+            "type": "string"
+          }
+        },
+        "title": "DoiTitle",
+        "type": "object"
+      },
+      "Doi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DoiAssociation"
+          },
+          {
+            "properties": {
+              "creators": {
+                "description": "The main researchers involved in producing the data, or the authors\nof the publication, in priority order.\n",
+                "items": {
+                  "$ref": "#/components/schemas/DoiCreator"
+                },
+                "type": "array"
+              },
+              "publicationYear": {
+                "description": "The year that this resource became publicly accessible. Must be in YYYY format.",
+                "type": "integer"
+              },
+              "resourceType": {
+                "$ref": "#/components/schemas/DoiResourceType"
+              },
+              "titles": {
+                "description": "A name or title by which a resource is known.",
+                "items": {
+                  "$ref": "#/components/schemas/DoiTitle"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "required": [
+          "publicationYear",
+          "titles",
+          "creators"
+        ],
+        "description": "JSON schema for fields associated with a DOI and its metadata.",
+        "title": "Doi"
+      },
+      "DoiRequest": {
+        "description": "An AsynchronousRequestBody to mint or modify DOIs.",
+        "example": {
+          "concreteType": "...",
+          "doi": {
+            "associatedBy": "...",
+            "associatedOn": "...",
+            "associationId": "...",
+            "creators": [
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              },
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              }
+            ],
+            "doiUri": "...",
+            "doiUrl": "...",
+            "etag": "...",
+            "objectId": "...",
+            "objectType": "FORUM",
+            "objectVersion": 12345,
+            "publicationYear": 12345,
+            "resourceType": {
+              "resourceTypeGeneral": "Dataset"
+            },
+            "titles": [
+              {
+                "title": "..."
+              },
+              {
+                "title": "..."
+              }
+            ],
+            "updatedBy": "...",
+            "updatedOn": "..."
+          }
+        },
+        "properties": {
+          "concreteType": {
+            "description": "concrete type",
+            "type": "string"
+          },
+          "doi": {
+            "$ref": "#/components/schemas/Doi"
+          }
+        },
+        "title": "DoiRequest",
+        "type": "object"
+      },
+      "AsyncJobId": {
+        "description": "Object used to track the status of an asynchronous job.",
+        "example": {
+          "token": "..."
+        },
+        "properties": {
+          "token": {
+            "description": "Token",
+            "type": "string"
+          }
+        },
+        "title": "AsyncJobId",
+        "type": "object"
+      },
+      "DoiResponse": {
+        "description": "An response to a DOI mint or update request.",
+        "example": {
+          "concreteType": "...",
+          "doi": {
+            "associatedBy": "...",
+            "associatedOn": "...",
+            "associationId": "...",
+            "creators": [
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  },
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              },
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              }
+            ],
+            "doiUri": "...",
+            "doiUrl": "...",
+            "etag": "...",
+            "objectId": "...",
+            "objectType": "FORM_GROUP",
+            "objectVersion": 12345,
+            "publicationYear": 12345,
+            "resourceType": {
+              "resourceTypeGeneral": "Sound"
+            },
+            "titles": [
+              {
+                "title": "..."
+              },
+              {
+                "title": "..."
+              }
+            ],
+            "updatedBy": "...",
+            "updatedOn": "..."
+          }
+        },
+        "properties": {
+          "concreteType": {
+            "description": "concrete type",
+            "type": "string"
+          },
+          "doi": {
+            "$ref": "#/components/schemas/Doi"
+          }
+        },
+        "title": "DoiResponse",
+        "type": "object"
+      },
+      "String": {
+        "description": "String value",
+        "type": "string"
+      },
+      "SubmissionQuota": {
+        "title": "SubmissionQuota",
+        "type": "object",
+        "description": "Maximum submissions per team/participant per submission round. If round information is omitted, then this indicates the overall submission limit per team/participant.",
+        "example": {
+          "firstRoundStart": "33333333",
+          "numberOfRounds": 1,
+          "roundDurationMillis": 12345,
+          "submissionLimit": 2
+        },
+        "properties": {
+          "firstRoundStart": {
+            "description": "The date/time at which the first round begins.",
+            "type": "string"
+          },
+          "numberOfRounds": {
+            "description": "The number of rounds, or null if there is no end.",
+            "type": "integer"
+          },
+          "roundDurationMillis": {
+            "description": "The duration of each round in milliseconds",
+            "type": "integer"
+          },
+          "submissionLimit": {
+            "description": "the maximum number of submissions per team/participant per round.",
+            "type": "integer"
+          }
+        }
+      },
+      "EvaluationStatus": {
+        "title": "EvaluationStatus",
+        "type": "string",
+        "description": "The possible states of a Synapse Evaluation.",
+        "enum": [
+          "PLANNED",
+          "OPEN",
+          "CLOSED",
+          "COMPLETED"
+        ]
+      },
+      "Evaluation": {
+        "title": "Evaluation",
+        "type": "object",
+        "description": "An Evaluation is the core object of the Evaluation API, used to support collaborative data analysis challenges in Synapse.",
+        "example": {
+          "contentSource": "syn234444",
+          "createdOn": "12345",
+          "description": "Evaluation Queue",
+          "etag": "aaaaa",
+          "id": "12345",
+          "name": "Test Evaluation",
+          "ownerId": "22222",
+          "quota": {
+            "firstRoundStart": "12345",
+            "numberOfRounds": 12345,
+            "roundDurationMillis": 12345,
+            "submissionLimit": 12345
+          },
+          "status": "PLANNED",
+          "submissionInstructionsMessage": "Instructions",
+          "submissionReceiptMessage": "Received"
+        },
+        "properties": {
+          "contentSource": {
+            "description": "The Synapse ID of the Entity to which this Evaluation belongs, e.g. a reference to a Synapse project.",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date on which Evaluation was created.",
+            "type": "string"
+          },
+          "description": {
+            "description": "A text description of this Evaluation.",
+            "type": "string"
+          },
+          "etag": {
+            "description": "Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent updates.\nThe eTag changes every time an Evaluation is updated; it is used to detect when a client's\ncopy of an Evaluation is out-of-date.\n",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique immutable ID for this Evaluation.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of this Evaluation",
+            "type": "string"
+          },
+          "ownerId": {
+            "description": "The ID of the Synapse user who created this Evaluation.",
+            "type": "string"
+          },
+          "quota": {
+            "$ref": "#/components/schemas/SubmissionQuota"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EvaluationStatus"
+          },
+          "submissionInstructionsMessage": {
+            "description": "Message to display to users detailing acceptable formatting for Submissions to this Evaluation.",
+            "type": "string"
+          },
+          "submissionReceiptMessage": {
+            "description": "Message to display to users upon successful submission to this Evaluation.",
+            "type": "string"
+          }
+        }
+      },
+      "PaginatedResultsOfEvaluation": {
+        "title": "PaginatedResultsOfEvaluation",
+        "type": "object",
+        "description": "Gets a collection of Evaluations, within a given range.",
+        "properties": {
+          "results": {
+            "type": "array",
+            "description": "List of evaluations",
+            "items": {
+              "$ref": "#/components/schemas/Evaluation"
+            }
+          },
+          "totalNumberOfResults": {
+            "description": "Number of results per page",
+            "type": "integer"
+          }
+        }
+      },
+      "BooleanResult": {
+        "description": "Boolean result",
+        "example": {
+          "result": true
+        },
+        "properties": {
+          "result": {
+            "description": "Boolean result",
+            "type": "boolean"
+          }
+        },
+        "title": "BooleanResult",
+        "type": "object"
+      },
+      "ACCESS_TYPE": {
+        "title": "ACCESS_TYPE",
+        "type": "string",
+        "description": "The enumeration of possible permission.",
+        "enum": [
+          "CREATE",
+          "READ",
+          "UPDATE",
+          "DELETE",
+          "CHANGE_PERMISSIONS",
+          "DOWNLOAD",
+          "UPLOAD",
+          "PARTICIPATE",
+          "SUBMIT",
+          "READ_PRIVATE_SUBMISSION",
+          "UPDATE_SUBMISSION",
+          "DELETE_SUBMISSION",
+          "TEAM_MEMBERSHIP_UPDATE",
+          "SEND_MESSAGE",
+          "CHANGE_SETTINGS",
+          "MODERATE"
+        ]
+      },
+      "ResourceAccess": {
+        "title": "ResourceAccess",
+        "type": "object",
+        "description": "JSON schema for a ResourceAccess POJO",
+        "example": {
+          "accessType": [
+            "UPDATE",
+            "DELETE_SUBMISSION"
+          ],
+          "principalId": 12345
+        },
+        "properties": {
+          "accessType": {
+            "description": "A list of types of access granted to the given principal",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ACCESS_TYPE"
+            }
+          },
+          "principalId": {
+            "description": "The id of the principal who is granted access",
+            "type": "integer"
+          }
+        }
+      },
+      "AccessControlList": {
+        "title": "AccessControlList",
+        "type": "object",
+        "description": "Contains list of principals who can access the data with the allowed types of access for each.",
+        "properties": {
+          "createdBy": {
+            "description": "UNUSED -- maintained only for backwards compatibility with archived objects",
+            "type": "string"
+          },
+          "creationDate": {
+            "description": "Created Date",
+            "type": "string"
+          },
+          "etag": {
+            "description": "Synapse etag value",
+            "type": "string"
+          },
+          "id": {
+            "description": "The entity id",
+            "type": "string"
+          },
+          "modifiedBy": {
+            "description": "UNUSED -- maintained only for backwards compatibility with archived objects",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "UNUSED -- maintained only for backwards compatibility with archived objects",
+            "type": "string"
+          },
+          "resourceAccess": {
+            "description": "The list of principals who can access the data with the allowed types of access for each.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceAccess"
+            }
+          }
+        },
+        "example": {
+          "createdBy": "...",
+          "creationDate": "12345",
+          "etag": "...",
+          "id": "...",
+          "modifiedBy": "...",
+          "modifiedOn": "12345",
+          "resourceAccess": [
+            {
+              "accessType": [
+                "UPDATE_SUBMISSION",
+                "CHANGE_PERMISSIONS"
+              ],
+              "principalId": 12345
+            },
+            {
+              "accessType": [
+                "UPDATE",
+                "SEND_MESSAGE"
+              ],
+              "principalId": 12345
+            }
+          ]
+        }
+      },
+      "EvaluationRoundLimitType": {
+        "title": "EvaluationRoundLimitType",
+        "type": "string",
+        "description": "Round limit type",
+        "enum": [
+          "TOTAL",
+          "DAILY",
+          "WEEKLY",
+          "MONTHLY"
+        ]
+      },
+      "EvaluationRoundLimit": {
+        "title": "EvaluationRoundLimit",
+        "type": "object",
+        "description": "Round limit",
+        "example": {
+          "limitType": "MONTHLY",
+          "maximumSubmissions": 2
+        },
+        "properties": {
+          "limitType": {
+            "$ref": "#/components/schemas/EvaluationRoundLimitType"
+          },
+          "maximumSubmissions": {
+            "description": "Max number of submissions",
+            "type": "integer"
+          }
+        }
+      },
+      "EvaluationRound": {
+        "title": "EvaluationRound",
+        "type": "object",
+        "description": "Evaluation Round",
+        "example": {
+          "etag": "...",
+          "evaluationId": "...",
+          "id": "...",
+          "limits": [
+            {
+              "limitType": "TOTAL",
+              "maximumSubmissions": 12345
+            },
+            {
+              "limitType": "WEEKLY",
+              "maximumSubmissions": 12345
+            }
+          ],
+          "roundEnd": "12345",
+          "roundStart": "12345"
+        },
+        "properties": {
+          "etag": {
+            "description": "Synapse etag",
+            "type": "string"
+          },
+          "evaluationId": {
+            "description": "The unique immutable ID for this Evaluation.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Evaluation round Id",
+            "type": "string"
+          },
+          "limits": {
+            "description": "List of round limits",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvaluationRoundLimit"
+            }
+          },
+          "roundEnd": {
+            "description": "End of round",
+            "type": "string"
+          },
+          "roundStart": {
+            "description": "Start of round",
+            "type": "string"
+          }
+        }
+      },
+      "EvaluationRoundListRequest": {
+        "title": "EvaluationRoundListRequest",
+        "type": "object",
+        "description": "Round list request",
+        "example": {
+          "nextPageToken": "..."
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "The token required to be sent with the subsequent batch.",
+            "type": "string"
+          }
+        }
+      },
+      "EvaluationRoundListResponse": {
+        "title": "EvaluationRoundListResponse",
+        "type": "object",
+        "description": "List of evaluation rounds",
+        "example": {
+          "nextPageToken": "...",
+          "page": [
+            {
+              "etag": "...",
+              "evaluationId": "...",
+              "id": "...",
+              "limits": [
+                {
+                  "limitType": "TOTAL",
+                  "maximumSubmissions": 12345
+                },
+                {
+                  "limitType": "TOTAL",
+                  "maximumSubmissions": 12345
+                }
+              ],
+              "roundEnd": "12345",
+              "roundStart": "12345"
+            },
+            {
+              "etag": "...",
+              "evaluationId": "...",
+              "id": "...",
+              "limits": [
+                {
+                  "limitType": "TOTAL",
+                  "maximumSubmissions": 12345
+                },
+                {
+                  "limitType": "MONTHLY",
+                  "maximumSubmissions": 12345
+                }
+              ],
+              "roundEnd": "12345",
+              "roundStart": "12345"
+            }
+          ]
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "The token required to be sent with the subsequent batch.",
+            "type": "string"
+          },
+          "page": {
+            "description": "Evaluation round",
+            "items": {
+              "$ref": "#/components/schemas/EvaluationRound"
+            },
+            "type": "array"
+          }
+        }
+      },
+      "DoubleAnnotation": {
+        "description": "An Annotation containing a Float value",
+        "example": {
+          "isPrivate": true,
+          "key": "...",
+          "value": 1.2
+        },
+        "properties": {
+          "isPrivate": {
+            "description": "Flag denoting whether this Annotation should be private.",
+            "type": "boolean"
+          },
+          "key": {
+            "description": "The key of this Annotation",
+            "type": "string"
+          },
+          "value": {
+            "description": "The value of this Annotation",
+            "type": "number"
+          }
+        },
+        "title": "DoubleAnnotation",
+        "type": "object"
+      },
+      "LongAnnotation": {
+        "description": "An Annotation containing a Integer value",
+        "example": {
+          "isPrivate": true,
+          "key": "...",
+          "value": 12345
+        },
+        "properties": {
+          "isPrivate": {
+            "description": "Flag denoting whether this Annotation should be private.",
+            "type": "boolean"
+          },
+          "key": {
+            "description": "The key of this Annotation",
+            "type": "string"
+          },
+          "value": {
+            "description": "The value of this Annotation",
+            "type": "integer"
+          }
+        },
+        "title": "LongAnnotation",
+        "type": "object"
+      },
+      "StringAnnotation": {
+        "title": "StringAnnotation",
+        "type": "object",
+        "description": "An Annotation containing a String value",
+        "example": {
+          "isPrivate": true,
+          "key": "...",
+          "value": "..."
+        },
+        "properties": {
+          "isPrivate": {
+            "description": "Flag denoting whether this Annotation should be private.",
+            "type": "boolean"
+          },
+          "key": {
+            "description": "The key of this Annotation",
+            "type": "string"
+          },
+          "value": {
+            "description": "The value of this Annotation",
+            "type": "string"
+          }
+        }
+      },
+      "Annotations_annotation": {
+        "title": "Annotations",
+        "type": "object",
+        "description": "Primary container object for Annotations on a Synapse object",
+        "example": {
+          "doubleAnnos": [
+            {
+              "isPrivate": true,
+              "key": "...",
+              "value": 12345
+            },
+            {
+              "isPrivate": true,
+              "key": "...",
+              "value": 12345
+            }
+          ],
+          "longAnnos": [
+            {
+              "isPrivate": true,
+              "key": "...",
+              "value": 12345
+            },
+            {
+              "isPrivate": true,
+              "key": "...",
+              "value": 12345
+            }
+          ],
+          "objectId": "...",
+          "scopeId": "...",
+          "stringAnnos": [
+            {
+              "isPrivate": true,
+              "key": "...",
+              "value": "..."
+            },
+            {
+              "isPrivate": true,
+              "key": "...",
+              "value": "..."
+            }
+          ],
+          "version": 12345
+        },
+        "properties": {
+          "doubleAnnos": {
+            "description": "A list of DoubleAnnnotations",
+            "items": {
+              "$ref": "#/components/schemas/DoubleAnnotation"
+            },
+            "type": "array"
+          },
+          "longAnnos": {
+            "description": "A list of LongAnnnotations",
+            "items": {
+              "$ref": "#/components/schemas/LongAnnotation"
+            },
+            "type": "array"
+          },
+          "objectId": {
+            "description": "The Synapse ID of the object with which these Annotations are associated",
+            "type": "string"
+          },
+          "scopeId": {
+            "description": "The Synapse ID of the umbrella object above the object with which these Annotations are associated",
+            "type": "string"
+          },
+          "stringAnnos": {
+            "description": "A list of StringAnnnotations",
+            "items": {
+              "$ref": "#/components/schemas/StringAnnotation"
+            },
+            "type": "array"
+          },
+          "version": {
+            "description": "The system controlled version of this collection of annotations",
+            "type": "integer"
+          }
+        }
+      },
+      "SubmissionStatusEnum": {
+        "description": "The possible states of a Synapse Submission.",
+        "enum": [
+          "OPEN",
+          "CLOSED",
+          "SCORED",
+          "INVALID",
+          "VALIDATED",
+          "EVALUATION_IN_PROGRESS",
+          "RECEIVED",
+          "REJECTED",
+          "ACCEPTED"
+        ],
+        "title": "SubmissionStatusEnum",
+        "type": "string"
+      },
+      "AnnotationsValueType": {
+        "title": "AnnotationsValueType",
+        "type": "string",
+        "description": "describes the type of a AnnotationV2's value\n",
+        "enum": [
+          "STRING",
+          "DOUBLE",
+          "LONG",
+          "TIMESTAMP_MS"
+        ]
+      },
+      "AnnotationsValue": {
+        "description": "Contains a AnnotationV2's value and its type\n",
+        "example": {
+          "type": "DOUBLE",
+          "value": [
+            "...",
+            "..."
+          ]
+        },
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AnnotationsValueType"
+          },
+          "value": {
+            "description": "List of values as strings. Clients should use the \"type\" field to determine how to\ninterpret the strings. Single values Annotations are represented as a list of size 1,\nand multiple values size > 1. Empty list or null is not allowed\n",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "AnnotationsValue",
+        "type": "object"
+      },
+      "Annotations_v2": {
+        "description": "Annotations are additional key-value pair metadata that are associated with an object.",
+        "example": {
+          "annotations": {
+            "property1": {
+              "type": "STRING",
+              "value": [
+                "...",
+                "..."
+              ]
+            },
+            "property2": {
+              "type": "STRING",
+              "value": [
+                "...",
+                "..."
+              ]
+            }
+          },
+          "etag": "...",
+          "id": "..."
+        },
+        "properties": {
+          "annotations": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AnnotationsValue"
+            },
+            "description": "Additional metadata associated with the object. The key is the name of your desired annotations. The value is an object containing a list of string values (use empty list to represent no values for key) and the value type associated with all values in the list",
+            "type": "object"
+          },
+          "etag": {
+            "description": "Etag of the object to which this annotation belongs. To update an AnnotationV2, this field must match the current etag on the object.",
+            "type": "string"
+          },
+          "id": {
+            "description": "ID of the object to which this annotation belongs",
+            "type": "string"
+          }
+        },
+        "title": "Annotations",
+        "type": "object"
+      },
+      "SubmissionStatus_model": {
+        "description": "A SubmissionStatus is a secondary, mutable object associated with a Submission.\nThis object should be used to contain scoring data about the Submission.\n",
+        "example": {
+          "annotations": {
+            "doubleAnnos": [
+              {
+                "isPrivate": true,
+                "key": "...",
+                "value": 12345
+              },
+              {
+                "isPrivate": true,
+                "key": "...",
+                "value": 12345
+              }
+            ],
+            "longAnnos": [
+              {
+                "isPrivate": true,
+                "key": "...",
+                "value": 12345
+              },
+              {
+                "isPrivate": true,
+                "key": "...",
+                "value": 12345
+              }
+            ],
+            "objectId": "...",
+            "scopeId": "...",
+            "stringAnnos": [
+              {
+                "isPrivate": true,
+                "key": "...",
+                "value": "..."
+              },
+              {
+                "isPrivate": true,
+                "key": "...",
+                "value": "..."
+              }
+            ],
+            "version": 12345
+          },
+          "canCancel": true,
+          "cancelRequested": true,
+          "entityId": "...",
+          "etag": "...",
+          "id": "...",
+          "modifiedOn": "12345",
+          "status": "ACCEPTED",
+          "statusVersion": 12345,
+          "submissionAnnotations": {
+            "annotations": {
+              "property1": {
+                "type": "TIMESTAMP_MS",
+                "value": [
+                  "...",
+                  "..."
+                ]
+              },
+              "property2": {
+                "type": "TIMESTAMP_MS",
+                "value": [
+                  "...",
+                  "..."
+                ]
+              }
+            },
+            "etag": "...",
+            "id": "..."
+          },
+          "versionNumber": 12345
+        },
+        "properties": {
+          "annotations": {
+            "$ref": "#/components/schemas/Annotations_annotation"
+          },
+          "canCancel": {
+            "description": "Can this submission be cancelled? By default, this will be set to False.\nUsers can read this value. Only the queue's scoring application can change this value.\n",
+            "type": "boolean"
+          },
+          "cancelRequested": {
+            "description": "Has user requested to cancel this submission? By default, this will be set to False. Submission owner can read and request to change this value.",
+            "type": "boolean"
+          },
+          "entityId": {
+            "description": "The Synapse ID of the Entity in this Submission.",
+            "type": "string"
+          },
+          "etag": {
+            "description": "Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent updates.\nThe eTag changes every time an SubmissionStatus is updated; it is used to detect when a client's\ncopy of an SubmissionStatus is out-of-date.\n",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique, immutable Synapse ID of the Submission.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date on which this SubmissionStatus was last modified.",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatusEnum"
+          },
+          "statusVersion": {
+            "description": "A version of the status, auto-generated and auto-incremented by the system and read-only to the client.",
+            "type": "number"
+          },
+          "submissionAnnotations": {
+            "$ref": "#/components/schemas/Annotations_v2"
+          },
+          "versionNumber": {
+            "description": "The version number of the Entity in this Submission.",
+            "type": "integer"
+          }
+        },
+        "title": "SubmissionStatus",
+        "type": "object"
+      },
+      "SubmissionStatusBatch": {
+        "description": "A batch of status objects, to be updated en masse.",
+        "example": {
+          "batchToken": "...",
+          "isFirstBatch": true,
+          "isLastBatch": true,
+          "statuses": [
+            {
+              "annotations": {
+                "doubleAnnos": [
+                  {},
+                  {}
+                ],
+                "longAnnos": [
+                  {},
+                  {}
+                ],
+                "objectId": "...",
+                "scopeId": "...",
+                "stringAnnos": [
+                  {},
+                  {}
+                ],
+                "version": 12345
+              },
+              "canCancel": true,
+              "cancelRequested": true,
+              "entityId": "...",
+              "etag": "...",
+              "id": "...",
+              "modifiedOn": "12345",
+              "status": "RECEIVED",
+              "statusVersion": 12345,
+              "submissionAnnotations": {
+                "annotations": {
+                  "property1": {},
+                  "property2": {}
+                },
+                "etag": "...",
+                "id": "..."
+              },
+              "versionNumber": 12345
+            },
+            {
+              "annotations": {
+                "doubleAnnos": [
+                  {},
+                  {}
+                ],
+                "longAnnos": [
+                  {},
+                  {}
+                ],
+                "objectId": "...",
+                "scopeId": "...",
+                "stringAnnos": [
+                  {},
+                  {}
+                ],
+                "version": 12345
+              },
+              "canCancel": true,
+              "cancelRequested": true,
+              "entityId": "...",
+              "etag": "...",
+              "id": "...",
+              "modifiedOn": "12345",
+              "status": "CLOSED",
+              "statusVersion": 12345,
+              "submissionAnnotations": {
+                "annotations": {
+                  "property1": {},
+                  "property2": {}
+                },
+                "etag": "...",
+                "id": "..."
+              },
+              "versionNumber": 12345
+            }
+          ]
+        },
+        "properties": {
+          "batchToken": {
+            "description": "A token required to accept a batch submission for all but the first batch.",
+            "type": "string"
+          },
+          "isFirstBatch": {
+            "description": "true if and only if this is the first batch to upload",
+            "type": "boolean"
+          },
+          "isLastBatch": {
+            "description": "true if and only if this is the last batch to upload",
+            "type": "boolean"
+          },
+          "statuses": {
+            "description": "A collection of Submission Statuses",
+            "items": {
+              "$ref": "#/components/schemas/SubmissionStatus_model"
+            },
+            "type": "array"
+          }
+        },
+        "title": "SubmissionStatusBatch",
+        "type": "object"
+      },
+      "BatchUploadResponse": {
+        "title": "BatchUploadResponse",
+        "type": "object",
+        "description": "The response for a batch SubmissionStatus upload.",
+        "example": {
+          "nextUploadToken": "..."
+        },
+        "properties": {
+          "nextUploadToken": {
+            "description": "The token required to be sent with the subsequent batch.",
+            "type": "string"
+          }
+        }
+      },
+      "SubmissionContributor": {
+        "description": "A contributor to an evaluation Submission",
+        "example": {
+          "createdOn": "...",
+          "principalId": "..."
+        },
+        "properties": {
+          "createdOn": {
+            "description": "'date when contributor was added to Submission.\nNormally this will match the creation date of the Submission, but administrative override is allowed.'\n",
+            "type": "string"
+          },
+          "principalId": {
+            "description": "ID of the contributor",
+            "type": "string"
+          }
+        },
+        "title": "SubmissionContributor",
+        "type": "object"
+      },
+      "Submission_model": {
+        "description": "A Submission to a Synapse Evaluation is a pointer to a versioned Entity.\nSubmissions are immutable, so we archive a copy of the EntityBundle at the time of submission.\n",
+        "example": {
+          "contributors": [
+            {
+              "createdOn": "...",
+              "principalId": "..."
+            },
+            {
+              "createdOn": "...",
+              "principalId": "..."
+            }
+          ],
+          "createdOn": "...",
+          "dockerDigest": "...",
+          "dockerRepositoryName": "...",
+          "entityBundleJSON": "...",
+          "entityId": "...",
+          "evaluationId": "...",
+          "evaluationRoundId": "...",
+          "id": "...",
+          "name": "...",
+          "submitterAlias": "...",
+          "teamId": "...",
+          "userId": "...",
+          "versionNumber": 12345
+        },
+        "properties": {
+          "contributors": {
+            "description": "User ids of the submitter and (if a team submission) the team members involved in creating the submission.\n",
+            "items": {
+              "$ref": "#/components/schemas/SubmissionContributor"
+            },
+            "type": "array"
+          },
+          "createdOn": {
+            "description": "The date on which Submission was created.",
+            "type": "string"
+          },
+          "dockerDigest": {
+            "description": "For Docker repositories, the digest from the commit. Null for other entity types.",
+            "type": "string"
+          },
+          "dockerRepositoryName": {
+            "description": "For Docker repositories, the name of the submitted repository. Null for other entity types.",
+            "type": "string"
+          },
+          "entityBundleJSON": {
+            "description": "The Bundled Entity and Annotations JSON at the time of submission.",
+            "type": "string"
+          },
+          "entityId": {
+            "description": "The Synapse ID of the Entity in this Submission.",
+            "type": "string"
+          },
+          "evaluationId": {
+            "description": "The Synapse ID of the Evaluation this Submission is for.",
+            "type": "string"
+          },
+          "evaluationRoundId": {
+            "description": "The Synapse ID of the EvaluationRound to which this was submitted. DO NOT specify a value for this. It will be filled in automatically upon creation of the Submission if the Evaluation is configured with an EvaluationRound.",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique, immutable Synapse ID of this Submission.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The title of this Submission.",
+            "type": "string"
+          },
+          "submitterAlias": {
+            "description": "The alias for the user or team creating the submission.",
+            "type": "string"
+          },
+          "teamId": {
+            "description": "optional Team which collaborated on the submission",
+            "type": "string"
+          },
+          "userId": {
+            "description": "The Synapse ID of the user who created this Submission.",
+            "type": "string"
+          },
+          "versionNumber": {
+            "description": "The submitted version number of the Entity.",
+            "type": "integer"
+          }
+        },
+        "title": "Submission",
+        "type": "object"
+      },
+      "PaginatedResultsOfSubmission": {
+        "title": "PaginatedResultsOfSubmission",
+        "type": "object",
+        "description": "Paginated Results of submissions",
+        "example": {
+          "results": [
+            {
+              "contributors": [
+                {
+                  "createdOn": "...",
+                  "principalId": "..."
+                },
+                {
+                  "createdOn": "...",
+                  "principalId": "..."
+                }
+              ],
+              "createdOn": "...",
+              "dockerDigest": "...",
+              "dockerRepositoryName": "...",
+              "entityBundleJSON": "...",
+              "entityId": "...",
+              "evaluationId": "...",
+              "evaluationRoundId": "...",
+              "id": "...",
+              "name": "...",
+              "submitterAlias": "...",
+              "teamId": "...",
+              "userId": "...",
+              "versionNumber": 12345
+            },
+            {
+              "contributors": [
+                {
+                  "createdOn": "...",
+                  "principalId": "..."
+                },
+                {
+                  "createdOn": "...",
+                  "principalId": "..."
+                }
+              ],
+              "createdOn": "...",
+              "dockerDigest": "...",
+              "dockerRepositoryName": "...",
+              "entityBundleJSON": "...",
+              "entityId": "...",
+              "evaluationId": "...",
+              "evaluationRoundId": "...",
+              "id": "...",
+              "name": "...",
+              "submitterAlias": "...",
+              "teamId": "...",
+              "userId": "...",
+              "versionNumber": 12345
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "Submission results",
+            "items": {
+              "$ref": "#/components/schemas/Submission_model"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "description": "Calculating the actual totalNumberOfResults is not longer supported.\nTherefore, for each page, the totalNumberOfResults is estimated using the current page,\nlimit, and offset. When the page size equals the limit,\nthe totalNumberOfResults will be offset+pageSize+ 1. Otherwise,\nthe totalNumberOfResults will be offset+pageSize.'\n",
+            "type": "integer"
+          }
+        }
+      },
+      "SubmissionBundle": {
+        "description": "A bundle object to contain a Submission and its accompanying SubmissionStatus.",
+        "example": {
+          "submission": {
+            "contributors": [
+              {
+                "createdOn": "...",
+                "principalId": "..."
+              },
+              {
+                "createdOn": "...",
+                "principalId": "..."
+              }
+            ],
+            "createdOn": "...",
+            "dockerDigest": "...",
+            "dockerRepositoryName": "...",
+            "entityBundleJSON": "...",
+            "entityId": "...",
+            "evaluationId": "...",
+            "evaluationRoundId": "...",
+            "id": "...",
+            "name": "...",
+            "submitterAlias": "...",
+            "teamId": "...",
+            "userId": "...",
+            "versionNumber": 12345
+          },
+          "submissionStatus": {
+            "annotations": {
+              "doubleAnnos": [
+                {},
+                {}
+              ],
+              "longAnnos": [
+                {},
+                {}
+              ],
+              "objectId": "...",
+              "scopeId": "...",
+              "stringAnnos": [
+                {},
+                {}
+              ],
+              "version": 12345
+            },
+            "canCancel": true,
+            "cancelRequested": true,
+            "entityId": "...",
+            "etag": "...",
+            "id": "...",
+            "modifiedOn": "...",
+            "status": "RECEIVED",
+            "statusVersion": 12345,
+            "submissionAnnotations": {
+              "annotations": {
+                "property1": {},
+                "property2": {}
+              },
+              "etag": "...",
+              "id": "..."
+            },
+            "versionNumber": 12345
+          }
+        },
+        "properties": {
+          "submission": {
+            "$ref": "#/components/schemas/Submission_model"
+          },
+          "submissionStatus": {
+            "$ref": "#/components/schemas/SubmissionStatus_model"
+          }
+        },
+        "title": "SubmissionBundle",
+        "type": "object"
+      },
+      "PaginatedResultsOfSubmissionBundle": {
+        "description": "Gets the requesting user's bundled Submissions and SubmissionStatuses\nto a specified Evaluation.\n",
+        "example": {
+          "results": [
+            {
+              "submission": {
+                "contributors": [
+                  {},
+                  {}
+                ],
+                "createdOn": "...",
+                "dockerDigest": "...",
+                "dockerRepositoryName": "...",
+                "entityBundleJSON": "...",
+                "entityId": "...",
+                "evaluationId": "...",
+                "evaluationRoundId": "...",
+                "id": "...",
+                "name": "...",
+                "submitterAlias": "...",
+                "teamId": "...",
+                "userId": "...",
+                "versionNumber": 12345
+              },
+              "submissionStatus": {
+                "annotations": {},
+                "canCancel": true,
+                "cancelRequested": true,
+                "entityId": "...",
+                "etag": "...",
+                "id": "...",
+                "modifiedOn": "...",
+                "status": "REJECTED",
+                "statusVersion": 12345,
+                "submissionAnnotations": {},
+                "versionNumber": 12345
+              }
+            },
+            {
+              "submission": {
+                "contributors": [
+                  {},
+                  {}
+                ],
+                "createdOn": "...",
+                "dockerDigest": "...",
+                "dockerRepositoryName": "...",
+                "entityBundleJSON": "...",
+                "entityId": "...",
+                "evaluationId": "...",
+                "evaluationRoundId": "...",
+                "id": "...",
+                "name": "...",
+                "submitterAlias": "...",
+                "teamId": "...",
+                "userId": "...",
+                "versionNumber": 12345
+              },
+              "submissionStatus": {
+                "annotations": {},
+                "canCancel": true,
+                "cancelRequested": true,
+                "entityId": "...",
+                "etag": "...",
+                "id": "...",
+                "modifiedOn": "...",
+                "status": "VALIDATED",
+                "statusVersion": 12345,
+                "submissionAnnotations": {},
+                "versionNumber": 12345
+              }
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "The the id of the entity to which this reference refers",
+            "items": {
+              "$ref": "#/components/schemas/SubmissionBundle"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "description": "Calculating the actual totalNumberOfResults is not longer supported. Therefore,\nfor each page, the totalNumberOfResults is estimated using the current page,\nlimit, and offset. When the page size equals the limit, the totalNumberOfResults\nwill be offset+pageSize+ 1. Otherwise, the totalNumberOfResults will be offset+pageSize.\n",
+            "type": "integer"
+          }
+        },
+        "title": "PaginatedResultsOfSubmissionBundle",
+        "type": "object"
+      },
+      "Integer": {
+        "description": "Integer value",
+        "type": "integer"
+      },
+      "PaginatedResultsOfSubmissionStatus": {
+        "description": "Gets a collection of SubmissionStatuses to a specified Evaluation.",
+        "example": {
+          "results": [
+            {
+              "annotations": {
+                "doubleAnnos": [
+                  {},
+                  {}
+                ],
+                "longAnnos": [
+                  {},
+                  {}
+                ],
+                "objectId": "...",
+                "scopeId": "...",
+                "stringAnnos": [
+                  {},
+                  {}
+                ],
+                "version": 12345
+              },
+              "canCancel": true,
+              "cancelRequested": true,
+              "entityId": "...",
+              "etag": "...",
+              "id": "...",
+              "modifiedOn": "...",
+              "status": "ACCEPTED",
+              "statusVersion": 12345,
+              "submissionAnnotations": {
+                "annotations": {
+                  "property1": {},
+                  "property2": {}
+                },
+                "etag": "...",
+                "id": "..."
+              },
+              "versionNumber": 12345
+            },
+            {
+              "annotations": {
+                "doubleAnnos": [
+                  {},
+                  {}
+                ],
+                "longAnnos": [
+                  {},
+                  {}
+                ],
+                "objectId": "...",
+                "scopeId": "...",
+                "stringAnnos": [
+                  {},
+                  {}
+                ],
+                "version": 12345
+              },
+              "canCancel": true,
+              "cancelRequested": true,
+              "entityId": "...",
+              "etag": "...",
+              "id": "...",
+              "modifiedOn": "...",
+              "status": "ACCEPTED",
+              "statusVersion": 12345,
+              "submissionAnnotations": {
+                "annotations": {
+                  "property1": {},
+                  "property2": {}
+                },
+                "etag": "...",
+                "id": "..."
+              },
+              "versionNumber": 12345
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "The the id of the entity to which this reference refers",
+            "items": {
+              "$ref": "#/components/schemas/SubmissionStatus_model"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "description": "Calculating the actual totalNumberOfResults is not longer supported.\nTherefore, for each page, the totalNumberOfResults is estimated using\nthe current page, limit, and offset. When the page size equals the limit,\nthe totalNumberOfResults will be offset+pageSize+ 1.\nOtherwise, the totalNumberOfResults will be offset+pageSize.\n",
+            "type": "integer"
+          }
+        },
+        "title": "PaginatedResultsOfSubmissionStatus",
+        "type": "object"
+      },
+      "MemberSubmissionEligibility": {
+        "description": "Describes the eligibility of an indivdiual to submit to an Evaluation queue,\nreflecting the queue's submission quotas and current submissions.\n",
+        "example": {
+          "hasConflictingSubmission": true,
+          "isEligible": true,
+          "isQuotaFilled": true,
+          "isRegistered": true,
+          "principalId": 12345
+        },
+        "properties": {
+          "hasConflictingSubmission": {
+            "description": "true if the individual has submitted alone or with another team",
+            "type": "boolean"
+          },
+          "isEligible": {
+            "description": "true if all criteria are met",
+            "type": "boolean"
+          },
+          "isQuotaFilled": {
+            "description": "true if team/individual has reached the submission quota (for the given submission round)",
+            "type": "boolean"
+          },
+          "isRegistered": {
+            "description": "true if team/individual is registered for challenge",
+            "type": "boolean"
+          },
+          "principalId": {
+            "description": "Synapse user id",
+            "type": "number"
+          }
+        },
+        "title": "MemberSubmissionEligibility",
+        "type": "object"
+      },
+      "SubmissionEligibility": {
+        "description": "Describes the eligibility of a to submit to an Evaluation queue,\nreflecting the queue's submission quotas and current submissions.\n",
+        "example": {
+          "isEligible": true,
+          "isQuotaFilled": true,
+          "isRegistered": true
+        },
+        "properties": {
+          "isEligible": {
+            "description": "true if all criteria are met",
+            "type": "boolean"
+          },
+          "isQuotaFilled": {
+            "description": "true if team/individual has reached the submission quota (for the given submission round)",
+            "type": "boolean"
+          },
+          "isRegistered": {
+            "description": "true if team/individual is registered for challenge",
+            "type": "boolean"
+          }
+        },
+        "title": "SubmissionEligibility",
+        "type": "object"
+      },
+      "TeamSubmissionEligibility": {
+        "description": "Describes the eligibility of a Challenge Team to submit to an Evalution queue,\nreflecting the queue's submission quotas and current submissions.\n",
+        "example": {
+          "eligibilityStateHash": 12345,
+          "evaluationId": "...",
+          "membersEligibility": [
+            {
+              "hasConflictingSubmission": true,
+              "isEligible": true,
+              "isQuotaFilled": true,
+              "isRegistered": true,
+              "principalId": 12345
+            },
+            {
+              "hasConflictingSubmission": true,
+              "isEligible": true,
+              "isQuotaFilled": true,
+              "isRegistered": true,
+              "principalId": 12345
+            }
+          ],
+          "teamEligibility": {
+            "isEligible": true,
+            "isQuotaFilled": true,
+            "isRegistered": true
+          },
+          "teamId": "..."
+        },
+        "properties": {
+          "eligibilityStateHash": {
+            "description": "A hash of this object, used for optimistic concurrency.",
+            "type": "integer"
+          },
+          "evaluationId": {
+            "description": "The ID of the Evaluation of interest",
+            "type": "string"
+          },
+          "membersEligibility": {
+            "description": "Describes the submission eligibility of the contributors to the Submission.",
+            "items": {
+              "$ref": "#/components/schemas/MemberSubmissionEligibility"
+            },
+            "type": "array"
+          },
+          "teamEligibility": {
+            "$ref": "#/components/schemas/SubmissionEligibility"
+          },
+          "teamId": {
+            "description": "The ID of the Team of interest",
+            "type": "string"
+          }
+        },
+        "title": "TeamSubmissionEligibility",
+        "type": "object"
       }
     }
   },
