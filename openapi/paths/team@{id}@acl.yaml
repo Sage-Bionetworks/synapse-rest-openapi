@@ -7,7 +7,7 @@ parameters:
       type: string
 get:
   description: Retrieve the AccessControlList for a specified Team.
-  operationId: getTeamACL
+  operationId: getTeamAcl
   responses:
     200:
       content:
