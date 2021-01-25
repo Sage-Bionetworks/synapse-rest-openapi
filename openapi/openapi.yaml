@@ -219,6 +219,8 @@ paths:
     $ref: paths/team@acl.yaml
   /teamList:
     $ref: paths/teamList.yaml
+  /teamMember:
+    $ref: paths/teamMember.yaml
 
 components:
   securitySchemes:
