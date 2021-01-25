@@ -1,0 +1,17 @@
+description: 'An Annotation containing a Integer value'
+example:
+  isPrivate: true
+  key: '...'
+  value: 12345
+properties:
+  isPrivate:
+    description: 'Flag denoting whether this Annotation should be private.'
+    type: boolean
+  key:
+    description: 'The key of this Annotation'
+    type: string
+  value:
+    description: 'The value of this Annotation'
+    type: integer
+title: LongAnnotation
+type: object

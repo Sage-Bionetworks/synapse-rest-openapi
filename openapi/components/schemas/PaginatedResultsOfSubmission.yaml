@@ -1,0 +1,57 @@
+title: PaginatedResultsOfSubmission
+type: object
+description: 'Paginated Results of submissions'
+example:
+  results:
+  - contributors:
+    - createdOn: '...'
+      principalId: '...'
+    - createdOn: '...'
+      principalId: '...'
+    createdOn: '...'
+    dockerDigest: '...'
+    dockerRepositoryName: '...'
+    entityBundleJSON: '...'
+    entityId: '...'
+    evaluationId: '...'
+    evaluationRoundId: '...'
+    id: '...'
+    name: '...'
+    submitterAlias: '...'
+    teamId: '...'
+    userId: '...'
+    versionNumber: 12345
+  - contributors:
+    - createdOn: '...'
+      principalId: '...'
+    - createdOn: '...'
+      principalId: '...'
+    createdOn: '...'
+    dockerDigest: '...'
+    dockerRepositoryName: '...'
+    entityBundleJSON: '...'
+    entityId: '...'
+    evaluationId: '...'
+    evaluationRoundId: '...'
+    id: '...'
+    name: '...'
+    submitterAlias: '...'
+    teamId: '...'
+    userId: '...'
+    versionNumber: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Submission results'
+    items:
+      $ref: 'Submission_model.yaml'
+    type: array
+  totalNumberOfResults:
+    description: |
+      Calculating the actual totalNumberOfResults is not longer supported.
+      Therefore, for each page, the totalNumberOfResults is estimated using the current page,
+      limit, and offset. When the page size equals the limit,
+      the totalNumberOfResults will be offset+pageSize+ 1. Otherwise,
+      the totalNumberOfResults will be offset+pageSize.'
+    type: integer
+

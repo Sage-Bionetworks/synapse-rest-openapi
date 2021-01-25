@@ -1,0 +1,76 @@
+description: 'Gets a collection of SubmissionStatuses to a specified Evaluation.'
+example:
+  results:
+  - annotations:
+      doubleAnnos:
+      - {}
+      - {}
+      longAnnos:
+      - {}
+      - {}
+      objectId: '...'
+      scopeId: '...'
+      stringAnnos:
+      - {}
+      - {}
+      version: 12345
+    canCancel: true
+    cancelRequested: true
+    entityId: '...'
+    etag: '...'
+    id: '...'
+    modifiedOn: '...'
+    status: ACCEPTED
+    statusVersion: 12345
+    submissionAnnotations:
+      annotations:
+        property1: {}
+        property2: {}
+      etag: '...'
+      id: '...'
+    versionNumber: 12345
+  - annotations:
+      doubleAnnos:
+      - {}
+      - {}
+      longAnnos:
+      - {}
+      - {}
+      objectId: '...'
+      scopeId: '...'
+      stringAnnos:
+      - {}
+      - {}
+      version: 12345
+    canCancel: true
+    cancelRequested: true
+    entityId: '...'
+    etag: '...'
+    id: '...'
+    modifiedOn: '...'
+    status: ACCEPTED
+    statusVersion: 12345
+    submissionAnnotations:
+      annotations:
+        property1: {}
+        property2: {}
+      etag: '...'
+      id: '...'
+    versionNumber: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'The the id of the entity to which this reference refers'
+    items:
+      $ref: 'SubmissionStatus_model.yaml'
+    type: array
+  totalNumberOfResults:
+    description: |
+      Calculating the actual totalNumberOfResults is not longer supported.
+      Therefore, for each page, the totalNumberOfResults is estimated using
+      the current page, limit, and offset. When the page size equals the limit,
+      the totalNumberOfResults will be offset+pageSize+ 1.
+      Otherwise, the totalNumberOfResults will be offset+pageSize.
+    type: integer
+title: PaginatedResultsOfSubmissionStatus
+type: object

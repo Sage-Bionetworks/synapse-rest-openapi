@@ -1,0 +1,44 @@
+parameters:
+  - in: path
+    name: evalId
+    description: The ID of the specified Evaluation.
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Gets the requesting user's bundled Submissions and SubmissionStatuses
+    to a specified Evaluation.
+  operationId: getMySubmissionBundles
+  parameters:
+  - description: |
+      Limits the number of entities that will be fetched for this
+      page. When null it will default to 10.'
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+      maximum: 100
+  - description: |
+      The offset index determines where this page will start from.
+      An index of 0 is the first entity. When null it will default
+      to 0.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfSubmissionBundle.yaml
+      description: Success
+  summary: |
+    Gets the requesting users bundled Submissions and SubmissionStatuses
+    to a specified Evaluation.'
+  tags:
+  - Evaluation Services

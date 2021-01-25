@@ -1,0 +1,9 @@
+title: BatchUploadResponse
+type: object
+description: 'The response for a batch SubmissionStatus upload.'
+example:
+  nextUploadToken: '...'
+properties:
+  nextUploadToken:
+    description: 'The token required to be sent with the subsequent batch.'
+    type: string

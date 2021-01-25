@@ -1,9 +1,7 @@
 parameters:
   - in: path
     name: evalId
-    description: |
-      The ID of the evaluation over which the user permission are being
-      retrieved.
+    description: The ID of the specified Evaluation.
     required: true
     schema:
       type: string
@@ -16,6 +14,8 @@ parameters:
 delete:
   deprecated: true
   operationId: deleteEvaluationRound
+  summary: Delete Evaluation Round
+  description: Delete Evaluation Round
   responses:
     204:
       description: The resouce has been deleted
@@ -23,6 +23,8 @@ delete:
   - Evaluation Services
 get:
   deprecated: true
+  summary: Get Evaluation Round
+  description: Get Evaluation Round
   operationId: getEvaluationRound
   responses:
     200:
@@ -34,6 +36,8 @@ get:
   tags:
   - Evaluation Services
 put:
+  summary: Update Evaluation Round
+  description: Update Evaluation Round
   deprecated: true
   operationId: updateEvaluationRound
   requestBody:

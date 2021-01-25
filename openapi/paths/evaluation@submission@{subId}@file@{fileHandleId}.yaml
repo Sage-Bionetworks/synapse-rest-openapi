@@ -1,0 +1,38 @@
+parameters:
+  - description: 'the ID of the requested FileHandle contained in the Submission.'
+    in: path
+    name: fileHandleId
+    required: true
+    schema:
+      type: string
+  - description: 'The ID of the Submission'
+    in: path
+    name: subId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Gets a pre-signed URL to access a requested File contained within
+    a specified Submission.
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.
+    </p>
+  operationId: redirectUrlForFileHandle
+  parameters:
+  - in: query
+    name: redirect
+    description: To redirect
+    schema:
+      type: boolean
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: |
+    Gets a pre-signed URL to access a requested File contained within a specified
+    Submission.
+  tags:
+  - Evaluation Services

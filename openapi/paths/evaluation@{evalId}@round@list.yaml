@@ -6,22 +6,22 @@ parameters:
     schema:
       type: string
 post:
+  summary: Get all rounds of an Evaluation
+  description: Get all rounds of an Evaluation
   deprecated: true
-  summary: Create Evaluation Round
-  description: Create Evaluation Round
-  operationId: createEvaluationRound
+  operationId: getAllEvaluationRounds
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../components/schemas/EvaluationRound.yaml'
+          $ref: '../components/schemas/EvaluationRoundListRequest.yaml'
     required: false
   responses:
-    201:
+    200:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/EvaluationRound.yaml
+            $ref: ../components/schemas/EvaluationRoundListResponse.yaml
       description: Success
   tags:
   - Evaluation Services

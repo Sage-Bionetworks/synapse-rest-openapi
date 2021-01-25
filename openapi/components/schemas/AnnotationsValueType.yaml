@@ -1,0 +1,10 @@
+title: AnnotationsValueType
+type: string
+description: |
+  describes the type of a AnnotationV2's value
+enum:
+- STRING
+- DOUBLE
+- LONG
+- TIMESTAMP_MS
+

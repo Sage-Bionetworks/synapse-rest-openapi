@@ -1,0 +1,53 @@
+title: Annotations
+type: object
+description: 'Primary container object for Annotations on a Synapse object'
+example:
+  doubleAnnos:
+  - isPrivate: true
+    key: '...'
+    value: 12345
+  - isPrivate: true
+    key: '...'
+    value: 12345
+  longAnnos:
+  - isPrivate: true
+    key: '...'
+    value: 12345
+  - isPrivate: true
+    key: '...'
+    value: 12345
+  objectId: '...'
+  scopeId: '...'
+  stringAnnos:
+  - isPrivate: true
+    key: '...'
+    value: '...'
+  - isPrivate: true
+    key: '...'
+    value: '...'
+  version: 12345
+properties:
+  doubleAnnos:
+    description: 'A list of DoubleAnnnotations'
+    items:
+      $ref: 'DoubleAnnotation.yaml'
+    type: array
+  longAnnos:
+    description: 'A list of LongAnnnotations'
+    items:
+      $ref: 'LongAnnotation.yaml'
+    type: array
+  objectId:
+    description: 'The Synapse ID of the object with which these Annotations are associated'
+    type: string
+  scopeId:
+    description: 'The Synapse ID of the umbrella object above the object with which these Annotations are associated'
+    type: string
+  stringAnnos:
+    description: 'A list of StringAnnnotations'
+    items:
+      $ref: 'StringAnnotation.yaml'
+    type: array
+  version:
+    description: 'The system controlled version of this collection of annotations'
+    type: integer

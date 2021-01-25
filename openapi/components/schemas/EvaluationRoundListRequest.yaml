@@ -1,0 +1,9 @@
+title: EvaluationRoundListRequest
+type: object
+description: 'Round list request'
+example:
+  nextPageToken: '...'
+properties:
+  nextPageToken:
+    description: 'The token required to be sent with the subsequent batch.'
+    type: string

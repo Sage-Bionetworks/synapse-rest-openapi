@@ -1,0 +1,70 @@
+description: |
+  A Submission to a Synapse Evaluation is a pointer to a versioned Entity.
+  Submissions are immutable, so we archive a copy of the EntityBundle at the time of submission.
+example:
+  contributors:
+  - createdOn: '...'
+    principalId: '...'
+  - createdOn: '...'
+    principalId: '...'
+  createdOn: '...'
+  dockerDigest: '...'
+  dockerRepositoryName: '...'
+  entityBundleJSON: '...'
+  entityId: '...'
+  evaluationId: '...'
+  evaluationRoundId: '...'
+  id: '...'
+  name: '...'
+  submitterAlias: '...'
+  teamId: '...'
+  userId: '...'
+  versionNumber: 12345
+properties:
+  contributors:
+    description: |
+      User ids of the submitter and (if a team submission) the team members involved in creating the submission.
+    items:
+      $ref: 'SubmissionContributor.yaml'
+    type: array
+  createdOn:
+    description: 'The date on which Submission was created.'
+    type: string
+  dockerDigest:
+    description: 'For Docker repositories, the digest from the commit. Null for other entity types.'
+    type: string
+  dockerRepositoryName:
+    description: 'For Docker repositories, the name of the submitted repository. Null for other entity types.'
+    type: string
+  entityBundleJSON:
+    description: 'The Bundled Entity and Annotations JSON at the time of submission.'
+    type: string
+  entityId:
+    description: 'The Synapse ID of the Entity in this Submission.'
+    type: string
+  evaluationId:
+    description: 'The Synapse ID of the Evaluation this Submission is for.'
+    type: string
+  evaluationRoundId:
+    description: 'The Synapse ID of the EvaluationRound to which this was submitted. DO NOT specify a value for this. It will be filled in automatically upon creation of the Submission if the Evaluation is configured with an EvaluationRound.'
+    type: string
+  id:
+    description: 'The unique, immutable Synapse ID of this Submission.'
+    type: string
+  name:
+    description: 'The title of this Submission.'
+    type: string
+  submitterAlias:
+    description: 'The alias for the user or team creating the submission.'
+    type: string
+  teamId:
+    description: 'optional Team which collaborated on the submission'
+    type: string
+  userId:
+    description: 'The Synapse ID of the user who created this Submission.'
+    type: string
+  versionNumber:
+    description: 'The submitted version number of the Entity.'
+    type: integer
+title: Submission
+type: object

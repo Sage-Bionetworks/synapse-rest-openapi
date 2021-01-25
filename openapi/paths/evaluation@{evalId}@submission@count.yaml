@@ -1,0 +1,23 @@
+parameters:
+  - in: path
+    name: evalId
+    description: The ID of the specified Evaluation.
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Gets the number of Submissions to a specified Evaluation.
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ_PRIVATE_SUBMISSION</a> on the specified Evaluation.
+    </p>
+  operationId: getSubmissionCount
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/Integer.yaml
+      description: Success
+  summary: Gets the number of Submissions to a specified Evaluation.
+  tags:
+  - Evaluation Services

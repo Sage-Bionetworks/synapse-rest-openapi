@@ -1,0 +1,41 @@
+description: |
+  Describes the eligibility of a Challenge Team to submit to an Evalution queue,
+  reflecting the queue's submission quotas and current submissions.
+example:
+  eligibilityStateHash: 12345
+  evaluationId: '...'
+  membersEligibility:
+  - hasConflictingSubmission: true
+    isEligible: true
+    isQuotaFilled: true
+    isRegistered: true
+    principalId: 12345
+  - hasConflictingSubmission: true
+    isEligible: true
+    isQuotaFilled: true
+    isRegistered: true
+    principalId: 12345
+  teamEligibility:
+    isEligible: true
+    isQuotaFilled: true
+    isRegistered: true
+  teamId: '...'
+properties:
+  eligibilityStateHash:
+    description: 'A hash of this object, used for optimistic concurrency.'
+    type: integer
+  evaluationId:
+    description: 'The ID of the Evaluation of interest'
+    type: string
+  membersEligibility:
+    description: 'Describes the submission eligibility of the contributors to the Submission.'
+    items:
+      $ref: 'MemberSubmissionEligibility.yaml'
+    type: array
+  teamEligibility:
+    $ref: 'SubmissionEligibility.yaml'
+  teamId:
+    description: 'The ID of the Team of interest'
+    type: string
+title: TeamSubmissionEligibility
+type: object

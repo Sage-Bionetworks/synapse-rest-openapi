@@ -1,0 +1,24 @@
+parameters:
+  - in: path
+    name: name
+    description: The name of the desired Evaluation.
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Finds an Evaluation by name.
+    <p>
+    <b>Note:</b> The caller must be granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a> on the specified Evaluation.
+    </p>
+  operationId: findEvaluation
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Evaluation.yaml
+      description: Success
+  summary: Finds an Evaluation by name.
+  tags:
+  - Evaluation Services

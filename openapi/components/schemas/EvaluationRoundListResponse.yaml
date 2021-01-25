@@ -1,0 +1,35 @@
+title: EvaluationRoundListResponse
+type: object
+description: 'List of evaluation rounds'
+example:
+  nextPageToken: '...'
+  page:
+  - etag: '...'
+    evaluationId: '...'
+    id: '...'
+    limits:
+    - limitType: TOTAL
+      maximumSubmissions: 12345
+    - limitType: TOTAL
+      maximumSubmissions: 12345
+    roundEnd: '12345'
+    roundStart: '12345'
+  - etag: '...'
+    evaluationId: '...'
+    id: '...'
+    limits:
+    - limitType: TOTAL
+      maximumSubmissions: 12345
+    - limitType: MONTHLY
+      maximumSubmissions: 12345
+    roundEnd: '12345'
+    roundStart: '12345'
+properties:
+  nextPageToken:
+    description: 'The token required to be sent with the subsequent batch.'
+    type: string
+  page:
+    description: 'Evaluation round'
+    items:
+      $ref: 'EvaluationRound.yaml'
+    type: array

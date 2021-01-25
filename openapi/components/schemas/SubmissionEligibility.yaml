@@ -1,0 +1,19 @@
+description: |
+  Describes the eligibility of a to submit to an Evaluation queue,
+  reflecting the queue's submission quotas and current submissions.
+example:
+  isEligible: true
+  isQuotaFilled: true
+  isRegistered: true
+properties:
+  isEligible:
+    description: 'true if all criteria are met'
+    type: boolean
+  isQuotaFilled:
+    description: 'true if team/individual has reached the submission quota (for the given submission round)'
+    type: boolean
+  isRegistered:
+    description: 'true if team/individual is registered for challenge'
+    type: boolean
+title: SubmissionEligibility
+type: object

@@ -1,0 +1,79 @@
+description: 'A batch of status objects, to be updated en masse.'
+example:
+  batchToken: '...'
+  isFirstBatch: true
+  isLastBatch: true
+  statuses:
+  - annotations:
+      doubleAnnos:
+      - {}
+      - {}
+      longAnnos:
+      - {}
+      - {}
+      objectId: '...'
+      scopeId: '...'
+      stringAnnos:
+      - {}
+      - {}
+      version: 12345
+    canCancel: true
+    cancelRequested: true
+    entityId: '...'
+    etag: '...'
+    id: '...'
+    modifiedOn: '12345'
+    status: RECEIVED
+    statusVersion: 12345
+    submissionAnnotations:
+      annotations:
+        property1: {}
+        property2: {}
+      etag: '...'
+      id: '...'
+    versionNumber: 12345
+  - annotations:
+      doubleAnnos:
+      - {}
+      - {}
+      longAnnos:
+      - {}
+      - {}
+      objectId: '...'
+      scopeId: '...'
+      stringAnnos:
+      - {}
+      - {}
+      version: 12345
+    canCancel: true
+    cancelRequested: true
+    entityId: '...'
+    etag: '...'
+    id: '...'
+    modifiedOn: '12345'
+    status: CLOSED
+    statusVersion: 12345
+    submissionAnnotations:
+      annotations:
+        property1: {}
+        property2: {}
+      etag: '...'
+      id: '...'
+    versionNumber: 12345
+properties:
+  batchToken:
+    description: 'A token required to accept a batch submission for all but the first batch.'
+    type: string
+  isFirstBatch:
+    description: 'true if and only if this is the first batch to upload'
+    type: boolean
+  isLastBatch:
+    description: 'true if and only if this is the last batch to upload'
+    type: boolean
+  statuses:
+    description: 'A collection of Submission Statuses'
+    items:
+      $ref: 'SubmissionStatus_model.yaml'
+    type: array
+title: SubmissionStatusBatch
+type: object

@@ -1,0 +1,25 @@
+put:
+  description: |
+    Updates the supplied access control list (ACL) for an evaluation.
+    The <a href="${org.sagebionetworks.repo.model.AccessControlList}">ACL</a>
+    to be updated should have the ID of the evaluation. The user should have the proper
+    <a href="${org.sagebionetworks.evaluation.model.UserEvaluationPermissions}">permissions</a>
+    in order to update the ACL.
+  operationId: updateAcl
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessControlList.yaml'
+    description: The ACL being updated.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Updates the supplied access control list (ACL) for an evaluation.
+  tags:
+  - Evaluation Services
