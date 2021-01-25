@@ -23,8 +23,12 @@
       "description": "A Challenge is a special object that supplements a project, providing additional features\nspecific to challenges.\n"
     },
     {
+      "name": "Doi Services",
+      "description": "Provides REST APIs for managing Synapse DOIs."
+    },
+    {
       "name": "Evaluation Services",
-      "description": "."
+      "description": "The Evaluation API is designed to support open-access data analysis and modeling\nchallenges in Synapse. This framework provides tools for administrators to collect\nand analyze data models from Synapse users created for a specific goal or purpose.\n"
     }
   ],
   "paths": {
@@ -532,6 +536,231 @@
             "description": "The resource was deleted successfully."
           }
         }
+      }
+    },
+    "/doi": {
+      "get": {
+        "description": "Retrieves the DOI for the object and its associated DOI metadata.\nNote: this call calls an external API, which may impact performance\nTo just retrieve the DOI association, see: <a href=\"${GET.doi.association}\">GET /doi/association</a>\n",
+        "operationId": "getDoiV2",
+        "parameters": [
+          {
+            "description": "The ID of the object to retrieve",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The type of the object",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectType"
+            }
+          },
+          {
+            "description": "The version number of the object",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Doi"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieves the DOI for the object and its associated DOI metadata.",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/association": {
+      "get": {
+        "description": "Retrieves the DOI for the object.\nNote: this call only retrieves the DOI association, if it exists. To retrieve\nthe metadata for the object,\nsee <a href=\"${GET.doi}\">GET /doi</a>'\n",
+        "operationId": "getDoiAssociation",
+        "parameters": [
+          {
+            "description": "The ID of the object to retrieve",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The type of the object",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectType"
+            }
+          },
+          {
+            "description": "The version number of the object",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoiAssociation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieves the DOI for the object.",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/async/start": {
+      "post": {
+        "description": "Asynchronously creates or updates a DOI in Synapse, with input metadata.\nRetrieve the results with\n<a href=\"${GET.doi.async.get.asyncToken}\">GET /doi/async/get/{asyncToken}</a>.\nThis call may fail if the external\nDataCite API is down. If the failure is recoverable, it will retry automatically.'\n",
+        "operationId": "startCreateOrUpdateDoi",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoiRequest"
+              }
+            }
+          },
+          "description": "A request containing a DOI and its metadata to associate with a Synapse\nobject\n",
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsyncJobId"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Asynchronously creates or updates a DOI in Synapse, with input metadata.",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/async/get/{asyncToken}": {
+      "get": {
+        "description": "Get the results of a call to POST /doi/async/start\n",
+        "operationId": "getCreateOrUpdateDoiResults",
+        "parameters": [
+          {
+            "description": "The async job token from the create/update call",
+            "in": "path",
+            "name": "asyncToken",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoiResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the results of a call to POST /doi/async/start",
+        "tags": [
+          "Doi Services"
+        ]
+      }
+    },
+    "/doi/locate": {
+      "get": {
+        "description": "Retrieves the Synapse web portal URL to the object entered.\nNote: This call does not check to see if the object exists in Synapse.\n",
+        "operationId": "locate",
+        "parameters": [
+          {
+            "description": "The ID of the object to retrieve",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Whether to return the URL or redirect to the URL",
+            "in": "query",
+            "name": "redirect",
+            "schema": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "The type of the object",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectType"
+            }
+          },
+          {
+            "description": "The version number of the object",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieves the Synapse web portal URL to the object entered.",
+        "tags": [
+          "Doi Services"
+        ]
       }
     },
     "/entity/{id}/challenge": {
@@ -2000,6 +2229,409 @@
           ]
         }
       },
+      "ObjectType": {
+        "description": "JSON enum for the types of objects in Synapse.",
+        "enum": [
+          "ENTITY",
+          "ENTITY_CONTAINER",
+          "PRINCIPAL",
+          "ACTIVITY",
+          "EVALUATION",
+          "EVALUATION_ROUND",
+          "SUBMISSION",
+          "EVALUATION_SUBMISSIONS",
+          "FILE",
+          "MESSAGE",
+          "WIKI",
+          "FAVORITE",
+          "ACCESS_REQUIREMENT",
+          "ACCESS_APPROVAL",
+          "TEAM",
+          "TABLE",
+          "ACCESS_CONTROL_LIST",
+          "PROJECT_SETTING",
+          "VERIFICATION_SUBMISSION",
+          "CERTIFIED_USER_PASSING_RECORD",
+          "FORUM",
+          "THREAD",
+          "REPLY",
+          "FORM_GROUP",
+          "ORGANIZATION",
+          "FORM_DATA",
+          "ENTITY_VIEW",
+          "USER_PROFILE",
+          "DATA_ACCESS_REQUEST",
+          "DATA_ACCESS_SUBMISSION",
+          "DATA_ACCESS_SUBMISSION_STATUS",
+          "MEMBERSHIP_INVITATION"
+        ],
+        "title": "ObjectType",
+        "type": "string"
+      },
+      "DoiAssociation": {
+        "description": "All fields that associate a Synapse object with a DOI.\nThe objectId and objectType are required to create or mint a DOI in all circumstances.\n",
+        "example": {
+          "associatedBy": "...",
+          "associatedOn": "...",
+          "associationId": "...",
+          "doiUri": "...",
+          "doiUrl": "...",
+          "etag": "...",
+          "objectId": "...",
+          "objectType": "WIKI",
+          "objectVersion": 12345,
+          "updatedBy": "...",
+          "updatedOn": "..."
+        },
+        "properties": {
+          "associatedBy": {
+            "description": "The ID of the user that creates this DOI. Provided by Synapse.",
+            "type": "string"
+          },
+          "associatedOn": {
+            "description": "The date time this DOI is first created. Provided by Synapse.",
+            "type": "string"
+          },
+          "associationId": {
+            "description": "The unique ID of this DOI stored in Synapse. Provided by Synapse.",
+            "type": "string"
+          },
+          "doiUri": {
+            "description": "The unique URI of this DOI to which the resource can be resolved. Provided by Synapse.",
+            "type": "string"
+          },
+          "doiUrl": {
+            "description": "The DOI URL that will point to the Synapse object. Provided by Synapse.",
+            "type": "string"
+          },
+          "etag": {
+            "description": "For Optimistic Concurrency Control (OCC). Required to successfully update a DOI.",
+            "type": "string"
+          },
+          "objectId": {
+            "description": "The ID of the digital object in Synapse for which this DOI is created.",
+            "require": true,
+            "type": "string"
+          },
+          "objectType": {
+            "$ref": "#/components/schemas/ObjectType"
+          },
+          "objectVersion": {
+            "description": "The version of the digital object. When null, the DOI is associated with the current version of the object.",
+            "type": "integer"
+          },
+          "updatedBy": {
+            "description": "The ID of the user that last updated this DOI. Provided by Synapse.",
+            "type": "string"
+          },
+          "updatedOn": {
+            "description": "The date time this DOI is last updated. Provided by Synapse.",
+            "type": "string"
+          }
+        },
+        "title": "DoiAssociation",
+        "type": "object"
+      },
+      "NameIdentifierScheme": {
+        "description": "Describes the scheme of the nameIdentifier. Required if nameIdentifier is used.",
+        "enum": [
+          "ORCID",
+          "ISNI"
+        ],
+        "title": "NameIdentifierScheme",
+        "type": "string"
+      },
+      "DoiNameIdentifier": {
+        "description": "Uniquely identifies an individual or legal entity, according to various schemas.",
+        "example": {
+          "identifier": "...",
+          "nameIdentifierScheme": "ISNI"
+        },
+        "properties": {
+          "identifier": {
+            "description": "The identifier belonging to the creator.",
+            "type": "string"
+          },
+          "nameIdentifierScheme": {
+            "$ref": "#/components/schemas/NameIdentifierScheme"
+          }
+        },
+        "required": [
+          "identifier",
+          "nameIdentifierScheme"
+        ],
+        "title": "DoiNameIdentifier",
+        "type": "object"
+      },
+      "DoiCreator": {
+        "description": "JSON schema for DOI Metadata Creator.",
+        "example": {
+          "creatorName": "...",
+          "nameIdentifiers": [
+            {
+              "identifier": "...",
+              "nameIdentifierScheme": "ISNI"
+            },
+            {
+              "identifier": "...",
+              "nameIdentifierScheme": "ORCID"
+            }
+          ]
+        },
+        "properties": {
+          "creatorName": {
+            "description": "May be a corporate/institutional or personal name (\"Family, Given\").",
+            "type": "string"
+          },
+          "nameIdentifiers": {
+            "description": "Uniquely identifies an individual or legal entity, according to various schemas.",
+            "items": {
+              "$ref": "#/components/schemas/DoiNameIdentifier"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "creatorName"
+        ],
+        "title": "DoiCreator",
+        "type": "object"
+      },
+      "DoiResourceTypeGeneral": {
+        "description": "Describes the general type of media that DOI Metadata refers to.",
+        "enum": [
+          "Audiovisual",
+          "Collection",
+          "DataPaper",
+          "Dataset",
+          "Event",
+          "Image",
+          "InteractiveResource",
+          "Model",
+          "PhysicalObject",
+          "Service",
+          "Software",
+          "Sound",
+          "Text",
+          "Workflow",
+          "Other"
+        ],
+        "title": "DoiResourceTypeGeneral",
+        "type": "string"
+      },
+      "DoiResourceType": {
+        "description": "Describes the type of media that the DOI Metadata refers to.",
+        "example": {
+          "resourceTypeGeneral": "Image"
+        },
+        "properties": {
+          "resourceTypeGeneral": {
+            "$ref": "#/components/schemas/DoiResourceTypeGeneral"
+          }
+        },
+        "title": "DoiResourceType",
+        "type": "object"
+      },
+      "DoiTitle": {
+        "description": "JSON schema for DOI Metadata Title.",
+        "example": {
+          "title": "..."
+        },
+        "properties": {
+          "title": {
+            "description": "A name or title by which a resource is known",
+            "type": "string"
+          }
+        },
+        "title": "DoiTitle",
+        "type": "object"
+      },
+      "Doi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DoiAssociation"
+          },
+          {
+            "properties": {
+              "creators": {
+                "description": "The main researchers involved in producing the data, or the authors\nof the publication, in priority order.\n",
+                "items": {
+                  "$ref": "#/components/schemas/DoiCreator"
+                },
+                "type": "array"
+              },
+              "publicationYear": {
+                "description": "The year that this resource became publicly accessible. Must be in YYYY format.",
+                "type": "integer"
+              },
+              "resourceType": {
+                "$ref": "#/components/schemas/DoiResourceType"
+              },
+              "titles": {
+                "description": "A name or title by which a resource is known.",
+                "items": {
+                  "$ref": "#/components/schemas/DoiTitle"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "required": [
+          "publicationYear",
+          "titles",
+          "creators"
+        ],
+        "description": "JSON schema for fields associated with a DOI and its metadata.",
+        "title": "Doi"
+      },
+      "DoiRequest": {
+        "description": "An AsynchronousRequestBody to mint or modify DOIs.",
+        "example": {
+          "concreteType": "...",
+          "doi": {
+            "associatedBy": "...",
+            "associatedOn": "...",
+            "associationId": "...",
+            "creators": [
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              },
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              }
+            ],
+            "doiUri": "...",
+            "doiUrl": "...",
+            "etag": "...",
+            "objectId": "...",
+            "objectType": "FORUM",
+            "objectVersion": 12345,
+            "publicationYear": 12345,
+            "resourceType": {
+              "resourceTypeGeneral": "Dataset"
+            },
+            "titles": [
+              {
+                "title": "..."
+              },
+              {
+                "title": "..."
+              }
+            ],
+            "updatedBy": "...",
+            "updatedOn": "..."
+          }
+        },
+        "properties": {
+          "concreteType": {
+            "description": "concrete type",
+            "type": "string"
+          },
+          "doi": {
+            "$ref": "#/components/schemas/Doi"
+          }
+        },
+        "title": "DoiRequest",
+        "type": "object"
+      },
+      "AsyncJobId": {
+        "description": "Object used to track the status of an asynchronous job.",
+        "example": {
+          "token": "..."
+        },
+        "properties": {
+          "token": {
+            "description": "Token",
+            "type": "string"
+          }
+        },
+        "title": "AsyncJobId",
+        "type": "object"
+      },
+      "DoiResponse": {
+        "description": "An response to a DOI mint or update request.",
+        "example": {
+          "concreteType": "...",
+          "doi": {
+            "associatedBy": "...",
+            "associatedOn": "...",
+            "associationId": "...",
+            "creators": [
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  },
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              },
+              {
+                "creatorName": "...",
+                "nameIdentifiers": [
+                  {
+                    "identifier": "...",
+                    "nameIdentifierScheme": "ORCID"
+                  }
+                ]
+              }
+            ],
+            "doiUri": "...",
+            "doiUrl": "...",
+            "etag": "...",
+            "objectId": "...",
+            "objectType": "FORM_GROUP",
+            "objectVersion": 12345,
+            "publicationYear": 12345,
+            "resourceType": {
+              "resourceTypeGeneral": "Sound"
+            },
+            "titles": [
+              {
+                "title": "..."
+              },
+              {
+                "title": "..."
+              }
+            ],
+            "updatedBy": "...",
+            "updatedOn": "..."
+          }
+        },
+        "properties": {
+          "concreteType": {
+            "description": "concrete type",
+            "type": "string"
+          },
+          "doi": {
+            "$ref": "#/components/schemas/Doi"
+          }
+        },
+        "title": "DoiResponse",
+        "type": "object"
+      },
+      "String": {
+        "description": "String value",
+        "type": "string"
+      },
       "SubmissionQuota": {
         "title": "SubmissionQuota",
         "type": "object",
@@ -3446,10 +4078,6 @@
         },
         "title": "TeamSubmissionEligibility",
         "type": "object"
-      },
-      "String": {
-        "description": "String value",
-        "type": "string"
       }
     }
   },
