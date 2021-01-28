@@ -1,0 +1,16 @@
+description: 'Reference to a WikiPage'
+example:
+  ownerObjectId: '...'
+  ownerObjectType: ORGANIZATION
+  wikiPageId: '...'
+properties:
+  ownerObjectId:
+    description: 'The owner of this page.'
+    type: string
+  ownerObjectType:
+    $ref: 'ObjectType.yaml'
+  wikiPageId:
+    description: 'The ID of the wiki page.'
+    type: string
+title: WikiPageKey
+type: object

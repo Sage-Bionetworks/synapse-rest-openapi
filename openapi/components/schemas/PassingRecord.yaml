@@ -1,0 +1,58 @@
+description: 'A record of whether a given user passed a given test'
+example:
+  corrections:
+  - isCorrect: true
+    question:
+      concreteType: '...'
+      docLink: '...'
+      helpText: '...'
+      prompt: '...'
+      questionIndex: 12345
+      reference: {}
+    response:
+      concreteType: '...'
+      questionIndex: 12345
+  - isCorrect: true
+    question:
+      concreteType: '...'
+      docLink: '...'
+      helpText: '...'
+      prompt: '...'
+      questionIndex: 12345
+      reference: {}
+    response:
+      concreteType: '...'
+      questionIndex: 12345
+  passed: true
+  passedOn: '...'
+  quizId: 12345
+  responseId: 12345
+  score: 12345
+  userId: '...'
+properties:
+  corrections:
+    description: 'For each response, whether it was correct'
+    items:
+      $ref: 'ResponseCorrectness.yaml'
+    type: array
+  passed:
+    description: 'Whether the user passed the given test'
+    type: boolean
+  passedOn:
+    description: 'Date/time when the user passed the test (omitted if the user has not passed)'
+    type: string
+  quizId:
+    description: 'The id of the quiz'
+    type: integer
+  responseId:
+    description: |
+      The id of the user's response
+    type: integer
+  score:
+    description: 'The score the user received on the test'
+    type: integer
+  userId:
+    description: 'The principal id of the user'
+    type: string
+title: PassingRecord
+type: object

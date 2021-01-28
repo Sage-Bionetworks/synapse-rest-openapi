@@ -1,0 +1,31 @@
+description: 'A single question in a Quiz'
+example:
+  concreteType: '...'
+  docLink: '...'
+  helpText: '...'
+  prompt: '...'
+  questionIndex: 12345
+  reference:
+    ownerObjectId: '...'
+    ownerObjectType: MESSAGE
+    wikiPageId: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  docLink:
+    description: 'Link to the document that contains information for background reading related to the question.'
+    type: string
+  helpText:
+    description: 'A short text that provides a snippet of help to answer the question.'
+    type: string
+  prompt:
+    description: 'the user-readable prompt for this question'
+    type: string
+  questionIndex:
+    description: 'An index unique in the Quiz, used to refer to this question'
+    type: integer
+  reference:
+    $ref: 'WikiPageKey.yaml'
+title: Question
+type: object
