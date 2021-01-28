@@ -1,0 +1,76 @@
+description: 'Page of UserProfiles'
+example:
+  results:
+  - RStudioUrl: '...'
+    company: '...'
+    createdOn: '...'
+    displayName: '...'
+    email: '...'
+    emails:
+    - '...'
+    - '...'
+    etag: '...'
+    firstName: '...'
+    industry: '...'
+    lastName: '...'
+    location: '...'
+    notificationSettings:
+      markEmailedMessagesAsRead: true
+      sendEmailNotifications: true
+    openIds:
+    - '...'
+    - '...'
+    ownerId: '...'
+    position: '...'
+    preferences:
+    - concreteType: '...'
+      name: '...'
+    - concreteType: '...'
+      name: '...'
+    profilePicureFileHandleId: '...'
+    summary: '...'
+    teamName: '...'
+    url: '...'
+    userName: '...'
+  - RStudioUrl: '...'
+    company: '...'
+    createdOn: '...'
+    displayName: '...'
+    email: '...'
+    emails:
+    - '...'
+    - '...'
+    etag: '...'
+    firstName: '...'
+    industry: '...'
+    lastName: '...'
+    location: '...'
+    notificationSettings:
+      markEmailedMessagesAsRead: true
+      sendEmailNotifications: true
+    openIds:
+    - '...'
+    - '...'
+    ownerId: '...'
+    position: '...'
+    preferences:
+    - concreteType: '...'
+      name: '...'
+    - concreteType: '...'
+      name: '...'
+    profilePicureFileHandleId: '...'
+    summary: '...'
+    teamName: '...'
+    url: '...'
+    userName: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'List of User profiles'
+    items:
+      $ref: 'UserProfile.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfUserProfile
+type: object

@@ -1,0 +1,13 @@
+description: 'User preferences'
+example:
+  concreteType: '...'
+  name: '...'
+properties:
+  concreteType:
+    description: 'Concrete type'
+    type: string
+  name:
+    description: 'The name of the user preference.'
+    type: string
+title: UserPreference
+type: object

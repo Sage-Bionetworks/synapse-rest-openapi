@@ -1,0 +1,50 @@
+get:
+  description: |
+    Get all publicly available <a href="${org.sagebionetworks.repo.model.UserProfile}">UserProfile</a>
+    data in the system
+  operationId: getUserProfilesPaginated
+  parameters:
+  - description: Used to indicate whether the sort direction is ascending or not.
+    in: query
+    name: ascending
+    schema:
+      default: true
+      type: boolean
+  - description: |
+      Limits the number of items that will be fetched for this page
+    in: query
+    name: limit
+    schema:
+      default: 100
+      type: integer
+  - description: The offset index determines where this page will start from. An index
+      of 0 is the first item.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+  - description: Used to indicate upon which field(s) to sort.
+    in: query
+    name: sort
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    description: |
+      Get all publicly available <a href="${org.sagebionetworks.repo.model.UserProfile}">UserProfile</a>
+      data in the system
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfUserProfile.yaml
+      description: Success
+  summary: Get all publicly available.
+  tags:
+  - User Profile Services

@@ -1,0 +1,114 @@
+description: 'JSON schema for UserProfile POJO'
+example:
+  RStudioUrl: '...'
+  company: '...'
+  createdOn: '...'
+  displayName: '...'
+  email: '...'
+  emails:
+  - '...'
+  - '...'
+  etag: '...'
+  firstName: '...'
+  industry: '...'
+  lastName: '...'
+  location: '...'
+  notificationSettings:
+    markEmailedMessagesAsRead: true
+    sendEmailNotifications: true
+  openIds:
+  - '...'
+  - '...'
+  ownerId: '...'
+  position: '...'
+  preferences:
+  - concreteType: '...'
+    name: '...'
+  - concreteType: '...'
+    name: '...'
+  profilePicureFileHandleId: '...'
+  summary: '...'
+  teamName: '...'
+  url: '...'
+  userName: '...'
+properties:
+  RStudioUrl:
+    description: 'URL for RStudio server assigned to the user'
+    type: string
+  company: 
+    description: |
+      This person's current affiliation
+    type: string
+  createdOn:
+    description: 'The date this profile was created.'
+    type: string
+  displayName:
+    description: 'Will always be null.'
+    type: string
+    deprecated: true
+  email:
+    description: 'Users can have more than one email. See emails'
+    type: string
+    deprecated: true
+  emails:
+    description: 'The list of user email addresses registered to this user.'
+    items:
+      type: string
+    type: array
+  etag:
+    $ref: ../definitions/Etag.yaml
+  firstName:
+    description: |
+      This person's given name (forename)
+    type: string
+  industry:
+    description: 'The industry/discipline that this person is associated with'
+    type: string
+  lastName:
+    description: |
+      This person's family name (surname)
+    type: string
+  location:
+    description: |
+      This person's location
+    type: string
+  notificationSettings:
+    $ref: 'Settings.yaml'
+  openIds:
+    description: |
+      'The list of OpenIds bound to this user's account.'
+    items:
+      type: string
+    type: array
+  ownerId:
+    description: |
+      'A foreign key to the ID of the 'principal' object for the user.'
+    type: string
+  position:
+    description: |
+      This person's current position title
+    type: string
+  preferences:
+    description: 'User preferences'
+    items:
+      $ref: 'UserPreference.yaml'
+    type: array
+  profilePicureFileHandleId:
+    description: |
+      The FileHandle.id of the user's profile picture.
+    type: string
+  summary:
+    description: 'A summary description about this person'
+    type: string
+  teamName:
+    description: |
+      This person's default team name
+    type: string
+  url:
+    description: 'A link to more information about this person'
+    type: string
+  userName:
+    description: 'A name chosen by the user that uniquely identifies them.'
+    type: string
+title: UserProfile
+type: object

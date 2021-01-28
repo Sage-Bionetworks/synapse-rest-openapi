@@ -104,8 +104,8 @@ tags:
       The recycle bin (or trash can) is the special folder that holds the
       deleted entities for users.
   # - name: User Group Service
-  # - name: User Profile Services
-  #   description: Every Synapse user has an associated.
+  - name: User Profile Services
+    description: Every Synapse user has an associated User Profile
   # - name: V2 Wiki Services
   #   description: "."
   # - name: Verification Services
@@ -236,6 +236,8 @@ paths:
     $ref: paths/trashcan@trash@{id}.yaml
   /trashcan/view:
     $ref: paths/trashcan@view.yaml
+  /user:
+    $ref: paths/user.yaml
 
 components:
   securitySchemes:

@@ -1,0 +1,16 @@
+description: |
+  Contains a user's notification settings
+example:
+  markEmailedMessagesAsRead: true
+  sendEmailNotifications: true
+properties:
+  markEmailedMessagesAsRead:
+    description: 'Should messages that are emailed to the user be marked as READ in Synapse? Default false.'
+    type: boolean
+    default: false
+  sendEmailNotifications:
+    description: 'Should the user receive email notifications? Default true.'
+    type: boolean
+    default: true
+title: Settings
+type: object
