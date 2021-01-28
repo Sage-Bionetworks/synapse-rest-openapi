@@ -40,4 +40,4 @@ get:
       description: Success
   summary: Get the user bundle of a specified user.
   tags:
-  - UserProfileController
+  - User Profile Services
