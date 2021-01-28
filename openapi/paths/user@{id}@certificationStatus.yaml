@@ -1,0 +1,19 @@
+parameters:
+- in: path
+  name: id
+  required: true
+  description: Synapse User id
+  schema:
+    type: string
+put:
+  operationId: setUserCertificationStatus
+  summary: Set certification status
+  description: Setting certification status.
+  responses:
+    204:
+      description: Success
+    410:
+      content: {}
+      description: Success
+  tags:
+  - Certified User Services
