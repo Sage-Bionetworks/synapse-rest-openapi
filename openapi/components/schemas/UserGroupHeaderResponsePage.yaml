@@ -1,0 +1,34 @@
+description: 'A single page of a users/groups info query response.'
+example:
+  children:
+  - displayName: '...'
+    email: '...'
+    firstName: '...'
+    isIndividual: true
+    lastName: '...'
+    ownerId: '...'
+    userName: '...'
+  - displayName: '...'
+    email: '...'
+    firstName: '...'
+    isIndividual: true
+    lastName: '...'
+    ownerId: '...'
+    userName: '...'
+  prefixFilter: '...'
+  totalNumberOfResults: 12345
+properties:
+  children:
+    description: 'The list of children that match the requested concept.'
+    items:
+      $ref: 'UserGroupHeader.yaml'
+    type: array
+  prefixFilter:
+    description: 'The prefix filter used to generate this result.'
+    type: string
+  totalNumberOfResults:
+    description: 'Total number of results'
+    type: number
+    deprecated: true
+title: UserGroupHeaderResponsePage
+type: object

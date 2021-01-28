@@ -262,6 +262,8 @@ paths:
     $ref: paths/user@bundle.yaml
   /userGroup:
     $ref: paths/userGroup.yaml
+  /userGroupHeaders:
+    $ref: paths/userGroupHeaders.yaml
 
 components:
   securitySchemes:

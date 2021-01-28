@@ -1,0 +1,46 @@
+get:
+  description: Get Users and Groups that match the given prefix.
+  operationId: getUserGroupHeadersByPrefix
+  parameters:
+  - description: |
+      Limits the number of items that will be fetched for this page.
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+  - description: |
+      The offset index determines where this page will start from.
+      An index of 0 is the first item.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 10
+  - description: The name to search for.
+    in: query
+    name: prefix
+    schema:
+      type: string
+  - description: |
+      Restrict the results to a type of principal.
+      Available options: <a href="${org.sagebionetworks.repo.model.principal.TypeFilter}">TypeFilter</a>.'
+    in: query
+    name: typeFilter
+    schema:
+      enum:
+      - ALL
+      - TEAMS_ONLY
+      - USERS_ONLY
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserGroupHeaderResponsePage.yaml
+      description: Success
+  summary: Get Users and Groups that match the given prefix.
+  tags:
+  - User Profile Services
