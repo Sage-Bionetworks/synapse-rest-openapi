@@ -1,0 +1,56 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the annotations for an entity.
+
+    <p>
+
+    Note: The caller must be granted the
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}" >ACCESS_TYPE.READ</a>
+    on the Entity, to get its annotations.
+
+    </p>
+  operationId: getEntityAnnotations
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Annotations_v2.yaml
+      description: Success
+  summary: Get the annotations for an entity.
+  tags:
+  - Entity Services
+put:
+  description: |
+    Update an Entity's annotations.
+
+    <p>
+
+    Note: The caller must be granted the
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.UPDATE</a>
+    on the Entity, to update its annotations.
+    </p>
+  operationId: updateEntityAnnotations
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Annotations_v2.yaml
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Annotations_v2.yaml
+      description: Success
+  summary: Update an Entity's annotations.
+  tags:
+  - Entity Services
