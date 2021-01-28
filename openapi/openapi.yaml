@@ -274,7 +274,8 @@ paths:
     $ref: paths/userProfile@{profileId}.yaml
   /userProfile/{profileId}/image:
     $ref: paths/userProfile@{profileId}@image.yaml
-
+  /userProfile/{profileId}/image/preview:
+    $ref: paths/userProfile@{profileId}@image@preview.yaml
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme

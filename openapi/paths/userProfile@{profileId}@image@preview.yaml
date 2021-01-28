@@ -1,0 +1,33 @@
+parameters:
+  - description: The ID of the Synapse user.
+    in: path
+    name: profileId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the actual URL of the image file associated with a user''s profile.
+    <p>
+    Note: This call will result in a HTTP temporary redirect (307), to the
+    actual file URL if the caller meets all of the download requirements.
+    </p>
+  operationId: imagePreviewRedirectUrlForUser
+  parameters:
+  - description: |
+      When set to false, the URL will be returned as text/plain
+      instead of redirecting.
+    in: query
+    name: redirect
+    schema:
+      type: boolean
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Get the actual URL of the image file associated with a user's profile.
+  tags:
+  - User Profile Services
