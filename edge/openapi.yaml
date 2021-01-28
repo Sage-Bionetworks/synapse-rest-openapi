@@ -52,6 +52,10 @@ tags:
     description: |
       The Membership Invitation Services create, retrieve and delete
       membership invitations.
+  - name: Membership Request Services
+    description: |
+      The Membership Request Services create, retrieve and delete
+      membership requests.
   - name: Team Services
     description: Teams are groups of users.
   - name: Trash Services

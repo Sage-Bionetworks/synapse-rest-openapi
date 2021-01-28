@@ -47,6 +47,10 @@
       "description": "The Membership Invitation Services create, retrieve and delete\nmembership invitations.\n"
     },
     {
+      "name": "Membership Request Services",
+      "description": "The Membership Request Services create, retrieve and delete\nmembership requests.\n"
+    },
+    {
       "name": "Team Services",
       "description": "Teams are groups of users."
     },
