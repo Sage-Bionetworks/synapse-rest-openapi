@@ -1,7 +1,5 @@
 parameters:
-  - description: |
-      The target profile owner ID (the "id" field returned in the "/user"
-      request).
+  - description: The ID of the Synapse user.
     in: path
     name: profileId
     required: true

@@ -272,6 +272,8 @@ paths:
     $ref: paths/userProfile.yaml
   /userProfile/{profileId}:
     $ref: paths/userProfile@{profileId}.yaml
+  /userProfile/{profileId}/image:
+    $ref: paths/userProfile@{profileId}@image.yaml
 
 components:
   securitySchemes:
