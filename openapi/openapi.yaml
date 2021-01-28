@@ -238,6 +238,8 @@ paths:
     $ref: paths/trashcan@view.yaml
   /user:
     $ref: paths/user.yaml
+  /user/{id}/bundle:
+    $ref: paths/user@{id}@bundle.yaml
 
 components:
   securitySchemes:

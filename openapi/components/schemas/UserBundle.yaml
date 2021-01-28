@@ -1,0 +1,90 @@
+description: 'JSON schema for UserBundle POJO'
+example:
+  ORCID: '...'
+  isACTMember: true
+  isCertified: true
+  isVerified: true
+  userId: '...'
+  userProfile:
+    RStudioUrl: '...'
+    company: '...'
+    createdOn: '...'
+    displayName: '...'
+    email: '...'
+    emails:
+    - '...'
+    - '...'
+    etag: '...'
+    firstName: '...'
+    industry: '...'
+    lastName: '...'
+    location: '...'
+    notificationSettings:
+      markEmailedMessagesAsRead: true
+      sendEmailNotifications: true
+    openIds:
+    - '...'
+    - '...'
+    ownerId: '...'
+    position: '...'
+    preferences:
+    - concreteType: '...'
+      name: '...'
+    - concreteType: '...'
+      name: '...'
+    profilePicureFileHandleId: '...'
+    summary: '...'
+    teamName: '...'
+    url: '...'
+    userName: '...'
+  verificationSubmission:
+    attachments:
+    - fileName: '...'
+      id: '...'
+    - fileName: '...'
+      id: '...'
+    company: '...'
+    createdBy: '...'
+    createdOn: '...'
+    emails:
+    - '...'
+    - '...'
+    firstName: '...'
+    id: '...'
+    lastName: '...'
+    location: '...'
+    notificationEmail: '...'
+    orcid: '...'
+    stateHistory:
+    - createdBy: '...'
+      createdOn: '...'
+      notes: '...'
+      reason: '...'
+      state: SUSPENDED
+    - createdBy: '...'
+      createdOn: '...'
+      notes: '...'
+      reason: '...'
+      state: REJECTED
+properties:
+  ORCID:
+    description: 'The ORCID ID for the user, if any'
+    type: string
+  isACTMember:
+    description: 'true if the user is an ACT member'
+    type: boolean
+  isCertified:
+    description: 'true if the user is Certified'
+    type: boolean
+  isVerified:
+    description: 'true if the user is Verified'
+    type: boolean
+  userId:
+    description: 'The ID of the user described by this bundle'
+    type: string
+  userProfile:
+    $ref: 'UserProfile.yaml'
+  verificationSubmission:
+    $ref: 'VerificationSubmission.yaml'
+title: UserBundle
+type: object

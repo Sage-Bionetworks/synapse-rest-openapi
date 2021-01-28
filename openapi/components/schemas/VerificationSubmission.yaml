@@ -1,0 +1,84 @@
+description: 'User info submitted for verification by Synapse ACT'
+example:
+  attachments:
+  - fileName: '...'
+    id: '...'
+  - fileName: '...'
+    id: '...'
+  company: '...'
+  createdBy: '...'
+  createdOn: '...'
+  emails:
+  - '...'
+  - '...'
+  firstName: '...'
+  id: '...'
+  lastName: '...'
+  location: '...'
+  notificationEmail: '...'
+  orcid: '...'
+  stateHistory:
+  - createdBy: '...'
+    createdOn: '...'
+    notes: '...'
+    reason: '...'
+    state: SUSPENDED
+  - createdBy: '...'
+    createdOn: '...'
+    notes: '...'
+    reason: '...'
+    state: SUSPENDED
+properties:
+  attachments:
+    description: |
+      Metadata of Files attached to the submission.
+      The list will be emptied after the state is APPROVED or REJECTED.
+    items:
+      $ref: 'AttachmentMetadata.yaml'
+    type: array
+  company:
+    description: |
+      This person's current affiliation
+    type: string
+  createdBy:
+    description: 'The principal ID of the user requesting verification'
+    type: string
+  createdOn:
+    description: 'The date and time this object was created'
+    type: string
+  emails:
+    description: 'The list of user email addresses registered to this user.'
+    items:
+      type: string
+    type: array
+  firstName:
+    description: |
+      This person's given name (forename)
+    type: string
+  id:
+    description: 'The ID of this object'
+    type: string
+  lastName:
+    description: |
+      This person's family name (surname)
+    type: string
+  location:
+    description: |
+      This person's location
+    type: string
+  notificationEmail:
+    description: 'The primary (notification) email address registered to this user.'
+    type: string
+  orcid:
+    description: |
+      The user's ORCID URI
+    type: string
+  stateHistory:
+    description: |
+      List of state changes the submission has passed through, ordered by time.
+      The last in the list contains the current state of the submission.
+    items:
+      $ref: 'VerificationState.yaml'
+    type: array
+title: VerificationSubmission
+type: object
