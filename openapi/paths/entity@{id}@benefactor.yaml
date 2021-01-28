@@ -1,0 +1,37 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get an Entity's benefactor.
+
+    <p>
+
+    The term 'benefactor' is used indicate which Entity an Entity inherits is ACL
+    from. For example, a newly created Project will have its own ACL and
+    therefore, it will be its own benefactor. A Folder will inherit its ACL (by
+    default) from its containing Project so the Project will be the Folder's
+    benefactor. This method will return the EntityHeader of an Entity's
+    benefactor.
+    </p>
+  operationId: getEntityBenefactor
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityHeader.yaml
+      description: Success
+  summary: Get an Entity's benefactor.
+  tags:
+  - Entity Services
