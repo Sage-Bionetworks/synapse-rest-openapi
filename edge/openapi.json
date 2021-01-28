@@ -27,6 +27,10 @@
       "description": "These services manage the Access Requirements/Restrictions (ARs) which may be placed on Entities,\nor Teams.\n"
     },
     {
+      "name": "Certified User Services",
+      "description": "To become a Synapse Certified User you must pass a test.\nThe Synapse APIs include a service to provide the test and a service to\nsubmit a test result. There are also administrative services to retrieve\nthe history of test submissions.\n"
+    },
+    {
       "name": "Challenge Services",
       "description": "A Challenge is a special object that supplements a project, providing additional features\nspecific to challenges.\n"
     },
@@ -49,6 +53,10 @@
     {
       "name": "Trash Services",
       "description": "The recycle bin (or trash can) is the special folder that holds the\ndeleted entities for users.\n"
+    },
+    {
+      "name": "User Profile Services",
+      "description": "Every Synapse user has an associated User Profile"
     }
   ],
   "paths": {
@@ -3247,6 +3255,914 @@
           "Trash Services"
         ]
       }
+    },
+    "/user": {
+      "get": {
+        "description": "Get all publicly available <a href=\"${org.sagebionetworks.repo.model.UserProfile}\">UserProfile</a>\ndata in the system\n",
+        "operationId": "getUserProfilesPaginated",
+        "parameters": [
+          {
+            "description": "Used to indicate whether the sort direction is ascending or not.",
+            "in": "query",
+            "name": "ascending",
+            "schema": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Limits the number of items that will be fetched for this page\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 100,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from. An index of 0 is the first item.",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Used to indicate upon which field(s) to sort.",
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "description": "Get all publicly available <a href=\"${org.sagebionetworks.repo.model.UserProfile}\">UserProfile</a>\ndata in the system\n",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfUserProfile"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get all publicly available.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/user/{id}/bundle": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "The ID of the Synapse user.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the user bundle of a specified user.\n<p><b>Note:</b> Private fields (e.g. \"rStudioUrl\") are omitted unless the requester\nis the profile owner or an administrator.</p>\n",
+        "operationId": "getUserBundleByOwnerId",
+        "parameters": [
+          {
+            "description": "integer flag defining which components to include in the bundle\n<p>\nThis integer is used as a bit-string of flags to specify which parts to include\nin the UserBundle. The mask is defined as follows:\n<ul>\n<li> UserProfile  = 0x1 </li>\n<li> ORCID  = 0x2 </li>\n<li> VerificationSubmission = 0x4 </li>\n<li> Is Certified = 0x8 </li>\n<li> Is Verified  = 0x10 </li>\n<li> Is ACT Member = 0x20 </li>\n</ul>\n</p>\n",
+            "in": "query",
+            "name": "mask",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserBundle"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the user bundle of a specified user.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/user/{id}/certificationStatus": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "The ID of the Synapse user.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "operationId": "setUserCertificationStatus",
+        "summary": "Set certification status",
+        "description": "Setting certification status.",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "410": {
+            "content": {},
+            "description": "Success"
+          }
+        },
+        "tags": [
+          "Certified User Services"
+        ]
+      }
+    },
+    "/user/{id}/certifiedUserPassingRecord": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "The ID of the Synapse user.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve the Passing Record on the User Certification test for the\ngiven user.\n",
+        "operationId": "getPassingRecord",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassingRecord"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve the Passing Record on the User Certification test for the given\nuser.\n",
+        "tags": [
+          "Certified User Services"
+        ]
+      }
+    },
+    "/user/{id}/memberList": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "description": "Returns the TeamMember info for a user and a given list of Team IDs.\nNot Found status is returned if the user ID is invalid, any of the Team IDs\nare invalid, or the user is not in any of the given teams.\n",
+        "operationId": "listTeamMembersGivenUserandTeamList",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdList"
+              }
+            }
+          },
+          "description": "Team IDs",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListWrapperOfTeamMember"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Returns the TeamMember info for a user and a given list of Team IDs.",
+        "tags": [
+          "Team Services"
+        ]
+      }
+    },
+    "/user/{id}/openInvitation": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve the open invitations to a user, optionally filtering by the\nTeam of origin.\nAn invitation is only open if it has not expired and if the user has not joined\nthe Team.\nNote: certain fields may be omitted when returned if the field value is null\n",
+        "operationId": "getOpenInvitationsByUser",
+        "parameters": [
+          {
+            "description": "the maximum number of invitations to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "the starting index of the returned results.",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "the ID of the Team extending the invitations",
+            "in": "query",
+            "name": "teamId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfMembershipInvitation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve the open invitations to a user, optionally filtering by the Team\nof origin.\n",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      }
+    },
+    "/user/{id}/openRequest": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve the open requests submitted by a user, optionally filtering\nby the Team.\nAn request is only open if it has not expired and if the requester has not been\nadded the Team.\nNote:  The 'id' in the URI must be the same ID as that of the authenticated\nuser issuing the request.\n",
+        "operationId": "getOpenRequestsByUser",
+        "parameters": [
+          {
+            "description": "the maximum number of requests to return",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "the starting index of the returned results.",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "teamId",
+            "description": "ID of a Synapse Team.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfMembershipRequest"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve the open requests submitted by a user, optionally filtering by\nthe Team.\n",
+        "tags": [
+          "Membership Request Services"
+        ]
+      }
+    },
+    "/user/{id}/team": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve a paginated list of Teams to which the given user belongs.",
+        "operationId": "getTeamsByMember",
+        "parameters": [
+          {
+            "description": "the maximum number of Teams to return (default 10)",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "the starting index of the returned results (default 0)",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfTeam"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve a paginated list of Teams to which the given user belongs.",
+        "tags": [
+          "Team Services"
+        ]
+      }
+    },
+    "/user/{id}/team/id": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve a paginated list of IDs of Teams to which the given user\nbelongs. If sorting is desired, both sort and\nascending must be specified. If they are omitted, results are not sorted.\n",
+        "operationId": "getTeamIdsByMember",
+        "parameters": [
+          {
+            "description": "the direction of sort: true for ascending, and false for descending",
+            "in": "query",
+            "name": "ascending",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "controls pagination",
+            "in": "query",
+            "name": "nextPageToken",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "the field to sort the team IDs on. Available options\n<a href=\"${org.sagebionetworks.repo.model.TeamSortOrder}\">TeamSortOrder</a>\n",
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "enum": [
+                "TEAM_NAME"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedTeamIds"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve a paginated list of IDs of Teams to which the given user belongs.",
+        "tags": [
+          "Team Services"
+        ]
+      }
+    },
+    "/user/bundle": {
+      "get": {
+        "description": "Get the user bundle of the caller (my own bundle).\n<p><b>Note:</b> Private fields will be returned.</p>\n",
+        "operationId": "getMyOwnUserBundle",
+        "parameters": [
+          {
+            "description": "integer flag defining which components to include in the bundle\n<p>\nThis integer is used as a bit-string of flags to specify which parts to include\nin the UserBundle. The mask is defined as follows:\n<ul>\n<li> UserProfile  = 0x1 </li>\n<li> ORCID  = 0x2 </li>\n<li> VerificationSubmission = 0x4 </li>\n<li> Is Certified = 0x8 </li>\n<li> Is Verified  = 0x10 </li>\n<li> Is ACT Member = 0x20 </li>\n</ul>\n</p>\n",
+            "in": "query",
+            "name": "mask",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserBundle"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the user bundle of the caller (my own bundle).",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userGroup": {
+      "get": {
+        "description": "Get the user-groups in the system",
+        "operationId": "getUserGroups",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Return results in ascending order.",
+            "name": "ascending",
+            "schema": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "the maximum number of results to return.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "the starting index of the returned results.",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "description": "Sort results.",
+            "schema": {
+              "default": "NONE",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "description": "Get the user-groups in the system",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfUserGroup"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the user-groups in the system.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userGroupHeaders": {
+      "get": {
+        "description": "Get Users and Groups that match the given prefix.",
+        "operationId": "getUserGroupHeadersByPrefix",
+        "parameters": [
+          {
+            "description": "Limits the number of items that will be fetched for this page.\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start from.\nAn index of 0 is the first item.\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 10
+            }
+          },
+          {
+            "description": "The name to search for.",
+            "in": "query",
+            "name": "prefix",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Restrict the results to a type of principal.\nAvailable options: <a href=\"${org.sagebionetworks.repo.model.principal.TypeFilter}\">TypeFilter</a>.'\n",
+            "in": "query",
+            "name": "typeFilter",
+            "schema": {
+              "enum": [
+                "ALL",
+                "TEAMS_ONLY",
+                "USERS_ONLY"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGroupHeaderResponsePage"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get Users and Groups that match the given prefix.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userGroupHeaders/aliases": {
+      "post": {
+        "description": "Get Users and Groups that match the given list of aliases.",
+        "operationId": "getUserGroupHeadersByAliases",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AliasList"
+              }
+            }
+          },
+          "description": "The list of principal aliases to lookup. Each alias must be\neither a user name or team name. The maximum number of aliases per request is\n100.\n",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGroupHeaderResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get Users and Groups that match the given list of aliases.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userGroupHeaders/batch": {
+      "get": {
+        "description": "Batch get UserGroupHeaders.\nThis fetches information about a collection of users or groups, specified by Synapse\nIDs.\n",
+        "operationId": "getUserGroupHeadersByIds",
+        "parameters": [
+          {
+            "description": "IDs are specified as request parameters at the end of the URL, separated\nby commas. For example: ids=1001,819\n",
+            "in": "query",
+            "name": "ids",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "description": "Batch get UserGroupHeaders.\nThis fetches information about a collection of users or groups, specified by\nSynapse IDs.\n",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGroupHeaderResponsePage"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Batch get UserGroupHeaders.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userProfile": {
+      "get": {
+        "description": "Get the profile of the caller (my profile).\n<p><b>Note:</b> Private user profile fields will be returned.</p>'\n",
+        "operationId": "getMyOwnUserProfile",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the profile of the caller (my profile).",
+        "tags": [
+          "UserProfileController"
+        ]
+      },
+      "post": {
+        "description": "Batch get UserGroupHeaders.\nThis fetches information about a collection of users or groups, specified by Synapse\nIDs.'\n",
+        "operationId": "listUserProfiles",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdList"
+              }
+            }
+          },
+          "description": "IDs are specified as request parameters at the end of the URL, separated\nby commas. For example: ids=1001,819\n",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListWrapperOfUserProfile"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Batch get UserGroupHeaders.",
+        "tags": [
+          "User Profile Services"
+        ]
+      },
+      "put": {
+        "description": "Update your own profile\n\n<p><b>Note: </b> The user associated with the UserProfile \"ownerId\" must match\nthe identity of the caller,\notherwise an Unauthorized response will occur.</p>\n",
+        "operationId": "updateUserProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfile"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Update your own profile.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userProfile/{profileId}": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "profileId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the profile of a specified user.\n<p><b>Note:</b> Private fields (e.g. \"rStudioUrl\") are omitted unless the requester\nis the profile owner or an administrator.</p>'\n",
+        "operationId": "getUserProfile",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the profile of a specified user.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userProfile/{profileId}/image": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "profileId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the actual URL of the image file associated with a user's profile.\n<p>\nNote: This call will result in a HTTP temporary redirect (307), to the\nactual file URL if the caller meets all of the download requirements.\n</p>\n",
+        "operationId": "imageRedirectUrlForUser",
+        "parameters": [
+          {
+            "description": "When set to false, the URL will be returned as text/plain\ninstead of redirecting.\n",
+            "in": "query",
+            "name": "redirect",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the actual URL of the image file associated with a user's profile.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
+    },
+    "/userProfile/{profileId}/image/preview": {
+      "parameters": [
+        {
+          "description": "The ID of the Synapse user.",
+          "in": "path",
+          "name": "profileId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the actual URL of the image file associated with a user''s profile.\n<p>\nNote: This call will result in a HTTP temporary redirect (307), to the\nactual file URL if the caller meets all of the download requirements.\n</p>\n",
+        "operationId": "imagePreviewRedirectUrlForUser",
+        "parameters": [
+          {
+            "description": "When set to false, the URL will be returned as text/plain\ninstead of redirecting.\n",
+            "in": "query",
+            "name": "redirect",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the actual URL of the image file associated with a user's profile.",
+        "tags": [
+          "User Profile Services"
+        ]
+      }
     }
   },
   "components": {
@@ -6160,6 +7076,1081 @@
           }
         },
         "title": "PaginatedResultsOfTrashedEntity",
+        "type": "object"
+      },
+      "Etag": {
+        "description": "Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle\nconcurrent updates. Since the E-Tag changes every time an entity is updated\nit is used to detect when a client's current representation of an entity is\nout-of-date.\n",
+        "type": "string"
+      },
+      "Settings": {
+        "description": "Contains a user's notification settings\n",
+        "example": {
+          "markEmailedMessagesAsRead": true,
+          "sendEmailNotifications": true
+        },
+        "properties": {
+          "markEmailedMessagesAsRead": {
+            "description": "Should messages that are emailed to the user be marked as READ in Synapse? Default false.",
+            "type": "boolean",
+            "default": false
+          },
+          "sendEmailNotifications": {
+            "description": "Should the user receive email notifications? Default true.",
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "title": "Settings",
+        "type": "object"
+      },
+      "UserPreference": {
+        "description": "User preferences",
+        "example": {
+          "concreteType": "...",
+          "name": "..."
+        },
+        "properties": {
+          "concreteType": {
+            "description": "Concrete type",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the user preference.",
+            "type": "string"
+          }
+        },
+        "title": "UserPreference",
+        "type": "object"
+      },
+      "UserProfile": {
+        "description": "JSON schema for UserProfile POJO",
+        "example": {
+          "RStudioUrl": "...",
+          "company": "...",
+          "createdOn": "...",
+          "displayName": "...",
+          "email": "...",
+          "emails": [
+            "...",
+            "..."
+          ],
+          "etag": "...",
+          "firstName": "...",
+          "industry": "...",
+          "lastName": "...",
+          "location": "...",
+          "notificationSettings": {
+            "markEmailedMessagesAsRead": true,
+            "sendEmailNotifications": true
+          },
+          "openIds": [
+            "...",
+            "..."
+          ],
+          "ownerId": "...",
+          "position": "...",
+          "preferences": [
+            {
+              "concreteType": "...",
+              "name": "..."
+            },
+            {
+              "concreteType": "...",
+              "name": "..."
+            }
+          ],
+          "profilePicureFileHandleId": "...",
+          "summary": "...",
+          "teamName": "...",
+          "url": "...",
+          "userName": "..."
+        },
+        "properties": {
+          "RStudioUrl": {
+            "description": "URL for RStudio server assigned to the user",
+            "type": "string"
+          },
+          "company": {
+            "description": "This person's current affiliation\n",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this profile was created.",
+            "type": "string"
+          },
+          "displayName": {
+            "description": "Will always be null.",
+            "type": "string",
+            "deprecated": true
+          },
+          "email": {
+            "description": "Users can have more than one email. See emails",
+            "type": "string",
+            "deprecated": true
+          },
+          "emails": {
+            "description": "The list of user email addresses registered to this user.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "etag": {
+            "$ref": "#/components/schemas/Etag"
+          },
+          "firstName": {
+            "description": "This person's given name (forename)\n",
+            "type": "string"
+          },
+          "industry": {
+            "description": "The industry/discipline that this person is associated with",
+            "type": "string"
+          },
+          "lastName": {
+            "description": "This person's family name (surname)\n",
+            "type": "string"
+          },
+          "location": {
+            "description": "This person's location\n",
+            "type": "string"
+          },
+          "notificationSettings": {
+            "$ref": "#/components/schemas/Settings"
+          },
+          "openIds": {
+            "description": "'The list of OpenIds bound to this user's account.'\n",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "ownerId": {
+            "description": "'A foreign key to the ID of the 'principal' object for the user.'\n",
+            "type": "string"
+          },
+          "position": {
+            "description": "This person's current position title\n",
+            "type": "string"
+          },
+          "preferences": {
+            "description": "User preferences",
+            "items": {
+              "$ref": "#/components/schemas/UserPreference"
+            },
+            "type": "array"
+          },
+          "profilePicureFileHandleId": {
+            "description": "The FileHandle.id of the user's profile picture.\n",
+            "type": "string"
+          },
+          "summary": {
+            "description": "A summary description about this person",
+            "type": "string"
+          },
+          "teamName": {
+            "description": "This person's default team name\n",
+            "type": "string"
+          },
+          "url": {
+            "description": "A link to more information about this person",
+            "type": "string"
+          },
+          "userName": {
+            "description": "A name chosen by the user that uniquely identifies them.",
+            "type": "string"
+          }
+        },
+        "title": "UserProfile",
+        "type": "object"
+      },
+      "PaginatedResultsOfUserProfile": {
+        "description": "Page of UserProfiles",
+        "example": {
+          "results": [
+            {
+              "RStudioUrl": "...",
+              "company": "...",
+              "createdOn": "...",
+              "displayName": "...",
+              "email": "...",
+              "emails": [
+                "...",
+                "..."
+              ],
+              "etag": "...",
+              "firstName": "...",
+              "industry": "...",
+              "lastName": "...",
+              "location": "...",
+              "notificationSettings": {
+                "markEmailedMessagesAsRead": true,
+                "sendEmailNotifications": true
+              },
+              "openIds": [
+                "...",
+                "..."
+              ],
+              "ownerId": "...",
+              "position": "...",
+              "preferences": [
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                },
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                }
+              ],
+              "profilePicureFileHandleId": "...",
+              "summary": "...",
+              "teamName": "...",
+              "url": "...",
+              "userName": "..."
+            },
+            {
+              "RStudioUrl": "...",
+              "company": "...",
+              "createdOn": "...",
+              "displayName": "...",
+              "email": "...",
+              "emails": [
+                "...",
+                "..."
+              ],
+              "etag": "...",
+              "firstName": "...",
+              "industry": "...",
+              "lastName": "...",
+              "location": "...",
+              "notificationSettings": {
+                "markEmailedMessagesAsRead": true,
+                "sendEmailNotifications": true
+              },
+              "openIds": [
+                "...",
+                "..."
+              ],
+              "ownerId": "...",
+              "position": "...",
+              "preferences": [
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                },
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                }
+              ],
+              "profilePicureFileHandleId": "...",
+              "summary": "...",
+              "teamName": "...",
+              "url": "...",
+              "userName": "..."
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "List of User profiles",
+            "items": {
+              "$ref": "#/components/schemas/UserProfile"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "$ref": "#/components/schemas/TotalNumberOfResults"
+          }
+        },
+        "title": "PaginatedResultsOfUserProfile",
+        "type": "object"
+      },
+      "AttachmentMetadata": {
+        "description": "The metadata of a file attached to a Verification Submission",
+        "example": {
+          "fileName": "...",
+          "id": "..."
+        },
+        "properties": {
+          "fileName": {
+            "description": "The name of a file",
+            "type": "string"
+          },
+          "id": {
+            "description": "The identifier of a file",
+            "type": "string"
+          }
+        },
+        "title": "AttachmentMetadata",
+        "type": "object"
+      },
+      "VerificationStateEnum": {
+        "description": "The enumeration of possible verification states.",
+        "enum": [
+          "SUBMITTED",
+          "APPROVED",
+          "REJECTED",
+          "SUSPENDED"
+        ],
+        "title": "VerificationStateEnum",
+        "type": "string"
+      },
+      "VerificationState": {
+        "description": "The state of a verification submission",
+        "example": {
+          "createdBy": "...",
+          "createdOn": "...",
+          "notes": "...",
+          "reason": "...",
+          "state": "APPROVED"
+        },
+        "properties": {
+          "createdBy": {
+            "description": "The principal ID of the user who created this object",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date and time this object was created",
+            "type": "string"
+          },
+          "notes": {
+            "description": "Additional notes that can be set by the ACT team and that is not exposed to the end user.",
+            "type": "string"
+          },
+          "reason": {
+            "description": "The reason for putting the verification submission in this state.",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/VerificationStateEnum"
+          }
+        },
+        "title": "VerificationState",
+        "type": "object"
+      },
+      "VerificationSubmission": {
+        "description": "User info submitted for verification by Synapse ACT",
+        "example": {
+          "attachments": [
+            {
+              "fileName": "...",
+              "id": "..."
+            },
+            {
+              "fileName": "...",
+              "id": "..."
+            }
+          ],
+          "company": "...",
+          "createdBy": "...",
+          "createdOn": "...",
+          "emails": [
+            "...",
+            "..."
+          ],
+          "firstName": "...",
+          "id": "...",
+          "lastName": "...",
+          "location": "...",
+          "notificationEmail": "...",
+          "orcid": "...",
+          "stateHistory": [
+            {
+              "createdBy": "...",
+              "createdOn": "...",
+              "notes": "...",
+              "reason": "...",
+              "state": "SUSPENDED"
+            },
+            {
+              "createdBy": "...",
+              "createdOn": "...",
+              "notes": "...",
+              "reason": "...",
+              "state": "SUSPENDED"
+            }
+          ]
+        },
+        "properties": {
+          "attachments": {
+            "description": "Metadata of Files attached to the submission.\nThe list will be emptied after the state is APPROVED or REJECTED.\n",
+            "items": {
+              "$ref": "#/components/schemas/AttachmentMetadata"
+            },
+            "type": "array"
+          },
+          "company": {
+            "description": "This person's current affiliation\n",
+            "type": "string"
+          },
+          "createdBy": {
+            "description": "The principal ID of the user requesting verification",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date and time this object was created",
+            "type": "string"
+          },
+          "emails": {
+            "description": "The list of user email addresses registered to this user.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "firstName": {
+            "description": "This person's given name (forename)\n",
+            "type": "string"
+          },
+          "id": {
+            "description": "The ID of this object",
+            "type": "string"
+          },
+          "lastName": {
+            "description": "This person's family name (surname)\n",
+            "type": "string"
+          },
+          "location": {
+            "description": "This person's location\n",
+            "type": "string"
+          },
+          "notificationEmail": {
+            "description": "The primary (notification) email address registered to this user.",
+            "type": "string"
+          },
+          "orcid": {
+            "description": "The user's ORCID URI\n",
+            "type": "string"
+          },
+          "stateHistory": {
+            "description": "List of state changes the submission has passed through, ordered by time.\nThe last in the list contains the current state of the submission.\n",
+            "items": {
+              "$ref": "#/components/schemas/VerificationState"
+            },
+            "type": "array"
+          }
+        },
+        "title": "VerificationSubmission",
+        "type": "object"
+      },
+      "UserBundle": {
+        "description": "JSON schema for UserBundle POJO",
+        "example": {
+          "ORCID": "...",
+          "isACTMember": true,
+          "isCertified": true,
+          "isVerified": true,
+          "userId": "...",
+          "userProfile": {
+            "RStudioUrl": "...",
+            "company": "...",
+            "createdOn": "...",
+            "displayName": "...",
+            "email": "...",
+            "emails": [
+              "...",
+              "..."
+            ],
+            "etag": "...",
+            "firstName": "...",
+            "industry": "...",
+            "lastName": "...",
+            "location": "...",
+            "notificationSettings": {
+              "markEmailedMessagesAsRead": true,
+              "sendEmailNotifications": true
+            },
+            "openIds": [
+              "...",
+              "..."
+            ],
+            "ownerId": "...",
+            "position": "...",
+            "preferences": [
+              {
+                "concreteType": "...",
+                "name": "..."
+              },
+              {
+                "concreteType": "...",
+                "name": "..."
+              }
+            ],
+            "profilePicureFileHandleId": "...",
+            "summary": "...",
+            "teamName": "...",
+            "url": "...",
+            "userName": "..."
+          },
+          "verificationSubmission": {
+            "attachments": [
+              {
+                "fileName": "...",
+                "id": "..."
+              },
+              {
+                "fileName": "...",
+                "id": "..."
+              }
+            ],
+            "company": "...",
+            "createdBy": "...",
+            "createdOn": "...",
+            "emails": [
+              "...",
+              "..."
+            ],
+            "firstName": "...",
+            "id": "...",
+            "lastName": "...",
+            "location": "...",
+            "notificationEmail": "...",
+            "orcid": "...",
+            "stateHistory": [
+              {
+                "createdBy": "...",
+                "createdOn": "...",
+                "notes": "...",
+                "reason": "...",
+                "state": "SUSPENDED"
+              },
+              {
+                "createdBy": "...",
+                "createdOn": "...",
+                "notes": "...",
+                "reason": "...",
+                "state": "REJECTED"
+              }
+            ]
+          }
+        },
+        "properties": {
+          "ORCID": {
+            "description": "The ORCID ID for the user, if any",
+            "type": "string"
+          },
+          "isACTMember": {
+            "description": "true if the user is an ACT member",
+            "type": "boolean"
+          },
+          "isCertified": {
+            "description": "true if the user is Certified",
+            "type": "boolean"
+          },
+          "isVerified": {
+            "description": "true if the user is Verified",
+            "type": "boolean"
+          },
+          "userId": {
+            "description": "The ID of the user described by this bundle",
+            "type": "string"
+          },
+          "userProfile": {
+            "$ref": "#/components/schemas/UserProfile"
+          },
+          "verificationSubmission": {
+            "$ref": "#/components/schemas/VerificationSubmission"
+          }
+        },
+        "title": "UserBundle",
+        "type": "object"
+      },
+      "WikiPageKey": {
+        "description": "Reference to a WikiPage",
+        "example": {
+          "ownerObjectId": "...",
+          "ownerObjectType": "ORGANIZATION",
+          "wikiPageId": "..."
+        },
+        "properties": {
+          "ownerObjectId": {
+            "description": "The owner of this page.",
+            "type": "string"
+          },
+          "ownerObjectType": {
+            "$ref": "#/components/schemas/ObjectType"
+          },
+          "wikiPageId": {
+            "description": "The ID of the wiki page.",
+            "type": "string"
+          }
+        },
+        "title": "WikiPageKey",
+        "type": "object"
+      },
+      "Question": {
+        "description": "A single question in a Quiz",
+        "example": {
+          "concreteType": "...",
+          "docLink": "...",
+          "helpText": "...",
+          "prompt": "...",
+          "questionIndex": 12345,
+          "reference": {
+            "ownerObjectId": "...",
+            "ownerObjectType": "MESSAGE",
+            "wikiPageId": "..."
+          }
+        },
+        "properties": {
+          "concreteType": {
+            "description": "Concrete Type",
+            "type": "string"
+          },
+          "docLink": {
+            "description": "Link to the document that contains information for background reading related to the question.",
+            "type": "string"
+          },
+          "helpText": {
+            "description": "A short text that provides a snippet of help to answer the question.",
+            "type": "string"
+          },
+          "prompt": {
+            "description": "the user-readable prompt for this question",
+            "type": "string"
+          },
+          "questionIndex": {
+            "description": "An index unique in the Quiz, used to refer to this question",
+            "type": "integer"
+          },
+          "reference": {
+            "$ref": "#/components/schemas/WikiPageKey"
+          }
+        },
+        "title": "Question",
+        "type": "object"
+      },
+      "QuestionResponse": {
+        "description": "The response to a question",
+        "example": {
+          "concreteType": "...",
+          "questionIndex": 12345
+        },
+        "properties": {
+          "concreteType": {
+            "description": "Concrete Type.",
+            "type": "string"
+          },
+          "questionIndex": {
+            "description": "An index unique in the Quiz, used to refer to the question being answered",
+            "type": "integer"
+          }
+        },
+        "title": "QuestionResponse",
+        "type": "object"
+      },
+      "ResponseCorrectness": {
+        "description": "A user response and whether it is correct.",
+        "example": {
+          "isCorrect": true,
+          "question": {
+            "concreteType": "...",
+            "docLink": "...",
+            "helpText": "...",
+            "prompt": "...",
+            "questionIndex": 12345,
+            "reference": {
+              "ownerObjectId": "...",
+              "ownerObjectType": "WIKI",
+              "wikiPageId": "..."
+            }
+          },
+          "response": {
+            "concreteType": "...",
+            "questionIndex": 12345
+          }
+        },
+        "properties": {
+          "isCorrect": {
+            "description": "Is the response correct?",
+            "type": "boolean"
+          },
+          "question": {
+            "$ref": "#/components/schemas/Question"
+          },
+          "response": {
+            "$ref": "#/components/schemas/QuestionResponse"
+          }
+        },
+        "title": "ResponseCorrectness",
+        "type": "object"
+      },
+      "PassingRecord": {
+        "description": "A record of whether a given user passed a given test",
+        "example": {
+          "corrections": [
+            {
+              "isCorrect": true,
+              "question": {
+                "concreteType": "...",
+                "docLink": "...",
+                "helpText": "...",
+                "prompt": "...",
+                "questionIndex": 12345,
+                "reference": {}
+              },
+              "response": {
+                "concreteType": "...",
+                "questionIndex": 12345
+              }
+            },
+            {
+              "isCorrect": true,
+              "question": {
+                "concreteType": "...",
+                "docLink": "...",
+                "helpText": "...",
+                "prompt": "...",
+                "questionIndex": 12345,
+                "reference": {}
+              },
+              "response": {
+                "concreteType": "...",
+                "questionIndex": 12345
+              }
+            }
+          ],
+          "passed": true,
+          "passedOn": "...",
+          "quizId": 12345,
+          "responseId": 12345,
+          "score": 12345,
+          "userId": "..."
+        },
+        "properties": {
+          "corrections": {
+            "description": "For each response, whether it was correct",
+            "items": {
+              "$ref": "#/components/schemas/ResponseCorrectness"
+            },
+            "type": "array"
+          },
+          "passed": {
+            "description": "Whether the user passed the given test",
+            "type": "boolean"
+          },
+          "passedOn": {
+            "description": "Date/time when the user passed the test (omitted if the user has not passed)",
+            "type": "string"
+          },
+          "quizId": {
+            "description": "The id of the quiz",
+            "type": "integer"
+          },
+          "responseId": {
+            "description": "The id of the user's response\n",
+            "type": "integer"
+          },
+          "score": {
+            "description": "The score the user received on the test",
+            "type": "integer"
+          },
+          "userId": {
+            "description": "The principal id of the user",
+            "type": "string"
+          }
+        },
+        "title": "PassingRecord",
+        "type": "object"
+      },
+      "PaginatedTeamIds": {
+        "description": "Container for a page of team IDs.",
+        "example": {
+          "nextPageToken": "...",
+          "teamIds": [
+            "...",
+            "..."
+          ]
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "Token that can be used to get the next page. Null if there are no more results.",
+            "type": "string"
+          },
+          "teamIds": {
+            "description": "The requested team IDs.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "PaginatedTeamIds",
+        "type": "object"
+      },
+      "UserGroup": {
+        "description": "JSON schema for UserGroup POJO",
+        "example": {
+          "creationDate": "...",
+          "etag": "...",
+          "id": "...",
+          "isIndividual": true,
+          "uri": "..."
+        },
+        "properties": {
+          "creationDate": {
+            "description": "The date this user or group was created.",
+            "type": "string"
+          },
+          "etag": {
+            "$ref": "#/components/schemas/Etag"
+          },
+          "id": {
+            "description": "The id of either the user or group.",
+            "type": "string"
+          },
+          "isIndividual": {
+            "description": "True if this is a user, false if it is a group",
+            "type": "boolean"
+          },
+          "uri": {
+            "description": "Uri",
+            "type": "string"
+          }
+        },
+        "title": "UserGroup",
+        "type": "object"
+      },
+      "PaginatedResultsOfUserGroup": {
+        "description": "JSON schema for UserGroup POJO",
+        "example": {
+          "results": [
+            {
+              "creationDate": "...",
+              "etag": "...",
+              "id": "...",
+              "isIndividual": true,
+              "uri": "..."
+            },
+            {
+              "creationDate": "...",
+              "etag": "...",
+              "id": "...",
+              "isIndividual": true,
+              "uri": "..."
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "Page of user groups",
+            "items": {
+              "$ref": "#/components/schemas/UserGroup"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "$ref": "#/components/schemas/TotalNumberOfResults"
+          }
+        },
+        "title": "PaginatedResultsOfUserGroup",
+        "type": "object"
+      },
+      "UserGroupHeaderResponsePage": {
+        "description": "A single page of a users/groups info query response.",
+        "example": {
+          "children": [
+            {
+              "displayName": "...",
+              "email": "...",
+              "firstName": "...",
+              "isIndividual": true,
+              "lastName": "...",
+              "ownerId": "...",
+              "userName": "..."
+            },
+            {
+              "displayName": "...",
+              "email": "...",
+              "firstName": "...",
+              "isIndividual": true,
+              "lastName": "...",
+              "ownerId": "...",
+              "userName": "..."
+            }
+          ],
+          "prefixFilter": "...",
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "children": {
+            "description": "The list of children that match the requested concept.",
+            "items": {
+              "$ref": "#/components/schemas/UserGroupHeader"
+            },
+            "type": "array"
+          },
+          "prefixFilter": {
+            "description": "The prefix filter used to generate this result.",
+            "type": "string"
+          },
+          "totalNumberOfResults": {
+            "description": "Total number of results",
+            "type": "number",
+            "deprecated": true
+          }
+        },
+        "title": "UserGroupHeaderResponsePage",
+        "type": "object"
+      },
+      "AliasList": {
+        "description": "List of principal aliases",
+        "example": {
+          "list": [
+            "...",
+            "..."
+          ]
+        },
+        "properties": {
+          "list": {
+            "description": "List of principal aliases",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "AliasList",
+        "type": "object"
+      },
+      "UserGroupHeaderResponse": {
+        "description": "A list of UserGroupHeaders.",
+        "example": {
+          "list": [
+            {
+              "displayName": "...",
+              "email": "...",
+              "firstName": "...",
+              "isIndividual": true,
+              "lastName": "...",
+              "ownerId": "...",
+              "userName": "..."
+            },
+            {
+              "displayName": "...",
+              "email": "...",
+              "firstName": "...",
+              "isIndividual": true,
+              "lastName": "...",
+              "ownerId": "...",
+              "userName": "..."
+            }
+          ]
+        },
+        "properties": {
+          "list": {
+            "description": "The list of UserGroupHeaders",
+            "items": {
+              "$ref": "#/components/schemas/UserGroupHeader"
+            },
+            "type": "array"
+          }
+        },
+        "title": "UserGroupHeaderResponse",
+        "type": "object"
+      },
+      "ListWrapperOfUserProfile": {
+        "description": "List of User Profiles.",
+        "example": {
+          "effectiveSchema": "...",
+          "list": [
+            {
+              "RStudioUrl": "...",
+              "company": "...",
+              "createdOn": "...",
+              "displayName": "...",
+              "email": "...",
+              "emails": [
+                "...",
+                "..."
+              ],
+              "etag": "...",
+              "firstName": "...",
+              "industry": "...",
+              "lastName": "...",
+              "location": "...",
+              "notificationSettings": {
+                "markEmailedMessagesAsRead": true,
+                "sendEmailNotifications": true
+              },
+              "openIds": [
+                "...",
+                "..."
+              ],
+              "ownerId": "...",
+              "position": "...",
+              "preferences": [
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                },
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                }
+              ],
+              "profilePicureFileHandleId": "...",
+              "summary": "...",
+              "teamName": "...",
+              "url": "...",
+              "userName": "..."
+            },
+            {
+              "RStudioUrl": "...",
+              "company": "...",
+              "createdOn": "...",
+              "displayName": "...",
+              "email": "...",
+              "emails": [
+                "...",
+                "..."
+              ],
+              "etag": "...",
+              "firstName": "...",
+              "industry": "...",
+              "lastName": "...",
+              "location": "...",
+              "notificationSettings": {
+                "markEmailedMessagesAsRead": true,
+                "sendEmailNotifications": true
+              },
+              "openIds": [
+                "...",
+                "..."
+              ],
+              "ownerId": "...",
+              "position": "...",
+              "preferences": [
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                },
+                {
+                  "concreteType": "...",
+                  "name": "..."
+                }
+              ],
+              "profilePicureFileHandleId": "...",
+              "summary": "...",
+              "teamName": "...",
+              "url": "...",
+              "userName": "..."
+            }
+          ]
+        },
+        "properties": {
+          "list": {
+            "description": "List of UserProfiles.",
+            "items": {
+              "$ref": "#/components/schemas/UserProfile"
+            },
+            "type": "array"
+          }
+        },
+        "title": "ListWrapperOfUserProfile",
         "type": "object"
       }
     }
