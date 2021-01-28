@@ -31,7 +31,7 @@ get:
   requestBody:
     content:
       application/json:
-        schemas:
+        schema:
           $ref: ../components/schemas/Empty.yaml
     required: false
   responses:
