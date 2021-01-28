@@ -77,10 +77,10 @@ tags:
     description: |
       The Membership Invitation Services create, retrieve and delete
       membership invitations.
-  # - name: Membership Request Services
-  #   description: |
-  #     The Membership Request Services create, retrieve and delete
-  #     membership requests.
+  - name: Membership Request Services
+    description: |
+      The Membership Request Services create, retrieve and delete
+      membership requests.
   # - name: Message Services
   #   description: "."
   # - name: Migration Services
