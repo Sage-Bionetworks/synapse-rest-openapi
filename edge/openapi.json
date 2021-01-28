@@ -3980,7 +3980,7 @@
         },
         "summary": "Get the profile of the caller (my profile).",
         "tags": [
-          "UserProfileController"
+          "User Profile Services"
         ]
       },
       "post": {
