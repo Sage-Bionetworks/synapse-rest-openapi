@@ -23,6 +23,6 @@ Starts the reference docs preview server.
 
 Bundles the definition to the dist folder.
 
-#### `npm test`
+#### `npm run lint:ibm`
 
 Validates the definition.
