@@ -1,0 +1,34 @@
+parameters:
+  - description: The ID of the Synapse user.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: Retrieve a paginated list of Teams to which the given user belongs.
+  operationId: getTeamsByMember
+  parameters:
+  - description: the maximum number of Teams to return (default 10)
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+  - description: the starting index of the returned results (default 0)
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfTeam.yaml
+      description: Success
+  summary: Retrieve a paginated list of Teams to which the given user belongs.
+  tags:
+  - Team Services
