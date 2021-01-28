@@ -147,7 +147,9 @@ paths:
   /doi/locate:
     $ref: paths/doi@locate.yaml
   /entity:
-    $ref: paths/pathentity.yaml
+    $ref: paths/entity@.yaml
+  /entity/{id}:
+    $ref: paths/entity@{id}.yaml
   /entity/{id}/challenge:
     $ref: paths/entity@{id}@challenge.yaml
   /evaluation:

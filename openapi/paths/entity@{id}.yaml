@@ -1,0 +1,167 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Moves an entity in the trash can, if the skipTrashCan is set to true
+    will flag the entity for purge and it will be deleted as soon as possible.
+
+    <p>
+
+    Note: To delete an Entity the caller must be granted the
+
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.DELETE</a> on the Entity.
+
+    </p>
+  operationId: deleteEntity
+  parameters:
+  - description: |
+      If true the entity will be flag for priority purge and
+      deleted as soon as possible
+    in: query
+    name: skipTrashCan
+    schema:
+      type: boolean
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    required: false
+  responses:
+    204:
+      description: The resource has been deleted
+  summary: Deletes an Entity
+  tags:
+  - Entity Services
+get:
+  description: |
+    Get an Entity using its ID.
+
+    <p>
+    Note: To get an Entity the caller must be granted the
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}" >ACCESS_TYPE.READ</a>
+    on the Entity.
+
+    </p>
+  operationId: getEntity
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Entity.yaml
+      description: Success
+  summary: Get an Entity
+  tags:
+  - Entity Services
+put:
+  description: |
+    Update an entity.
+
+    <p>
+
+    If the Entity is a FileEntity and the dataFileHandleId fields is set to a new
+    value, then a new version will automatically be created for this update if the
+    MD5 of the new file handle does not match the MD5 of the existing file handle
+    or if the file handles do not have an MD5 set. You can also force the creation of a
+    new version using the newVersion parameter
+
+    (see below).
+
+    </p>
+
+    <p>
+
+    Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
+    concurrent updates. Each time an Entity is updated a new etag will be issued
+    to the Entity. When an update is request, Synapse will compare the etag of
+    the passed Entity with the current etag of the Entity. If the etags do not
+    match, then the update will be rejected with a PRECONDITION_FAILED (412)
+    response. When this occurs the caller should get the latest copy of the
+    Entity (see: <a href="${GET.entity.id}">GET /entity/{id}</a>) and re-apply
+    any changes to the object, then re-attempt the Entity update. This ensure the
+    caller has any changes applied by other users before applying their own
+    changes.
+
+    </p>
+
+    <p>
+
+    Note: To update an Entity the caller must be granted the
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.UPDATE</a> on the Entity.
+
+    </p>
+
+    <p>
+
+    <b>Service Limits</b>
+
+    <table border="1">
+
+    <tr>
+
+    <th>resource</th>
+
+    <th>limit</th>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum number of children for a single parent entity</td>
+
+    <td>10 K</td>
+
+    </tr>
+
+    </table>
+
+    </p>
+  operationId: updateEntity
+  parameters:
+
+  - description: |
+      To track the Provenance of an Entity update, include the
+      ID of the <a href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a> that was created to track the change. For
+      more information see: <a href="${POST.activity}">POST /activity</a>.
+      You must be the creator of the
+      <a href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a> used here.'
+    in: query
+    name: generatedBy
+    schema:
+      type: string
+  - description: |
+      To force the creation of a new version for a
+      <a href="${org.sagebionetworks.repo.model.VersionableEntity}">versionable</a>
+      entity such as a <a href= "${org.sagebionetworks.repo.model.FileEntity}">FileEntity</a>,
+      include this optional parameter with a value set to true (i.e. newVersion=true).
+      This parameter is ignored for entities of type
+
+      <a href="${org.sagebionetworks.repo.model.table.Table}">Table</a>
+      (See <a href="${POST.entity.id.table.snapshot}">POST /entity/{id}/table/snapshot</a>
+      instead)
+    in: query
+    name: newVersion
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Entity.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Entity.yaml
+      description: Success
+  summary: Update an entity.
+  tags:
+  -  Entity Services
