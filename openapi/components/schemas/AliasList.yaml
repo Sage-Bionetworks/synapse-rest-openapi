@@ -1,0 +1,13 @@
+description: 'List of principal aliases'
+example:
+  list:
+  - '...'
+  - '...'
+properties:
+  list:
+    description: 'List of principal aliases'
+    items:
+      type: string
+    type: array
+title: AliasList
+type: object

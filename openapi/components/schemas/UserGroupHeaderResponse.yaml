@@ -1,0 +1,25 @@
+description: 'A list of UserGroupHeaders.'
+example:
+  list:
+  - displayName: '...'
+    email: '...'
+    firstName: '...'
+    isIndividual: true
+    lastName: '...'
+    ownerId: '...'
+    userName: '...'
+  - displayName: '...'
+    email: '...'
+    firstName: '...'
+    isIndividual: true
+    lastName: '...'
+    ownerId: '...'
+    userName: '...'
+properties:
+  list:
+    description: 'The list of UserGroupHeaders'
+    items:
+      $ref: 'UserGroupHeader.yaml'
+    type: array
+title: UserGroupHeaderResponse
+type: object

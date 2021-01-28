@@ -264,6 +264,8 @@ paths:
     $ref: paths/userGroup.yaml
   /userGroupHeaders:
     $ref: paths/userGroupHeaders.yaml
+  /userGroupHeaders/aliases:
+    $ref: paths/userGroupHeaders@aliases.yaml
 
 components:
   securitySchemes:
