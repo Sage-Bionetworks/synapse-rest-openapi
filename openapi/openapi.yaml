@@ -270,6 +270,8 @@ paths:
     $ref: paths/userGroupHeaders@batch.yaml
   /userProfile:
     $ref: paths/userProfile.yaml
+  /userProfile/{profileId}:
+    $ref: paths/userProfile@{profileId}.yaml
 
 components:
   securitySchemes:

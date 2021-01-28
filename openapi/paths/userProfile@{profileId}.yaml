@@ -1,0 +1,25 @@
+parameters:
+  - description: |
+      The target profile owner ID (the "id" field returned in the "/user"
+      request).
+    in: path
+    name: profileId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the profile of a specified user.
+    <p><b>Note:</b> Private fields (e.g. "rStudioUrl") are omitted unless the requester
+    is the profile owner or an administrator.</p>'
+  operationId: getUserProfile
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserProfile.yaml
+      description: Success
+  summary: Get the profile of a specified user.
+  tags:
+  - User Profile Services
