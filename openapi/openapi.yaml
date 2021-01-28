@@ -56,8 +56,8 @@ tags:
   #   description: "."
   # - name: Entity Bundle V2 Services
   #   description: "."
-  # - name: Entity Services
-  #   description: "."
+  - name: Entity Services
+    description: "Entity services"
   - name: Evaluation Services
     description: |
       The Evaluation API is designed to support open-access data analysis and modeling
@@ -146,6 +146,8 @@ paths:
     $ref: paths/doi@async@get@{asyncToken}.yaml
   /doi/locate:
     $ref: paths/doi@locate.yaml
+  /entity:
+    $ref: paths/pathentity.yaml
   /entity/{id}/challenge:
     $ref: paths/entity@{id}@challenge.yaml
   /evaluation:
