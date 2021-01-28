@@ -21,7 +21,7 @@ get:
       <li> UserProfile  = 0x1 </li>
       <li> ORCID  = 0x2 </li>
       <li> VerificationSubmission = 0x4 </li>
-      <li> IsCertified = 0x8 </li>
+      <li> Is Certified = 0x8 </li>
       <li> Is Verified  = 0x10 </li>
       <li> Is ACT Member = 0x20 </li>
       </ul>
@@ -30,7 +30,7 @@ get:
     name: mask
     required: true
     schema:
-      type: integer
+      type: string
   responses:
     200:
       content:

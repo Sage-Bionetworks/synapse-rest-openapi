@@ -258,6 +258,8 @@ paths:
     $ref: paths/user@{id}@team.yaml
   /user/{id}/team/id:
     $ref: paths/user@{id}@team@id.yaml
+  /user/bundle:
+    $ref: paths/user@bundle.yaml
 
 components:
   securitySchemes:
