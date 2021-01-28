@@ -256,6 +256,8 @@ paths:
     $ref: paths/user@{id}@openRequest.yaml
   /user/{id}/team:
     $ref: paths/user@{id}@team.yaml
+  /user/{id}/team/id:
+    $ref: paths/user@{id}@team@id.yaml
 
 components:
   securitySchemes:

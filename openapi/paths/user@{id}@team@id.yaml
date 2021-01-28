@@ -1,0 +1,43 @@
+parameters:
+  - description: The ID of the Synapse user.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieve a paginated list of IDs of Teams to which the given user
+    belongs. If sorting is desired, both sort and
+    ascending must be specified. If they are omitted, results are not sorted.
+  operationId: getTeamIdsByMember
+  parameters:
+  - description: 'the direction of sort: true for ascending, and false for descending'
+    in: query
+    name: ascending
+    schema:
+      type: boolean
+  - description: controls pagination
+    in: query
+    name: nextPageToken
+    schema:
+      type: string
+  - description: |
+      the field to sort the team IDs on. Available options
+      <a href="${org.sagebionetworks.repo.model.TeamSortOrder}">TeamSortOrder</a>
+    in: query
+    name: sort
+    schema:
+      enum:
+      - TEAM_NAME
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedTeamIds.yaml
+      description: Success
+  summary: Retrieve a paginated list of IDs of Teams to which the given user belongs.
+  tags:
+  - Team Services
