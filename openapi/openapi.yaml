@@ -260,6 +260,8 @@ paths:
     $ref: paths/user@{id}@team@id.yaml
   /user/bundle:
     $ref: paths/user@bundle.yaml
+  /userGroup:
+    $ref: paths/userGroup.yaml
 
 components:
   securitySchemes:

@@ -1,0 +1,24 @@
+description: 'JSON schema for UserGroup POJO'
+example:
+  results:
+  - creationDate: '...'
+    etag: '...'
+    id: '...'
+    isIndividual: true
+    uri: '...'
+  - creationDate: '...'
+    etag: '...'
+    id: '...'
+    isIndividual: true
+    uri: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of user groups'
+    items:
+      $ref: 'UserGroup.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfUserGroup
+type: object
