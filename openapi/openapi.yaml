@@ -150,6 +150,8 @@ paths:
     $ref: paths/entity@.yaml
   /entity/{id}:
     $ref: paths/entity@{id}.yaml
+  /entity/{id}:
+    $ref: paths/entity@{id}@access.yaml
   /entity/{id}/challenge:
     $ref: paths/entity@{id}@challenge.yaml
   /evaluation:
