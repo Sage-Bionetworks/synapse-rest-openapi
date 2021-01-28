@@ -248,6 +248,9 @@ paths:
     $ref: paths/user@{id}@certificationStatus.yaml
   /user/{id}/certifiedUserPassingRecord:
     $ref: paths/user@{id}@certifiedUserPassingRecord.yaml
+  /user/{id}/memberList:
+    $ref: paths/user@{id}@memberList.yaml
+
 
 components:
   securitySchemes:

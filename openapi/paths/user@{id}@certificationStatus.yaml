@@ -2,7 +2,7 @@ parameters:
 - in: path
   name: id
   required: true
-  description: Synapse User id
+  description: The ID of the Synapse user.
   schema:
     type: string
 put:
