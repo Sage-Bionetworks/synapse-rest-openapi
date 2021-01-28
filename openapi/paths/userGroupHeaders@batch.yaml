@@ -1,0 +1,35 @@
+get:
+  description: |
+    Batch get UserGroupHeaders.
+    This fetches information about a collection of users or groups, specified by Synapse
+    IDs.
+  operationId: getUserGroupHeadersByIds
+  parameters:
+  - description: |
+      IDs are specified as request parameters at the end of the URL, separated
+      by commas. For example: ids=1001,819
+    in: query
+    name: ids
+    required: true
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    description: |
+      Batch get UserGroupHeaders.
+      This fetches information about a collection of users or groups, specified by
+      Synapse IDs.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserGroupHeaderResponsePage.yaml
+      description: Success
+  summary: Batch get UserGroupHeaders.
+  tags:
+  - User Profile Services

@@ -1,0 +1,26 @@
+description: 'A user response and whether it is correct.'
+example:
+  isCorrect: true
+  question:
+    concreteType: '...'
+    docLink: '...'
+    helpText: '...'
+    prompt: '...'
+    questionIndex: 12345
+    reference:
+      ownerObjectId: '...'
+      ownerObjectType: WIKI
+      wikiPageId: '...'
+  response:
+    concreteType: '...'
+    questionIndex: 12345
+properties:
+  isCorrect:
+    description: 'Is the response correct?'
+    type: boolean
+  question:
+    $ref: 'Question.yaml'
+  response:
+    $ref: 'QuestionResponse.yaml'
+title: ResponseCorrectness
+type: object

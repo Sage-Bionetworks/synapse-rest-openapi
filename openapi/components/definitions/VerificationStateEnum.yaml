@@ -1,0 +1,8 @@
+description: 'The enumeration of possible verification states.'
+enum:
+- SUBMITTED
+- APPROVED
+- REJECTED
+- SUSPENDED
+title: VerificationStateEnum
+type: string

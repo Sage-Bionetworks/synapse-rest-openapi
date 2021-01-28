@@ -1,0 +1,24 @@
+description: 'The state of a verification submission'
+example:
+  createdBy: '...'
+  createdOn: '...'
+  notes: '...'
+  reason: '...'
+  state: APPROVED
+properties:
+  createdBy:
+    description: 'The principal ID of the user who created this object'
+    type: string
+  createdOn:
+    description: 'The date and time this object was created'
+    type: string
+  notes:
+    description: 'Additional notes that can be set by the ACT team and that is not exposed to the end user.'
+    type: string
+  reason:
+    description: 'The reason for putting the verification submission in this state.'
+    type: string
+  state:
+    $ref: '../definitions/VerificationStateEnum.yaml'
+title: VerificationState
+type: object

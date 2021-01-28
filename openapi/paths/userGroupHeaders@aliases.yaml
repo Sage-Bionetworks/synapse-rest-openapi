@@ -1,0 +1,23 @@
+post:
+  description: Get Users and Groups that match the given list of aliases.
+  operationId: getUserGroupHeadersByAliases
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AliasList.yaml'
+    description: |
+      The list of principal aliases to lookup. Each alias must be
+      either a user name or team name. The maximum number of aliases per request is
+      100.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserGroupHeaderResponse.yaml
+      description: Success
+  summary: Get Users and Groups that match the given list of aliases.
+  tags:
+  - User Profile Services

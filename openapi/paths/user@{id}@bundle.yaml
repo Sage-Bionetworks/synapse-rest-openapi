@@ -1,0 +1,43 @@
+parameters:
+- in: path
+  name: id
+  required: true
+  description: The ID of the Synapse user.
+  schema:
+    type: string
+get:
+  description: |
+    Get the user bundle of a specified user.
+    <p><b>Note:</b> Private fields (e.g. "rStudioUrl") are omitted unless the requester
+    is the profile owner or an administrator.</p>
+  operationId: getUserBundleByOwnerId
+  parameters:
+  - description: |
+      integer flag defining which components to include in the bundle
+      <p>
+      This integer is used as a bit-string of flags to specify which parts to include
+      in the UserBundle. The mask is defined as follows:
+      <ul>
+      <li> UserProfile  = 0x1 </li>
+      <li> ORCID  = 0x2 </li>
+      <li> VerificationSubmission = 0x4 </li>
+      <li> Is Certified = 0x8 </li>
+      <li> Is Verified  = 0x10 </li>
+      <li> Is ACT Member = 0x20 </li>
+      </ul>
+      </p>
+    in: query
+    name: mask
+    required: true
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserBundle.yaml
+      description: Success
+  summary: Get the user bundle of a specified user.
+  tags:
+  - User Profile Services

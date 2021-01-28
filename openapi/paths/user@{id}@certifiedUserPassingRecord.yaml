@@ -1,0 +1,24 @@
+parameters:
+- in: path
+  name: id
+  required: true
+  description: The ID of the Synapse user.
+  schema:
+    type: string
+get:
+  description: |
+    Retrieve the Passing Record on the User Certification test for the
+    given user.
+  operationId: getPassingRecord
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PassingRecord.yaml
+      description: Success
+  summary: |
+    Retrieve the Passing Record on the User Certification test for the given
+    user.
+  tags:
+  - Certified User Services

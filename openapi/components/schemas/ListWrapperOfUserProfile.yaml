@@ -1,0 +1,74 @@
+description: 'List of User Profiles.'
+example:
+  effectiveSchema: '...'
+  list:
+  - RStudioUrl: '...'
+    company: '...'
+    createdOn: '...'
+    displayName: '...'
+    email: '...'
+    emails:
+    - '...'
+    - '...'
+    etag: '...'
+    firstName: '...'
+    industry: '...'
+    lastName: '...'
+    location: '...'
+    notificationSettings:
+      markEmailedMessagesAsRead: true
+      sendEmailNotifications: true
+    openIds:
+    - '...'
+    - '...'
+    ownerId: '...'
+    position: '...'
+    preferences:
+    - concreteType: '...'
+      name: '...'
+    - concreteType: '...'
+      name: '...'
+    profilePicureFileHandleId: '...'
+    summary: '...'
+    teamName: '...'
+    url: '...'
+    userName: '...'
+  - RStudioUrl: '...'
+    company: '...'
+    createdOn: '...'
+    displayName: '...'
+    email: '...'
+    emails:
+    - '...'
+    - '...'
+    etag: '...'
+    firstName: '...'
+    industry: '...'
+    lastName: '...'
+    location: '...'
+    notificationSettings:
+      markEmailedMessagesAsRead: true
+      sendEmailNotifications: true
+    openIds:
+    - '...'
+    - '...'
+    ownerId: '...'
+    position: '...'
+    preferences:
+    - concreteType: '...'
+      name: '...'
+    - concreteType: '...'
+      name: '...'
+    profilePicureFileHandleId: '...'
+    summary: '...'
+    teamName: '...'
+    url: '...'
+    userName: '...'
+properties:
+  list:
+    description: 'List of UserProfiles.'
+    items:
+      $ref: 'UserProfile.yaml'
+    type: array
+title: ListWrapperOfUserProfile
+type: object

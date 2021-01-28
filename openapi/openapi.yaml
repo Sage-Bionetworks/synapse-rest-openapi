@@ -29,8 +29,12 @@ tags:
   #   description: |
   #     This is a generic set of services that provides support for both launching
   #     asynchronous jobs and monitoring the progress of jobs.
-  # - name: Certified User Services
-  #   description: To become a Synapse Certified User you must pass a test.
+  - name: Certified User Services
+    description: |
+      To become a Synapse Certified User you must pass a test.
+      The Synapse APIs include a service to provide the test and a service to
+      submit a test result. There are also administrative services to retrieve
+      the history of test submissions.
   - name: Challenge Services
     description: |
       A Challenge is a special object that supplements a project, providing additional features
@@ -104,8 +108,8 @@ tags:
       The recycle bin (or trash can) is the special folder that holds the
       deleted entities for users.
   # - name: User Group Service
-  # - name: User Profile Services
-  #   description: Every Synapse user has an associated.
+  - name: User Profile Services
+    description: Every Synapse user has an associated User Profile
   # - name: V2 Wiki Services
   #   description: "."
   # - name: Verification Services
@@ -236,7 +240,42 @@ paths:
     $ref: paths/trashcan@trash@{id}.yaml
   /trashcan/view:
     $ref: paths/trashcan@view.yaml
-
+  /user:
+    $ref: paths/user.yaml
+  /user/{id}/bundle:
+    $ref: paths/user@{id}@bundle.yaml
+  /user/{id}/certificationStatus:
+    $ref: paths/user@{id}@certificationStatus.yaml
+  /user/{id}/certifiedUserPassingRecord:
+    $ref: paths/user@{id}@certifiedUserPassingRecord.yaml
+  /user/{id}/memberList:
+    $ref: paths/user@{id}@memberList.yaml
+  /user/{id}/openInvitation:
+    $ref: paths/user@{id}@openInvitation.yaml
+  /user/{id}/openRequest:
+    $ref: paths/user@{id}@openRequest.yaml
+  /user/{id}/team:
+    $ref: paths/user@{id}@team.yaml
+  /user/{id}/team/id:
+    $ref: paths/user@{id}@team@id.yaml
+  /user/bundle:
+    $ref: paths/user@bundle.yaml
+  /userGroup:
+    $ref: paths/userGroup.yaml
+  /userGroupHeaders:
+    $ref: paths/userGroupHeaders.yaml
+  /userGroupHeaders/aliases:
+    $ref: paths/userGroupHeaders@aliases.yaml
+  /userGroupHeaders/batch:
+    $ref: paths/userGroupHeaders@batch.yaml
+  /userProfile:
+    $ref: paths/userProfile.yaml
+  /userProfile/{profileId}:
+    $ref: paths/userProfile@{profileId}.yaml
+  /userProfile/{profileId}/image:
+    $ref: paths/userProfile@{profileId}@image.yaml
+  /userProfile/{profileId}/image/preview:
+    $ref: paths/userProfile@{profileId}@image@preview.yaml
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme

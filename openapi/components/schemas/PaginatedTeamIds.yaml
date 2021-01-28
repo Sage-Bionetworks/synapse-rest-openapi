@@ -1,0 +1,17 @@
+description: 'Container for a page of team IDs.'
+example:
+  nextPageToken: '...'
+  teamIds:
+  - '...'
+  - '...'
+properties:
+  nextPageToken:
+    description: 'Token that can be used to get the next page. Null if there are no more results.'
+    type: string
+  teamIds:
+    description: 'The requested team IDs.'
+    items:
+      type: string
+    type: array
+title: PaginatedTeamIds
+type: object

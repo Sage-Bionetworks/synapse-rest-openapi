@@ -1,0 +1,64 @@
+get:
+  description: |
+    Get the profile of the caller (my profile).
+    <p><b>Note:</b> Private user profile fields will be returned.</p>'
+  operationId: getMyOwnUserProfile
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserProfile.yaml
+      description: Success
+  summary: Get the profile of the caller (my profile).
+  tags:
+  - UserProfileController
+post:
+  description: |
+    Batch get UserGroupHeaders.
+    This fetches information about a collection of users or groups, specified by Synapse
+    IDs.'
+  operationId: listUserProfiles
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/IdList.yaml
+    description: |
+      IDs are specified as request parameters at the end of the URL, separated
+      by commas. For example: ids=1001,819
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListWrapperOfUserProfile.yaml
+      description: Success
+  summary: Batch get UserGroupHeaders.
+  tags:
+  - User Profile Services
+put:
+  description: |
+    Update your own profile
+
+    <p><b>Note: </b> The user associated with the UserProfile "ownerId" must match
+    the identity of the caller,
+    otherwise an Unauthorized response will occur.</p>
+  operationId: updateUserProfile
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/UserProfile.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserProfile.yaml
+      description: Success
+  summary: Update your own profile.
+  tags:
+  - User Profile Services

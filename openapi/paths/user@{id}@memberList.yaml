@@ -1,0 +1,30 @@
+parameters:
+  - description: The ID of the Synapse user.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Returns the TeamMember info for a user and a given list of Team IDs.
+    Not Found status is returned if the user ID is invalid, any of the Team IDs
+    are invalid, or the user is not in any of the given teams.
+  operationId: listTeamMembersGivenUserandTeamList
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/IdList.yaml'
+    description: Team IDs
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListWrapperOfTeamMember.yaml
+      description: Success
+  summary: Returns the TeamMember info for a user and a given list of Team IDs.
+  tags:
+  - Team Services

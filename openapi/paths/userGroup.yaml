@@ -1,0 +1,46 @@
+get:
+  description: Get the user-groups in the system
+  operationId: getUserGroups
+  parameters:
+  - in: query
+    description: Return results in ascending order.
+    name: ascending
+    schema:
+      default: true
+      type: boolean
+  - description: the maximum number of results to return.
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+  - description: the starting index of the returned results.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  - in: query
+    name: sort
+    description: Sort results.
+    schema:
+      default: NONE
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    description: Get the user-groups in the system
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfUserGroup.yaml
+      description: Success
+  summary: Get the user-groups in the system.
+  tags:
+  - User Profile Services

@@ -1,0 +1,13 @@
+description: 'The metadata of a file attached to a Verification Submission'
+example:
+  fileName: '...'
+  id: '...'
+properties:
+  fileName:
+    description: 'The name of a file'
+    type: string
+  id:
+    description: 'The identifier of a file'
+    type: string
+title: AttachmentMetadata
+type: object
