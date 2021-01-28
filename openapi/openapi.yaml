@@ -250,7 +250,8 @@ paths:
     $ref: paths/user@{id}@certifiedUserPassingRecord.yaml
   /user/{id}/memberList:
     $ref: paths/user@{id}@memberList.yaml
-
+  /user/{id}/openInvitation:
+    $ref: paths/user@{id}@openInvitation.yaml
 
 components:
   securitySchemes:
