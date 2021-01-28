@@ -266,7 +266,8 @@ paths:
     $ref: paths/userGroupHeaders.yaml
   /userGroupHeaders/aliases:
     $ref: paths/userGroupHeaders@aliases.yaml
-
+  /userGroupHeaders/batch:
+    $ref: paths/userGroupHeaders@batch.yaml
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
