@@ -109,8 +109,14 @@ tags:
   # - name: Subscription Services
   #   description: "."
   # - name: Synapse Version Info Services
-  # - name: Table Services
-  #   description: "."
+  - name: Table Services
+    description: |
+      A Synapse TableEntity model object represents the metadata of a table.
+      Each TableEntity is defined by a list of ColumnModel IDs. Use POST /column
+      to create new ColumnModel objects. Each ColumnModel object is immutable,
+      so to change a column of a table a new column must be added and the old column
+      must be removed. TableEntities can be created, updated, read and deleted like
+      any other entity.
   - name: Team Services
     description: Teams are groups of users.
   - name: Trash Services
@@ -172,9 +178,10 @@ paths:
     $ref: paths/entity@{id}@benefactor.yaml
   /entity/{id}/bundle2:
     $ref: paths/entity@{id}@bundle2.yaml
-
   /entity/{id}/challenge:
     $ref: paths/entity@{id}@challenge.yaml
+  /entity/{id}/column:
+    $ref: paths/entity@{id}@column.yaml
   /evaluation:
     $ref: paths/evaluation.yaml
   /evaluation/{evalId}:
