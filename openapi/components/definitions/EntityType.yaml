@@ -1,0 +1,12 @@
+description: 'Type of the Entity'
+enum:
+- project
+- folder
+- file
+- table
+- link
+- entityview
+- dockerrepo
+- submissionview
+title: EntityType
+type: string

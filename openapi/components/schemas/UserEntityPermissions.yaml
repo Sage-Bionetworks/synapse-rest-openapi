@@ -1,0 +1,71 @@
+description: 'The permission a User has for a given Entity'
+example:
+  canAddChild: true
+  canCertifiedUserAddChild: true
+  canCertifiedUserEdit: true
+  canChangePermissions: true
+  canChangeSettings: true
+  canDelete: true
+  canDownload: true
+  canEdit: true
+  canEnableInheritance: true
+  canModerate: true
+  canPublicRead: true
+  canUpload: true
+  canView: true
+  isCertificationRequired: true
+  isCertifiedUser: true
+  ownerPrincipalId: 12345
+properties:
+  canAddChild:
+    description: 'Can the user add a child entity to this entity?'
+    type: boolean
+  canCertifiedUserAddChild:
+    description: 'Can the user add a child entity to this entity once they become a Certified User?'
+    type: boolean
+  canCertifiedUserEdit:
+    description: 'Can the user edit this entity once they become a Certified User?'
+    type: boolean
+  canChangePermissions:
+    description: 'Can the user change the permissions of this entity?'
+    type: boolean
+  canChangeSettings:
+    description: 'Can the user change the settings of this entity?'
+    type: boolean
+  canDelete:
+    description: 'Can the user delete this entity?'
+    type: boolean
+  canDownload:
+    description: 'Are there any access requirements precluding the user from downloading this entity?'
+    type: boolean
+  canEdit:
+    description: 'Can the user edit this entity?'
+    type: boolean
+  canEnableInheritance:
+    description: |
+      Can the user delete the entity's access control list (so it inherits settings from an ancestor)?'
+    type: boolean
+  canModerate:
+    description: 'Can the user moderate the forum associated with this entity? Note that only project entity has forum.'
+    type: boolean
+  canPublicRead:
+    description: 'Is this entity considered public?'
+    type: boolean
+  canUpload:
+    description: 'Are there any access requirements precluding the user from uploading into this entity (folder or project)?'
+    type: boolean
+  canView:
+    description: 'Can the user view this entity?'
+    type: boolean
+  isCertificationRequired:
+    description: 'Is the certification requirement enabled for the project of the entity?'
+    type: boolean
+  isCertifiedUser:
+    description: 'Is this user certified?'
+    type: boolean
+  ownerPrincipalId:
+    description: |
+      The principal ID of the entity's owner (i.e. the entity's 'createdBy')'
+    type: number
+title: UserEntityPermissions
+type: object

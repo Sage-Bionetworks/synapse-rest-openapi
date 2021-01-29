@@ -1,0 +1,62 @@
+description: 'Specifies what fields to include in an EntityBundle'
+example:
+  includeAccessControlList: true
+  includeAnnotations: true
+  includeBenefactorACL: true
+  includeDOIAssociation: true
+  includeEntity: true
+  includeEntityPath: true
+  includeFileHandles: true
+  includeFileName: true
+  includeHasChildren: true
+  includePermissions: true
+  includeRestrictionInformation: true
+  includeRootWikiId: true
+  includeTableBundle: true
+  includeThreadCount: true
+properties:
+  includeAccessControlList:
+    description: 'Include the AccessControlList for this Entity'
+    type: boolean
+  includeAnnotations:
+    description: 'Include Annotations associated with the Entity in the response.'
+    type: boolean
+  includeBenefactorACL:
+    description: 'Include the ACL of the Entity from which this Entity inherits its AccessControlList'
+    type: boolean
+  includeDOIAssociation:
+    description: 'Include DOIs associated with this Entity'
+    type: boolean
+  includeEntity:
+    description: 'Include the Entity in the response.'
+    type: boolean
+  includeEntityPath:
+    description: |
+      Include EntityHeaders for all Entities in this Entity's path
+    type: boolean
+  includeFileHandles:
+    description: 'Include all FileHandles associated with this Entity.'
+    type: boolean
+  includeFileName:
+    description: 'If this Entity is a FileEntity, include its filename'
+    type: boolean
+  includeHasChildren:
+    description: 'Include boolean indicating whether this Entity has children'
+    type: boolean
+  includePermissions:
+    description: 'Include permissions of the current user on the entity.'
+    type: boolean
+  includeRestrictionInformation:
+    description: 'Include the RestrictionLevel of this Entity'
+    type: boolean
+  includeRootWikiId:
+    description: 'Include the id of the root Wiki associated with this Entity'
+    type: boolean
+  includeTableBundle:
+    description: 'If the Entity is a TableEntity, include Table specific metadata.'
+    type: boolean
+  includeThreadCount:
+    description: 'Include the number of discussion threads that mention this Entity'
+    type: boolean
+title: EntityBundleRequest
+type: object

@@ -1,0 +1,52 @@
+description: 'A column model contains the metadata of a single column of a TableEntity'
+example:
+  columnType: INTEGER_LIST
+  defaultValue: '...'
+  enumValues:
+  - '...'
+  - '...'
+  facetType: enumeration
+  id: '...'
+  maximumListLength: 100
+  maximumSize: 12345
+  name: '...'
+properties:
+  columnType:
+    $ref: '../definitions/ColumnType.yaml'
+  defaultValue:
+    description: |
+      The default value for this column. Columns of type ENTITYID, FILEHANDLEID, USERID,
+      and LARGETEXT are not allowed to have default values.
+    type: string
+  enumValues:
+    description: |
+      Columns of type STRING can be constrained to an enumeration values set on this list.
+      The maximum number of entries for an enum is 100
+    items:
+      type: string
+    type: array
+  facetType:
+    $ref: '../definitions/FacetType.yaml'
+  id:
+    description: 'The immutable ID issued to new columns'
+    type: string
+  maximumListLength:
+    description: |
+      Required if using a columnType with a "_LIST" suffix.
+      Describes the maximum number of values that will appear in that list.
+    type: integer
+    default: 100
+    minimum: 1
+    maximum: 100
+  maximumSize:
+    description: |
+      A parameter for columnTypes with a maximum size. For example, ColumnType. STRINGs
+      have a default maximum size of 50 characters, but can be set to a maximumSize of
+      1 to 1000 characters. For columnType of STRING_LIST, this limits the size of
+      individual string elements in the list
+    type: number
+  name:
+    description: 'The display name of the column'
+    type: string
+title: ColumnModel
+type: object

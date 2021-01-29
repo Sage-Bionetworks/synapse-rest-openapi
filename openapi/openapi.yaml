@@ -54,10 +54,20 @@ tags:
     description: Provides REST APIs for managing Synapse DOIs.
   # - name: Entity Bundle Services
   #   description: "."
-  # - name: Entity Bundle V2 Services
-  #   description: "."
+  - name: Entity Bundle V2 Services
+    description: |
+      The Entity Bundle Services provide bundled access to Entities and their related data components.
+      An EntityBundle can be used to create, fetch, or update an Entity and associated objects
+      with a single web service request.
   - name: Entity Services
-    description: "Entity services"
+    description: |
+      All data in Synapse is organize into Projects. These Projects can be further organized
+      into hierarchical Folders. Finally, the data is then represented by FileEntities or
+      Records (coming soon) that reside within Folders or directly within Projects.
+      All these objects (Projects, Folders, FileEntities, and Records) are derived from
+      a common object called Entity. The Entity Services provide the means to create, read,
+      update, and delete Synapse Entities. There are also services for navigating the Entity
+      hierarchies, setting Authorization rules, and Annotating Entities.
   - name: Evaluation Services
     description: |
       The Evaluation API is designed to support open-access data analysis and modeling
@@ -160,6 +170,8 @@ paths:
     $ref: paths/entity@{id}@annotations2.yaml
   /entity/{id}/benefactor:
     $ref: paths/entity@{id}@benefactor.yaml
+  /entity/{id}/bundle2:
+    $ref: paths/entity@{id}@bundle2.yaml
 
   /entity/{id}/challenge:
     $ref: paths/entity@{id}@challenge.yaml

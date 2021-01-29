@@ -1,0 +1,202 @@
+description: 'Bundle to transport an Entity and related data objects'
+example:
+  accessControlList:
+    createdBy: '...'
+    creationDate: '...'
+    etag: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    resourceAccess:
+    - accessType:
+      - CHANGE_PERMISSIONS
+      - UPDATE_SUBMISSION
+      principalId: 12345
+    - accessType:
+      - DOWNLOAD
+      - MODERATE
+      principalId: 12345
+  annotations:
+    annotations:
+      property1:
+        type: STRING
+        value:
+        - '...'
+        - '...'
+      property2:
+        type: TIMESTAMP_MS
+        value:
+        - '...'
+        - '...'
+    etag: '...'
+    id: '...'
+  benefactorAcl:
+    createdBy: '...'
+    creationDate: '...'
+    etag: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    resourceAccess:
+    - accessType:
+      - UPLOAD
+      - DELETE
+      principalId: 12345
+    - accessType:
+      - CHANGE_SETTINGS
+      - CREATE
+      principalId: 12345
+  doiAssociation:
+    associatedBy: '...'
+    associatedOn: '...'
+    associationId: '...'
+    doiUri: '...'
+    doiUrl: '...'
+    etag: '...'
+    objectId: '...'
+    objectType: VERIFICATION_SUBMISSION
+    objectVersion: 12345
+    updatedBy: '...'
+    updatedOn: '...'
+  entity:
+    concreteType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    parentId: '...'
+  entityType: entityview
+  fileHandles:
+  - concreteType: '...'
+    contentMd5: '...'
+    contentSize: 12345
+    contentType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    fileName: '...'
+    id: '...'
+    storageLocationId: 12345
+  - concreteType: '...'
+    contentMd5: '...'
+    contentSize: 12345
+    contentType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    fileName: '...'
+    id: '...'
+    storageLocationId: 12345
+  fileName: '...'
+  hasChildren: true
+  path:
+    path:
+    - benefactorId: 12345
+      createdBy: '...'
+      createdOn: '...'
+      id: '...'
+      modifiedBy: '...'
+      modifiedOn: '...'
+      name: '...'
+      type: '...'
+      versionLabel: '...'
+      versionNumber: 12345
+    - benefactorId: 12345
+      createdBy: '...'
+      createdOn: '...'
+      id: '...'
+      modifiedBy: '...'
+      modifiedOn: '...'
+      name: '...'
+      type: '...'
+      versionLabel: '...'
+      versionNumber: 12345
+  permissions:
+    canAddChild: true
+    canCertifiedUserAddChild: true
+    canCertifiedUserEdit: true
+    canChangePermissions: true
+    canChangeSettings: true
+    canDelete: true
+    canDownload: true
+    canEdit: true
+    canEnableInheritance: true
+    canModerate: true
+    canPublicRead: true
+    canUpload: true
+    canView: true
+    isCertificationRequired: true
+    isCertifiedUser: true
+    ownerPrincipalId: 12345
+  restrictionInformation:
+    hasUnmetAccessRequirement: true
+    restrictionLevel: RESTRICTED_BY_TERMS_OF_USE
+  rootWikiId: '...'
+  tableBundle:
+    columnModels:
+    - columnType: STRING
+      defaultValue: '...'
+      enumValues:
+      - '...'
+      - '...'
+      facetType: enumeration
+      id: '...'
+      maximumListLength: 100
+      maximumSize: 12345
+      name: '...'
+    - columnType: USERID_LIST
+      defaultValue: '...'
+      enumValues:
+      - '...'
+      - '...'
+      facetType: range
+      id: '...'
+      maximumListLength: 100
+      maximumSize: 12345
+      name: '...'
+    maxRowsPerPage: 12345
+  threadCount: 12345
+properties:
+  accessControlList:
+    $ref: 'AccessControlList.yaml'
+  annotations:
+    $ref: 'Annotations_v2.yaml'
+  benefactorAcl:
+    $ref: 'AccessControlList.yaml'
+  doiAssociation:
+    $ref: 'DoiAssociation.yaml'
+  entity:
+    $ref: 'Entity.yaml'
+  entityType:
+    $ref: '../definitions/EntityType.yaml'
+  fileHandles:
+    description: 'FileHandles associated with this Entity'
+    items:
+      $ref: 'FileHandle.yaml'
+    type: array
+  fileName:
+    description: 'If this Entity is a FileEntity, this is its filename'
+    type: string
+  hasChildren:
+    description: 'Whether or not this Entity has children'
+    type: boolean
+  path:
+    $ref: 'EntityPath.yaml'
+  permissions:
+    $ref: 'UserEntityPermissions.yaml'
+  restrictionInformation:
+    $ref: 'RestrictionInformationResponse.yaml'
+  rootWikiId:
+    description: 'Id of the root Wiki associated with this Entity'
+    type: string
+  tableBundle:
+    $ref: 'TableBundle.yaml'
+  threadCount:
+    description: 'Number of disucssion threads that reference this Entity'
+    type: number
+title: EntityBundle
+type: object

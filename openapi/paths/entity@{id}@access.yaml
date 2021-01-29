@@ -12,11 +12,11 @@ get:
     <p>
 
     A User's permission on an Entity is a calculation based several factors
-    including the permission granted by the Entity''s ACL and the User's group
+    including the permission granted by the Entity's ACL and the User's group
     membership. There might also be extra requirement for an Entity, such as
     special terms-of-use or special restrictions for sensitive data. This means a
-    client cannot accurately calculate a User''s permission on an Entity simply by
-    inspecting the Entity''s ACL. Instead, all clients should use this method to
+    client cannot accurately calculate a User's permission on an Entity simply by
+    inspecting the Entity's ACL. Instead, all clients should use this method to
     get the calculated permission a User has on an Entity.
     </p>
   operationId: hasAccess
