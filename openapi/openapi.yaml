@@ -204,6 +204,8 @@ paths:
     $ref: paths/entity@{id}@generatedBy.yaml
   /entity/{id}/json:
     $ref: paths/entity@{id}@json.yaml
+  /entity/{id}/lockAccessRequirement:
+    $ref: paths/entity@{id}@lockAccessRequirement.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
