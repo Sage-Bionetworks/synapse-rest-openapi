@@ -1,0 +1,46 @@
+description: 'Interface for JSON schema for Activity POJO.'
+example:
+  createdBy: '...'
+  createdOn: '...'
+  description: '...'
+  etag: '...'
+  id: '...'
+  modifiedBy: '...'
+  modifiedOn: '...'
+  name: '...'
+  used:
+  - concreteType: '...'
+    wasExecuted: true
+  - concreteType: '...'
+    wasExecuted: true
+properties:
+  createdBy:
+    description: 'The user that created this object.'
+    type: string
+  createdOn:
+    description: 'The date this object was created.'
+    type: string
+  description:
+    description: 'A description of this Activity.'
+    type: string
+  etag:
+    $ref: ../definitions/Etag.yaml
+  id:
+    description: 'The unique immutable ID'
+    type: string
+  modifiedBy:
+    description: 'The user that last modified this object.'
+    type: string
+  modifiedOn:
+    description: 'The date this object was last modified.'
+    type: string
+  name:
+    description: 'A name for this Activity.'
+    type: string
+  used:
+    description: 'The entities used by this Activity.'
+    items:
+      $ref: 'Used.yaml'
+    type: array
+title: Activity
+type: object

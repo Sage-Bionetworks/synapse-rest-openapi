@@ -1,0 +1,74 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Deletes the activity relationship for the current version of an
+    Entity.
+  operationId: deleteActivity
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    required: false
+  responses:
+    204:
+      description: This resource has been deleted
+  summary: Deletes the activity relationship for the current version of an Entity.
+  tags:
+  - Entity Services
+get:
+  description: Get an existing activity for the current version of an Entity.
+  operationId: getActivity
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    description: Get an existing activity for the current version of an Entity.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Activity.yaml
+      description: Success
+  summary: Get an existing activity for the current version of an Entity.
+  tags:
+  - Entity Services
+put:
+  description: Sets the generatedBy relationship for the current version of an Entity.
+  operationId: updateActivityForEntity
+  parameters:
+  - description: |
+      The id of the activity to connect to the entity. You must
+      be the creator of the
+      <a href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a> used here.'
+    in: query
+    name: generatedBy
+    required: true
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    description: Sets the generatedBy relationship for the current version of an Entity.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Activity.yaml
+      description: Success
+  summary: Sets the generatedBy relationship for the current version of an Entity.
+  tags:
+  - Entity Services
