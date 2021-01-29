@@ -1,0 +1,40 @@
+parameters:
+  - description: |
+      The ID of the Folder with an STS-enabled storage location.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Gets the temporary S3 credentials from STS for the given entity. These
+    credentials are only good for the bucket and base key specified by the
+    returned credentials and expire 12 hours after this API is called.
+
+    The specified entity must be a folder with an STS-enabled storage location.
+    If that storage location is external storage, you may request read-only or
+    read-write permissions. If that storage location is Synapse storage, you must
+    request read-only permissions.
+  operationId: getTemporaryCredentialsForEntity
+  parameters:
+  - description: |
+      Read-only or read-write permissions.
+    in: query
+    name: permission
+    required: true
+    schema:
+      enum:
+      - read_only
+      - read_write
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/StsCredentials.yaml
+      description: Success
+  summary: Gets the temporary S3 credentials from STS for the given entity.
+  tags:
+  - Entity Services

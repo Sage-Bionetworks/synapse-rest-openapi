@@ -222,6 +222,8 @@ paths:
     $ref: paths/entity@{id}@schema@validation@invalid.yaml
   /entity/{id}/schema/validation/statistics:
     $ref: paths/entity@{id}@schema@validation@statistics.yaml
+  /entity/{id}/sts:
+    $ref: paths/entity@{id}@sts.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
