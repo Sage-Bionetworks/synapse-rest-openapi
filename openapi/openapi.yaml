@@ -182,6 +182,9 @@ paths:
     $ref: paths/entity@{id}@challenge.yaml
   /entity/{id}/column:
     $ref: paths/entity@{id}@column.yaml
+  /entity/{id}/datatype:
+    $ref: paths/entity@{id}@datatype.yaml
+
   /evaluation:
     $ref: paths/evaluation.yaml
   /evaluation/{evalId}:
