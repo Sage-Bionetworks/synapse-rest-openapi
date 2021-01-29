@@ -1,0 +1,100 @@
+parameters:
+  - description: The ID of a TableEntity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Asynchronously start a query. Use the returned job id and GET
+    /entity/{id}/table/query/async/get</a> to get the results of the query
+
+    Using a 'SQL like' syntax, query the current version of the rows in a
+    single table. The following pseudo-syntax is the basic supported format:
+
+
+    SELECT <br>
+
+    [ALL | DISTINCT] select_expr [, select_expr ...] <br>
+
+    FROM synapse_table_id <br>
+
+    [WHERE where_condition] <br>
+
+    [GROUP BY {col_name [, [col_name * ...] } <br>
+
+    [ORDER BY {col_name [ [ASC | DESC] [, col_name [ [ASC | DESC]]}<br>
+
+    [LIMIT row_count [ OFFSET offset ]]<br>
+
+
+    <p>
+
+    Note: Sub-queries and joining tables is not supported.
+
+    </p>
+
+    <p>
+
+    This services depends on an index that is created/update asynchronously
+    from table creation and update events. This means there could be short
+    window of time when the index is inconsistent with the true state of the
+    table. When the index is out-of-synch, then a status code of 202
+    (ACCEPTED) will be returned and the response body will be a TableStatus
+    object. The TableStatus will indicates the current
+    status of the index including how much work is remaining until the index
+    is consistent with the truth of the table.
+
+    The 'partsMask' is an integer "mask" that can be combined into to request
+    any desired part. As of this writing, the mask is defined as follows QueryBundleRequest
+
+    <ul>
+
+    <li>Query Results <i>(queryResults)</i> = 0x1</li>
+
+    <li>Query Count <i>(queryCount)</i> = 0x2</li>
+
+    <li>Select Columns <i>(selectColumns)</i> = 0x4</li>
+
+    <li>Max Rows Per Page <i>(maxRowsPerPage)</i> = 0x8</li>
+
+    <li>The Table Columns <i>(columnModels)</i> = 0x10</li>
+
+    <li>Facet statistics for each faceted column <i>(facetStatistics)</i> = 0x20</li>
+
+    <li>The sum of the file sizes <i>(sumFileSizesBytes)</i> = 0x40</li>
+
+    </ul>
+
+    </p>
+
+    <p>
+
+    For example, to request all parts, the request mask value should be: <br>
+    0x1 OR 0x2 OR 0x4 OR 0x8 OR 0x10 OR 0x20 OR 0x40 = 0x7F.
+
+    </p>
+
+    <p>
+
+    Note: The caller must have the READ permission on the TableEntity to make this call.
+
+    </p>
+  operationId: queryAsyncStart
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/QueryBundleRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AsyncJobId.yaml
+      description: Success
+  summary: Asynchronously start a query.
+  tags:
+  - Table Services

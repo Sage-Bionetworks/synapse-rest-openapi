@@ -1,0 +1,46 @@
+description: 'Query Bundle Request'
+example:
+  concreteType: '...'
+  entityId: '...'
+  partMask: 0x1
+  query:
+    additionalFilters:
+    - {}
+    - {}
+    includeEntityEtag: true
+    limit: 12345
+    offset: 12345
+    selectedFacets:
+    - columnName: '...'
+      concreteType: '...'
+    - columnName: '...'
+      concreteType: '...'
+    sort:
+    - column: '...'
+      direction: DESC
+    - column: '...'
+      direction: ASC
+    sql: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  entityId:
+    description: 'Entity Id'
+    type: string
+  partMask:
+    description: |
+      Optional, default all. The 'partsMask' is an integer mask that can be combined into to request any desired part.
+      The mask is defined as follows:
+      * Query Results (queryResults) = 0x1
+      * Query Count (queryCount) = 0x2
+      * Select Columns (selectColumns) = 0x4
+      * Max Rows Per Page (maxRowsPerPage) = 0x8
+      * The Table Columns (columnModels) = 0x10
+      * Facet statistics for each faceted column (facetStatistics) = 0x20
+      * The sum of the file sizes (sumFileSizesBytes) = 0x40
+    type: integer
+  query:
+    $ref: 'Query.yaml'
+title: QueryBundleRequest
+type: object
