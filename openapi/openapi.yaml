@@ -216,6 +216,8 @@ paths:
     $ref: paths/entity@{id}@permissions.yaml
   /entity/{id}/schema/binding:
     $ref: paths/entity@{id}@schema@binding.yaml
+  /entity/{id}/schema/validation:
+    $ref: paths/entity@{id}@schema@validation.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

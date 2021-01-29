@@ -1,0 +1,5 @@
+description: 'Type of Synapse objects that can have a JSON schema.'
+enum:
+- entity
+title: ObjectType
+type: string
