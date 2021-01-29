@@ -202,6 +202,8 @@ paths:
     $ref: paths/entity@{id}@filepreview.yaml
   /entity/{id}/generatedBy:
     $ref: paths/entity@{id}@generatedBy.yaml
+  /entity/{id}/json:
+    $ref: paths/entity@{id}@json.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
