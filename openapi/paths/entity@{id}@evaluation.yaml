@@ -63,4 +63,4 @@ get:
       description: Success
   summary: Gets Evaluations tied to a project.
   tags:
-  - EvaluationController
+  - Evaluation Services

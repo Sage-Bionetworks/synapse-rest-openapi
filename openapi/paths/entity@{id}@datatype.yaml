@@ -40,4 +40,4 @@ put:
       description: Success
   summary: Change the.
   tags:
-  - EntityController
+  - Entity Services

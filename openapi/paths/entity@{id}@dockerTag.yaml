@@ -48,4 +48,4 @@ get:
       description: Success
   summary: List the tagged commits (tag/digest pairs) for the given Docker repository.
   tags:
-  - DockerCommitController
+  - Docker Commit Services
