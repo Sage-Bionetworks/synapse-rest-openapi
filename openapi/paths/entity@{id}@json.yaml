@@ -1,0 +1,64 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the raw JSON for the given entity. The resulting JSON can be used
+    for the validation of a entity against a
+    <a href="${org.sagebionetworks.repo.model.schema.JsonSchema}">JsonSchema</a>.
+
+    <p>
+
+    Note: The caller must be granted the
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}" >ACCESS_TYPE.READ</a>
+    permission on the Entity.
+
+    </p>
+  operationId: getEntityJson
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/JSONObject.yaml
+      description: Success
+  summary: Get the raw JSON for the given entity.
+  tags:
+  - Entity Services
+put:
+  description: |
+    Update the annotations of an entity using the raw JSON of the entity.
+
+    <p>
+
+    See: <a href="${GET.entity.id.json}">GET entity/{id}/json</a> to get the JSON
+    of an entity.
+
+    </p>
+
+    <p>
+    Note: The caller must be granted the
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}" >ACCESS_TYPE.UPDATE and ACCESS_TYPE.READ</a>
+    permission on the Entity.
+    </p>'
+  operationId: updateEntityWithJson
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/JSONObject.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/JSONObject.yaml
+      description: Success
+  summary: Update the annotations of an entity using the raw JSON of the entity.
+  tags:
+  - Entity Services

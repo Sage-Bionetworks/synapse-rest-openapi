@@ -1,0 +1,51 @@
+parameters:
+  - description: the ID of the Docker repository entity
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    List the tagged commits (tag/digest pairs) for the given Docker repository.  Only
+    the most recent digest for each tag is returned since,
+    following Docker's convention, a tag may be reassigned
+    to a newer commit. The list may be sorted by date or tag.  The default is to sort
+    by date, descending (newest first).'
+  operationId: listDockerTags
+  parameters:
+  - in: query
+    name: ascending
+    description: Ascending
+    schema:
+      default: false
+      type: boolean
+  - description: pagination parameter, optional (default is 20)
+    in: query
+    name: limit
+    schema:
+      default: 20
+      type: integer
+      minimum: 0
+  - description: pagination parameter, optional (default is 0)
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  - in: query
+    name: sort
+    description: Sort results
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfDockerCommit.yaml
+      description: Success
+  summary: List the tagged commits (tag/digest pairs) for the given Docker repository.
+  tags:
+  - Docker Commit Services

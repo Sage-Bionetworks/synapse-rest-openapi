@@ -1,0 +1,7 @@
+description: 'ACT restriction levels'
+enum:
+- OPEN
+- RESTRICTED_BY_TERMS_OF_USE
+- CONTROLLED_BY_ACT
+title: RestrictionLevel
+type: string

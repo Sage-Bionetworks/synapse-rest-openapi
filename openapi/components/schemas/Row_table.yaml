@@ -1,0 +1,25 @@
+description: 'Represents a single row of a TableEntity'
+example:
+  etag: '...'
+  rowId: 12345
+  values:
+  - '...'
+  - '...'
+  versionNumber: 12345
+properties:
+  etag:
+    description: 'For queries against EntityViews with query.includeEtag=true, this field will contain the etag of the entity. Will be null for all other cases.'
+    type: string
+  rowId:
+    description: 'The immutable ID issued to a new row.'
+    type: integer
+  values:
+    description: 'The values for each column of this row. To delete a row, set this to an empty list: []'
+    items:
+      type: string
+    type: array
+  versionNumber:
+    description: 'The version number of this row. Each row version is immutable, so when a row is updated a new version is created.'
+    type: integer
+title: Row
+type: object

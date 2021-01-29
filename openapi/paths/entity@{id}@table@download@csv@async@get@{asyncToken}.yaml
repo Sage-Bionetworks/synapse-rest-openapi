@@ -1,0 +1,30 @@
+parameters:
+  - description: The ID of a TableEntity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - in: path
+    description: Async Token
+    name: asyncToken
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Asynchronously get the results of a csv download started with POST
+
+    Note: When the result is not ready yet, this method will return a status
+    code of 202 (ACCEPTED) and the response body will be a AsynchronousJobStatus
+  operationId: csvDownloadAsyncGet
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/DownloadFromTableResult.yaml
+      description: Success
+  summary: Asynchronously get the results of a csv download started with.
+  tags:
+  - Table Services

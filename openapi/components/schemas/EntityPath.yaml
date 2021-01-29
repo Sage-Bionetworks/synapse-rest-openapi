@@ -1,0 +1,34 @@
+description: |
+  All entities in this Entity's path
+example:
+  path:
+  - benefactorId: 12345
+    createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    type: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+  - benefactorId: 12345
+    createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    type: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+properties:
+  path:
+    description: |
+      The list of all entities in this entites path.
+      The first element is the root parent and the last element (n) is the entity.
+    items:
+      $ref: 'EntityHeader.yaml'
+    type: array
+title: EntityPath
+type: object

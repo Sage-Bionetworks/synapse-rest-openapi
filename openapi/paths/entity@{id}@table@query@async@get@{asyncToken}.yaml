@@ -1,0 +1,31 @@
+parameters:
+  - in: path
+    name: asyncToken
+    description: Async Token
+    required: true
+    schema:
+      type: string
+  - description: The ID of the TableEntity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Asynchronously get the results of a query started with POST
+    /entity/{id}/table/query/async/start
+
+    Note: When the result is not ready yet, this method will return a status
+    code of 202 (ACCEPTED) and the response body will be a AsynchronousJobStatus object.
+  operationId: queryAsyncGet
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/QueryResultBundle.yaml
+      description: Success
+  summary: Asynchronously get the results of a query started with.
+  tags:
+  - Table Services

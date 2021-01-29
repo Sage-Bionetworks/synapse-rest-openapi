@@ -1,0 +1,83 @@
+post:
+  description: |
+    Create a new Entity. This method is used to create Projects, Folders,
+    FileEntities and Records (coming soon). The passed request body should
+    contain the following fields:
+
+    <ul>
+
+    <li>name - Give your new entity a Name. <b>Note:</b> A name must be unique
+    within the given parent, similar to a file in a folder.</li>
+
+    <li>parentId - The ID of the parent Entity, such as a Folder or Project. This
+    field should be excluded when creating a Project.</li>
+
+    <li>concreteType - Indicates the type of Entity to create. The value should
+    be one of the following: org.sagebionetworks.repo.model.Project,
+    org.sagebionetworks.repo.model.Folder, or
+    org.sagebionetworks.repo.model.FileEntity</li>
+
+    </ul>
+
+    <p>
+
+    Note: To create an Entity the caller must be granted the
+    <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.CREATE</a>
+    on the parent Entity. Any authenticated caller can
+    create a new Project (with parentId=null).
+
+    </p>
+
+    <p>
+
+    <b>Service Limits</b>
+
+    <table border="1">
+
+    <tr>
+
+    <th>resource</th>
+
+    <th>limit</th>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum number of children for a single parent entity</td>
+
+    <td>10 K</td>
+
+    </tr>
+
+    </table>
+
+    </p>
+  operationId: createEntity
+  parameters:
+  - description: |
+      To track the Provenance of an Entity create, include the
+      ID of the <a href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a>
+      that was created to track the change. For
+      more information see: <a href="${POST.activity}">POST /activity</a>.
+      You must be the creator of the <a href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a> used here.'
+    in: query
+    name: generatedBy
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Entity.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Entity.yaml
+      description: Success
+  summary: Create a new Entity.
+  tags:
+  - Entity Services

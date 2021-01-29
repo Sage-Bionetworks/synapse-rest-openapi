@@ -1,0 +1,35 @@
+description: 'Paginated results of a ColumnModel'
+example:
+  results:
+  - columnType: LINK
+    defaultValue: '...'
+    enumValues:
+    - '...'
+    - '...'
+    facetType: range
+    id: '...'
+    maximumListLength: 100
+    maximumSize: 12345
+    name: '...'
+  - columnType: SUBMISSIONID
+    defaultValue: '...'
+    enumValues:
+    - '...'
+    - '...'
+    facetType: range
+    id: '...'
+    maximumListLength: 100
+    maximumSize: 12345
+    name: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'The list of ColumnModels for this page'
+    items:
+      $ref: 'ColumnModel.yaml'
+    type: array
+  totalNumberOfResults:
+    description: 'The total number of results'
+    type: integer
+title: PaginatedColumnModels
+type: object

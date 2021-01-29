@@ -1,0 +1,33 @@
+description: 'Describes the binding of a JSON schema to an object'
+example:
+  createdBy: '...'
+  createdOn: '...'
+  jsonSchemaVersionInfo:
+    $id: '...'
+    createdBy: '...'
+    createdOn: '...'
+    jsonSHA256Hex: '...'
+    organizationId: '...'
+    organizationName: '...'
+    schemaId: '...'
+    schemaName: '...'
+    semanticVersion: '...'
+    versionId: '...'
+  objectId: 12345
+  objectType: entity
+properties:
+  createdBy:
+    description: 'The ID of the user that bound this object to the schema.'
+    type: string
+  createdOn:
+    description: 'The date this binding was created.'
+    type: string
+  jsonSchemaVersionInfo:
+    $ref: 'JsonSchemaVersionInfo.yaml'
+  objectId:
+    description: 'The numeric identifier of the object bound to a JSON schema'
+    type: integer
+  objectType:
+    $ref: '../definitions/BoundObjectType.yaml'
+title: JsonSchemaObjectBinding
+type: object

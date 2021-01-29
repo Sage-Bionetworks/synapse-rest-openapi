@@ -1,0 +1,49 @@
+parameters:
+  - description: The ID of a Table.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Given the ID of a <a href="${org.sagebionetworks.repo.model.table.TableEntity}">TableEntity</a>,
+    get its list of <ahref="${org.sagebionetworks.repo.model.table.ColumnModel}">ColumnModels</a>
+    that are currently assigned to the table.
+
+    <p>
+
+    <b>Service Limits</b>
+
+    <table border="1">
+
+    <tr>
+
+    <th>resource</th>
+
+    <th>limit</th>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum frequency this method can be called</td>
+
+    <td>6 calls per minute</td>
+
+    </tr>
+
+    </table>
+
+    </p>
+  operationId: getColumnForTable
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedColumnModels.yaml
+      description: Success
+  summary: Given the ID of a.
+  tags:
+  - Table Services

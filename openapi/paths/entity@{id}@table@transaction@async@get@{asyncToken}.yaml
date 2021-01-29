@@ -1,0 +1,31 @@
+parameters:
+  - description: The token returned when the job was started.
+    in: path
+    name: asyncToken
+    required: true
+    schema:
+      type: string
+  - description: The ID of a Table entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Asynchronously get the results of a table update transaction started
+    with POST /entity/{id}/table/transaction/async/start</a>
+
+    Note: When the result is not ready yet, this method will return a status
+    code of 202 (ACCEPTED) and the response body will be a AsynchronousJobStatus object.
+  operationId: getTableTransactionResult
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/TableUpdateTransactionResponse.yaml
+      description: Success
+  summary: Asynchronously get the results of a table update transaction started with.
+  tags:
+  - Table Services

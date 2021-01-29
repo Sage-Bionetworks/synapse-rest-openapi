@@ -1,0 +1,12 @@
+description: 'The information about restriction level on a restrict-able object.'
+example:
+  hasUnmetAccessRequirement: true
+  restrictionLevel: CONTROLLED_BY_ACT
+properties:
+  hasUnmetAccessRequirement:
+    description: 'True if user has at least one unmet access requirement on this restrict-able object; false otherwise.'
+    type: boolean
+  restrictionLevel:
+    $ref: '../definitions/RestrictionLevel.yaml'
+title: RestrictionInformationResponse
+type: object

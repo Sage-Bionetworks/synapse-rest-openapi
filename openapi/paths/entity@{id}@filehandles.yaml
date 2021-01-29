@@ -1,0 +1,29 @@
+parameters:
+  - description: The ID of a File Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the FileHandles of the file currently associated with the current
+    version of the Entity.
+
+    <p>
+    If a preview exists for the file then the handle of the preview and the file
+    will be returned with this call.
+    </p>
+  operationId: getEntityFileHandles
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FileHandleResults.yaml
+      description: Success
+  summary: |
+    Get the FileHandles of the file currently associated with the current
+    version of the Entity.
+  tags:
+  - Entity Services

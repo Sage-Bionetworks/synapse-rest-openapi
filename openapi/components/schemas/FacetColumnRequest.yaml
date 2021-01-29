@@ -1,0 +1,13 @@
+description: 'A set of values that have been selected for filtering in a faceted column'
+example:
+  columnName: '...'
+  concreteType: '...'
+properties:
+  columnName:
+    description: 'The name of the faceted column'
+    type: string
+  concreteType:
+    description: 'Conrete Type'
+    type: string
+title: FacetColumnRequest
+type: object

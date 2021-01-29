@@ -1,0 +1,9 @@
+description: 'Response to creating a snapshot of a table of view.'
+example:
+  snapshotVersionNumber: 12345
+properties:
+  snapshotVersionNumber:
+    description: 'The version number of the resulting snapshot.'
+    type: integer
+title: SnapshotResponse
+type: object

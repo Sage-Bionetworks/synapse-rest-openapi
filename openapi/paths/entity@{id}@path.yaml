@@ -1,0 +1,23 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the full path of an Entity as a List of EntityHeaders. The first
+    EntityHeader will be the Root Entity, and the last EntityHeader will be the
+    requested Entity.
+  operationId: getEntityPath
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityPath.yaml
+      description: Success
+  summary: Get the full path of an Entity as a List of EntityHeaders.
+  tags:
+  - Entity Services

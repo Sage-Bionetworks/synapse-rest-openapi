@@ -1,0 +1,32 @@
+parameters:
+  - in: path
+    description: Async Token
+    name: asyncToken
+    required: true
+    schema:
+      type: string
+  - description: The ID of a TableEntity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Asynchronously get the results of a csv upload started with 
+    POST /entity/{id}/table/upload/csv/async/start
+
+    Note: When the result is not ready yet, this method will return a status
+    code of 202 (ACCEPTED) and the response body will be a AsynchronousJobStatus
+    object.
+  operationId: csvUploadAsyncGet
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UploadToTableResult.yaml
+      description: Success
+  summary: Asynchronously get the results of a csv upload started with.
+  tags:
+  - Table Services

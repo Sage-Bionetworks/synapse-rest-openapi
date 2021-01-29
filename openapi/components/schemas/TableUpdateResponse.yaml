@@ -1,0 +1,9 @@
+description: 'Abstraction for a response to update a table.'
+example:
+  concreteType: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+title: TableUpdateResponse
+type: object

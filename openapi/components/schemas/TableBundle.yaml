@@ -1,0 +1,37 @@
+description: 'Metadata about a TableEntity that can be included in an EntityBundle'
+example:
+  columnModels:
+  - columnType: EVALUATIONID
+    defaultValue: '...'
+    enumValues:
+    - '...'
+    - '...'
+    facetType: enumeration
+    id: '...'
+    maximumListLength: 100
+    maximumSize: 12345
+    name: '...'
+  - columnType: STRING
+    defaultValue: '...'
+    enumValues:
+    - '...'
+    - '...'
+    facetType: range
+    id: '...'
+    maximumListLength: 100
+    maximumSize: 12345
+    name: '...'
+  maxRowsPerPage: 12345
+properties:
+  columnModels:
+    description: 'The list of ColumnModels currently used by this table.'
+    items:
+      $ref: 'ColumnModel.yaml'
+    type: array
+  maxRowsPerPage:
+    description: |
+      The maximum number of rows that can be requested or posted for this table in a single call.
+      This is a function of the columns that are currently assigned to this table.
+    type: number
+title: TableBundle
+type: object

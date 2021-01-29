@@ -1,0 +1,28 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Adds the owner of the given entity as an additional recipient of the
+    message.
+  operationId: sendMessageToEntityOwner
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MessageToUser.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/MessageToUser.yaml
+      description: Success
+  summary: Adds the owner of the given entity as an additional recipient of the message.
+  tags:
+  - Message Services

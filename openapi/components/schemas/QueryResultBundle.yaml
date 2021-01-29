@@ -1,0 +1,97 @@
+description: 'A bundle of information about a query result.'
+example:
+  columnModels:
+  - columnType: DATE_LIST
+    defaultValue: '...'
+    enumValues:
+    - '...'
+    - '...'
+    facetType: enumeration
+    id: '...'
+    maximumListLength: 100
+    maximumSize: 12345
+    name: '...'
+  - columnType: DOUBLE
+    defaultValue: '...'
+    enumValues:
+    - '...'
+    - '...'
+    facetType: range
+    id: '...'
+    maximumListLength: 100
+    maximumSize: 100
+    name: '...'
+  concreteType: '...'
+  facets:
+  - columnName: '...'
+    concreteType: '...'
+    facetType: enumeration
+  - columnName: '...'
+    concreteType: '...'
+    facetType: enumeration
+  lastUpdatedOn: '...'
+  maxRowsPerPage: 12345
+  queryCount: 12345
+  queryResult:
+    concreteType: '...'
+    nextPageToken:
+      concreteType: '...'
+      entityId: '...'
+      token: '...'
+    queryResults:
+      concreteType: '...'
+      etag: '...'
+      headers:
+      - {}
+      - {}
+      rows:
+      - {}
+      - {}
+      tableId: '...'
+  selectColumns:
+  - columnType: USERID_LIST
+    id: '...'
+    name: '...'
+  - columnType: EVALUATIONID
+    id: '...'
+    name: '...'
+  sumFileSizes:
+    greaterThan: true
+    sumFileSizesBytes: 12345
+properties:
+  columnModels:
+    description: 'The list of ColumnModels for the table. Use mask = 0x10 to include in the bundle.'
+    items:
+      $ref: 'ColumnModel.yaml'
+    type: array
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  facets:
+    description: 'The list of facets for the search results'
+    items:
+      $ref: 'FacetColumnResult.yaml'
+    type: array
+  lastUpdatedOn:
+    description: |
+      The date-time when this table/view was last updated.
+      Note: Since views are eventually consistent a view might still be
+      out-of-date even if it was recently updated. Use mask = 0x80 to include in the bundle.
+    type: string
+  maxRowsPerPage:
+    description: 'The maximum number of rows that can be retrieved in a single call. This is a function of the columns that are selected in the query. Use mask = 0x8 to include in the bundle.'
+    type: integer
+  queryCount:
+    description: 'The total number of rows that match the query. Use mask = 0x2 to include in the bundle.'
+    type: integer
+  queryResult:
+    $ref: 'QueryResult.yaml'
+  selectColumns:
+    description: 'The list of SelectColumns from the select clause. Use mask = 0x4 to include in the bundle.'
+    items:
+      $ref: 'SelectColumn.yaml'
+    type: array
+  sumFileSizes:
+    $ref: 'SumFileSizes.yaml'
+title: QueryResultBundle
+type: object

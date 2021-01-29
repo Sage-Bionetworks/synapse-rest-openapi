@@ -1,0 +1,34 @@
+parameters:
+  - in: path
+    description: The ID of a Table Entity.
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Request to create a new snapshot of a table. The provided comment,
+    label, and activity ID will be applied to the current version thereby creating a
+    snapshot and locking the current version. After the snapshot is created a new
+    version will be started with an 'in-progress' label.
+
+    NOTE: This service is for TableEntity only. Snapshots of EntityView
+    require asynchronous processing and can be created via:
+    POST /entity/{id}/table/transaction/async/start
+  operationId: createSnapshot
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/SnapshotRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SnapshotResponse.yaml
+      description: Success
+  summary: Request to create a new snapshot of a table.
+  tags:
+  - Table Services

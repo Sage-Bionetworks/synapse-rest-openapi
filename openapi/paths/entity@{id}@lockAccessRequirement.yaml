@@ -1,0 +1,25 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Add a temporary access restriction that prevents access pending review
+    by the Synapse Access and Compliance Team.
+    This service may be used only by an administrator of the specified entity.
+  operationId: createLockAccessRequirement
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessRequirement.yaml
+      description: Success
+  summary: |
+    Add a temporary access restriction that prevents access pending review
+    by the Synapse ACT.
+  tags:
+  - Access Requirement Services

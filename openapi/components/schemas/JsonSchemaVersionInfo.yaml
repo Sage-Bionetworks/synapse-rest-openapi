@@ -1,0 +1,48 @@
+description: 'Information about a single version of a JSON schema.'
+example:
+  $id: '...'
+  createdBy: '...'
+  createdOn: '...'
+  jsonSHA256Hex: '...'
+  organizationId: '...'
+  organizationName: '...'
+  schemaId: '...'
+  schemaName: '...'
+  semanticVersion: '...'
+  versionId: '...'
+properties:
+  $id:
+    description: |
+      The full '$id' of this schema version
+    type: string
+  createdBy:
+    description: 'The ID of the user that created this JSON schema version.'
+    type: string
+  createdOn:
+    description: The date this JSON schema version was created.
+    type: string
+  jsonSHA256Hex:
+    description: 'The SHA-256 hexadecimal hash of the UTF-8 encoded JSON schema.'
+    type: string
+  organizationId:
+    description: 'The Synapse issued numeric identifier for the organization.'
+    type: string
+  organizationName:
+    description: 'The name of the organization to which this schema belongs.'
+    type: string
+  schemaId:
+    description: 'The Synapse issued numeric identifier for the schema.'
+    type: string
+  schemaName:
+    description: 'The name of the this schema.'
+    type: string
+  semanticVersion:
+    description: |
+      The semantic version label provided when this version was created.
+      Can be null if a semantic version was not provided when this version was created.
+    type: string
+  versionId:
+    description: 'The Synapse issued numeric identifier for this version.'
+    type: string
+title: JsonSchemaVersionInfo
+type: object

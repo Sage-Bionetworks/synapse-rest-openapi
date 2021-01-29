@@ -1,0 +1,41 @@
+description: 'A recursive ValidationException that describes all schema violations for an entire schema tree.'
+example:
+  causingExceptions:
+  - causingExceptions:
+    - {}
+    - {}
+    keyword: '...'
+    message: '...'
+    pointerToViolation: '...'
+    schemaLocation: '...'
+  - causingExceptions:
+    - {}
+    - {}
+    keyword: '...'
+    message: '...'
+    pointerToViolation: '...'
+    schemaLocation: '...'
+  keyword: '...'
+  message: '...'
+  pointerToViolation: '...'
+  schemaLocation: '...'
+properties:
+  causingExceptions:
+    description: 'An array of sub-exceptions.'
+    items:
+      $ref: 'ValidationException.yaml'
+    type: array
+  keyword:
+    description: 'The JSON schema keyword which was violated.'
+    type: string
+  message:
+    description: 'The description of the validation failure.'
+    type: string
+  pointerToViolation:
+    description: 'A JSON Pointer denoting the path from the input document root to its fragment which caused the validation failure.'
+    type: string
+  schemaLocation:
+    description: 'A JSON Pointer denoting the path from the schema JSON root to the violated keyword.'
+    type: string
+title: ValidationException
+type: object

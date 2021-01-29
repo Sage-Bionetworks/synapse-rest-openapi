@@ -46,18 +46,34 @@ tags:
   # - name: Docker Authorization Services
   #   description: These services allow Synapse to act as an authorization service for
   #     a Docker Registry.
-  # - name: Docker Commit Services
-  #   description: These services relate to the 'commits' to Docker repositories.
+  - name: Docker Commit Services
+    description: |
+      These services relate to the 'commits' to Docker repositories.
+      Note that create, update and delete of the Docker repositories themselves
+      are done using the Entity Services, for external/unmanaged repositories,
+      or by direct integration with the Docker registry, for managed Docker
+      repositories. Tagged commits for both managed and external/unmanaged repositories
+      may be retrieved using the 'listDockerTags' API included in this service.
   # - name: Docker Registry Event Services
   #   description: These services process events from the Docker Registry.
   - name: Doi Services
     description: Provides REST APIs for managing Synapse DOIs.
   # - name: Entity Bundle Services
   #   description: "."
-  # - name: Entity Bundle V2 Services
-  #   description: "."
-  # - name: Entity Services
-  #   description: "."
+  - name: Entity Bundle V2 Services
+    description: |
+      The Entity Bundle Services provide bundled access to Entities and their related data components.
+      An EntityBundle can be used to create, fetch, or update an Entity and associated objects
+      with a single web service request.
+  - name: Entity Services
+    description: |
+      All data in Synapse is organize into Projects. These Projects can be further organized
+      into hierarchical Folders. Finally, the data is then represented by FileEntities or
+      Records (coming soon) that reside within Folders or directly within Projects.
+      All these objects (Projects, Folders, FileEntities, and Records) are derived from
+      a common object called Entity. The Entity Services provide the means to create, read,
+      update, and delete Synapse Entities. There are also services for navigating the Entity
+      hierarchies, setting Authorization rules, and Annotating Entities.
   - name: Evaluation Services
     description: |
       The Evaluation API is designed to support open-access data analysis and modeling
@@ -81,8 +97,10 @@ tags:
     description: |
       The Membership Request Services create, retrieve and delete
       membership requests.
-  # - name: Message Services
-  #   description: "."
+  - name: Message Services
+    description: |
+      Provides REST APIs for sending messages to other Synapse users and
+      for commenting on Synapse entities.
   # - name: Migration Services
   #   description: Services for Migrating data between stacks.
   # - name: Principal Services
@@ -99,8 +117,14 @@ tags:
   # - name: Subscription Services
   #   description: "."
   # - name: Synapse Version Info Services
-  # - name: Table Services
-  #   description: "."
+  - name: Table Services
+    description: |
+      A Synapse TableEntity model object represents the metadata of a table.
+      Each TableEntity is defined by a list of ColumnModel IDs. Use POST /column
+      to create new ColumnModel objects. Each ColumnModel object is immutable,
+      so to change a column of a table a new column must be added and the old column
+      must be removed. TableEntities can be created, updated, read and deleted like
+      any other entity.
   - name: Team Services
     description: Teams are groups of users.
   - name: Trash Services
@@ -146,8 +170,83 @@ paths:
     $ref: paths/doi@async@get@{asyncToken}.yaml
   /doi/locate:
     $ref: paths/doi@locate.yaml
+  /entity:
+    $ref: paths/entity@.yaml
+  /entity/{id}:
+    $ref: paths/entity@{id}.yaml
+  /entity/{id}/access:
+    $ref: paths/entity@{id}@access.yaml
+  /entity/{id}/accessRequirement:
+    $ref: paths/entity@{id}@accessRequirement.yaml
+  /entity/{id}/acl:
+    $ref: paths/entity@{id}@acl.yaml
+  /entity/{id}/annotations2:
+    $ref: paths/entity@{id}@annotations2.yaml
+  /entity/{id}/benefactor:
+    $ref: paths/entity@{id}@benefactor.yaml
+  /entity/{id}/bundle2:
+    $ref: paths/entity@{id}@bundle2.yaml
   /entity/{id}/challenge:
     $ref: paths/entity@{id}@challenge.yaml
+  /entity/{id}/column:
+    $ref: paths/entity@{id}@column.yaml
+  /entity/{id}/datatype:
+    $ref: paths/entity@{id}@datatype.yaml
+  /entity/{id}/dockerCommit:
+    $ref: paths/entity@{id}@dockerCommit.yaml
+  /entity/{id}/dockerTag:
+    $ref: paths/entity@{id}@dockerTag.yaml
+  /entity/{id}/evaluation:
+    $ref: paths/entity@{id}@evaluation.yaml
+  /entity/{id}/filehandles:
+    $ref: paths/entity@{id}@filehandles.yaml
+  /entity/{id}/filepreview:
+    $ref: paths/entity@{id}@filepreview.yaml
+  /entity/{id}/generatedBy:
+    $ref: paths/entity@{id}@generatedBy.yaml
+  /entity/{id}/json:
+    $ref: paths/entity@{id}@json.yaml
+  /entity/{id}/lockAccessRequirement:
+    $ref: paths/entity@{id}@lockAccessRequirement.yaml
+  /entity/{id}/message:
+    $ref: paths/entity@{id}@message.yaml
+  /entity/{id}/path:
+    $ref: paths/entity@{id}@path.yaml
+  /entity/{id}/permissions:
+    $ref: paths/entity@{id}@permissions.yaml
+  /entity/{id}/schema/binding:
+    $ref: paths/entity@{id}@schema@binding.yaml
+  /entity/{id}/schema/validation:
+    $ref: paths/entity@{id}@schema@validation.yaml
+  /entity/{id}/schema/validation/invalid:
+    $ref: paths/entity@{id}@schema@validation@invalid.yaml
+  /entity/{id}/schema/validation/statistics:
+    $ref: paths/entity@{id}@schema@validation@statistics.yaml
+  /entity/{id}/sts:
+    $ref: paths/entity@{id}@sts.yaml
+  /entity/{id}/table/column/{columnId}/row/{rowId}/version/{versionNumber}/file:
+    $ref: paths/entity@{id}@table@column@{columnId}@row@{rowId}@version@{versionNumber}@file.yaml
+  /entity/{id}/table/column/{columnId}/row/{rowId}/version/{versionNumber}/filepreview:
+    $ref: paths/entity@{id}@table@column@{columnId}@row@{rowId}@version@{versionNumber}@filepreview.yaml
+  /entity/{id}/table/download/csv/async/get/{asyncToken}:
+    $ref: paths/entity@{id}@table@download@csv@async@get@{asyncToken}.yaml
+  /entity/{id}/table/download/csv/async/start:
+    $ref: paths/entity@{id}@table@download@csv@async@start.yaml
+  /entity/{id}/table/filehandles:
+    $ref: paths/entity@{id}@table@filehandles.yaml
+  /entity/{id}/table/query/async/get/{asyncToken}:
+    $ref: paths/entity@{id}@table@query@async@get@{asyncToken}.yaml
+  /entity/{id}/table/query/async/start:
+    $ref: paths/entity@{id}@table@query@async@start.yaml
+  /entity/{id}/table/snapshot:
+    $ref: paths/entity@{id}@table@snapshot.yaml
+  /entity/{id}/table/transaction/async/get/{asyncToken}:
+    $ref: paths/entity@{id}@table@transaction@async@get@{asyncToken}.yaml
+  /entity/{id}/table/transaction/async/start:
+    $ref: paths/entity@{id}@table@transaction@async@start.yaml
+  /entity/{id}/threads:
+    $ref: paths/entity@{id}@threads.yaml
+
   /evaluation:
     $ref: paths/evaluation.yaml
   /evaluation/{evalId}:

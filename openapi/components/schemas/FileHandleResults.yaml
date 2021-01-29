@@ -1,0 +1,31 @@
+description: 'List of file handles'
+example:
+  list:
+  - concreteType: '...'
+    contentMd5: '...'
+    contentSize: 12345
+    contentType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    fileName: '...'
+    id: '...'
+    storageLocationId: 12345
+  - concreteType: '...'
+    contentMd5: '...'
+    contentSize: 12345
+    contentType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    fileName: '...'
+    id: '...'
+    storageLocationId: 12345
+properties:
+  list:
+    description: 'List of file handles'
+    items:
+      $ref: 'FileHandle.yaml'
+    type: array
+title: FileHandleResults
+type: object

@@ -1,0 +1,72 @@
+description: 'The Thread model object represents a single Thread.'
+example:
+  activeAuthors:
+  - '...'
+  - '...'
+  createdBy: '...'
+  createdOn: '...'
+  etag: '...'
+  forumId: '...'
+  id: '...'
+  isDeleted: true
+  isEdited: true
+  isPinned: true
+  lastActivity: '...'
+  messageKey: '...'
+  modifiedOn: '...'
+  numberOfReplies: 12345
+  numberOfViews: 12345
+  projectId: '...'
+  title: '...'
+properties:
+  activeAuthors:
+    description: 'The list of userId whose most active on this Thread'
+    items:
+      type: string
+    type: array
+  createdBy:
+    description: 'The id of the user that created this Thread'
+    type: string
+  createdOn:
+    description: 'The timestamp when this Thread was created'
+    type: string
+  etag:
+    $ref: ../definitions/Etag.yaml
+  forumId:
+    description: 'The ID of the forum this Thread belongs to'
+    type: string
+  id:
+    description: 'The ID of the Thread'
+    type: string
+  isDeleted:
+    description: 'Has this Thread been deleted?'
+    type: boolean
+  isEdited:
+    description: 'Has the author edited this Thread?'
+    type: boolean
+  isPinned:
+    description: 'Has this Thread been pinned?'
+    type: boolean
+  lastActivity:
+    description: 'The timestamp when the last activity occurs on this Thread'
+    type: string
+  messageKey:
+    description: 'The S3 key where the actual message stored'
+    type: string
+  modifiedOn:
+    description: 'The timestamp when this Thread was last modified'
+    type: string
+  numberOfReplies:
+    description: 'The number of replies to this thread'
+    type: integer
+  numberOfViews:
+    description: 'The number of unique users who has viewed this thread'
+    type: integer
+  projectId:
+    description: 'The ID of the project this Thread belongs to'
+    type: string
+  title:
+    description: 'The title of the Thread'
+    type: string
+title: DiscussionThreadBundle
+type: object

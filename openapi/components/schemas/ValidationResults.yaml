@@ -1,0 +1,57 @@
+description: 'Results of validating an object against a schema'
+example:
+  allValidationMessages:
+  - '...'
+  - '...'
+  isValid: true
+  objectEtag: '...'
+  objectId: '...'
+  objectType: entity
+  schema$id: '...'
+  validatedOn: '...'
+  validationErrorMessage: '...'
+  validationException:
+    causingExceptions:
+    - {}
+    - {}
+    keyword: '...'
+    message: '...'
+    pointerToViolation: '...'
+    schemaLocation: '...'
+properties:
+  allValidationMessages:
+    description: |
+      If the object is not valid according to the schema, a the flat list
+      of error messages will be provided with one error message per sub-schema.
+    items:
+      type: string
+    type: array
+  isValid:
+    description: 'True if the object is currently valid according to the schema.'
+    type: boolean
+  objectEtag:
+    description: |
+      The etag of the object at the time of validation.
+      Note: If this etag does not match the current etag of the object then
+      these validation results should be considered out of date.
+    type: string
+  objectId:
+    description: 'The identifier of the object that was validated.'
+    type: string
+  objectType:
+    $ref: '../definitions/ObjectType_schema.yaml'
+  schema$id:
+    description: 'The $id of the schema that the object was validated against.'
+    type: string
+  validatedOn:
+    description: 'The date-time this object was validated'
+    type: string
+  validationErrorMessage:
+    description: |
+      If the object is not valid according to the schema, a simple one
+      line error message will be provided.
+    type: string
+  validationException:
+    $ref: 'ValidationException.yaml'
+title: ValidationResults
+type: object

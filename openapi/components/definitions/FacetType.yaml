@@ -1,0 +1,6 @@
+description: 'Table Facet Type'
+enum:
+- enumeration
+- range
+title: FacetType
+type: string

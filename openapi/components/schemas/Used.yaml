@@ -1,0 +1,13 @@
+description: 'Interface for JSON schema for a Used record in Provenance'
+example:
+  concreteType: '...'
+  wasExecuted: true
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  wasExecuted:
+    description: 'The enclosed entity was used and also executed in the Activity'
+    type: boolean
+title: Used
+type: object

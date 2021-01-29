@@ -1,0 +1,26 @@
+description: |
+  Response for an Object's DataType.
+example:
+  dataType: OPEN_DATA
+  objectId: '...'
+  objectType: FORM_GROUP
+  updatedBy: '...'
+  updatedOn: '...'
+properties:
+  dataType:
+    $ref: '../definitions/DataType.yaml'
+  objectId:
+    description: 'The ID of the object.'
+    type: string
+  objectType:
+    $ref: 'ObjectType.yaml'
+  updatedBy:
+    description: |
+      The user that last updated this object's DataType.
+    type: string
+  updatedOn:
+    description: |
+      The date this object's DataType was last updated.
+    type: string
+title: DataTypeResponse
+type: object

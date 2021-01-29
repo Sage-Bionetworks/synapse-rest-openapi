@@ -1,0 +1,30 @@
+parameters:
+  - description: The ID of an Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the list of permission that the caller has on a given Entity.
+
+    A User's permission on an Entity is a calculation based several factors
+    including the permission granted by the Entity's ACL and the User's group
+    membership. There might also be extra requirement for an Entity, such as
+    special terms-of-use or special restrictions for sensitive data. This means a
+    client cannot accurately calculate a User's permission on an Entity simply by
+    inspecting the Entity''s ACL. Instead, all clients should use this method to
+    get the calculated permission a User has on an Entity.
+
+  operationId: getUserEntityPermissions
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserEntityPermissions.yaml
+      description: Success
+  summary: Get the list of permission that the caller has on a given Entity.
+  tags:
+  - Entity Services

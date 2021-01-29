@@ -1,0 +1,69 @@
+description: 'JSON schema for TableFileHandleResults.'
+example:
+  headers:
+  - columnType: EVALUATIONID
+    id: '...'
+    name: '...'
+  - columnType: DATE_LIST
+    id: '...'
+    name: '...'
+  rows:
+  - list:
+    - concreteType: '...'
+      contentMd5: '...'
+      contentSize: 12345
+      contentType: '...'
+      createdBy: '...'
+      createdOn: '...'
+      etag: '...'
+      fileName: '...'
+      id: '...'
+      storageLocationId: 12345
+    - concreteType: '...'
+      contentMd5: '...'
+      contentSize: 12345
+      contentType: '...'
+      createdBy: '...'
+      createdOn: '...'
+      etag: '...'
+      fileName: '...'
+      id: '...'
+      storageLocationId: 12345
+  - list:
+    - concreteType: '...'
+      contentMd5: '...'
+      contentSize: 12345
+      contentType: '...'
+      createdBy: '...'
+      createdOn: '...'
+      etag: '...'
+      fileName: '...'
+      id: '...'
+      storageLocationId: 12345
+    - concreteType: '...'
+      contentMd5: '...'
+      contentSize: 12345
+      contentType: '...'
+      createdBy: '...'
+      createdOn: '...'
+      etag: '...'
+      fileName: '...'
+      id: '...'
+      storageLocationId: 12345
+  tableId: '...'
+properties:
+  headers:
+    description: 'The list of ColumnModels ID that describes the rows of this set.'
+    items:
+      $ref: 'SelectColumn.yaml'
+    type: array
+  rows:
+    description: 'For each row a list of file handles for each requested column'
+    items:
+      $ref: 'FileHandleResults.yaml'
+    type: array
+  tableId:
+    description: 'The ID of the TableEntity than owns these rows'
+    type: string
+title: TableFileHandleResults
+type: object

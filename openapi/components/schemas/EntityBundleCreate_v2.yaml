@@ -1,0 +1,52 @@
+description: 'Used to create Entity and associated metadata in a single transaction'
+example:
+  accessControlList:
+    createdBy: '...'
+    creationDate: '...'
+    etag: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    resourceAccess:
+    - accessType:
+      - PARTICIPATE
+      - UPDATE_SUBMISSION
+      principalId: 12345
+    - accessType:
+      - DELETE
+      - UPLOAD
+      principalId: 12345
+  annotations:
+    annotations:
+      property1:
+        type: STRING
+        value:
+        - '...'
+        - '...'
+      property2:
+        type: STRING
+        value:
+        - '...'
+        - '...'
+    etag: '...'
+    id: '...'
+  entity:
+    concreteType: '...'
+    createdBy: '...'
+    createdOn: '...'
+    description: '...'
+    etag: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    parentId: '...'
+properties:
+  accessControlList:
+    $ref: 'AccessControlList.yaml'
+  annotations:
+    $ref: 'Annotations_v2.yaml'
+  entity:
+    $ref: 'Entity.yaml'
+title: EntityBundleCreate
+type: object

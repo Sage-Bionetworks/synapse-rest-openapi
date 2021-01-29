@@ -1,0 +1,37 @@
+description: |
+  An AsynchronousRequestBody to used make multiple changes to a table as a single 'transaction'.
+  All changes will either succeed or fail as a unit.
+example:
+  changes:
+  - concreteType: '...'
+    entityId: '...'
+  - concreteType: '...'
+    entityId: '...'
+  concreteType: '...'
+  createSnapshot: true
+  entityId: '...'
+  snapshotOptions:
+    snapshotActivityId: '...'
+    snapshotComment: '...'
+    snapshotLabel: '...'
+properties:
+  changes:
+    description: 'List of changes that describes schema and/or row changes to a table.'
+    items:
+      $ref: 'TableUpdateRequest.yaml'
+    type: array
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  createSnapshot:
+    description: |
+      When set to 'true', a snapshot of the table will be created after the change
+      from this transaction request are applied to the table.
+    type: boolean
+  entityId:
+    description: 'Entity Id'
+    type: string
+  snapshotOptions:
+    $ref: 'SnapshotRequest.yaml'
+title: TableUpdateTransactionRequest
+type: object

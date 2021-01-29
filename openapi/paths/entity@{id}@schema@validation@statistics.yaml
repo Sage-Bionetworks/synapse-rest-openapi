@@ -1,0 +1,35 @@
+parameters:
+  - description: The ID of the container Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the The summary statistics of the JSON schema validation results
+    for a single container Entity such as a Project or Folder. Only direct children of
+    the container are included in the results. The statistics include the total
+    number of children in the container, and the counts for both the invalid and
+    valid children. If an Entity has not been validated for the first time, or it
+    does not have bound schema it will be counted as 'unknown'.
+
+    The validation of an Entity against its bound schema is automatic and
+    eventually consistent. Keep checking this method to get the latest validation
+    statistics for the given container.
+
+    Note: The caller must be granted the READ permission on the container Entity.
+    The resulting statistics will only include children that the caller has the READ permission on.
+  operationId: getEntitySchemaValidationStatistics
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ValidationSummaryStatistics.yaml
+      description: Success
+  summary: |
+    Get the summary statistics of the JSON schema validation results for
+    a single container Entity such as a Project or Folder.
+  tags:
+  - Entity Services
