@@ -1,0 +1,17 @@
+description: 'The result of a CSV table upload job.'
+example:
+  concreteType: '...'
+  etag: '...'
+  rowsProcessed: 12345
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  etag:
+    description: 'The new etag of the version applied to the table.'
+    type: string
+  rowsProcessed:
+    description: 'The number of rows that were read from the provided file and applied to the table.'
+    type: number
+title: UploadToTableResult
+type: object
