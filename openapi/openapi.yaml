@@ -184,6 +184,8 @@ paths:
     $ref: paths/entity@{id}@column.yaml
   /entity/{id}/datatype:
     $ref: paths/entity@{id}@datatype.yaml
+  /entity/{id}/dockerCommit:
+    $ref: paths/entity@{id}@dockerCommit.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

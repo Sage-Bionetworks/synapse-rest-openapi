@@ -1,0 +1,26 @@
+parameters:
+  - description: the ID of the Docker repository entity
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Add a commit (tag and digest) for an external/unmanaged Docker repository.
+    (Commits for managed repositories are added via direct integration with the
+    Synapse Docker registry.)
+  operationId: addDockerCommit
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/DockerCommit.yaml'
+    description: the new tag/digest pair for the repository
+    required: false
+  responses:
+    204:
+      description: Success
+  summary: Add a commit (tag and digest) for an external/unmanaged Docker repository.
+  tags:
+  - Docker Commit Services
