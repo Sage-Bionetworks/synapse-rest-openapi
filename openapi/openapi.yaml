@@ -242,6 +242,8 @@ paths:
     $ref: paths/entity@{id}@table@snapshot.yaml
   /entity/{id}/table/transaction/async/get/{asyncToken}:
     $ref: paths/entity@{id}@table@transaction@async@get@{asyncToken}.yaml
+  /entity/{id}/table/transaction/async/start:
+    $ref: paths/entity@{id}@table@transaction@async@start.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

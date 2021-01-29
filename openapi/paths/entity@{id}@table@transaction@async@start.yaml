@@ -1,0 +1,71 @@
+parameters:
+  - description: The ID of a Table Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Start a table update job that will attempt to make all of the requested
+    changes in a single transaction. All updates will either succeed or fail as a unit.  All
+    update requests must be for the same table.
+
+    <p>
+
+    Note: The caller must have the UPDATE permission on the TableEntity to make this call.
+
+    </p>
+
+    <p>
+
+    <b>Service Limits</b>
+
+    <table border="1">
+
+    <tr>
+
+    <th>resource</th>
+
+    <th>limit</th>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum size of a PartialRow change </td>
+
+    <td>2 MB</td>
+
+    </tr>
+
+    <tr>
+
+    <td>The maximum size of a CSV that can be appended to a table</td>
+
+    <td>1 GB</td>
+
+    </tr>
+
+    </table>
+
+    </p>
+  operationId: startTableTransactionJob
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/TableUpdateTransactionRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AsyncJobId.yaml
+      description: Success
+  summary: |
+    Start a table update job that will attempt to make all of the requested
+    changes in a single transaction.
+  tags:
+  - Table Services

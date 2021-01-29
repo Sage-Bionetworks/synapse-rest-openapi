@@ -28,4 +28,4 @@ get:
       description: Success
   summary: Asynchronously get the results of a table update transaction started with.
   tags:
-  - TableController
+  - Table Services

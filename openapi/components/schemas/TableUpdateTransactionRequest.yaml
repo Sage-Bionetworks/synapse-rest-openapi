@@ -1,4 +1,6 @@
-description: ''
+description: |
+  An AsynchronousRequestBody to used make multiple changes to a table as a single 'transaction'.
+  All changes will either succeed or fail as a unit.
 example:
   changes:
   - concreteType: '...'
@@ -19,7 +21,7 @@ properties:
       $ref: 'TableUpdateRequest.yaml'
     type: array
   concreteType:
-    description: ''
+    description: 'Concrete Type'
     type: string
   createSnapshot:
     description: |
