@@ -1,5 +1,5 @@
 parameters:
-  - description: The ID of an Entity.
+  - description: The ID of a File Entity.
     in: path
     name: id
     required: true
@@ -14,7 +14,7 @@ get:
     If a preview exists for the file then the handle of the preview and the file
     will be returned with this call.
     </p>
-  operationId: getEntityFileHandlesForCurrentVersion
+  operationId: getEntityFileHandles
   responses:
     200:
       content:
@@ -26,4 +26,4 @@ get:
     Get the FileHandles of the file currently associated with the current
     version of the Entity.
   tags:
-  - EntityController
+  - Entity Services

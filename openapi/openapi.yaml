@@ -198,6 +198,8 @@ paths:
     $ref: paths/entity@{id}@evaluation.yaml
   /entity/{id}/filehandles:
     $ref: paths/entity@{id}@filehandles.yaml
+  /entity/{id}/filepreview:
+    $ref: paths/entity@{id}@filepreview.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
