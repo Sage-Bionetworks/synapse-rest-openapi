@@ -1,0 +1,14 @@
+description: 'Request to get a single page of JSON schema validation results for a given Entity container.'
+example:
+  containerId: '...'
+  nextPageToken: '...'
+properties:
+  containerId:
+    description: 'The ID of the Entity container to get.'
+    type: string
+  nextPageToken:
+    description: |
+      Forward the returned 'nextPageToken' to get the next page of results.
+    type: string
+title: ListValidationResultsRequest
+type: object

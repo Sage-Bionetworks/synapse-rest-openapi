@@ -218,6 +218,8 @@ paths:
     $ref: paths/entity@{id}@schema@binding.yaml
   /entity/{id}/schema/validation:
     $ref: paths/entity@{id}@schema@validation.yaml
+  /entity/{id}/schema/validation/invalid:
+    $ref: paths/entity@{id}@schema@validation@invalid.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

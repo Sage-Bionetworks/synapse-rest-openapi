@@ -1,0 +1,38 @@
+parameters:
+  - description: The ID of the container Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Get a single page of invalid JSON schema validation results for a
+    container Entity (Project or Folder). The validation of an Entity against its bound
+    schema is automatic and eventually consistent. The validation results include
+    the etag of the Entity at the time of the last validation. If the returned
+    etag does not match the current etag of the Entity then the results should be
+    considered out-of-date.
+
+    Note: The caller must be granted the READ permission on the container Entity.
+    The results will only include children that the caller has the READ permission on.
+
+  operationId: getInvalidValidationResults
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ListValidationResultsRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListValidationResultsResponse.yaml
+      description: Success
+  summary: |
+    Get a single page of invalid JSON schema validation results for a container
+    Entity (Project or Folder).
+  tags:
+  - Entity Services

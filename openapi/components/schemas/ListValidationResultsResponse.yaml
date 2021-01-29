@@ -1,0 +1,51 @@
+description: 'A single page of the JSON schema validation results.'
+example:
+  nextPageToken: '...'
+  page:
+  - allValidationMessages:
+    - '...'
+    - '...'
+    isValid: true
+    objectEtag: '...'
+    objectId: '...'
+    objectType: entity
+    schema$id: '...'
+    validatedOn: '...'
+    validationErrorMessage: '...'
+    validationException:
+      causingExceptions:
+      - {}
+      - {}
+      keyword: '...'
+      message: '...'
+      pointerToViolation: '...'
+      schemaLocation: '...'
+  - allValidationMessages:
+    - '...'
+    - '...'
+    isValid: true
+    objectEtag: '...'
+    objectId: '...'
+    objectType: entity
+    schema$id: '...'
+    validatedOn: '...'
+    validationErrorMessage: '...'
+    validationException:
+      causingExceptions:
+      - {}
+      - {}
+      keyword: '...'
+      message: '...'
+      pointerToViolation: '...'
+      schemaLocation: '...'
+properties:
+  nextPageToken:
+    description: 'Forward this token to get the next page of results.'
+    type: string
+  page:
+    description: 'Page of results'
+    items:
+      $ref: 'ValidationResults.yaml'
+    type: array
+title: ListValidationResultsResponse
+type: object
