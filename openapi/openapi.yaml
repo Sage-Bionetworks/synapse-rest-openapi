@@ -210,6 +210,8 @@ paths:
     $ref: paths/entity@{id}@lockAccessRequirement.yaml
   /entity/{id}/message:
     $ref: paths/entity@{id}@message.yaml
+  /entity/{id}/path:
+    $ref: paths/entity@{id}@path.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
