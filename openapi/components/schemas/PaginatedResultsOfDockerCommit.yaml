@@ -1,0 +1,20 @@
+description: 'JSON schema for Row POJO'
+example:
+  results:
+  - createdOn: '...'
+    digest: '...'
+    tag: '...'
+  - createdOn: '...'
+    digest: '...'
+    tag: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'List of Docker commits.'
+    items:
+      $ref: 'DockerCommit.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfDockerCommit
+type: object
