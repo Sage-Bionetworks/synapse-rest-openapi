@@ -46,8 +46,14 @@ tags:
   # - name: Docker Authorization Services
   #   description: These services allow Synapse to act as an authorization service for
   #     a Docker Registry.
-  # - name: Docker Commit Services
-  #   description: These services relate to the 'commits' to Docker repositories.
+  - name: Docker Commit Services
+    description: |
+      These services relate to the 'commits' to Docker repositories.
+      Note that create, update and delete of the Docker repositories themselves
+      are done using the Entity Services, for external/unmanaged repositories,
+      or by direct integration with the Docker registry, for managed Docker
+      repositories. Tagged commits for both managed and external/unmanaged repositories
+      may be retrieved using the 'listDockerTags' API included in this service.
   # - name: Docker Registry Event Services
   #   description: These services process events from the Docker Registry.
   - name: Doi Services
@@ -186,7 +192,8 @@ paths:
     $ref: paths/entity@{id}@datatype.yaml
   /entity/{id}/dockerCommit:
     $ref: paths/entity@{id}@dockerCommit.yaml
-
+  /entity/{id}/dockerTag:
+    $ref: paths/entity@{id}@dockerTag.yaml
   /evaluation:
     $ref: paths/evaluation.yaml
   /evaluation/{evalId}:
