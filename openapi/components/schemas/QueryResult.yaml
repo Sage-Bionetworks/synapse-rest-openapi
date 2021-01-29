@@ -1,0 +1,41 @@
+description: 'A page of query result.'
+example:
+  concreteType: '...'
+  nextPageToken:
+    concreteType: '...'
+    entityId: '...'
+    token: '...'
+  queryResults:
+    concreteType: '...'
+    etag: '...'
+    headers:
+    - columnType: BOOLEAN_LIST
+      id: '...'
+      name: '...'
+    - columnType: USERID_LIST
+      id: '...'
+      name: '...'
+    rows:
+    - etag: '...'
+      rowId: 12345
+      values:
+      - '...'
+      - '...'
+      versionNumber: 12345
+    - etag: '...'
+      rowId: 12345
+      values:
+      - '...'
+      - '...'
+      versionNumber: 12345
+    tableId: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  nextPageToken:
+    $ref: 'QueryNextPageToken.yaml'
+  queryResults:
+    $ref: 'RowSet.yaml'
+title: QueryResult
+type: object

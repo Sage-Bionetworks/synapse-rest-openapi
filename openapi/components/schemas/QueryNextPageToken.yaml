@@ -1,0 +1,17 @@
+description: 'Next page token for query'
+example:
+  concreteType: '...'
+  entityId: '...'
+  token: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  entityId:
+    description: 'The ID of an Entity.'
+    type: string
+  token:
+    description: 'The token for the next page.'
+    type: string
+title: QueryNextPageToken
+type: object

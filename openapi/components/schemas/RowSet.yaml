@@ -1,0 +1,47 @@
+description: 'Represents a set of row of a TableEntity'
+example:
+  concreteType: '...'
+  etag: '...'
+  headers:
+  - columnType: FILEHANDLEID
+    id: '...'
+    name: '...'
+  - columnType: SUBMISSIONID
+    id: '...'
+    name: '...'
+  rows:
+  - etag: '...'
+    rowId: 12345
+    values:
+    - '...'
+    - '...'
+    versionNumber: 12345
+  - etag: '...'
+    rowId: 12345
+    values:
+    - '...'
+    - '...'
+    versionNumber: 12345
+  tableId: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  etag:
+    description: 'Any RowSet returned from Synapse will contain the current etag of the change set. To update any rows from a RowSet the etag must be provided with the POST.'
+    type: string
+  headers:
+    description: 'The list of SelectColumns that describes the rows of this set.'
+    items:
+      $ref: 'SelectColumn.yaml'
+    type: array
+  rows:
+    description: 'The Rows of this set. The index of each row value aligns with the index of each header.'
+    items:
+      $ref: 'Row_table.yaml'
+    type: array
+  tableId:
+    description: 'The ID of the TableEntity than owns these rows'
+    type: string
+title: RowSet
+type: object

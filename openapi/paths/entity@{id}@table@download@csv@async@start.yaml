@@ -25,4 +25,4 @@ post:
       description: Success
   summary: Asynchronously start a csv download.
   tags:
-  - TableController
+  - Table Services

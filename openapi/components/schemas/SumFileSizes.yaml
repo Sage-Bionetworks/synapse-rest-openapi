@@ -1,0 +1,18 @@
+description: |
+  The sum of the file size for all files in the given view query.
+  Use mask = 0x40 to include in the bundle.
+example:
+  greaterThan: true
+  sumFileSizesBytes: 12345
+properties:
+  greaterThan:
+    description: |
+      When true, the actual sum of the files sizes is greater than the value
+      provided with 'sumFileSizesBytes'. When false, the actual sum of the
+      files sizes is equlas the value provided with 'sumFileSizesBytes'
+    type: boolean
+  sumFileSizesBytes:
+    description: 'The sum of the file size in bytes.'
+    type: integer
+title: SumFileSizes
+type: object

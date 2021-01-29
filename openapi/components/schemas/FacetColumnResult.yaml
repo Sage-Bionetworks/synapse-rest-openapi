@@ -1,0 +1,16 @@
+description: 'Resulting information about a faceted column'
+example:
+  columnName: '...'
+  concreteType: '...'
+  facetType: enumeration
+properties:
+  columnName:
+    description: 'The name of the faceted column'
+    type: string
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  facetType:
+    $ref: '../definitions/FacetType.yaml'
+title: FacetColumnResult
+type: object

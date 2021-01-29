@@ -234,6 +234,8 @@ paths:
     $ref: paths/entity@{id}@table@download@csv@async@start.yaml
   /entity/{id}/table/filehandles:
     $ref: paths/entity@{id}@table@filehandles.yaml
+  /entity/{id}/table/query/async/get/{asyncToken}:
+    $ref: paths/entity@{id}@table@query@async@get@{asyncToken}.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
