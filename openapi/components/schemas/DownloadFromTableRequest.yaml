@@ -1,0 +1,26 @@
+allOf:
+- $ref: 'Query.yaml'
+- properties:
+    concreteType:
+      description: 'Concrete Type'
+      type: string
+    csvTableDescriptor:
+      $ref: 'CsvTableDescriptor.yaml'
+    entityId:
+      description: 'Entity Id'
+      type: string
+    includeRowIdAndRowVersion:
+      description: |
+        Should the first two columns contain the row ID and row version?
+        The default value is 'true'.
+      type: boolean
+      default: true
+    writeHeader:
+      description: |
+        Should the first line contain the columns names as a header in the resulting file?
+        Set to 'true' to include the headers else, 'false'. The default value is 'true'.
+      type: boolean
+      default: true
+  type: object
+description: 'A CSV table download request.'
+title: DownloadFromTableRequest

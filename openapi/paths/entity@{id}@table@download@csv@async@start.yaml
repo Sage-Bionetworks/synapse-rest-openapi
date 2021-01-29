@@ -1,0 +1,28 @@
+parameters:
+  - description: The ID of a TableEntity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Asynchronously start a csv download. Use the returned job id and 
+    /entity/{id}/table/download/csv/async/get to get the results of the query
+  operationId: csvDownloadAsyncStart
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/DownloadFromTableRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AsyncJobId.yaml
+      description: Success
+  summary: Asynchronously start a csv download.
+  tags:
+  - TableController

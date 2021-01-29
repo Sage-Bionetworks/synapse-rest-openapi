@@ -1,0 +1,6 @@
+description: 'Optional sort direction. Default is the default mysql sort direction for that type.'
+enum:
+- ASC
+- DESC
+title: SortDirection
+type: string

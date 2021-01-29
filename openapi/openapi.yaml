@@ -230,6 +230,8 @@ paths:
     $ref: paths/entity@{id}@table@column@{columnId}@row@{rowId}@version@{versionNumber}@filepreview.yaml
   /entity/{id}/table/download/csv/async/get/{asyncToken}:
     $ref: paths/entity@{id}@table@download@csv@async@get@{asyncToken}.yaml
+  /entity/{id}/table/download/csv/async/start:
+    $ref: paths/entity@{id}@table@download@csv@async@start.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

@@ -1,0 +1,12 @@
+description: 'Sort schema'
+example:
+  column: '...'
+  direction: ASC
+properties:
+  column:
+    description: 'The column to sort on.'
+    type: string
+  direction:
+    $ref: '../definitions/SortDirection.yaml'
+title: SortItem
+type: object
