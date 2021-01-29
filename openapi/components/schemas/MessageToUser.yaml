@@ -1,0 +1,82 @@
+description: 'JSON schema for a message to another user'
+example:
+  bcc: '...'
+  cc: '...'
+  createdBy: '...'
+  createdOn: '...'
+  fileHandleId: '...'
+  id: '...'
+  inReplyTo: '...'
+  inReplyToRoot: '...'
+  isNotificationMessage: true
+  notificationUnsubscribeEndpoint: '...'
+  recipients:
+  - '...'
+  - '...'
+  subject: '...'
+  to: '...'
+  userProfileSettingEndpoint: '...'
+  withProfileSettingLink: true
+  withUnsubscribeLink: true
+properties:
+  bcc:
+    description: |
+      The email addresses in the 'bcc' field of the email message
+    type: string
+  cc:
+    description: |
+      The email addresses in the 'cc' field of the email message
+    type: string
+  createdBy:
+    description: 'The unique identifier of the sender of this message'
+    type: string
+  createdOn:
+    description: 'When this message was created'
+    type: string
+  fileHandleId:
+    description: |
+      The S3 file handle storing the body of this message. Note: The file's mime type
+      should be 'text/plain' or 'text/html'. If no character encoding is specified,
+      then UTF-8 is assumed.
+    type: string
+  id:
+    description: 'The unique identifier of the message or comment'
+    type: string
+  inReplyTo:
+    description: 'The unique identifier of the message being replied to. Can be null'
+    type: string
+  inReplyToRoot:
+    description: 'The unique identifier of the root message being replied to'
+    type: string
+  isNotificationMessage:
+    description: 'A notification message is sent from a noreply email address, delivery failures are not sent back to the sender'
+    type: boolean
+  notificationUnsubscribeEndpoint:
+    description: |
+      the portal prefix for one-click email unsubscription.
+      A signed, serialized token is appended to create the complete URL.
+      If omitted, the default endpoint will be used.
+    type: string
+  recipients:
+    description: 'The unique identifiers of the intended recipients of a message'
+    items:
+      type: string
+    type: array
+  subject:
+    description: 'Topic of this message. Optional'
+    type: string
+  to:
+    description: |
+      The email addresses in the 'to' field of the email message
+    type: string
+  userProfileSettingEndpoint:
+    description: 'the portal link to user profile setting page. If omitted, the default endpoint will be used.'
+    type: string
+  withProfileSettingLink:
+    description: 'should the user profile setting link be included in the email?'
+    type: boolean
+  withUnsubscribeLink:
+    description: 'should the unsubscribe link be included in the email?'
+    type: boolean
+title: MessageToUser
+type: object

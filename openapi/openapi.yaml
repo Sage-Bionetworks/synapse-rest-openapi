@@ -97,8 +97,10 @@ tags:
     description: |
       The Membership Request Services create, retrieve and delete
       membership requests.
-  # - name: Message Services
-  #   description: "."
+  - name: Message Services
+    description: |
+      Provides REST APIs for sending messages to other Synapse users and
+      for commenting on Synapse entities.
   # - name: Migration Services
   #   description: Services for Migrating data between stacks.
   # - name: Principal Services
@@ -206,6 +208,8 @@ paths:
     $ref: paths/entity@{id}@json.yaml
   /entity/{id}/lockAccessRequirement:
     $ref: paths/entity@{id}@lockAccessRequirement.yaml
+  /entity/{id}/message:
+    $ref: paths/entity@{id}@message.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
