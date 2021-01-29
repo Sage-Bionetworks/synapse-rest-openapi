@@ -1,0 +1,35 @@
+description: 'Represents a set of RowReferences of a TableEntity'
+example:
+  etag: '...'
+  headers:
+  - columnType: DATE
+    id: '...'
+    name: '...'
+  - columnType: USERID
+    id: '...'
+    name: '...'
+  rows:
+  - rowId: 12345
+    versionNumber: 12345
+  - rowId: 12345
+    versionNumber: 12345
+  tableId: '...'
+properties:
+  etag:
+    description: 'When a RowReferenceSet is returned from a table update, this will be set to the current etag of the table.'
+    type: string
+  headers:
+    description: 'The list of ColumnModels ID that describes the rows of this set.'
+    items:
+      $ref: 'SelectColumn.yaml'
+    type: array
+  rows:
+    description: 'Each RowReference of this list refers to a single version of a single row of a TableEntity.'
+    items:
+      $ref: 'RowReference.yaml'
+    type: array
+  tableId:
+    description: 'The ID of the TableEntity than owns these rows'
+    type: string
+title: RowReferenceSet
+type: object

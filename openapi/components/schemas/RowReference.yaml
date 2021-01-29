@@ -1,0 +1,13 @@
+description: 'Reference for a single Row of a TableEntity'
+example:
+  rowId: 12345
+  versionNumber: 12345
+properties:
+  rowId:
+    description: 'The immutable ID issued to a new row.'
+    type: integer
+  versionNumber:
+    description: 'The version number of this row. Each row version is immutable, so when a row is updated a new version is created.'
+    type: integer
+title: RowReference
+type: object
