@@ -194,6 +194,9 @@ paths:
     $ref: paths/entity@{id}@dockerCommit.yaml
   /entity/{id}/dockerTag:
     $ref: paths/entity@{id}@dockerTag.yaml
+  /entity/{id}/evaluation:
+    $ref: paths/entity@{id}@evaluation.yaml
+
   /evaluation:
     $ref: paths/evaluation.yaml
   /evaluation/{evalId}:

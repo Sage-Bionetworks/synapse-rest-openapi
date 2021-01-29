@@ -1,0 +1,66 @@
+parameters:
+  - description: the ID of the project
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Gets Evaluations tied to a project.
+    <b>Note:</b> The response will contain only those Evaluations on which the caller
+    is granted the <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+    permission, unless specified otherwise with the accessType parameter.
+  operationId: getEvaluationsByContentSourcePaginated
+  parameters:
+  - description: |
+      The type of access for the user to filter for, optional and defaults
+      to <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+    in: query
+    name: accessType
+    schema:
+      $ref: ../components/schemas/ACCESS_TYPE.yaml
+  - description: |
+      If 'true' then return only those evaluations with rounds defined
+      and for which the current time is in one of the rounds.
+    in: query
+    name: activeOnly
+    schema:
+      default: false
+      type: boolean
+  - description: |
+      an optional, comma-delimited list of evaluation IDs to which the
+      response is limited
+    in: query
+    name: evaluationIds
+    schema:
+      type: string
+  - description: |
+      Limits the number of entities that will be fetched for this
+      page. When null it will default to 10.
+    in: query
+    name: limit
+    schema:
+      default: 10
+      type: integer
+      minimum: 0
+  - description: |
+      The offset index determines where this page will start from.
+      An index of 0 is the first entity. When null it will default
+      to 0.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfEvaluation.yaml
+      description: Success
+  summary: Gets Evaluations tied to a project.
+  tags:
+  - EvaluationController
