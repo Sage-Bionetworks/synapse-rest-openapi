@@ -224,6 +224,8 @@ paths:
     $ref: paths/entity@{id}@schema@validation@statistics.yaml
   /entity/{id}/sts:
     $ref: paths/entity@{id}@sts.yaml
+  /entity/{id}/table/column/{columnId}/row/{rowId}/version/{versionNumber}/file:
+    $ref: paths/entity@{id}@table@column@{columnId}@row@{rowId}@version@{versionNumber}@file.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

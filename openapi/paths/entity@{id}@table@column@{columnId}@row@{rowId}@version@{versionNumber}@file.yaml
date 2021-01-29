@@ -1,0 +1,53 @@
+parameters:
+  - in: path
+    name: columnId
+    description: The ID of the Table column
+    required: true
+    schema:
+      type: string
+  - description: The ID of the FileEntity to get.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - in: path
+    name: rowId
+    description: The ID of the Table Row
+    required: true
+    schema:
+      type: number
+  - in: path
+    name: versionNumber
+    description: The version of the Table Row
+    required: true
+    schema:
+      type: number
+get:
+  description: |
+    Get the actual URL of the file associated with a specific version
+    of a row and file handle column.
+
+    Note: This call will result in a HTTP temporary redirect (307), to the
+    actual file URL if the caller meets all of the download requirements.
+  operationId: fileRedirectUrlForRow
+  parameters:
+  - description: |
+      When set to false, the URL will be returned as text/plain
+      instead of redirecting.
+    in: query
+    name: redirect
+    schema:
+      type: boolean
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: |
+    Get the actual URL of the file associated with a specific version of a
+    row and file handle column.
+  tags:
+  - Table Services
