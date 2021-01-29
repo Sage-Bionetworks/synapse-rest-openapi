@@ -1,0 +1,71 @@
+parameters:
+  - in: path
+    name: id
+    description: The ID of an Entity.
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Clear the bound JSON schema from this Entity. The schema will no longer
+    be used to validate this Entity or its children.
+
+    Note: The caller must be granted the DELETE permission on the Entity.
+
+  operationId: clearBoundSchema
+  responses:
+    204:
+      description: The resource has been deleted
+  summary: Clear the bound JSON schema from this Entity.
+  tags:
+  - Entity Services
+get:
+  description: |
+    Get information about a JSON schema bound to an Entity. Note: Any
+    child Entity that does not have a bound schema will inherit the first bound schema
+    found in its hierarchy.
+
+    Note: The caller must be granted the READ permission on the Entity.
+
+  operationId: getBoundJsonSchema
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/JsonSchemaObjectBinding.yaml
+      description: Success
+  summary: Get information about a JSON schema bound to an Entity.
+  tags:
+  - Entity Services
+put:
+  description: |
+    Bind a JSON schema to an Entity. The bound schema will be used to validate
+    the Entity''s metadata (annotations). Any child Entity that does not have a
+    bound schema will inherit the first bound schema found in its hierarchy.
+
+    Only a single schema can be bound to an Entity at a time. If you have more
+    than one schema to bind to an Entity you will need to create and bind a
+    single composition schema using keywords such as 'anyOf', 'allOf' or 'oneOf'
+    that defines how the schemas should be used for validation.
+
+    Note: The caller must be granted the UPDATE ermission on the Entity to bind.
+
+  operationId: bindJsonSchemaToEntity
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/BindSchemaToEntityRequest.yaml'
+    description: The request identifies the JSON schema to bind.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/JsonSchemaObjectBinding.yaml
+      description: Success
+  summary: Bind a JSON schema to an Entity.
+  tags:
+  - Entity Services

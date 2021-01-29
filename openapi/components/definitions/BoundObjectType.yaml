@@ -1,0 +1,5 @@
+description: 'Object types that can be bound to a JSON schema.'
+enum:
+- entity
+title: BoundObjectType
+type: string
