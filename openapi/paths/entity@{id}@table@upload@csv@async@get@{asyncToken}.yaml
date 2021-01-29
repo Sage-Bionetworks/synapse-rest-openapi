@@ -29,4 +29,4 @@ get:
       description: Success
   summary: Asynchronously get the results of a csv upload started with.
   tags:
-  - TableController
+  - Table Services
