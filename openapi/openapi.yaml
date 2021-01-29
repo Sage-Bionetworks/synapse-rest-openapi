@@ -244,6 +244,8 @@ paths:
     $ref: paths/entity@{id}@table@transaction@async@get@{asyncToken}.yaml
   /entity/{id}/table/transaction/async/start:
     $ref: paths/entity@{id}@table@transaction@async@start.yaml
+  /entity/{id}/threads:
+    $ref: paths/entity@{id}@threads.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

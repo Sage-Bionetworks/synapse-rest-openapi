@@ -1,0 +1,50 @@
+description: 'Page of Discussion Thread Bundles'
+example:
+  results:
+  - activeAuthors:
+    - '...'
+    - '...'
+    createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    forumId: '...'
+    id: '...'
+    isDeleted: true
+    isEdited: true
+    isPinned: true
+    lastActivity: '...'
+    messageKey: '...'
+    modifiedOn: '...'
+    numberOfReplies: 12345
+    numberOfViews: 12345
+    projectId: '...'
+    title: '...'
+  - activeAuthors:
+    - '...'
+    - '...'
+    createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    forumId: '...'
+    id: '...'
+    isDeleted: true
+    isEdited: true
+    isPinned: true
+    lastActivity: '...'
+    messageKey: '...'
+    modifiedOn: '...'
+    numberOfReplies: 12345
+    numberOfViews: 12345
+    projectId: '...'
+    title: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of discussion thread bundles'
+    items:
+      $ref: 'DiscussionThreadBundle.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfDiscussionThreadBundle
+type: object
