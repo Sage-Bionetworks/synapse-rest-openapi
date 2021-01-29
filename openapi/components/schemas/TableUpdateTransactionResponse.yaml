@@ -1,0 +1,21 @@
+description: 'An AsynchronousResponseBody returned from a table update transaction.'
+example:
+  concreteType: '...'
+  results:
+  - concreteType: '...'
+  - concreteType: '...'
+  snapshotVersionNumber: 12345
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  results:
+    description: 'List of responses. There will be one response for each request in the transaction.'
+    items:
+      $ref: 'TableUpdateResponse.yaml'
+    type: array
+  snapshotVersionNumber:
+    description: 'The version number of the snapshot. Returned only, if a new snapshot was requested.'
+    type: number
+title: TableUpdateTransactionResponse
+type: object

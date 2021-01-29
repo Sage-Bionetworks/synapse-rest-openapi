@@ -1,0 +1,13 @@
+description: 'Abstraction for a request to update a table.'
+example:
+  concreteType: '...'
+  entityId: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  entityId:
+    description: 'Entity Id'
+    type: string
+title: TableUpdateRequest
+type: object
