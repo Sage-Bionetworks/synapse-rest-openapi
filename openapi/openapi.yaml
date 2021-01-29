@@ -212,6 +212,8 @@ paths:
     $ref: paths/entity@{id}@message.yaml
   /entity/{id}/path:
     $ref: paths/entity@{id}@path.yaml
+  /entity/{id}/permissions:
+    $ref: paths/entity@{id}@permissions.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
