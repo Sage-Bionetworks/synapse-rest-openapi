@@ -1,0 +1,41 @@
+parameters:
+  - description: The ID of the Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: The version number of the Entity.
+    in: path
+    name: versionNumber
+    required: true
+    schema:
+      type: integer
+get:
+  description: |
+    Get the URL of the preview file associated with a specific version
+    of a FileEntity.
+
+    Note: This call will result in a HTTP temporary redirect (307), to the actual
+    file URL if the caller meets all of the download requirements.
+  operationId: filePreviewRedirectUrlForVersion
+  parameters:
+  - description: |
+      When set to false, the URL will be returned as
+      text/plain instead of redirecting.
+    in: query
+    name: redirect
+    schema:
+      type: boolean
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: |
+    Get the URL of the preview file associated with a specific version of
+    a FileEntity.
+  tags:
+  - Entity Services
