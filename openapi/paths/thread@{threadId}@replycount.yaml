@@ -1,0 +1,36 @@
+parameters:
+  - description: 'The ID of a thread.'
+    in: path
+    name: threadId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    This API is used to get the total number of replies for a given thread
+    ID.
+
+    Target users: anyone who has READ permission to the project.'
+  operationId: getReplyCountForThread
+  parameters:
+  - description: Filter deleted not deleted replies.
+    in: query
+    name: filter
+    required: true
+    schema:
+      enum:
+      - DELETED_ONLY
+      - EXCLUDE_DELETED
+      - NO_FILTER
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ReplyCount.yaml
+      description: Success
+  summary: |
+    Get the total number of replies for a given Thread.
+  tags:
+  - Discussion Services

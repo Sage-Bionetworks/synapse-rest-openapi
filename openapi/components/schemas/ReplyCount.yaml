@@ -1,0 +1,9 @@
+description: 'The total number of replies.'
+example:
+  count: 12345
+properties:
+  count:
+    description: 'The total number of replies.'
+    type: number
+title: ReplyCount
+type: object
