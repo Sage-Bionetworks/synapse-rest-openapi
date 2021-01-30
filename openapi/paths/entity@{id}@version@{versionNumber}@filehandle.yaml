@@ -1,0 +1,34 @@
+parameters:
+  - description: The ID of the Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: The version number of the Entity.
+    in: path
+    name: versionNumber
+    required: true
+    schema:
+      type: integer
+put:
+  description: |
+    Updates the FileHandle associated with the FileEntity
+    with the provided entity id and version.
+  operationId: updateEntityFileHandle
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/FileHandleUpdateRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: '../components/definitions/String.yaml'
+      description: Success
+  summary: Updates the filehandle.
+  tags:
+  - Entity Services

@@ -259,6 +259,8 @@ paths:
     $ref: paths/entity@{id}@version@{versionNumber}@annotations2.yaml
   /entity/{id}/version/{versionNumber}/bundle2:
     $ref: paths/entity@{id}@version@{versionNumber}@bundle2.yaml
+  /entity/{id}/version/{versionNumber}/filehandle:
+    $ref: paths/entity@{id}@version@{versionNumber}@filehandle.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
