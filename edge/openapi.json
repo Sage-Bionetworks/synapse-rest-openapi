@@ -7799,10 +7799,6 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
-      },
-      "basicAuth": {
-        "type": "http",
-        "scheme": "basic"
       }
     },
     "schemas": {
@@ -15545,9 +15541,6 @@
   "security": [
     {
       "bearerAuth": []
-    },
-    {
-      "basicAuth": []
     }
   ]
 }

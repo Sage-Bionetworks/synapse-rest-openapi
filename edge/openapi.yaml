@@ -7850,9 +7850,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    basicAuth:
-      type: http
-      scheme: basic
   schemas:
     Challenge:
       title: Challenge
@@ -14614,4 +14611,3 @@ components:
       type: object
 security:
   - bearerAuth: []
-  - basicAuth: []
