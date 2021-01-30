@@ -18,7 +18,7 @@ get:
           schema:
             $ref: ../components/schemas/AccessControlList.yaml
       description: Success
-  summary: Get the.
+  summary: Get the ACL for a FormGroup
   tags:
   - Form Services
 put:
@@ -53,6 +53,6 @@ put:
           schema:
             $ref: ../components/schemas/AccessControlList.yaml
       description: Success
-  summary: Update the.
+  summary: Update the ACL for a FormGroup.
   tags:
   - Form Services
