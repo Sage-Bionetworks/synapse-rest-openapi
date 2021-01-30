@@ -1,0 +1,13 @@
+description: 'JSON schema for Reference POJO'
+example:
+  targetId: '...'
+  targetVersionNumber: 12345
+properties:
+  targetId:
+    description: 'The the id of the entity to which this reference refers'
+    type: string
+  targetVersionNumber:
+    description: 'The version number of the entity to which this reference refers'
+    type: number
+title: Reference
+type: object

@@ -1,0 +1,35 @@
+parameters:
+  - description: The ID of the Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: The version number of the Entity.
+    in: path
+    name: versionNumber
+    required: true
+    schema:
+      type: integer
+post:
+  description: Get an entity at a specific version and its related data with a single
+    POST.
+  operationId: getEntityBundle2
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/EntityBundleRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityBundle_v2.yaml
+      description: Success
+  summary: |
+    Get an entity at a specific version and its related data with a single
+    POST.
+  tags:
+  - Entity Bundle V2 Services

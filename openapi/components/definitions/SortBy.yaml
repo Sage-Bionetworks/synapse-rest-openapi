@@ -1,0 +1,7 @@
+description: 'How results should be sorted.'
+enum:
+- NAME
+- CREATED_ON
+- MODIFIED_ON
+title: SortBy
+type: string

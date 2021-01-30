@@ -1,0 +1,28 @@
+parameters:
+  - description: The ID of the Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the EntityHeader of an Entity given its ID. The EntityHeader is
+    a light weight object with basic information about an Entity includes its type.
+  operationId: getEntityType
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityHeader.yaml
+      description: Success
+  summary: Get the EntityHeader of an Entity given its ID.
+  tags:
+  - Entity Services

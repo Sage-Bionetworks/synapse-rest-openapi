@@ -1,0 +1,32 @@
+description: 'JSON schema for Row POJO'
+example:
+  results:
+  - contentMd5: '...'
+    contentSize: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedByPrincipalId: '...'
+    modifiedOn: '...'
+    versionComment: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+  - contentMd5: '...'
+    contentSize: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedByPrincipalId: '...'
+    modifiedOn: '...'
+    versionComment: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of version info'
+    items:
+      $ref: 'VersionInfo.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfVersionInfo
+type: object

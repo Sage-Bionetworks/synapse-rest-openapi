@@ -1,0 +1,33 @@
+parameters:
+  - description: The ID of the Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: The version number of the Entity.
+    in: path
+    name: versionNumber
+    required: true
+    schema:
+      type: integer
+get:
+  description: Get an existing activity for a specific version of an Entity.
+  operationId: getActivityForEntityVersion
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    description: Get an existing activity for a specific version of an Entity.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Activity.yaml
+      description: Success
+  summary: Get an existing activity for a specific version of an Entity.
+  tags:
+  - Entity Services

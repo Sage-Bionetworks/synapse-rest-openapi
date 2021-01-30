@@ -1,0 +1,15 @@
+description: 'An array of Reference objects'
+example:
+  references:
+  - targetId: '...'
+    targetVersionNumber: 12345
+  - targetId: '...'
+    targetVersionNumber: 12345
+properties:
+  references:
+    description: 'The list of references'
+    items:
+      $ref: 'Reference.yaml'
+    type: array
+title: ReferenceList
+type: object

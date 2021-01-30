@@ -1,0 +1,9 @@
+description: 'JSON schema for EntityId POJO'
+example:
+  id: '...'
+properties:
+  id:
+    description: 'The id of an entity.'
+    type: string
+title: EntityId
+type: object

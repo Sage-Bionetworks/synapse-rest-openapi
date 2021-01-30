@@ -1,0 +1,21 @@
+post:
+  description: |
+    Get the EntityHeader for a list of references with a POST. If any
+    item in the batch fails (e.g., with a 404) it will be EXCLUDED in the result set.
+  operationId: getEntityVersionedTypeBatch
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ReferenceList.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfEntityHeader.yaml
+      description: Success
+  summary: Get the EntityHeader for a list of references with a POST.
+  tags:
+  - Entity Services

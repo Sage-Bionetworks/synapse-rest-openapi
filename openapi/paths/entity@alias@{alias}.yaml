@@ -1,0 +1,20 @@
+parameters:
+  - in: path
+    name: alias
+    description: Alias of an Entity
+    required: true
+    schema:
+      type: string
+get:
+  description: Lookup an Entity ID using an alias.
+  operationId: getEntityIdByAlias
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityId.yaml
+      description: Success
+  summary: Lookup an Entity ID using an alias.
+  tags:
+  - Entity Services

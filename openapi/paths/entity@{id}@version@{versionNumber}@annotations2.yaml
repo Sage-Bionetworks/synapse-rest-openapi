@@ -1,0 +1,26 @@
+parameters:
+  - description: The ID of the Entity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: The version number of the Entity.
+    in: path
+    name: versionNumber
+    required: true
+    schema:
+      type: integer
+get:
+  description: Get an Entity's annotations for a specific version of a FileEntity.
+  operationId: getEntityAnnotationsV2ForVersion
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Annotations_v2.yaml
+      description: Success
+  summary: Get an Entity's annotations for a specific version of a FileEntity.
+  tags:
+  - Entity Services

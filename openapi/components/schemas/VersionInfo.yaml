@@ -1,0 +1,41 @@
+description: 'JSON schema for VersionInfo POJO'
+example:
+  contentMd5: '...'
+  contentSize: '...'
+  id: '...'
+  modifiedBy: '...'
+  modifiedByPrincipalId: '...'
+  modifiedOn: '...'
+  versionComment: '...'
+  versionLabel: '...'
+  versionNumber: 12345
+properties:
+  contentMd5:
+    description: 'Calculated md5 of the associated file (when applicable and available).'
+    type: string
+  contentSize:
+    description: 'The size of the associated file (when applicable and available).'
+    type: string
+  id:
+    description: 'The id of the entity'
+    type: string
+  modifiedBy:
+    description: 'The display name of the user that last modified this entity.'
+    type: string
+  modifiedByPrincipalId:
+    description: 'The user that last modified this entity.'
+    type: string
+  modifiedOn:
+    description: 'The date this entity was last modified.'
+    type: string
+  versionComment:
+    description: 'The user defined version label of the entity'
+    type: string
+  versionLabel:
+    description: 'The user defined version label of the entity'
+    type: string
+  versionNumber:
+    description: 'The version number of the entity'
+    type: integer
+title: VersionInfo
+type: object
