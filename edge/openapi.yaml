@@ -5575,7 +5575,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccessControlList'
           description: Success
-      summary: Get the.
+      summary: Get the ACL for a FormGroup
       tags:
         - Form Services
     put:
@@ -5627,7 +5627,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccessControlList'
           description: Success
-      summary: Update the.
+      summary: Update the ACL for a FormGroup.
       tags:
         - Form Services
   /team:

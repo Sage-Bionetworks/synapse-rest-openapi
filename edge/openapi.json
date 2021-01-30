@@ -5259,7 +5259,7 @@
             "description": "Success"
           }
         },
-        "summary": "Get the.",
+        "summary": "Get the ACL for a FormGroup",
         "tags": [
           "Form Services"
         ]
@@ -5289,7 +5289,7 @@
             "description": "Success"
           }
         },
-        "summary": "Update the.",
+        "summary": "Update the ACL for a FormGroup.",
         "tags": [
           "Form Services"
         ]
