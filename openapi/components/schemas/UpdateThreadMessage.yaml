@@ -1,0 +1,9 @@
+description: 'Update Thread Message'
+example:
+  messageMarkdown: '...'
+properties:
+  messageMarkdown:
+    description: 'The new message markdown'
+    type: string
+title: UpdateThreadMessage
+type: object

@@ -390,7 +390,8 @@ paths:
     $ref: paths/thread.yaml
   /thread/{threadId}:
     $ref: paths/thread@{threadId}.yaml
-
+  /thread/{threadId}/message:
+    $ref: paths/thread@{threadId}@message.yaml
 
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
