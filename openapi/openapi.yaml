@@ -332,6 +332,8 @@ paths:
     $ref: paths/evaluation@submission@{subId}@status.yaml
   /form/data:
     $ref: paths/form@data.yaml
+  /form/data/{id}:
+    $ref: paths/form@data@{id}.yaml
 
   /team:
     $ref: paths/team.yaml

@@ -1,0 +1,52 @@
+parameters:
+  - description: The ID of the FormData.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Delete an existing FormData object. The caller must be the creator
+    of the FormData object.
+
+    Note: Cannot delete a FormData object once it has been submitted and caller
+    must have the SUBMIT permission on the identified group to update the group's ACL.
+  operationId: deleteFormData
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Delete a FormData object.
+  tags:
+  - Form Services
+put:
+  description: |
+    Update an existing FormData object. The caller must be the creator
+    of the FormData object. Once a FormData object has been submitted, it cannot be
+    updated until it has been processed. If the submission is accepted it becomes
+    immutable. Rejected submission are editable. Updating a rejected submission
+    will change its status back to waiting_for_submission.
+
+    Note: The caller must have the SUBMIT permission on the FormGrup to
+    create/update/submit FormData.
+  operationId: updateFormData
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/FormChangeRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FormData.yaml
+      description: Success
+  summary: Update a FormData object.
+  tags:
+  - Form Services
