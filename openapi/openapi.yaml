@@ -344,6 +344,8 @@ paths:
     $ref: paths/form@data@list.yaml
   /form/data/list/reviewer:
     $ref: paths/form@data@list@reviewer.yaml
+  /form/group:
+    $ref: paths/form@group.yaml
 
   /team:
     $ref: paths/team.yaml

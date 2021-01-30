@@ -1,0 +1,21 @@
+description: 'All form data belongs to a form group. Access to the group is managed via the ACL of the group.'
+example:
+  createdBy: '...'
+  createdOn: '...'
+  groupId: '...'
+  name: '...'
+properties:
+  createdBy:
+    description: 'Id of the user that created this group'
+    type: string
+  createdOn:
+    description: 'The date this object was originally created.'
+    type: string
+  groupId:
+    description: 'Unique identifier provided by the system.'
+    type: string
+  name:
+    description: 'Unique name for the group provided by the caller.'
+    type: string
+title: FormGroup
+type: object
