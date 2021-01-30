@@ -36,8 +36,52 @@ tags:
       additional features
 
       specific to challenges.
+  - name: Docker Commit Services
+    description: >
+      These services relate to the 'commits' to Docker repositories.
+
+      Note that create, update and delete of the Docker repositories themselves
+
+      are done using the Entity Services, for external/unmanaged repositories,
+
+      or by direct integration with the Docker registry, for managed Docker
+
+      repositories. Tagged commits for both managed and external/unmanaged
+      repositories
+
+      may be retrieved using the 'listDockerTags' API included in this service.
   - name: Doi Services
     description: Provides REST APIs for managing Synapse DOIs.
+  - name: Entity Bundle V2 Services
+    description: >
+      The Entity Bundle Services provide bundled access to Entities and their
+      related data components.
+
+      An EntityBundle can be used to create, fetch, or update an Entity and
+      associated objects
+
+      with a single web service request.
+  - name: Entity Services
+    description: >
+      All data in Synapse is organize into Projects. These Projects can be
+      further organized
+
+      into hierarchical Folders. Finally, the data is then represented by
+      FileEntities or
+
+      Records (coming soon) that reside within Folders or directly within
+      Projects.
+
+      All these objects (Projects, Folders, FileEntities, and Records) are
+      derived from
+
+      a common object called Entity. The Entity Services provide the means to
+      create, read,
+
+      update, and delete Synapse Entities. There are also services for
+      navigating the Entity
+
+      hierarchies, setting Authorization rules, and Annotating Entities.
   - name: Evaluation Services
     description: >
       The Evaluation API is designed to support open-access data analysis and
@@ -56,6 +100,25 @@ tags:
     description: |
       The Membership Request Services create, retrieve and delete
       membership requests.
+  - name: Message Services
+    description: |
+      Provides REST APIs for sending messages to other Synapse users and
+      for commenting on Synapse entities.
+  - name: Table Services
+    description: >
+      A Synapse TableEntity model object represents the metadata of a table.
+
+      Each TableEntity is defined by a list of ColumnModel IDs. Use POST /column
+
+      to create new ColumnModel objects. Each ColumnModel object is immutable,
+
+      so to change a column of a table a new column must be added and the old
+      column
+
+      must be removed. TableEntities can be created, updated, read and deleted
+      like
+
+      any other entity.
   - name: Team Services
     description: Teams are groups of users.
   - name: Trash Services
@@ -632,6 +695,867 @@ paths:
       summary: Retrieves the Synapse web portal URL to the object entered.
       tags:
         - Doi Services
+  /entity:
+    post:
+      description: >
+        Create a new Entity. This method is used to create Projects, Folders,
+
+        FileEntities and Records (coming soon). The passed request body should
+
+        contain the following fields:
+
+
+        <ul>
+
+
+        <li>name - Give your new entity a Name. <b>Note:</b> A name must be
+        unique
+
+        within the given parent, similar to a file in a folder.</li>
+
+
+        <li>parentId - The ID of the parent Entity, such as a Folder or Project.
+        This
+
+        field should be excluded when creating a Project.</li>
+
+
+        <li>concreteType - Indicates the type of Entity to create. The value
+        should
+
+        be one of the following: org.sagebionetworks.repo.model.Project,
+
+        org.sagebionetworks.repo.model.Folder, or
+
+        org.sagebionetworks.repo.model.FileEntity</li>
+
+
+        </ul>
+
+
+        <p>
+
+
+        Note: To create an Entity the caller must be granted the
+
+        <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.CREATE</a>
+
+        on the parent Entity. Any authenticated caller can
+
+        create a new Project (with parentId=null).
+
+
+        </p>
+
+
+        <p>
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum number of children for a single parent entity</td>
+
+
+        <td>10 K</td>
+
+
+        </tr>
+
+
+        </table>
+
+
+        </p>
+      operationId: createEntity
+      parameters:
+        - description: >
+            To track the Provenance of an Entity create, include the
+
+            ID of the <a
+            href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a>
+
+            that was created to track the change. For
+
+            more information see: <a href="${POST.activity}">POST /activity</a>.
+
+            You must be the creator of the <a
+            href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a>
+            used here.'
+          in: query
+          name: generatedBy
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Entity'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+          description: Success
+      summary: Create a new Entity.
+      tags:
+        - Entity Services
+  '/entity/{id}':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    delete:
+      description: >
+        Moves an entity in the trash can, if the skipTrashCan is set to true
+
+        will flag the entity for purge and it will be deleted as soon as
+        possible.
+
+
+        <p>
+
+
+        Note: To delete an Entity the caller must be granted the
+
+
+        <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.DELETE</a>
+        on the Entity.
+
+
+        </p>
+      operationId: deleteEntity
+      parameters:
+        - description: |
+            If true the entity will be flag for priority purge and
+            deleted as soon as possible
+          in: query
+          name: skipTrashCan
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: false
+      responses:
+        '204':
+          description: The resource has been deleted
+      summary: Deletes an Entity
+      tags:
+        - Entity Services
+    get:
+      description: >
+        Get an Entity using its ID.
+
+
+        <p>
+
+        Note: To get an Entity the caller must be granted the
+
+        <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+        >ACCESS_TYPE.READ</a>
+
+        on the Entity.
+
+
+        </p>
+      operationId: getEntity
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+          description: Success
+      summary: Get an Entity
+      tags:
+        - Entity Services
+    put:
+      description: >
+        Update an entity.
+
+
+        <p>
+
+
+        If the Entity is a FileEntity and the dataFileHandleId fields is set to
+        a new
+
+        value, then a new version will automatically be created for this update
+        if the
+
+        MD5 of the new file handle does not match the MD5 of the existing file
+        handle
+
+        or if the file handles do not have an MD5 set. You can also force the
+        creation of a
+
+        new version using the newVersion parameter
+
+
+        (see below).
+
+
+        </p>
+
+
+        <p>
+
+
+        Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
+
+        concurrent updates. Each time an Entity is updated a new etag will be
+        issued
+
+        to the Entity. When an update is request, Synapse will compare the etag
+        of
+
+        the passed Entity with the current etag of the Entity. If the etags do
+        not
+
+        match, then the update will be rejected with a PRECONDITION_FAILED (412)
+
+        response. When this occurs the caller should get the latest copy of the
+
+        Entity (see: <a href="${GET.entity.id}">GET /entity/{id}</a>) and
+        re-apply
+
+        any changes to the object, then re-attempt the Entity update. This
+        ensure the
+
+        caller has any changes applied by other users before applying their own
+
+        changes.
+
+
+        </p>
+
+
+        <p>
+
+
+        Note: To update an Entity the caller must be granted the
+
+        <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.UPDATE</a>
+        on the Entity.
+
+
+        </p>
+
+
+        <p>
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum number of children for a single parent entity</td>
+
+
+        <td>10 K</td>
+
+
+        </tr>
+
+
+        </table>
+
+
+        </p>
+      operationId: updateEntity
+      parameters:
+        - description: >
+            To track the Provenance of an Entity update, include the
+
+            ID of the <a
+            href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a>
+            that was created to track the change. For
+
+            more information see: <a href="${POST.activity}">POST /activity</a>.
+
+            You must be the creator of the
+
+            <a
+            href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a>
+            used here.'
+          in: query
+          name: generatedBy
+          schema:
+            type: string
+        - description: >
+            To force the creation of a new version for a
+
+            <a
+            href="${org.sagebionetworks.repo.model.VersionableEntity}">versionable</a>
+
+            entity such as a <a href=
+            "${org.sagebionetworks.repo.model.FileEntity}">FileEntity</a>,
+
+            include this optional parameter with a value set to true (i.e.
+            newVersion=true).
+
+            This parameter is ignored for entities of type
+
+
+            <a href="${org.sagebionetworks.repo.model.table.Table}">Table</a>
+
+            (See <a href="${POST.entity.id.table.snapshot}">POST
+            /entity/{id}/table/snapshot</a>
+
+            instead)
+          in: query
+          name: newVersion
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Entity'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+          description: Success
+      summary: Update an entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/access':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Determine if the caller have a given permission on a given Entity.
+
+
+        <p>
+
+
+        A User's permission on an Entity is a calculation based several factors
+
+        including the permission granted by the Entity's ACL and the User's
+        group
+
+        membership. There might also be extra requirement for an Entity, such as
+
+        special terms-of-use or special restrictions for sensitive data. This
+        means a
+
+        client cannot accurately calculate a User's permission on an Entity
+        simply by
+
+        inspecting the Entity's ACL. Instead, all clients should use this method
+        to
+
+        get the calculated permission a User has on an Entity.
+
+        </p>
+      operationId: hasAccess
+      parameters:
+        - description: >
+            The permission to check. Must be from: 
+
+            <a
+            href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE</a>'
+          in: query
+          name: accessType
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BooleanResult'
+          description: Success
+      summary: Determine if the caller have a given permission on a given Entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/accessRequirement':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Retrieve paginated list of ALL Access Requirements associated with
+        an entity.
+      operationId: getEntityAccessRequirements
+      parameters:
+        - description: |
+            Limits the size of the page returned. For example, a page size
+            of 10 require limit = 10. The maximum limit for this call is 50.
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 50
+        - description: >
+            The index of the pagination offset. For a page size of 10, the
+
+            first page would be at offset = 0, and the second page would be at
+            offset =
+
+            10.
+          in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfAccessRequirement'
+          description: Success
+      summary: >-
+        Retrieve paginated list of ALL Access Requirements associated with an
+        entity.
+      tags:
+        - Access Requirement Services
+  '/entity/{id}/acl':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    delete:
+      description: >
+        Delete the Access Control List (ACL) for a given Entity.
+
+
+        <p>
+
+
+        By default, Entities such as FileEntity and Folder inherit their
+        permission
+
+        from their containing Project. For such Entities the Project is the
+        Entity's
+
+        'benefactor'. This permission inheritance can be overridden by creating
+        an
+
+        ACL for the Entity. When this occurs the Entity becomes its own
+        benefactor
+
+        and all permission are determined by its own ACL.
+
+
+        </p>
+
+
+        <p>
+
+
+        If the ACL of an Entity is deleted, then its benefactor will
+        automatically be
+
+        set to its parent''s benefactor. The ACL for a Project cannot be
+        deleted.
+
+
+        </p>
+
+
+        <p>
+
+
+        Note: The caller must be granted
+
+        <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.CHANGE_PERMISSIONS</a>
+
+        on the Entity to call this method.
+
+
+        </p>
+      operationId: deleteEntityAcl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: false
+      responses:
+        '204':
+          description: This resource has been deleted.
+      summary: Delete the Access Control List (ACL) for a given Entity.
+      tags:
+        - Entity Services
+    get:
+      description: >
+        Get the Access Control List (ACL) for a given entity.
+
+
+        <p>
+
+        Note: If this method is called on an Entity that is inheriting its
+        permission
+
+        from another Entity a NOT_FOUND (404) response will be generated. The
+        error
+
+        response message will include the Entity''s benefactor ID.
+
+        </p>
+      operationId: getEntityAcl
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlList'
+          description: Success
+      summary: Get the Access Control List (ACL) for a given entity.
+      tags:
+        - Entity Services
+    post:
+      description: >
+        Create a new Access Control List (ACL), overriding inheritance.
+
+
+        <p>
+
+        By default, Entities such as FileEntity and Folder inherit their
+        permission
+
+        from their containing Project. For such Entities the Project is the
+        Entity's
+
+        'benefactor'. This permission inheritance can be overridden by creating
+        an
+
+        ACL for the Entity. When this occurs the Entity becomes its own
+        benefactor
+
+        and all permission are determined by its own ACL.
+
+
+        </p>
+
+
+        <p>
+
+
+        If the ACL of an Entity is deleted, then its benefactor will
+        automatically be
+
+        set to its parent's benefactor.
+
+
+        </p>
+
+
+        <p>
+
+
+        Note: The caller must be granted
+
+
+        <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.CHANGE_PERMISSIONS</a>
+
+        on the Entity to call this method.
+
+
+        </p>
+      operationId: createEntityAcl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessControlList'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlList'
+          description: Success
+      summary: 'Create a new Access Control List (ACL), overriding inheritance.'
+      tags:
+        - Entity Services
+    put:
+      description: >
+        Update an Entity's ACL.
+
+
+        <p>
+
+
+        Note: The caller must be granted
+
+
+        <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.CHANGE_PERMISSIONS</a>
+
+        on the Entity to call this method.
+
+
+        </p>
+      operationId: updateEntityAcl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessControlList'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlList'
+          description: Success
+      summary: Update an Entity's ACL.
+      tags:
+        - Entity Services
+  '/entity/{id}/annotations2':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the annotations for an entity.
+
+
+        <p>
+
+
+        Note: The caller must be granted the
+
+        <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+        >ACCESS_TYPE.READ</a>
+
+        on the Entity, to get its annotations.
+
+
+        </p>
+      operationId: getEntityAnnotations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Annotations_v2'
+          description: Success
+      summary: Get the annotations for an entity.
+      tags:
+        - Entity Services
+    put:
+      description: >
+        Update an Entity's annotations.
+
+
+        <p>
+
+
+        Note: The caller must be granted the
+
+        <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.UPDATE</a>
+
+        on the Entity, to update its annotations.
+
+        </p>
+      operationId: updateEntityAnnotations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Annotations_v2'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Annotations_v2'
+          description: Success
+      summary: Update an Entity's annotations.
+      tags:
+        - Entity Services
+  '/entity/{id}/benefactor':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get an Entity's benefactor.
+
+
+        <p>
+
+
+        The term 'benefactor' is used indicate which Entity an Entity inherits
+        is ACL
+
+        from. For example, a newly created Project will have its own ACL and
+
+        therefore, it will be its own benefactor. A Folder will inherit its ACL
+        (by
+
+        default) from its containing Project so the Project will be the Folder's
+
+        benefactor. This method will return the EntityHeader of an Entity's
+
+        benefactor.
+
+        </p>
+      operationId: getEntityBenefactor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityHeader'
+          description: Success
+      summary: Get an Entity's benefactor.
+      tags:
+        - Entity Services
+  '/entity/{id}/bundle2':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: Get an entity and related data with a single POST.
+      operationId: getEntityBundle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityBundleRequest'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityBundle_v2'
+          description: Success
+      summary: Get an entity and related data with a single POST.
+      tags:
+        - Entity Bundle V2 Services
+    put:
+      description: |
+        Update an entity and associated components with a single PUT.
+        Specifically, this operation supports update of an Entity, its
+        Annotations, and its ACL.
+        Upon successful creation, an EntityBundle is returned containing the
+        requested components, as defined by the partsMask in the request object.
+      operationId: updateEntityBundle
+      parameters:
+        - in: query
+          name: generatedBy
+          description: Generated by
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityBundleCreate_v2'
+        description: |
+          The EntityBundleCreate object containing the Entity and Annotations
+          to update.
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityBundle_v2'
+          description: Success
+      summary: Update an entity and associated components with a single PUT.
+      tags:
+        - Entity Bundle V2 Services
   '/entity/{id}/challenge':
     parameters:
       - name: id
@@ -657,6 +1581,1644 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Challenge'
+  '/entity/{id}/column':
+    parameters:
+      - description: The ID of a Table.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Given the ID of a <a
+        href="${org.sagebionetworks.repo.model.table.TableEntity}">TableEntity</a>,
+
+        get its list of
+        <ahref="${org.sagebionetworks.repo.model.table.ColumnModel}">ColumnModels</a>
+
+        that are currently assigned to the table.
+
+
+        <p>
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum frequency this method can be called</td>
+
+
+        <td>6 calls per minute</td>
+
+
+        </tr>
+
+
+        </table>
+
+
+        </p>
+      operationId: getColumnForTable
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedColumnModels'
+          description: Success
+      summary: Given the ID of a.
+      tags:
+        - Table Services
+  '/entity/{id}/datatype':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    put:
+      description: >
+        Change the <a href="${org.sagebionetworks.repo.model.DataType}"
+        >DataType</a>
+
+        of the given entity. The entity's DataType controls how the entity can
+        be
+
+        accessed. For example, an entity's DataType must be set to 'open_data'
+        in
+
+        order for anonymous to be allowed to access its contents.
+
+
+        <p>
+
+
+        Note: The caller must be a member of the 'Synapse Access and Compliance
+        Team'
+
+        (id=464532) in order to change an Entity's type to 'OPEN_DATA'. The
+        caller
+
+        must be granted UPDATED on the Entity to change the its type to any
+        other
+
+        value.
+
+
+        </p>'
+      operationId: changeEntityDataType
+      parameters:
+        - in: query
+          name: type
+          required: true
+          description: Type of data
+          schema:
+            enum:
+              - OPEN_DATA
+              - SENSITIVE_DATA
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataTypeResponse'
+          description: Success
+      summary: Change the.
+      tags:
+        - Entity Services
+  '/entity/{id}/dockerCommit':
+    parameters:
+      - description: the ID of the Docker repository entity
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Add a commit (tag and digest) for an external/unmanaged Docker
+        repository.
+
+        (Commits for managed repositories are added via direct integration with
+        the
+
+        Synapse Docker registry.)
+      operationId: addDockerCommit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DockerCommit'
+        description: the new tag/digest pair for the repository
+        required: false
+      responses:
+        '204':
+          description: Success
+      summary: >-
+        Add a commit (tag and digest) for an external/unmanaged Docker
+        repository.
+      tags:
+        - Docker Commit Services
+  '/entity/{id}/dockerTag':
+    parameters:
+      - description: the ID of the Docker repository entity
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        List the tagged commits (tag/digest pairs) for the given Docker
+        repository.  Only
+
+        the most recent digest for each tag is returned since,
+
+        following Docker's convention, a tag may be reassigned
+
+        to a newer commit. The list may be sorted by date or tag.  The default
+        is to sort
+
+        by date, descending (newest first).'
+      operationId: listDockerTags
+      parameters:
+        - in: query
+          name: ascending
+          description: Ascending
+          schema:
+            default: false
+            type: boolean
+        - description: 'pagination parameter, optional (default is 20)'
+          in: query
+          name: limit
+          schema:
+            default: 20
+            type: integer
+            minimum: 0
+        - description: 'pagination parameter, optional (default is 0)'
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+        - in: query
+          name: sort
+          description: Sort results
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfDockerCommit'
+          description: Success
+      summary: >-
+        List the tagged commits (tag/digest pairs) for the given Docker
+        repository.
+      tags:
+        - Docker Commit Services
+  '/entity/{id}/evaluation':
+    parameters:
+      - description: the ID of the project
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Gets Evaluations tied to a project.
+
+        <b>Note:</b> The response will contain only those Evaluations on which
+        the caller
+
+        is granted the <a
+        href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+
+        permission, unless specified otherwise with the accessType parameter.
+      operationId: getEvaluationsByContentSourcePaginated
+      parameters:
+        - description: >
+            The type of access for the user to filter for, optional and defaults
+
+            to <a
+            href="${org.sagebionetworks.repo.model.ACCESS_TYPE}">ACCESS_TYPE.READ</a>
+          in: query
+          name: accessType
+          schema:
+            $ref: '#/components/schemas/ACCESS_TYPE'
+        - description: |
+            If 'true' then return only those evaluations with rounds defined
+            and for which the current time is in one of the rounds.
+          in: query
+          name: activeOnly
+          schema:
+            default: false
+            type: boolean
+        - description: |
+            an optional, comma-delimited list of evaluation IDs to which the
+            response is limited
+          in: query
+          name: evaluationIds
+          schema:
+            type: string
+        - description: |
+            Limits the number of entities that will be fetched for this
+            page. When null it will default to 10.
+          in: query
+          name: limit
+          schema:
+            default: 10
+            type: integer
+            minimum: 0
+        - description: |
+            The offset index determines where this page will start from.
+            An index of 0 is the first entity. When null it will default
+            to 0.
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfEvaluation'
+          description: Success
+      summary: Gets Evaluations tied to a project.
+      tags:
+        - Evaluation Services
+  '/entity/{id}/filehandles':
+    parameters:
+      - description: The ID of a File Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the FileHandles of the file currently associated with the current
+
+        version of the Entity.
+
+
+        <p>
+
+        If a preview exists for the file then the handle of the preview and the
+        file
+
+        will be returned with this call.
+
+        </p>
+      operationId: getEntityFileHandles
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileHandleResults'
+          description: Success
+      summary: |
+        Get the FileHandles of the file currently associated with the current
+        version of the Entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/filepreview':
+    parameters:
+      - description: The ID of a File Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the URL of the preview file associated with the current version
+
+        of a FileEntity.
+
+
+        <p>
+
+        Note: This call will result in a HTTP temporary redirect (307), to the
+        actual
+
+        file URL if the caller meets all of the download requirements.
+
+        </p>
+      operationId: getFilePreviewUrl
+      parameters:
+        - description: |
+            When set to false, the URL will be returned as text/plain
+            instead of redirecting.
+          in: query
+          name: redirect
+          schema:
+            type: boolean
+        - in: query
+          description: Status
+          name: status
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: |
+        Get the URL of the preview file associated with the current version of
+        a FileEntity.
+      tags:
+        - Entity Services
+  '/entity/{id}/generatedBy':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    delete:
+      description: |
+        Deletes the activity relationship for the current version of an
+        Entity.
+      operationId: deleteActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: false
+      responses:
+        '204':
+          description: This resource has been deleted
+      summary: Deletes the activity relationship for the current version of an Entity.
+      tags:
+        - Entity Services
+    get:
+      description: Get an existing activity for the current version of an Entity.
+      operationId: getActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        description: Get an existing activity for the current version of an Entity.
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: Success
+      summary: Get an existing activity for the current version of an Entity.
+      tags:
+        - Entity Services
+    put:
+      description: Sets the generatedBy relationship for the current version of an Entity.
+      operationId: updateActivityForEntity
+      parameters:
+        - description: >
+            The id of the activity to connect to the entity. You must
+
+            be the creator of the
+
+            <a
+            href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a>
+            used here.'
+          in: query
+          name: generatedBy
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        description: >-
+          Sets the generatedBy relationship for the current version of an
+          Entity.
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: Success
+      summary: Sets the generatedBy relationship for the current version of an Entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/json':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the raw JSON for the given entity. The resulting JSON can be used
+
+        for the validation of a entity against a
+
+        <a
+        href="${org.sagebionetworks.repo.model.schema.JsonSchema}">JsonSchema</a>.
+
+
+        <p>
+
+
+        Note: The caller must be granted the
+
+        <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+        >ACCESS_TYPE.READ</a>
+
+        permission on the Entity.
+
+
+        </p>
+      operationId: getEntityJson
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSONObject'
+          description: Success
+      summary: Get the raw JSON for the given entity.
+      tags:
+        - Entity Services
+    put:
+      description: >
+        Update the annotations of an entity using the raw JSON of the entity.
+
+
+        <p>
+
+
+        See: <a href="${GET.entity.id.json}">GET entity/{id}/json</a> to get the
+        JSON
+
+        of an entity.
+
+
+        </p>
+
+
+        <p>
+
+        Note: The caller must be granted the
+
+        <a href="${org.sagebionetworks.repo.model.ACCESS_TYPE}"
+        >ACCESS_TYPE.UPDATE and ACCESS_TYPE.READ</a>
+
+        permission on the Entity.
+
+        </p>'
+      operationId: updateEntityWithJson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JSONObject'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSONObject'
+          description: Success
+      summary: Update the annotations of an entity using the raw JSON of the entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/lockAccessRequirement':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Add a temporary access restriction that prevents access pending review
+
+        by the Synapse Access and Compliance Team.
+
+        This service may be used only by an administrator of the specified
+        entity.
+      operationId: createLockAccessRequirement
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequirement'
+          description: Success
+      summary: |
+        Add a temporary access restriction that prevents access pending review
+        by the Synapse ACT.
+      tags:
+        - Access Requirement Services
+  '/entity/{id}/message':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: |
+        Adds the owner of the given entity as an additional recipient of the
+        message.
+      operationId: sendMessageToEntityOwner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageToUser'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageToUser'
+          description: Success
+      summary: >-
+        Adds the owner of the given entity as an additional recipient of the
+        message.
+      tags:
+        - Message Services
+  '/entity/{id}/path':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the full path of an Entity as a List of EntityHeaders. The first
+
+        EntityHeader will be the Root Entity, and the last EntityHeader will be
+        the
+
+        requested Entity.
+      operationId: getEntityPath
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityPath'
+          description: Success
+      summary: Get the full path of an Entity as a List of EntityHeaders.
+      tags:
+        - Entity Services
+  '/entity/{id}/permissions':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the list of permission that the caller has on a given Entity.
+
+
+        A User's permission on an Entity is a calculation based several factors
+
+        including the permission granted by the Entity's ACL and the User's
+        group
+
+        membership. There might also be extra requirement for an Entity, such as
+
+        special terms-of-use or special restrictions for sensitive data. This
+        means a
+
+        client cannot accurately calculate a User's permission on an Entity
+        simply by
+
+        inspecting the Entity''s ACL. Instead, all clients should use this
+        method to
+
+        get the calculated permission a User has on an Entity.
+      operationId: getUserEntityPermissions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEntityPermissions'
+          description: Success
+      summary: Get the list of permission that the caller has on a given Entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/schema/binding':
+    parameters:
+      - in: path
+        name: id
+        description: The ID of an Entity.
+        required: true
+        schema:
+          type: string
+    delete:
+      description: |
+        Clear the bound JSON schema from this Entity. The schema will no longer
+        be used to validate this Entity or its children.
+
+        Note: The caller must be granted the DELETE permission on the Entity.
+      operationId: clearBoundSchema
+      responses:
+        '204':
+          description: The resource has been deleted
+      summary: Clear the bound JSON schema from this Entity.
+      tags:
+        - Entity Services
+    get:
+      description: >
+        Get information about a JSON schema bound to an Entity. Note: Any
+
+        child Entity that does not have a bound schema will inherit the first
+        bound schema
+
+        found in its hierarchy.
+
+
+        Note: The caller must be granted the READ permission on the Entity.
+      operationId: getBoundJsonSchema
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonSchemaObjectBinding'
+          description: Success
+      summary: Get information about a JSON schema bound to an Entity.
+      tags:
+        - Entity Services
+    put:
+      description: >
+        Bind a JSON schema to an Entity. The bound schema will be used to
+        validate
+
+        the Entity''s metadata (annotations). Any child Entity that does not
+        have a
+
+        bound schema will inherit the first bound schema found in its hierarchy.
+
+
+        Only a single schema can be bound to an Entity at a time. If you have
+        more
+
+        than one schema to bind to an Entity you will need to create and bind a
+
+        single composition schema using keywords such as 'anyOf', 'allOf' or
+        'oneOf'
+
+        that defines how the schemas should be used for validation.
+
+
+        Note: The caller must be granted the UPDATE ermission on the Entity to
+        bind.
+      operationId: bindJsonSchemaToEntity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BindSchemaToEntityRequest'
+        description: The request identifies the JSON schema to bind.
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonSchemaObjectBinding'
+          description: Success
+      summary: Bind a JSON schema to an Entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/schema/validation':
+    parameters:
+      - description: The ID of the Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the validation results of an Entity against its bound JSON schema.
+
+        The validation of an Entity against its bound schema is automatic and
+        eventually
+
+        consistent. The validation results include the etag of the Entity at the
+        time
+
+        of the last validation. If the returned etag does not match the current
+        etag
+
+        of the Entity then the results should be considered out-of-date. If an
+        Entity
+
+        has not been validated for the first time, or if the Entity does not
+        have a
+
+        bound schema, this method will return a 404 (not-found). Keep checking
+        for
+
+        the latest validation results.
+
+
+        Note: The caller must be granted the READ permission on the Entity.
+      operationId: getEntitySchemaValidationResults
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResults'
+          description: Success
+      summary: Get the validation results of an Entity against its bound JSON schema.
+      tags:
+        - Entity Services
+  '/entity/{id}/schema/validation/invalid':
+    parameters:
+      - description: The ID of the container Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Get a single page of invalid JSON schema validation results for a
+
+        container Entity (Project or Folder). The validation of an Entity
+        against its bound
+
+        schema is automatic and eventually consistent. The validation results
+        include
+
+        the etag of the Entity at the time of the last validation. If the
+        returned
+
+        etag does not match the current etag of the Entity then the results
+        should be
+
+        considered out-of-date.
+
+
+        Note: The caller must be granted the READ permission on the container
+        Entity.
+
+        The results will only include children that the caller has the READ
+        permission on.
+      operationId: getInvalidValidationResults
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListValidationResultsRequest'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListValidationResultsResponse'
+          description: Success
+      summary: >
+        Get a single page of invalid JSON schema validation results for a
+        container
+
+        Entity (Project or Folder).
+      tags:
+        - Entity Services
+  '/entity/{id}/schema/validation/statistics':
+    parameters:
+      - description: The ID of the container Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Get the The summary statistics of the JSON schema validation results
+
+        for a single container Entity such as a Project or Folder. Only direct
+        children of
+
+        the container are included in the results. The statistics include the
+        total
+
+        number of children in the container, and the counts for both the invalid
+        and
+
+        valid children. If an Entity has not been validated for the first time,
+        or it
+
+        does not have bound schema it will be counted as 'unknown'.
+
+
+        The validation of an Entity against its bound schema is automatic and
+
+        eventually consistent. Keep checking this method to get the latest
+        validation
+
+        statistics for the given container.
+
+
+        Note: The caller must be granted the READ permission on the container
+        Entity.
+
+        The resulting statistics will only include children that the caller has
+        the READ permission on.
+      operationId: getEntitySchemaValidationStatistics
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationSummaryStatistics'
+          description: Success
+      summary: |
+        Get the summary statistics of the JSON schema validation results for
+        a single container Entity such as a Project or Folder.
+      tags:
+        - Entity Services
+  '/entity/{id}/sts':
+    parameters:
+      - description: |
+          The ID of the Folder with an STS-enabled storage location.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Gets the temporary S3 credentials from STS for the given entity. These
+
+        credentials are only good for the bucket and base key specified by the
+
+        returned credentials and expire 12 hours after this API is called.
+
+
+        The specified entity must be a folder with an STS-enabled storage
+        location.
+
+        If that storage location is external storage, you may request read-only
+        or
+
+        read-write permissions. If that storage location is Synapse storage, you
+        must
+
+        request read-only permissions.
+      operationId: getTemporaryCredentialsForEntity
+      parameters:
+        - description: |
+            Read-only or read-write permissions.
+          in: query
+          name: permission
+          required: true
+          schema:
+            enum:
+              - read_only
+              - read_write
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StsCredentials'
+          description: Success
+      summary: Gets the temporary S3 credentials from STS for the given entity.
+      tags:
+        - Entity Services
+  '/entity/{id}/table/column/{columnId}/row/{rowId}/version/{versionNumber}/file':
+    parameters:
+      - in: path
+        name: columnId
+        description: The ID of the Table column
+        required: true
+        schema:
+          type: string
+      - description: The ID of the FileEntity to get.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: rowId
+        description: The ID of the Table Row
+        required: true
+        schema:
+          type: number
+      - in: path
+        name: versionNumber
+        description: The version of the Table Row
+        required: true
+        schema:
+          type: number
+    get:
+      description: |
+        Get the actual URL of the file associated with a specific version
+        of a row and file handle column.
+
+        Note: This call will result in a HTTP temporary redirect (307), to the
+        actual file URL if the caller meets all of the download requirements.
+      operationId: fileRedirectUrlForRow
+      parameters:
+        - description: |
+            When set to false, the URL will be returned as text/plain
+            instead of redirecting.
+          in: query
+          name: redirect
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: |
+        Get the actual URL of the file associated with a specific version of a
+        row and file handle column.
+      tags:
+        - Table Services
+  '/entity/{id}/table/column/{columnId}/row/{rowId}/version/{versionNumber}/filepreview':
+    parameters:
+      - in: path
+        name: columnId
+        description: The ID of the Table column
+        required: true
+        schema:
+          type: string
+      - description: The ID of the FileEntity to get.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: rowId
+        description: The ID of the Table Row
+        required: true
+        schema:
+          type: number
+      - in: path
+        name: versionNumber
+        description: The version of the Table Row
+        required: true
+        schema:
+          type: number
+    get:
+      description: |
+        Get the preview URL of the file associated with a specific version
+        of a row and file handle column.
+
+        Note: This call will result in a HTTP temporary redirect (307), to the
+        actual file URL if the caller meets all of the download requirements.
+      operationId: filePreviewRedirectUrlForRow
+      parameters:
+        - description: |
+            When set to false, the URL will be returned as text/plain
+            instead of redirecting.
+          in: query
+          name: redirect
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: |
+        Get the preview URL of the file associated with a specific version of
+        a row and file handle column.
+      tags:
+        - Table Services
+  '/entity/{id}/table/download/csv/async/get/{asyncToken}':
+    parameters:
+      - description: The ID of a TableEntity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - in: path
+        description: Async Token
+        name: asyncToken
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Asynchronously get the results of a csv download started with POST
+
+
+        Note: When the result is not ready yet, this method will return a status
+
+        code of 202 (ACCEPTED) and the response body will be a
+        AsynchronousJobStatus
+      operationId: csvDownloadAsyncGet
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadFromTableResult'
+          description: Success
+      summary: Asynchronously get the results of a csv download started with.
+      tags:
+        - Table Services
+  '/entity/{id}/table/download/csv/async/start':
+    parameters:
+      - description: The ID of a TableEntity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Asynchronously start a csv download. Use the returned job id and 
+
+        /entity/{id}/table/download/csv/async/get to get the results of the
+        query
+      operationId: csvDownloadAsyncStart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadFromTableRequest'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncJobId'
+          description: Success
+      summary: Asynchronously start a csv download.
+      tags:
+        - Table Services
+  '/entity/{id}/table/filehandles':
+    parameters:
+      - description: The ID of a TableEntity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        This method is used to get file handle information for rows in a
+
+        TableEntity. The columns in the passed in RowReferenceSet need to be
+
+        FILEHANDLEID columns and the rows in the passed in RowReferenceSet need
+
+        to exists (a 400 will be returned if a row ID is provided that does not
+
+        actually exist). The order of the returned rows of file handles is the
+
+        same as the order of the rows requested, and the order of the file
+
+        handles in each row is the same as the order of the columns requested.
+
+
+        Note: The caller must have the READ permission on the TableEntity to
+        make this call.
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum frequency this method can be called</td>
+
+
+        <td>1 calls per second</td>
+
+
+        </tr>
+
+
+        </table>
+      operationId: getFileHandles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RowReferenceSet'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableFileHandleResults'
+          description: Success
+      summary: .
+      tags:
+        - Table Services
+  '/entity/{id}/table/query/async/get/{asyncToken}':
+    parameters:
+      - in: path
+        name: asyncToken
+        description: Async Token
+        required: true
+        schema:
+          type: string
+      - description: The ID of the TableEntity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Asynchronously get the results of a query started with POST
+
+        /entity/{id}/table/query/async/start
+
+
+        Note: When the result is not ready yet, this method will return a status
+
+        code of 202 (ACCEPTED) and the response body will be a
+        AsynchronousJobStatus object.
+      operationId: queryAsyncGet
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResultBundle'
+          description: Success
+      summary: Asynchronously get the results of a query started with.
+      tags:
+        - Table Services
+  '/entity/{id}/table/query/async/start':
+    parameters:
+      - description: The ID of a TableEntity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Asynchronously start a query. Use the returned job id and GET
+
+        /entity/{id}/table/query/async/get</a> to get the results of the query
+
+
+        Using a 'SQL like' syntax, query the current version of the rows in a
+
+        single table. The following pseudo-syntax is the basic supported format:
+
+
+
+        SELECT <br>
+
+
+        [ALL | DISTINCT] select_expr [, select_expr ...] <br>
+
+
+        FROM synapse_table_id <br>
+
+
+        [WHERE where_condition] <br>
+
+
+        [GROUP BY {col_name [, [col_name * ...] } <br>
+
+
+        [ORDER BY {col_name [ [ASC | DESC] [, col_name [ [ASC | DESC]]}<br>
+
+
+        [LIMIT row_count [ OFFSET offset ]]<br>
+
+
+
+        <p>
+
+
+        Note: Sub-queries and joining tables is not supported.
+
+
+        </p>
+
+
+        <p>
+
+
+        This services depends on an index that is created/update asynchronously
+
+        from table creation and update events. This means there could be short
+
+        window of time when the index is inconsistent with the true state of the
+
+        table. When the index is out-of-synch, then a status code of 202
+
+        (ACCEPTED) will be returned and the response body will be a TableStatus
+
+        object. The TableStatus will indicates the current
+
+        status of the index including how much work is remaining until the index
+
+        is consistent with the truth of the table.
+
+
+        The 'partsMask' is an integer "mask" that can be combined into to
+        request
+
+        any desired part. As of this writing, the mask is defined as follows
+        QueryBundleRequest
+
+
+        <ul>
+
+
+        <li>Query Results <i>(queryResults)</i> = 0x1</li>
+
+
+        <li>Query Count <i>(queryCount)</i> = 0x2</li>
+
+
+        <li>Select Columns <i>(selectColumns)</i> = 0x4</li>
+
+
+        <li>Max Rows Per Page <i>(maxRowsPerPage)</i> = 0x8</li>
+
+
+        <li>The Table Columns <i>(columnModels)</i> = 0x10</li>
+
+
+        <li>Facet statistics for each faceted column <i>(facetStatistics)</i> =
+        0x20</li>
+
+
+        <li>The sum of the file sizes <i>(sumFileSizesBytes)</i> = 0x40</li>
+
+
+        </ul>
+
+
+        </p>
+
+
+        <p>
+
+
+        For example, to request all parts, the request mask value should be:
+        <br>
+
+        0x1 OR 0x2 OR 0x4 OR 0x8 OR 0x10 OR 0x20 OR 0x40 = 0x7F.
+
+
+        </p>
+
+
+        <p>
+
+
+        Note: The caller must have the READ permission on the TableEntity to
+        make this call.
+
+
+        </p>
+      operationId: queryAsyncStart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryBundleRequest'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncJobId'
+          description: Success
+      summary: Asynchronously start a query.
+      tags:
+        - Table Services
+  '/entity/{id}/table/snapshot':
+    parameters:
+      - in: path
+        description: The ID of a Table Entity.
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Request to create a new snapshot of a table. The provided comment,
+
+        label, and activity ID will be applied to the current version thereby
+        creating a
+
+        snapshot and locking the current version. After the snapshot is created
+        a new
+
+        version will be started with an 'in-progress' label.
+
+
+        NOTE: This service is for TableEntity only. Snapshots of EntityView
+
+        require asynchronous processing and can be created via:
+
+        POST /entity/{id}/table/transaction/async/start
+      operationId: createSnapshot
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SnapshotRequest'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SnapshotResponse'
+          description: Success
+      summary: Request to create a new snapshot of a table.
+      tags:
+        - Table Services
+  '/entity/{id}/table/transaction/async/get/{asyncToken}':
+    parameters:
+      - description: The token returned when the job was started.
+        in: path
+        name: asyncToken
+        required: true
+        schema:
+          type: string
+      - description: The ID of a Table entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Asynchronously get the results of a table update transaction started
+
+        with POST /entity/{id}/table/transaction/async/start</a>
+
+
+        Note: When the result is not ready yet, this method will return a status
+
+        code of 202 (ACCEPTED) and the response body will be a
+        AsynchronousJobStatus object.
+      operationId: getTableTransactionResult
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableUpdateTransactionResponse'
+          description: Success
+      summary: >-
+        Asynchronously get the results of a table update transaction started
+        with.
+      tags:
+        - Table Services
+  '/entity/{id}/table/transaction/async/start':
+    parameters:
+      - description: The ID of a Table Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Start a table update job that will attempt to make all of the requested
+
+        changes in a single transaction. All updates will either succeed or fail
+        as a unit.  All
+
+        update requests must be for the same table.
+
+
+        <p>
+
+
+        Note: The caller must have the UPDATE permission on the TableEntity to
+        make this call.
+
+
+        </p>
+
+
+        <p>
+
+
+        <b>Service Limits</b>
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>resource</th>
+
+
+        <th>limit</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum size of a PartialRow change </td>
+
+
+        <td>2 MB</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>The maximum size of a CSV that can be appended to a table</td>
+
+
+        <td>1 GB</td>
+
+
+        </tr>
+
+
+        </table>
+
+
+        </p>
+      operationId: startTableTransactionJob
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableUpdateTransactionRequest'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncJobId'
+          description: Success
+      summary: |
+        Start a table update job that will attempt to make all of the requested
+        changes in a single transaction.
+      tags:
+        - Table Services
+  '/entity/{id}/threads':
+    parameters:
+      - description: The ID of an Entity.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        This API is used to get N number of threads that belongs to projects
+        user can view and references the given entity.
+
+        Target users: anyone who has READ permission to the entity.
+      operationId: getThreadsForEntity
+      parameters:
+        - description: 'The direction of sort: true for ascending, and false for descending'
+          in: query
+          name: ascending
+          schema:
+            type: boolean
+        - description: |
+            Limits the size of the page returned. For example, a page size
+            of 10 require limit = 10. The maximum Limit for this call is 20.'
+          in: query
+          name: limit
+          schema:
+            type: number
+            default: 10
+            minimum: 10
+            maximum: 20
+        - description: >
+            The index of the pagination offset. For a page size of 10, the
+
+            first page would be at offset = 0, and the second page would be at
+            offset =
+
+            10.'
+          in: query
+          name: offset
+          schema:
+            type: number
+            default: 0
+            minimum: 0
+        - description: >
+            The field to sort the resulting threads on. Available options
+            DiscussionThreadOrder
+          in: query
+          name: sort
+          schema:
+            enum:
+              - NUMBER_OF_REPLIES
+              - NUMBER_OF_VIEWS
+              - PINNED_AND_LAST_ACTIVITY
+              - THREAD_TITLE
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfDiscussionThreadBundle'
+          description: Success
+      summary: >
+        This API is used to get N number of threads that belongs to projects
+        user
+
+        can view and references the given entity.
+      tags:
+        - Discussion Services
   /evaluation:
     get:
       description: >
@@ -4467,6 +7029,1595 @@ components:
     String:
       description: String value
       type: string
+    Etag:
+      description: >
+        Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
+
+        concurrent updates. Since the E-Tag changes every time an entity is
+        updated
+
+        it is used to detect when a client's current representation of an entity
+        is
+
+        out-of-date.
+      type: string
+    Entity:
+      description: This is the base interface that all Entities implement.
+      example:
+        concreteType: ...
+        createdBy: ...
+        createdOn: ...
+        description: ...
+        etag: ...
+        id: ...
+        modifiedBy: ...
+        modifiedOn: ...
+        name: Trial ' + (_) . 09
+        parentId: ...
+      properties:
+        concreteType:
+          description: >
+            Indicates which implementation of Entity this object represents.
+
+            It should be set to one of the following:
+            org.sagebionetworks.repo.model.Project,
+
+            org.sagebionetworks.repo.model.Folder, or
+            org.sagebionetworks.repo.model.FileEntity.
+          type: string
+        createdBy:
+          description: The ID of the user that created this entity.
+          type: string
+        createdOn:
+          description: The date this entity was created.
+          type: string
+        description:
+          description: The description of this entity.
+          type: string
+          maxLength: 1000
+        etag:
+          $ref: '#/components/schemas/Etag'
+        id:
+          description: >
+            The unique immutable ID for this entity. A new ID will be generated
+            for new Entities.
+
+            Once issued, this ID is guaranteed to never change or be re-issued
+          type: string
+        modifiedBy:
+          description: The ID of the user that last modified this entity.
+          type: string
+        modifiedOn:
+          description: The date this entity was last modified.
+          type: string
+        name:
+          description: >
+            The name of this entity. Must be 256 characters or less. Names may
+
+            only contain: letters, numbers, spaces, underscores, hyphens,
+            periods,
+
+            plus signs, apostrophes, and parentheses
+          type: string
+          maxLength: 256
+          minLength: 1
+          pattern: '^[a-zA-Z0-9 +.''(_)]*$'
+        parentId:
+          description: The ID of the Entity that is the parent of this Entity.
+          type: string
+      title: Entity
+      type: object
+    Empty:
+      type: object
+    BooleanResult:
+      description: Boolean result
+      example:
+        result: true
+      properties:
+        result:
+          description: Boolean result
+          type: boolean
+      title: BooleanResult
+      type: object
+    ACCESS_TYPE:
+      title: ACCESS_TYPE
+      type: string
+      description: The enumeration of possible permission.
+      enum:
+        - CREATE
+        - READ
+        - UPDATE
+        - DELETE
+        - CHANGE_PERMISSIONS
+        - DOWNLOAD
+        - UPLOAD
+        - PARTICIPATE
+        - SUBMIT
+        - READ_PRIVATE_SUBMISSION
+        - UPDATE_SUBMISSION
+        - DELETE_SUBMISSION
+        - TEAM_MEMBERSHIP_UPDATE
+        - SEND_MESSAGE
+        - CHANGE_SETTINGS
+        - MODERATE
+    RestrictableObjectType:
+      description: >-
+        JSON enum for the types of objects which can be restricted by an
+        AccessRequirement.
+      enum:
+        - ENTITY
+        - EVALUATION
+        - TEAM
+      title: RestrictableObjectType
+      type: string
+    RestrictableObjectDescriptor:
+      description: Restrictable object descriptor
+      example:
+        id: ...
+        type: EVALUATION
+      properties:
+        id:
+          description: Id
+          type: string
+        type:
+          $ref: '#/components/schemas/RestrictableObjectType'
+      title: RestrictableObjectDescriptor
+      type: object
+    AccessRequirement:
+      description: >
+        Interface for JSON schema for AccessRequirement. The Access Requirement
+        mechanism is
+
+        distinct from the access control list in that it is controlled not by
+        the entity
+
+        owner but by a separate authority: Access Requirements are created and
+        maintained
+
+        by the Synapse Access and Compliance Team (ACT). ACTAccessRequirements
+        can only be
+
+        approved by the ACT. Self-sign Access Requirements can be approved by
+        the user
+
+        desiring access, but said user first has to meet 'terms of use'
+        associated with the requirement.
+      example:
+        accessType: SUBMIT
+        concreteType: ...
+        createdBy: ...
+        createdOn: ...
+        description: ...
+        etag: ...
+        id: 12345
+        modifiedBy: ...
+        modifiedOn: ...
+        subjectIds:
+          - id: ...
+            type: EVALUATION
+          - id: ...
+            type: TEAM
+        versionNumber: 12345
+      properties:
+        accessType:
+          $ref: '#/components/schemas/ACCESS_TYPE'
+        concreteType:
+          description: >-
+            Indicates which type of AccessRequirement this object represents.
+            Provided by the system, the user may not set this field.
+          type: string
+        createdBy:
+          description: >-
+            The user that created this object. Provided by the system, the user
+            may not set this field.
+          type: string
+        createdOn:
+          description: >-
+            The date this object was created. Provided by the system, the user
+            may not set this field.
+          type: string
+        description:
+          description: Short optional description for the AR. Limited to 50 characters.
+          type: string
+        etag:
+          description: >
+            Synapse employs an Optimistic Concurrency Control (OCC) scheme to
+            handle concurrent
+
+            updates. Since the E-Tag changes every time an entity is updated it
+            is used to
+
+            detect when a client's current representation of an object is
+            out-of-date.
+          type: string
+        id:
+          description: >-
+            The unique immutable ID. Provided by the system, the user may not
+            set this field.
+          type: number
+        modifiedBy:
+          description: >-
+            The user that last modified this object. Provided by the system, the
+            user may not set this field.
+          type: string
+        modifiedOn:
+          description: >-
+            The date this object was last modified. Provided by the system, the
+            user may not set this field.
+          type: string
+        subjectIds:
+          description: >-
+            The IDs of the items controlled by this Access Requirement. Required
+            when creating or updating.
+          items:
+            $ref: '#/components/schemas/RestrictableObjectDescriptor'
+          type: array
+        versionNumber:
+          description: The version number issued to this version on the object.
+          type: integer
+      title: AccessRequirement
+      type: object
+    PaginatedResultsOfAccessRequirement:
+      description: >-
+        Retrieve paginated list of ALL Access Requirements associated with a
+        Team.
+      example:
+        results:
+          - accessType: READ
+            concreteType: ...
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            id: 12345
+            modifiedBy: ...
+            modifiedOn: ...
+            subjectIds:
+              - id: ...
+                type: EVALUATION
+              - id: ...
+                type: TEAM
+            versionNumber: 12345
+          - accessType: UPLOAD
+            concreteType: ...
+            createdBy: ...
+            createdOn: ...
+            description: ...
+            etag: ...
+            id: 12345
+            modifiedBy: ...
+            modifiedOn: ...
+            subjectIds:
+              - id: ...
+                type: ENTITY
+              - id: ...
+                type: TEAM
+            versionNumber: 12345
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: The the id of the entity to which this reference refers
+          items:
+            $ref: '#/components/schemas/AccessRequirement'
+          type: array
+        totalNumberOfResults:
+          description: >
+            Calculating the actual totalNumberOfResults is not longer supported.
+
+            Therefore, for each page, the totalNumberOfResults is estimated
+            using
+
+            the current page, limit, and offset. When the page size equals the
+            limit,
+
+            the totalNumberOfResults will be offset+pageSize+ 1. Otherwise, the
+
+            totalNumberOfResults will be offset+pageSize.
+          type: integer
+      title: PaginatedResultsOfAccessRequirement
+      type: object
+    ResourceAccess:
+      title: ResourceAccess
+      type: object
+      description: JSON schema for a ResourceAccess POJO
+      example:
+        accessType:
+          - UPDATE
+          - DELETE_SUBMISSION
+        principalId: 12345
+      properties:
+        accessType:
+          description: A list of types of access granted to the given principal
+          type: array
+          items:
+            $ref: '#/components/schemas/ACCESS_TYPE'
+        principalId:
+          description: The id of the principal who is granted access
+          type: integer
+    AccessControlList:
+      title: AccessControlList
+      type: object
+      description: >-
+        Contains list of principals who can access the data with the allowed
+        types of access for each.
+      properties:
+        createdBy:
+          description: >-
+            UNUSED -- maintained only for backwards compatibility with archived
+            objects
+          type: string
+        creationDate:
+          description: Created Date
+          type: string
+        etag:
+          description: Synapse etag value
+          type: string
+        id:
+          description: The entity id
+          type: string
+        modifiedBy:
+          description: >-
+            UNUSED -- maintained only for backwards compatibility with archived
+            objects
+          type: string
+        modifiedOn:
+          description: >-
+            UNUSED -- maintained only for backwards compatibility with archived
+            objects
+          type: string
+        resourceAccess:
+          description: >-
+            The list of principals who can access the data with the allowed
+            types of access for each.
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceAccess'
+      example:
+        createdBy: ...
+        creationDate: '12345'
+        etag: ...
+        id: ...
+        modifiedBy: ...
+        modifiedOn: '12345'
+        resourceAccess:
+          - accessType:
+              - UPDATE_SUBMISSION
+              - CHANGE_PERMISSIONS
+            principalId: 12345
+          - accessType:
+              - UPDATE
+              - SEND_MESSAGE
+            principalId: 12345
+    AnnotationsValueType:
+      title: AnnotationsValueType
+      type: string
+      description: |
+        describes the type of a AnnotationV2's value
+      enum:
+        - STRING
+        - DOUBLE
+        - LONG
+        - TIMESTAMP_MS
+    AnnotationsValue:
+      description: |
+        Contains a AnnotationV2's value and its type
+      example:
+        type: DOUBLE
+        value:
+          - ...
+          - ...
+      properties:
+        type:
+          $ref: '#/components/schemas/AnnotationsValueType'
+        value:
+          description: >
+            List of values as strings. Clients should use the "type" field to
+            determine how to
+
+            interpret the strings. Single values Annotations are represented as
+            a list of size 1,
+
+            and multiple values size > 1. Empty list or null is not allowed
+          items:
+            type: string
+          type: array
+      title: AnnotationsValue
+      type: object
+    Annotations_v2:
+      description: >-
+        Annotations are additional key-value pair metadata that are associated
+        with an object.
+      example:
+        annotations:
+          property1:
+            type: STRING
+            value:
+              - ...
+              - ...
+          property2:
+            type: STRING
+            value:
+              - ...
+              - ...
+        etag: ...
+        id: ...
+      properties:
+        annotations:
+          additionalProperties:
+            $ref: '#/components/schemas/AnnotationsValue'
+          description: >-
+            Additional metadata associated with the object. The key is the name
+            of your desired annotations. The value is an object containing a
+            list of string values (use empty list to represent no values for
+            key) and the value type associated with all values in the list
+          type: object
+        etag:
+          description: >-
+            Etag of the object to which this annotation belongs. To update an
+            AnnotationV2, this field must match the current etag on the object.
+          type: string
+        id:
+          description: ID of the object to which this annotation belongs
+          type: string
+      title: Annotations
+      type: object
+    EntityHeader:
+      description: JSON schema for EntityHeader POJO
+      example:
+        benefactorId: 12345
+        createdBy: ...
+        createdOn: ...
+        id: ...
+        modifiedBy: ...
+        modifiedOn: ...
+        name: ...
+        type: ...
+        versionLabel: ...
+        versionNumber: 12345
+      properties:
+        benefactorId:
+          description: |
+            The ID of the entity that this Entity's ACL is inherited from.'
+          type: number
+        createdBy:
+          description: The ID of the user that created this entity.
+          type: string
+        createdOn:
+          description: The date this entity was created.
+          type: string
+        id:
+          description: The id of the entity
+          type: string
+        modifiedBy:
+          description: The ID of the user that last modified this entity.
+          type: string
+        modifiedOn:
+          description: The date this entity was last modified.
+          type: string
+        name:
+          description: The name of the entity
+          type: string
+        type:
+          description: The type of the entity
+          type: string
+        versionLabel:
+          description: The user defined version label of the entity
+          type: string
+        versionNumber:
+          description: The version number of the entity
+          type: number
+      title: EntityHeader
+      type: object
+    EntityBundleCreate_v2:
+      description: Used to create Entity and associated metadata in a single transaction
+      example:
+        accessControlList:
+          createdBy: ...
+          creationDate: ...
+          etag: ...
+          id: ...
+          modifiedBy: ...
+          modifiedOn: ...
+          resourceAccess:
+            - accessType:
+                - PARTICIPATE
+                - UPDATE_SUBMISSION
+              principalId: 12345
+            - accessType:
+                - DELETE
+                - UPLOAD
+              principalId: 12345
+        annotations:
+          annotations:
+            property1:
+              type: STRING
+              value:
+                - ...
+                - ...
+            property2:
+              type: STRING
+              value:
+                - ...
+                - ...
+          etag: ...
+          id: ...
+        entity:
+          concreteType: ...
+          createdBy: ...
+          createdOn: ...
+          description: ...
+          etag: ...
+          id: ...
+          modifiedBy: ...
+          modifiedOn: ...
+          name: ...
+          parentId: ...
+      properties:
+        accessControlList:
+          $ref: '#/components/schemas/AccessControlList'
+        annotations:
+          $ref: '#/components/schemas/Annotations_v2'
+        entity:
+          $ref: '#/components/schemas/Entity'
+      title: EntityBundleCreate
+      type: object
+    EntityType:
+      description: Type of the Entity
+      enum:
+        - project
+        - folder
+        - file
+        - table
+        - link
+        - entityview
+        - dockerrepo
+        - submissionview
+      title: EntityType
+      type: string
+    FileHandle:
+      description: >-
+        The FileHandle interface defines all of the fields that are common to
+        all implementations.
+      example:
+        concreteType: ...
+        contentMd5: ...
+        contentSize: 12345
+        contentType: ...
+        createdBy: ...
+        createdOn: ...
+        etag: ...
+        fileName: ...
+        id: ...
+        storageLocationId: 12345
+      properties:
+        concreteType:
+          description: >
+            This is used to indicate the implementation of this interface.
+
+            For example, an S3FileHandle should be set to:
+            org.sagebionetworks.repo.model.file.S3FileHandle
+          type: string
+        contentMd5:
+          description: |
+            The file's content MD5.
+          type: string
+        contentSize:
+          description: The size of the file in bytes.
+          type: integer
+        contentType:
+          description: |
+            Must be: http://en.wikipedia.org/wiki/Internet_media_type
+          type: string
+        createdBy:
+          description: The ID Of the user that created this file.
+          type: string
+        createdOn:
+          description: The date when this file was uploaded.
+          type: string
+        etag:
+          $ref: '#/components/schemas/Etag'
+        fileName:
+          description: 'The short, user visible name for this file.'
+          type: string
+        id:
+          description: >
+            The ID of this FileHandle. All references to this FileHandle will
+            use this ID.
+
+            Synapse will generate this ID when the FileHandle is created.
+          type: string
+        storageLocationId:
+          description: The optional storage location descriptor
+          type: integer
+      title: FileHandle
+      type: object
+    EntityPath:
+      description: |
+        All entities in this Entity's path
+      example:
+        path:
+          - benefactorId: 12345
+            createdBy: ...
+            createdOn: ...
+            id: ...
+            modifiedBy: ...
+            modifiedOn: ...
+            name: ...
+            type: ...
+            versionLabel: ...
+            versionNumber: 12345
+          - benefactorId: 12345
+            createdBy: ...
+            createdOn: ...
+            id: ...
+            modifiedBy: ...
+            modifiedOn: ...
+            name: ...
+            type: ...
+            versionLabel: ...
+            versionNumber: 12345
+      properties:
+        path:
+          description: >
+            The list of all entities in this entites path.
+
+            The first element is the root parent and the last element (n) is the
+            entity.
+          items:
+            $ref: '#/components/schemas/EntityHeader'
+          type: array
+      title: EntityPath
+      type: object
+    UserEntityPermissions:
+      description: The permission a User has for a given Entity
+      example:
+        canAddChild: true
+        canCertifiedUserAddChild: true
+        canCertifiedUserEdit: true
+        canChangePermissions: true
+        canChangeSettings: true
+        canDelete: true
+        canDownload: true
+        canEdit: true
+        canEnableInheritance: true
+        canModerate: true
+        canPublicRead: true
+        canUpload: true
+        canView: true
+        isCertificationRequired: true
+        isCertifiedUser: true
+        ownerPrincipalId: 12345
+      properties:
+        canAddChild:
+          description: Can the user add a child entity to this entity?
+          type: boolean
+        canCertifiedUserAddChild:
+          description: >-
+            Can the user add a child entity to this entity once they become a
+            Certified User?
+          type: boolean
+        canCertifiedUserEdit:
+          description: Can the user edit this entity once they become a Certified User?
+          type: boolean
+        canChangePermissions:
+          description: Can the user change the permissions of this entity?
+          type: boolean
+        canChangeSettings:
+          description: Can the user change the settings of this entity?
+          type: boolean
+        canDelete:
+          description: Can the user delete this entity?
+          type: boolean
+        canDownload:
+          description: >-
+            Are there any access requirements precluding the user from
+            downloading this entity?
+          type: boolean
+        canEdit:
+          description: Can the user edit this entity?
+          type: boolean
+        canEnableInheritance:
+          description: >
+            Can the user delete the entity's access control list (so it inherits
+            settings from an ancestor)?'
+          type: boolean
+        canModerate:
+          description: >-
+            Can the user moderate the forum associated with this entity? Note
+            that only project entity has forum.
+          type: boolean
+        canPublicRead:
+          description: Is this entity considered public?
+          type: boolean
+        canUpload:
+          description: >-
+            Are there any access requirements precluding the user from uploading
+            into this entity (folder or project)?
+          type: boolean
+        canView:
+          description: Can the user view this entity?
+          type: boolean
+        isCertificationRequired:
+          description: >-
+            Is the certification requirement enabled for the project of the
+            entity?
+          type: boolean
+        isCertifiedUser:
+          description: Is this user certified?
+          type: boolean
+        ownerPrincipalId:
+          description: >
+            The principal ID of the entity's owner (i.e. the entity's
+            'createdBy')'
+          type: number
+      title: UserEntityPermissions
+      type: object
+    RestrictionLevel:
+      description: ACT restriction levels
+      enum:
+        - OPEN
+        - RESTRICTED_BY_TERMS_OF_USE
+        - CONTROLLED_BY_ACT
+      title: RestrictionLevel
+      type: string
+    RestrictionInformationResponse:
+      description: The information about restriction level on a restrict-able object.
+      example:
+        hasUnmetAccessRequirement: true
+        restrictionLevel: CONTROLLED_BY_ACT
+      properties:
+        hasUnmetAccessRequirement:
+          description: >-
+            True if user has at least one unmet access requirement on this
+            restrict-able object; false otherwise.
+          type: boolean
+        restrictionLevel:
+          $ref: '#/components/schemas/RestrictionLevel'
+      title: RestrictionInformationResponse
+      type: object
+    ColumnType:
+      description: >
+        The column type determines the type of data that can be stored in a
+        column.
+
+        Switching between types (using a transaction with
+        TableUpdateTransactionRequest
+
+        in the "changes" list) is generally allowed except for switching to
+        "_LIST" suffixed types.
+
+        In such cases, a new column must be created and data must be copied over
+        manually
+
+
+        <table border="1">
+
+
+        <tr>
+
+
+        <th>name</th>
+
+
+        <th>description</th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>STRING</td>
+
+
+        <td>The STRING data type is a small text strings with between 1 and
+        1,000 characters. Each STRING column will have a declared maximum size
+        between 1 and 1,000 characters (with 50 characters as the default when
+        maximumSize = null). The maximum STRING size is applied to the budget of
+        the maximum table width, therefore it is best to use the smallest
+        possible maximum size for the data. For strings larger than 250
+        characters, consider using the LARGETEXT column type for improved
+        performance. Each STRING column counts as maxSize*4 (4 bytes per
+        character) towards the total width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>DOUBLE</td>
+
+
+        <td>The DOUBLE data type is a double-precision 64-bit IEEE 754 floating
+        point. Its range of values is approximately +/-1.79769313486231570E+308
+        (15 significant decimal digits). Each DOUBLE column counts as 23 bytes
+        towards the total width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>INTEGER</td>
+
+
+        <td>The INTEGER data type is a 64-bit two's complement integer. The
+        signed integer has a minimum value of -2^63 and a maximum value of
+        2^63-1. Each INTEGER column counts as 20 bytes towards the total width
+        of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>BOOLEAN</td>
+
+
+        <td>The BOOLEAN data type has only two possible values: 'true' and
+        'false'. Each BOOLEAN column counts as 5 bytes towards the total width
+        of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>DATE</td>
+
+
+        <td>The DATE data type represent the specified number of milliseconds
+        since the standard base time known as 'the epoch', namely January 1,
+        1970, 00:00:00 GM. Each DATE column counts as 20 bytes towards the total
+        width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>FILEHANDLEID</td>
+
+
+        <td>The FILEHANDLEID data type represents a file stored within a table.
+        To store a file in a table, first use the 'File Services' to upload a
+        file to generate a new FileHandle, then apply the fileHandle.id as the
+        value for this column. Note: This column type works best for files that
+        are binary (non-text) or text files that are 1 MB or larger. For text
+        files that are smaller than 1 MB consider using the LARGETEXT column
+        type to improve download performance. Each FILEHANDLEID column counts as
+        20 bytes towards the total width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>ENTITYID</td>
+
+
+        <td>The ENTITYID type represents a reference to a Synapse Entity. Values
+        will include the 'syn' prefix, such as 'syn123'. Each ENTITYID column
+        counts as 44 bytes towards the total width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>SUBMISSIONID</td>
+
+
+        <td>The SUBMISSIONID type represents a reference to an evaluation
+        submission. The value should be the ID of the referenced submission.
+        Each SUBMISSIONID column counts as 20 bytes towards the total width of a
+        table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>EVALUATIONID</td>
+
+
+        <td>The EVALUATIONID type represents a reference to an evaluation. The
+        value should be the ID of the referenced evaluation. Each EVALUATIONID
+        column counts as 20 bytes towards the total width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>LINK</td>
+
+
+        <td>The LINK data type represents any URL with 1,000 characters or less.
+        Each LINK column counts as maxSize*4 (4 bytes per character) towards the
+        total width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>LARGETEXT</td>
+
+
+        <td>The LARGETEXT data type represents a string that is greater than 250
+        characters but less than 524,288 characters (2 MB of UTF-8 4 byte
+        chars). For smaller strings consider using the STRING column type. For
+        larger strings, consider using the FILEHANDELID column type. Each
+        LARGE_TEXT column counts as 2133 bytes towards the total width of a
+        table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>USERID</td>
+
+
+        <td>The USERID data type represents a reference to a Synapse User. The
+        value should be the ID of the referenced User. Each USERID column counts
+        as 20 bytes towards the total width of a table.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>STRING_LIST</td>
+
+
+        <td>Multiple values of STRING</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>INTEGER_LIST</td>
+
+
+        <td>Multiple values of INTEGER.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>BOOLEAN_LIST</td>
+
+
+        <td>Multiple values of BOOLEAN.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>DOUBLE</td>
+
+
+        <td></td>
+
+
+        </tr>
+
+        <tr>
+
+
+        <td>DATE_LIST</td>
+
+
+        <td>Multiple values of DATE.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>ENTITYID_LIST</td>
+
+
+        <td>Multiple values of ENTITYID.</td>
+
+
+        </tr>
+
+
+        <tr>
+
+
+        <td>USERID_LIST</td>
+
+
+        <td>Multiple values of USERID.</td>
+
+
+        </tr>
+
+
+        </table>
+      enum:
+        - STRING
+        - DOUBLE
+        - INTEGER
+        - BOOLEAN
+        - DATE
+        - FILEHANDLEID
+        - ENTITYID
+        - SUBMISSIONID
+        - EVALUATIONID
+        - LINK
+        - LARGETEXT
+        - USERID
+        - STRING_LIST
+        - INTEGER_LIST
+        - BOOLEAN_LIST
+        - DATE_LIST
+        - ENTITYID_LIST
+        - USERID_LIST
+      title: ColumnType
+      type: string
+    FacetType:
+      description: Table Facet Type
+      enum:
+        - enumeration
+        - range
+      title: FacetType
+      type: string
+    ColumnModel:
+      description: A column model contains the metadata of a single column of a TableEntity
+      example:
+        columnType: INTEGER_LIST
+        defaultValue: ...
+        enumValues:
+          - ...
+          - ...
+        facetType: enumeration
+        id: ...
+        maximumListLength: 100
+        maximumSize: 12345
+        name: ...
+      properties:
+        columnType:
+          $ref: '#/components/schemas/ColumnType'
+        defaultValue:
+          description: >
+            The default value for this column. Columns of type ENTITYID,
+            FILEHANDLEID, USERID,
+
+            and LARGETEXT are not allowed to have default values.
+          type: string
+        enumValues:
+          description: >
+            Columns of type STRING can be constrained to an enumeration values
+            set on this list.
+
+            The maximum number of entries for an enum is 100
+          items:
+            type: string
+          type: array
+        facetType:
+          $ref: '#/components/schemas/FacetType'
+        id:
+          description: The immutable ID issued to new columns
+          type: string
+        maximumListLength:
+          description: >
+            Required if using a columnType with a "_LIST" suffix.
+
+            Describes the maximum number of values that will appear in that
+            list.
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+        maximumSize:
+          description: >
+            A parameter for columnTypes with a maximum size. For example,
+            ColumnType. STRINGs
+
+            have a default maximum size of 50 characters, but can be set to a
+            maximumSize of
+
+            1 to 1000 characters. For columnType of STRING_LIST, this limits the
+            size of
+
+            individual string elements in the list
+          type: number
+        name:
+          description: The display name of the column
+          type: string
+      title: ColumnModel
+      type: object
+    TableBundle:
+      description: Metadata about a TableEntity that can be included in an EntityBundle
+      example:
+        columnModels:
+          - columnType: EVALUATIONID
+            defaultValue: ...
+            enumValues:
+              - ...
+              - ...
+            facetType: enumeration
+            id: ...
+            maximumListLength: 100
+            maximumSize: 12345
+            name: ...
+          - columnType: STRING
+            defaultValue: ...
+            enumValues:
+              - ...
+              - ...
+            facetType: range
+            id: ...
+            maximumListLength: 100
+            maximumSize: 12345
+            name: ...
+        maxRowsPerPage: 12345
+      properties:
+        columnModels:
+          description: The list of ColumnModels currently used by this table.
+          items:
+            $ref: '#/components/schemas/ColumnModel'
+          type: array
+        maxRowsPerPage:
+          description: >
+            The maximum number of rows that can be requested or posted for this
+            table in a single call.
+
+            This is a function of the columns that are currently assigned to
+            this table.
+          type: number
+      title: TableBundle
+      type: object
+    EntityBundle_v2:
+      description: Bundle to transport an Entity and related data objects
+      example:
+        accessControlList:
+          createdBy: ...
+          creationDate: ...
+          etag: ...
+          id: ...
+          modifiedBy: ...
+          modifiedOn: ...
+          resourceAccess:
+            - accessType:
+                - CHANGE_PERMISSIONS
+                - UPDATE_SUBMISSION
+              principalId: 12345
+            - accessType:
+                - DOWNLOAD
+                - MODERATE
+              principalId: 12345
+        annotations:
+          annotations:
+            property1:
+              type: STRING
+              value:
+                - ...
+                - ...
+            property2:
+              type: TIMESTAMP_MS
+              value:
+                - ...
+                - ...
+          etag: ...
+          id: ...
+        benefactorAcl:
+          createdBy: ...
+          creationDate: ...
+          etag: ...
+          id: ...
+          modifiedBy: ...
+          modifiedOn: ...
+          resourceAccess:
+            - accessType:
+                - UPLOAD
+                - DELETE
+              principalId: 12345
+            - accessType:
+                - CHANGE_SETTINGS
+                - CREATE
+              principalId: 12345
+        doiAssociation:
+          associatedBy: ...
+          associatedOn: ...
+          associationId: ...
+          doiUri: ...
+          doiUrl: ...
+          etag: ...
+          objectId: ...
+          objectType: VERIFICATION_SUBMISSION
+          objectVersion: 12345
+          updatedBy: ...
+          updatedOn: ...
+        entity:
+          concreteType: ...
+          createdBy: ...
+          createdOn: ...
+          description: ...
+          etag: ...
+          id: ...
+          modifiedBy: ...
+          modifiedOn: ...
+          name: ...
+          parentId: ...
+        entityType: entityview
+        fileHandles:
+          - concreteType: ...
+            contentMd5: ...
+            contentSize: 12345
+            contentType: ...
+            createdBy: ...
+            createdOn: ...
+            etag: ...
+            fileName: ...
+            id: ...
+            storageLocationId: 12345
+          - concreteType: ...
+            contentMd5: ...
+            contentSize: 12345
+            contentType: ...
+            createdBy: ...
+            createdOn: ...
+            etag: ...
+            fileName: ...
+            id: ...
+            storageLocationId: 12345
+        fileName: ...
+        hasChildren: true
+        path:
+          path:
+            - benefactorId: 12345
+              createdBy: ...
+              createdOn: ...
+              id: ...
+              modifiedBy: ...
+              modifiedOn: ...
+              name: ...
+              type: ...
+              versionLabel: ...
+              versionNumber: 12345
+            - benefactorId: 12345
+              createdBy: ...
+              createdOn: ...
+              id: ...
+              modifiedBy: ...
+              modifiedOn: ...
+              name: ...
+              type: ...
+              versionLabel: ...
+              versionNumber: 12345
+        permissions:
+          canAddChild: true
+          canCertifiedUserAddChild: true
+          canCertifiedUserEdit: true
+          canChangePermissions: true
+          canChangeSettings: true
+          canDelete: true
+          canDownload: true
+          canEdit: true
+          canEnableInheritance: true
+          canModerate: true
+          canPublicRead: true
+          canUpload: true
+          canView: true
+          isCertificationRequired: true
+          isCertifiedUser: true
+          ownerPrincipalId: 12345
+        restrictionInformation:
+          hasUnmetAccessRequirement: true
+          restrictionLevel: RESTRICTED_BY_TERMS_OF_USE
+        rootWikiId: ...
+        tableBundle:
+          columnModels:
+            - columnType: STRING
+              defaultValue: ...
+              enumValues:
+                - ...
+                - ...
+              facetType: enumeration
+              id: ...
+              maximumListLength: 100
+              maximumSize: 12345
+              name: ...
+            - columnType: USERID_LIST
+              defaultValue: ...
+              enumValues:
+                - ...
+                - ...
+              facetType: range
+              id: ...
+              maximumListLength: 100
+              maximumSize: 12345
+              name: ...
+          maxRowsPerPage: 12345
+        threadCount: 12345
+      properties:
+        accessControlList:
+          $ref: '#/components/schemas/AccessControlList'
+        annotations:
+          $ref: '#/components/schemas/Annotations_v2'
+        benefactorAcl:
+          $ref: '#/components/schemas/AccessControlList'
+        doiAssociation:
+          $ref: '#/components/schemas/DoiAssociation'
+        entity:
+          $ref: '#/components/schemas/Entity'
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        fileHandles:
+          description: FileHandles associated with this Entity
+          items:
+            $ref: '#/components/schemas/FileHandle'
+          type: array
+        fileName:
+          description: 'If this Entity is a FileEntity, this is its filename'
+          type: string
+        hasChildren:
+          description: Whether or not this Entity has children
+          type: boolean
+        path:
+          $ref: '#/components/schemas/EntityPath'
+        permissions:
+          $ref: '#/components/schemas/UserEntityPermissions'
+        restrictionInformation:
+          $ref: '#/components/schemas/RestrictionInformationResponse'
+        rootWikiId:
+          description: Id of the root Wiki associated with this Entity
+          type: string
+        tableBundle:
+          $ref: '#/components/schemas/TableBundle'
+        threadCount:
+          description: Number of disucssion threads that reference this Entity
+          type: number
+      title: EntityBundle
+      type: object
+    EntityBundleRequest:
+      description: Specifies what fields to include in an EntityBundle
+      example:
+        includeAccessControlList: true
+        includeAnnotations: true
+        includeBenefactorACL: true
+        includeDOIAssociation: true
+        includeEntity: true
+        includeEntityPath: true
+        includeFileHandles: true
+        includeFileName: true
+        includeHasChildren: true
+        includePermissions: true
+        includeRestrictionInformation: true
+        includeRootWikiId: true
+        includeTableBundle: true
+        includeThreadCount: true
+      properties:
+        includeAccessControlList:
+          description: Include the AccessControlList for this Entity
+          type: boolean
+        includeAnnotations:
+          description: Include Annotations associated with the Entity in the response.
+          type: boolean
+        includeBenefactorACL:
+          description: >-
+            Include the ACL of the Entity from which this Entity inherits its
+            AccessControlList
+          type: boolean
+        includeDOIAssociation:
+          description: Include DOIs associated with this Entity
+          type: boolean
+        includeEntity:
+          description: Include the Entity in the response.
+          type: boolean
+        includeEntityPath:
+          description: |
+            Include EntityHeaders for all Entities in this Entity's path
+          type: boolean
+        includeFileHandles:
+          description: Include all FileHandles associated with this Entity.
+          type: boolean
+        includeFileName:
+          description: 'If this Entity is a FileEntity, include its filename'
+          type: boolean
+        includeHasChildren:
+          description: Include boolean indicating whether this Entity has children
+          type: boolean
+        includePermissions:
+          description: Include permissions of the current user on the entity.
+          type: boolean
+        includeRestrictionInformation:
+          description: Include the RestrictionLevel of this Entity
+          type: boolean
+        includeRootWikiId:
+          description: Include the id of the root Wiki associated with this Entity
+          type: boolean
+        includeTableBundle:
+          description: 'If the Entity is a TableEntity, include Table specific metadata.'
+          type: boolean
+        includeThreadCount:
+          description: Include the number of discussion threads that mention this Entity
+          type: boolean
+      title: EntityBundleRequest
+      type: object
+    PaginatedColumnModels:
+      description: Paginated results of a ColumnModel
+      example:
+        results:
+          - columnType: LINK
+            defaultValue: ...
+            enumValues:
+              - ...
+              - ...
+            facetType: range
+            id: ...
+            maximumListLength: 100
+            maximumSize: 12345
+            name: ...
+          - columnType: SUBMISSIONID
+            defaultValue: ...
+            enumValues:
+              - ...
+              - ...
+            facetType: range
+            id: ...
+            maximumListLength: 100
+            maximumSize: 12345
+            name: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: The list of ColumnModels for this page
+          items:
+            $ref: '#/components/schemas/ColumnModel'
+          type: array
+        totalNumberOfResults:
+          description: The total number of results
+          type: integer
+      title: PaginatedColumnModels
+      type: object
+    DataType:
+      description: >
+        Enumeration of data types the describe the contents of objects like
+        Tables and Files.
+
+
+        * SENSITIVE_DATA: The default type assigned to all Tables and Files.
+        Sensitive_data indicates
+
+        that the contents 'might' contain Protected Health Data (PHI), data with
+        access restriction,
+
+        data with special terms-of-use, or data that should not be released to
+        the public.
+
+
+        * OPEN_DATA: Open_data is data that is safe to release to the public.
+        Open_data must not
+
+        include Protected Health Data (PHI), data with access restrictions, or
+        any type of terms-of-use.
+      enum:
+        - SENSITIVE_DATA
+        - OPEN_DATA
+      title: DataType
+      type: string
+    DataTypeResponse:
+      description: |
+        Response for an Object's DataType.
+      example:
+        dataType: OPEN_DATA
+        objectId: ...
+        objectType: FORM_GROUP
+        updatedBy: ...
+        updatedOn: ...
+      properties:
+        dataType:
+          $ref: '#/components/schemas/DataType'
+        objectId:
+          description: The ID of the object.
+          type: string
+        objectType:
+          $ref: '#/components/schemas/ObjectType'
+        updatedBy:
+          description: |
+            The user that last updated this object's DataType.
+          type: string
+        updatedOn:
+          description: |
+            The date this object's DataType was last updated.
+          type: string
+      title: DataTypeResponse
+      type: object
+    DockerCommit:
+      description: 'Metadata for an image in a Docker Repository: A digest and optional tag.'
+      example:
+        createdOn: ...
+        digest: ...
+        tag: ...
+      properties:
+        createdOn:
+          description: The date this commit was created.
+          type: string
+        digest:
+          description: 'A unique id for the commit, generated by hashing its content.'
+          type: string
+        tag:
+          description: A user supplied name for a specific version of a repository.
+          type: string
+      title: DockerCommit
+      type: object
+    TotalNumberOfResults:
+      description: >
+        Calculating the actual totalNumberOfResults is not longer supported.
+
+        Therefore, for each page, the totalNumberOfResults is estimated using
+        the current page,
+
+        limit, and offset. When the page size equals the limit, the
+        totalNumberOfResults will
+
+        be offset+pageSize+ 1. Otherwise, the totalNumberOfResults will be
+        offset+pageSize.
+      type: integer
+    PaginatedResultsOfDockerCommit:
+      description: JSON schema for Row POJO
+      example:
+        results:
+          - createdOn: ...
+            digest: ...
+            tag: ...
+          - createdOn: ...
+            digest: ...
+            tag: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: List of Docker commits.
+          items:
+            $ref: '#/components/schemas/DockerCommit'
+          type: array
+        totalNumberOfResults:
+          $ref: '#/components/schemas/TotalNumberOfResults'
+      title: PaginatedResultsOfDockerCommit
+      type: object
     SubmissionQuota:
       title: SubmissionQuota
       type: object
@@ -4581,109 +8732,1561 @@ components:
         totalNumberOfResults:
           description: Number of results per page
           type: integer
-    BooleanResult:
-      description: Boolean result
+    FileHandleResults:
+      description: List of file handles
       example:
-        result: true
+        list:
+          - concreteType: ...
+            contentMd5: ...
+            contentSize: 12345
+            contentType: ...
+            createdBy: ...
+            createdOn: ...
+            etag: ...
+            fileName: ...
+            id: ...
+            storageLocationId: 12345
+          - concreteType: ...
+            contentMd5: ...
+            contentSize: 12345
+            contentType: ...
+            createdBy: ...
+            createdOn: ...
+            etag: ...
+            fileName: ...
+            id: ...
+            storageLocationId: 12345
       properties:
-        result:
-          description: Boolean result
+        list:
+          description: List of file handles
+          items:
+            $ref: '#/components/schemas/FileHandle'
+          type: array
+      title: FileHandleResults
+      type: object
+    Used:
+      description: Interface for JSON schema for a Used record in Provenance
+      example:
+        concreteType: ...
+        wasExecuted: true
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        wasExecuted:
+          description: The enclosed entity was used and also executed in the Activity
           type: boolean
-      title: BooleanResult
+      title: Used
       type: object
-    ACCESS_TYPE:
-      title: ACCESS_TYPE
-      type: string
-      description: The enumeration of possible permission.
-      enum:
-        - CREATE
-        - READ
-        - UPDATE
-        - DELETE
-        - CHANGE_PERMISSIONS
-        - DOWNLOAD
-        - UPLOAD
-        - PARTICIPATE
-        - SUBMIT
-        - READ_PRIVATE_SUBMISSION
-        - UPDATE_SUBMISSION
-        - DELETE_SUBMISSION
-        - TEAM_MEMBERSHIP_UPDATE
-        - SEND_MESSAGE
-        - CHANGE_SETTINGS
-        - MODERATE
-    ResourceAccess:
-      title: ResourceAccess
-      type: object
-      description: JSON schema for a ResourceAccess POJO
-      example:
-        accessType:
-          - UPDATE
-          - DELETE_SUBMISSION
-        principalId: 12345
-      properties:
-        accessType:
-          description: A list of types of access granted to the given principal
-          type: array
-          items:
-            $ref: '#/components/schemas/ACCESS_TYPE'
-        principalId:
-          description: The id of the principal who is granted access
-          type: integer
-    AccessControlList:
-      title: AccessControlList
-      type: object
-      description: >-
-        Contains list of principals who can access the data with the allowed
-        types of access for each.
-      properties:
-        createdBy:
-          description: >-
-            UNUSED -- maintained only for backwards compatibility with archived
-            objects
-          type: string
-        creationDate:
-          description: Created Date
-          type: string
-        etag:
-          description: Synapse etag value
-          type: string
-        id:
-          description: The entity id
-          type: string
-        modifiedBy:
-          description: >-
-            UNUSED -- maintained only for backwards compatibility with archived
-            objects
-          type: string
-        modifiedOn:
-          description: >-
-            UNUSED -- maintained only for backwards compatibility with archived
-            objects
-          type: string
-        resourceAccess:
-          description: >-
-            The list of principals who can access the data with the allowed
-            types of access for each.
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceAccess'
+    Activity:
+      description: Interface for JSON schema for Activity POJO.
       example:
         createdBy: ...
-        creationDate: '12345'
+        createdOn: ...
+        description: ...
         etag: ...
         id: ...
         modifiedBy: ...
-        modifiedOn: '12345'
-        resourceAccess:
-          - accessType:
-              - UPDATE_SUBMISSION
-              - CHANGE_PERMISSIONS
-            principalId: 12345
-          - accessType:
-              - UPDATE
-              - SEND_MESSAGE
-            principalId: 12345
+        modifiedOn: ...
+        name: ...
+        used:
+          - concreteType: ...
+            wasExecuted: true
+          - concreteType: ...
+            wasExecuted: true
+      properties:
+        createdBy:
+          description: The user that created this object.
+          type: string
+        createdOn:
+          description: The date this object was created.
+          type: string
+        description:
+          description: A description of this Activity.
+          type: string
+        etag:
+          $ref: '#/components/schemas/Etag'
+        id:
+          description: The unique immutable ID
+          type: string
+        modifiedBy:
+          description: The user that last modified this object.
+          type: string
+        modifiedOn:
+          description: The date this object was last modified.
+          type: string
+        name:
+          description: A name for this Activity.
+          type: string
+        used:
+          description: The entities used by this Activity.
+          items:
+            $ref: '#/components/schemas/Used'
+          type: array
+      title: Activity
+      type: object
+    JSONObject:
+      description: Json Object
+      example: {}
+      title: JSONObject
+      type: object
+    MessageToUser:
+      description: JSON schema for a message to another user
+      example:
+        bcc: ...
+        cc: ...
+        createdBy: ...
+        createdOn: ...
+        fileHandleId: ...
+        id: ...
+        inReplyTo: ...
+        inReplyToRoot: ...
+        isNotificationMessage: true
+        notificationUnsubscribeEndpoint: ...
+        recipients:
+          - ...
+          - ...
+        subject: ...
+        to: ...
+        userProfileSettingEndpoint: ...
+        withProfileSettingLink: true
+        withUnsubscribeLink: true
+      properties:
+        bcc:
+          description: |
+            The email addresses in the 'bcc' field of the email message
+          type: string
+        cc:
+          description: |
+            The email addresses in the 'cc' field of the email message
+          type: string
+        createdBy:
+          description: The unique identifier of the sender of this message
+          type: string
+        createdOn:
+          description: When this message was created
+          type: string
+        fileHandleId:
+          description: >
+            The S3 file handle storing the body of this message. Note: The
+            file's mime type
+
+            should be 'text/plain' or 'text/html'. If no character encoding is
+            specified,
+
+            then UTF-8 is assumed.
+          type: string
+        id:
+          description: The unique identifier of the message or comment
+          type: string
+        inReplyTo:
+          description: The unique identifier of the message being replied to. Can be null
+          type: string
+        inReplyToRoot:
+          description: The unique identifier of the root message being replied to
+          type: string
+        isNotificationMessage:
+          description: >-
+            A notification message is sent from a noreply email address,
+            delivery failures are not sent back to the sender
+          type: boolean
+        notificationUnsubscribeEndpoint:
+          description: |
+            the portal prefix for one-click email unsubscription.
+            A signed, serialized token is appended to create the complete URL.
+            If omitted, the default endpoint will be used.
+          type: string
+        recipients:
+          description: The unique identifiers of the intended recipients of a message
+          items:
+            type: string
+          type: array
+        subject:
+          description: Topic of this message. Optional
+          type: string
+        to:
+          description: |
+            The email addresses in the 'to' field of the email message
+          type: string
+        userProfileSettingEndpoint:
+          description: >-
+            the portal link to user profile setting page. If omitted, the
+            default endpoint will be used.
+          type: string
+        withProfileSettingLink:
+          description: should the user profile setting link be included in the email?
+          type: boolean
+        withUnsubscribeLink:
+          description: should the unsubscribe link be included in the email?
+          type: boolean
+      title: MessageToUser
+      type: object
+    JsonSchemaVersionInfo:
+      description: Information about a single version of a JSON schema.
+      example:
+        $id: ...
+        createdBy: ...
+        createdOn: ...
+        jsonSHA256Hex: ...
+        organizationId: ...
+        organizationName: ...
+        schemaId: ...
+        schemaName: ...
+        semanticVersion: ...
+        versionId: ...
+      properties:
+        $id:
+          description: |
+            The full '$id' of this schema version
+          type: string
+        createdBy:
+          description: The ID of the user that created this JSON schema version.
+          type: string
+        createdOn:
+          description: The date this JSON schema version was created.
+          type: string
+        jsonSHA256Hex:
+          description: The SHA-256 hexadecimal hash of the UTF-8 encoded JSON schema.
+          type: string
+        organizationId:
+          description: The Synapse issued numeric identifier for the organization.
+          type: string
+        organizationName:
+          description: The name of the organization to which this schema belongs.
+          type: string
+        schemaId:
+          description: The Synapse issued numeric identifier for the schema.
+          type: string
+        schemaName:
+          description: The name of the this schema.
+          type: string
+        semanticVersion:
+          description: >
+            The semantic version label provided when this version was created.
+
+            Can be null if a semantic version was not provided when this version
+            was created.
+          type: string
+        versionId:
+          description: The Synapse issued numeric identifier for this version.
+          type: string
+      title: JsonSchemaVersionInfo
+      type: object
+    BoundObjectType:
+      description: Object types that can be bound to a JSON schema.
+      enum:
+        - entity
+      title: BoundObjectType
+      type: string
+    JsonSchemaObjectBinding:
+      description: Describes the binding of a JSON schema to an object
+      example:
+        createdBy: ...
+        createdOn: ...
+        jsonSchemaVersionInfo:
+          $id: ...
+          createdBy: ...
+          createdOn: ...
+          jsonSHA256Hex: ...
+          organizationId: ...
+          organizationName: ...
+          schemaId: ...
+          schemaName: ...
+          semanticVersion: ...
+          versionId: ...
+        objectId: 12345
+        objectType: entity
+      properties:
+        createdBy:
+          description: The ID of the user that bound this object to the schema.
+          type: string
+        createdOn:
+          description: The date this binding was created.
+          type: string
+        jsonSchemaVersionInfo:
+          $ref: '#/components/schemas/JsonSchemaVersionInfo'
+        objectId:
+          description: The numeric identifier of the object bound to a JSON schema
+          type: integer
+        objectType:
+          $ref: '#/components/schemas/BoundObjectType'
+      title: JsonSchemaObjectBinding
+      type: object
+    BindSchemaToEntityRequest:
+      description: Request to bind an Entity to a JSON schema.
+      example:
+        entityId: ...
+        schema$id: ...
+      properties:
+        entityId:
+          description: The ID of the the entity.
+          type: string
+        schema$id:
+          description: >
+            The $id of the JSON schema to bind to the entity.
+
+            Note: If the $id includes a semantic version then entity will be
+
+            bound to that specific version. If the $id excludes the semantic
+
+            version then the entity will be bound to the latest version of that
+            schema.
+          type: string
+      title: BindSchemaToEntityRequest
+      type: object
+    ObjectType_schema:
+      description: Type of Synapse objects that can have a JSON schema.
+      enum:
+        - entity
+      title: ObjectType
+      type: string
+    ValidationException:
+      description: >-
+        A recursive ValidationException that describes all schema violations for
+        an entire schema tree.
+      example:
+        causingExceptions:
+          - causingExceptions:
+              - {}
+              - {}
+            keyword: ...
+            message: ...
+            pointerToViolation: ...
+            schemaLocation: ...
+          - causingExceptions:
+              - {}
+              - {}
+            keyword: ...
+            message: ...
+            pointerToViolation: ...
+            schemaLocation: ...
+        keyword: ...
+        message: ...
+        pointerToViolation: ...
+        schemaLocation: ...
+      properties:
+        causingExceptions:
+          description: An array of sub-exceptions.
+          items:
+            $ref: '#/components/schemas/ValidationException'
+          type: array
+        keyword:
+          description: The JSON schema keyword which was violated.
+          type: string
+        message:
+          description: The description of the validation failure.
+          type: string
+        pointerToViolation:
+          description: >-
+            A JSON Pointer denoting the path from the input document root to its
+            fragment which caused the validation failure.
+          type: string
+        schemaLocation:
+          description: >-
+            A JSON Pointer denoting the path from the schema JSON root to the
+            violated keyword.
+          type: string
+      title: ValidationException
+      type: object
+    ValidationResults:
+      description: Results of validating an object against a schema
+      example:
+        allValidationMessages:
+          - ...
+          - ...
+        isValid: true
+        objectEtag: ...
+        objectId: ...
+        objectType: entity
+        schema$id: ...
+        validatedOn: ...
+        validationErrorMessage: ...
+        validationException:
+          causingExceptions:
+            - {}
+            - {}
+          keyword: ...
+          message: ...
+          pointerToViolation: ...
+          schemaLocation: ...
+      properties:
+        allValidationMessages:
+          description: >
+            If the object is not valid according to the schema, a the flat list
+
+            of error messages will be provided with one error message per
+            sub-schema.
+          items:
+            type: string
+          type: array
+        isValid:
+          description: True if the object is currently valid according to the schema.
+          type: boolean
+        objectEtag:
+          description: >
+            The etag of the object at the time of validation.
+
+            Note: If this etag does not match the current etag of the object
+            then
+
+            these validation results should be considered out of date.
+          type: string
+        objectId:
+          description: The identifier of the object that was validated.
+          type: string
+        objectType:
+          $ref: '#/components/schemas/ObjectType_schema'
+        schema$id:
+          description: The $id of the schema that the object was validated against.
+          type: string
+        validatedOn:
+          description: The date-time this object was validated
+          type: string
+        validationErrorMessage:
+          description: |
+            If the object is not valid according to the schema, a simple one
+            line error message will be provided.
+          type: string
+        validationException:
+          $ref: '#/components/schemas/ValidationException'
+      title: ValidationResults
+      type: object
+    ListValidationResultsRequest:
+      description: >-
+        Request to get a single page of JSON schema validation results for a
+        given Entity container.
+      example:
+        containerId: ...
+        nextPageToken: ...
+      properties:
+        containerId:
+          description: The ID of the Entity container to get.
+          type: string
+        nextPageToken:
+          description: >
+            Forward the returned 'nextPageToken' to get the next page of
+            results.
+          type: string
+      title: ListValidationResultsRequest
+      type: object
+    ListValidationResultsResponse:
+      description: A single page of the JSON schema validation results.
+      example:
+        nextPageToken: ...
+        page:
+          - allValidationMessages:
+              - ...
+              - ...
+            isValid: true
+            objectEtag: ...
+            objectId: ...
+            objectType: entity
+            schema$id: ...
+            validatedOn: ...
+            validationErrorMessage: ...
+            validationException:
+              causingExceptions:
+                - {}
+                - {}
+              keyword: ...
+              message: ...
+              pointerToViolation: ...
+              schemaLocation: ...
+          - allValidationMessages:
+              - ...
+              - ...
+            isValid: true
+            objectEtag: ...
+            objectId: ...
+            objectType: entity
+            schema$id: ...
+            validatedOn: ...
+            validationErrorMessage: ...
+            validationException:
+              causingExceptions:
+                - {}
+                - {}
+              keyword: ...
+              message: ...
+              pointerToViolation: ...
+              schemaLocation: ...
+      properties:
+        nextPageToken:
+          description: Forward this token to get the next page of results.
+          type: string
+        page:
+          description: Page of results
+          items:
+            $ref: '#/components/schemas/ValidationResults'
+          type: array
+      title: ListValidationResultsResponse
+      type: object
+    ValidationSummaryStatistics:
+      description: >-
+        Summary statistics for the JSON schema validation results for the
+        children of an Entity container (Project or Folder)
+      example:
+        containerId: ...
+        generatedOn: ...
+        numberOfInvalidChildren: 12345
+        numberOfUnknownChildren: 12345
+        numberOfValidChildren: 12345
+        totalNumberOfChildren: 12345
+      properties:
+        containerId:
+          description: The ID of the container Entity.
+          type: string
+        generatedOn:
+          description: The date-time when the statistics were calculated.
+          type: string
+        numberOfInvalidChildren:
+          description: >-
+            The total number of children that are invalid according to their
+            bound JSON schema.
+          type: integer
+        numberOfUnknownChildren:
+          description: >-
+            The total number of children that do not have validation results.
+            This can occur when a child does not have a bound JSON schema or
+            when a child has not been validated yet.
+          type: integer
+        numberOfValidChildren:
+          description: >-
+            The total number of children that are valid according to their bound
+            JSON schema.
+          type: integer
+        totalNumberOfChildren:
+          description: The total number of children in the container.
+          type: integer
+      title: ValidationSummaryStatistics
+      type: object
+    StsCredentials:
+      description: Temporary AWS credentials vended by STS (Security Token Service).
+      example:
+        accessKeyId: ...
+        baseKey: ...
+        bucket: ...
+        expiration: ...
+        secretAccessKey: ...
+        sessionToken: ...
+      properties:
+        accessKeyId:
+          description: AWS access key ID.
+          type: string
+        baseKey:
+          description: The S3 key prefix that these credentials have access to.
+          type: string
+        bucket:
+          description: The bucket that these credentials have access to.
+          type: string
+        expiration:
+          description: The date-time that these credentials expire.
+          type: string
+        secretAccessKey:
+          description: AWS secret access key.
+          type: string
+        sessionToken:
+          description: AWS temporary session token.
+          type: string
+      title: StsCredentials
+      type: object
+    SelectColumn:
+      description: A column model contains the metadata of a single column of a TableEntity
+      example:
+        columnType: BOOLEAN
+        id: ...
+        name: ...
+      properties:
+        columnType:
+          $ref: '#/components/schemas/ColumnType'
+        id:
+          description: >-
+            The optional ID of the select column, if this is a direct column
+            selected
+          type: string
+        name:
+          description: The required display name of the column
+          type: string
+      title: SelectColumn
+      type: object
+    DownloadFromTableResult:
+      description: The response body of an asynchronous CSV table download job.
+      example:
+        concreteType: ...
+        etag: ...
+        headers:
+          - columnType: LINK
+            id: ...
+            name: ...
+          - columnType: STRING_LIST
+            id: ...
+            name: ...
+        resultsFileHandleId: ...
+        tableId: ...
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        etag:
+          description: >
+            Any RowSet returned from Synapse will contain the current etag of
+            the change set.
+
+            To update any rows from a RowSet the etag must be provided with the
+            POST.
+          type: string
+        headers:
+          description: The list of SelectColumns that describes the rows of this set.
+          items:
+            $ref: '#/components/schemas/SelectColumn'
+          type: array
+        resultsFileHandleId:
+          description: >
+            The resulting file handle ID can be used to download the CSV file
+
+            created by this job. The file will contain all of the data requested
+            in the
+
+            query SQL provided when the job was started.
+          type: string
+        tableId:
+          description: >-
+            The ID of the table identified in the from clause of the table
+            query.
+          type: string
+      title: DownloadFromTableResult
+      type: object
+    QueryFilter:
+      description: Query filter
+      example: {}
+      title: QueryFilter
+      type: object
+    FacetColumnRequest:
+      description: >-
+        A set of values that have been selected for filtering in a faceted
+        column
+      example:
+        columnName: ...
+        concreteType: ...
+      properties:
+        columnName:
+          description: The name of the faceted column
+          type: string
+        concreteType:
+          description: Conrete Type
+          type: string
+      title: FacetColumnRequest
+      type: object
+    SortDirection:
+      description: >-
+        Optional sort direction. Default is the default mysql sort direction for
+        that type.
+      enum:
+        - ASC
+        - DESC
+      title: SortDirection
+      type: string
+    SortItem:
+      description: Sort schema
+      example:
+        column: ...
+        direction: ASC
+      properties:
+        column:
+          description: The column to sort on.
+          type: string
+        direction:
+          $ref: '#/components/schemas/SortDirection'
+      title: SortItem
+      type: object
+    Query:
+      description: Query
+      example:
+        additionalFilters:
+          - {}
+          - {}
+        includeEntityEtag: true
+        limit: 12345
+        offset: 12345
+        selectedFacets:
+          - columnName: ...
+            concreteType: ...
+          - columnName: ...
+            concreteType: ...
+        sort:
+          - column: ...
+            direction: ASC
+          - column: ...
+            direction: DESC
+        sql: ...
+      properties:
+        additionalFilters:
+          description: >
+            Appends additional filters to the SQL query. These are applied
+            before facets.
+
+            Filters within the list have an AND relationship. If a WHERE clause
+            already
+
+            exists on the SQL query or facets are selected, it will also be
+            ANDed with
+
+            the query generated by these additional filters.
+          items:
+            $ref: '#/components/schemas/QueryFilter'
+          type: array
+        includeEntityEtag:
+          description: >
+            Optional, default false. When true, a query results against views
+            will
+
+            include the Etag of each entity in the results. Note: The etag is
+            necessary
+
+            to update Entities in the view.
+          type: boolean
+        limit:
+          description: The optional limit to the results
+          type: integer
+        offset:
+          description: The optional offset into the results
+          type: integer
+        selectedFacets:
+          description: The selected facet filters.
+          items:
+            $ref: '#/components/schemas/FacetColumnRequest'
+          type: array
+        sort:
+          description: To sort values
+          items:
+            $ref: '#/components/schemas/SortItem'
+          type: array
+        sql:
+          description: The SQL query string.
+          type: string
+      title: Query
+      type: object
+    CsvTableDescriptor:
+      description: The description of a csv for upload or download.
+      example:
+        escapeCharacter: ...
+        isFirstLineHeader: true
+        lineEnd: ...
+        quoteCharacter: ...
+        separator: ...
+      properties:
+        escapeCharacter:
+          description: >
+            The escape character to be used for escaping a separator or quote in
+            the
+
+            resulting file. The default character '\\' will be used if this is
+            not
+
+            provided by the caller.
+          type: string
+        isFirstLineHeader:
+          description: |
+            Is the first line a header? The default value of 'true' will
+            be used if this is not provided by the caller.
+          type: boolean
+        lineEnd:
+          description: >
+            The line feed terminator to be used for the resulting file.
+
+            The default value of '\n' will be used if this is not provided by
+            the caller.
+          type: string
+        quoteCharacter:
+          description: >
+            The character to be used for quoted elements in the resulting file.
+
+            The default character '"' will be used if this is not provided by
+            the caller.
+          type: string
+        separator:
+          description: >
+            The delimiter to be used for separating entries in the resulting
+            file.
+
+            The default character ',' will be used if this is not provided by
+            the caller.
+
+            For tab-separated values use '\t'
+          type: string
+      title: CsvTableDescriptor
+      type: object
+    DownloadFromTableRequest:
+      allOf:
+        - $ref: '#/components/schemas/Query'
+        - properties:
+            concreteType:
+              description: Concrete Type
+              type: string
+            csvTableDescriptor:
+              $ref: '#/components/schemas/CsvTableDescriptor'
+            entityId:
+              description: Entity Id
+              type: string
+            includeRowIdAndRowVersion:
+              description: |
+                Should the first two columns contain the row ID and row version?
+                The default value is 'true'.
+              type: boolean
+              default: true
+            writeHeader:
+              description: >
+                Should the first line contain the columns names as a header in
+                the resulting file?
+
+                Set to 'true' to include the headers else, 'false'. The default
+                value is 'true'.
+              type: boolean
+              default: true
+          type: object
+      description: A CSV table download request.
+      title: DownloadFromTableRequest
+    RowReference:
+      description: Reference for a single Row of a TableEntity
+      example:
+        rowId: 12345
+        versionNumber: 12345
+      properties:
+        rowId:
+          description: The immutable ID issued to a new row.
+          type: integer
+        versionNumber:
+          description: >-
+            The version number of this row. Each row version is immutable, so
+            when a row is updated a new version is created.
+          type: integer
+      title: RowReference
+      type: object
+    RowReferenceSet:
+      description: Represents a set of RowReferences of a TableEntity
+      example:
+        etag: ...
+        headers:
+          - columnType: DATE
+            id: ...
+            name: ...
+          - columnType: USERID
+            id: ...
+            name: ...
+        rows:
+          - rowId: 12345
+            versionNumber: 12345
+          - rowId: 12345
+            versionNumber: 12345
+        tableId: ...
+      properties:
+        etag:
+          description: >-
+            When a RowReferenceSet is returned from a table update, this will be
+            set to the current etag of the table.
+          type: string
+        headers:
+          description: The list of ColumnModels ID that describes the rows of this set.
+          items:
+            $ref: '#/components/schemas/SelectColumn'
+          type: array
+        rows:
+          description: >-
+            Each RowReference of this list refers to a single version of a
+            single row of a TableEntity.
+          items:
+            $ref: '#/components/schemas/RowReference'
+          type: array
+        tableId:
+          description: The ID of the TableEntity than owns these rows
+          type: string
+      title: RowReferenceSet
+      type: object
+    TableFileHandleResults:
+      description: JSON schema for TableFileHandleResults.
+      example:
+        headers:
+          - columnType: EVALUATIONID
+            id: ...
+            name: ...
+          - columnType: DATE_LIST
+            id: ...
+            name: ...
+        rows:
+          - list:
+              - concreteType: ...
+                contentMd5: ...
+                contentSize: 12345
+                contentType: ...
+                createdBy: ...
+                createdOn: ...
+                etag: ...
+                fileName: ...
+                id: ...
+                storageLocationId: 12345
+              - concreteType: ...
+                contentMd5: ...
+                contentSize: 12345
+                contentType: ...
+                createdBy: ...
+                createdOn: ...
+                etag: ...
+                fileName: ...
+                id: ...
+                storageLocationId: 12345
+          - list:
+              - concreteType: ...
+                contentMd5: ...
+                contentSize: 12345
+                contentType: ...
+                createdBy: ...
+                createdOn: ...
+                etag: ...
+                fileName: ...
+                id: ...
+                storageLocationId: 12345
+              - concreteType: ...
+                contentMd5: ...
+                contentSize: 12345
+                contentType: ...
+                createdBy: ...
+                createdOn: ...
+                etag: ...
+                fileName: ...
+                id: ...
+                storageLocationId: 12345
+        tableId: ...
+      properties:
+        headers:
+          description: The list of ColumnModels ID that describes the rows of this set.
+          items:
+            $ref: '#/components/schemas/SelectColumn'
+          type: array
+        rows:
+          description: For each row a list of file handles for each requested column
+          items:
+            $ref: '#/components/schemas/FileHandleResults'
+          type: array
+        tableId:
+          description: The ID of the TableEntity than owns these rows
+          type: string
+      title: TableFileHandleResults
+      type: object
+    FacetColumnResult:
+      description: Resulting information about a faceted column
+      example:
+        columnName: ...
+        concreteType: ...
+        facetType: enumeration
+      properties:
+        columnName:
+          description: The name of the faceted column
+          type: string
+        concreteType:
+          description: Concrete Type
+          type: string
+        facetType:
+          $ref: '#/components/schemas/FacetType'
+      title: FacetColumnResult
+      type: object
+    QueryNextPageToken:
+      description: Next page token for query
+      example:
+        concreteType: ...
+        entityId: ...
+        token: ...
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        entityId:
+          description: The ID of an Entity.
+          type: string
+        token:
+          description: The token for the next page.
+          type: string
+      title: QueryNextPageToken
+      type: object
+    Row_table:
+      description: Represents a single row of a TableEntity
+      example:
+        etag: ...
+        rowId: 12345
+        values:
+          - ...
+          - ...
+        versionNumber: 12345
+      properties:
+        etag:
+          description: >-
+            For queries against EntityViews with query.includeEtag=true, this
+            field will contain the etag of the entity. Will be null for all
+            other cases.
+          type: string
+        rowId:
+          description: The immutable ID issued to a new row.
+          type: integer
+        values:
+          description: >-
+            The values for each column of this row. To delete a row, set this to
+            an empty list: []
+          items:
+            type: string
+          type: array
+        versionNumber:
+          description: >-
+            The version number of this row. Each row version is immutable, so
+            when a row is updated a new version is created.
+          type: integer
+      title: Row
+      type: object
+    RowSet:
+      description: Represents a set of row of a TableEntity
+      example:
+        concreteType: ...
+        etag: ...
+        headers:
+          - columnType: FILEHANDLEID
+            id: ...
+            name: ...
+          - columnType: SUBMISSIONID
+            id: ...
+            name: ...
+        rows:
+          - etag: ...
+            rowId: 12345
+            values:
+              - ...
+              - ...
+            versionNumber: 12345
+          - etag: ...
+            rowId: 12345
+            values:
+              - ...
+              - ...
+            versionNumber: 12345
+        tableId: ...
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        etag:
+          description: >-
+            Any RowSet returned from Synapse will contain the current etag of
+            the change set. To update any rows from a RowSet the etag must be
+            provided with the POST.
+          type: string
+        headers:
+          description: The list of SelectColumns that describes the rows of this set.
+          items:
+            $ref: '#/components/schemas/SelectColumn'
+          type: array
+        rows:
+          description: >-
+            The Rows of this set. The index of each row value aligns with the
+            index of each header.
+          items:
+            $ref: '#/components/schemas/Row_table'
+          type: array
+        tableId:
+          description: The ID of the TableEntity than owns these rows
+          type: string
+      title: RowSet
+      type: object
+    QueryResult:
+      description: A page of query result.
+      example:
+        concreteType: ...
+        nextPageToken:
+          concreteType: ...
+          entityId: ...
+          token: ...
+        queryResults:
+          concreteType: ...
+          etag: ...
+          headers:
+            - columnType: BOOLEAN_LIST
+              id: ...
+              name: ...
+            - columnType: USERID_LIST
+              id: ...
+              name: ...
+          rows:
+            - etag: ...
+              rowId: 12345
+              values:
+                - ...
+                - ...
+              versionNumber: 12345
+            - etag: ...
+              rowId: 12345
+              values:
+                - ...
+                - ...
+              versionNumber: 12345
+          tableId: ...
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        nextPageToken:
+          $ref: '#/components/schemas/QueryNextPageToken'
+        queryResults:
+          $ref: '#/components/schemas/RowSet'
+      title: QueryResult
+      type: object
+    SumFileSizes:
+      description: |
+        The sum of the file size for all files in the given view query.
+        Use mask = 0x40 to include in the bundle.
+      example:
+        greaterThan: true
+        sumFileSizesBytes: 12345
+      properties:
+        greaterThan:
+          description: >
+            When true, the actual sum of the files sizes is greater than the
+            value
+
+            provided with 'sumFileSizesBytes'. When false, the actual sum of the
+
+            files sizes is equlas the value provided with 'sumFileSizesBytes'
+          type: boolean
+        sumFileSizesBytes:
+          description: The sum of the file size in bytes.
+          type: integer
+      title: SumFileSizes
+      type: object
+    QueryResultBundle:
+      description: A bundle of information about a query result.
+      example:
+        columnModels:
+          - columnType: DATE_LIST
+            defaultValue: ...
+            enumValues:
+              - ...
+              - ...
+            facetType: enumeration
+            id: ...
+            maximumListLength: 100
+            maximumSize: 12345
+            name: ...
+          - columnType: DOUBLE
+            defaultValue: ...
+            enumValues:
+              - ...
+              - ...
+            facetType: range
+            id: ...
+            maximumListLength: 100
+            maximumSize: 100
+            name: ...
+        concreteType: ...
+        facets:
+          - columnName: ...
+            concreteType: ...
+            facetType: enumeration
+          - columnName: ...
+            concreteType: ...
+            facetType: enumeration
+        lastUpdatedOn: ...
+        maxRowsPerPage: 12345
+        queryCount: 12345
+        queryResult:
+          concreteType: ...
+          nextPageToken:
+            concreteType: ...
+            entityId: ...
+            token: ...
+          queryResults:
+            concreteType: ...
+            etag: ...
+            headers:
+              - {}
+              - {}
+            rows:
+              - {}
+              - {}
+            tableId: ...
+        selectColumns:
+          - columnType: USERID_LIST
+            id: ...
+            name: ...
+          - columnType: EVALUATIONID
+            id: ...
+            name: ...
+        sumFileSizes:
+          greaterThan: true
+          sumFileSizesBytes: 12345
+      properties:
+        columnModels:
+          description: >-
+            The list of ColumnModels for the table. Use mask = 0x10 to include
+            in the bundle.
+          items:
+            $ref: '#/components/schemas/ColumnModel'
+          type: array
+        concreteType:
+          description: Concrete Type
+          type: string
+        facets:
+          description: The list of facets for the search results
+          items:
+            $ref: '#/components/schemas/FacetColumnResult'
+          type: array
+        lastUpdatedOn:
+          description: >
+            The date-time when this table/view was last updated.
+
+            Note: Since views are eventually consistent a view might still be
+
+            out-of-date even if it was recently updated. Use mask = 0x80 to
+            include in the bundle.
+          type: string
+        maxRowsPerPage:
+          description: >-
+            The maximum number of rows that can be retrieved in a single call.
+            This is a function of the columns that are selected in the query.
+            Use mask = 0x8 to include in the bundle.
+          type: integer
+        queryCount:
+          description: >-
+            The total number of rows that match the query. Use mask = 0x2 to
+            include in the bundle.
+          type: integer
+        queryResult:
+          $ref: '#/components/schemas/QueryResult'
+        selectColumns:
+          description: >-
+            The list of SelectColumns from the select clause. Use mask = 0x4 to
+            include in the bundle.
+          items:
+            $ref: '#/components/schemas/SelectColumn'
+          type: array
+        sumFileSizes:
+          $ref: '#/components/schemas/SumFileSizes'
+      title: QueryResultBundle
+      type: object
+    QueryBundleRequest:
+      description: Query Bundle Request
+      example:
+        concreteType: ...
+        entityId: ...
+        partMask: 1
+        query:
+          additionalFilters:
+            - {}
+            - {}
+          includeEntityEtag: true
+          limit: 12345
+          offset: 12345
+          selectedFacets:
+            - columnName: ...
+              concreteType: ...
+            - columnName: ...
+              concreteType: ...
+          sort:
+            - column: ...
+              direction: DESC
+            - column: ...
+              direction: ASC
+          sql: ...
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        entityId:
+          description: Entity Id
+          type: string
+        partMask:
+          description: >
+            Optional, default all. The 'partsMask' is an integer mask that can
+            be combined into to request any desired part.
+
+            The mask is defined as follows:
+
+            * Query Results (queryResults) = 0x1
+
+            * Query Count (queryCount) = 0x2
+
+            * Select Columns (selectColumns) = 0x4
+
+            * Max Rows Per Page (maxRowsPerPage) = 0x8
+
+            * The Table Columns (columnModels) = 0x10
+
+            * Facet statistics for each faceted column (facetStatistics) = 0x20
+
+            * The sum of the file sizes (sumFileSizesBytes) = 0x40
+          type: integer
+        query:
+          $ref: '#/components/schemas/Query'
+      title: QueryBundleRequest
+      type: object
+    SnapshotRequest:
+      description: >
+        Request to create a new snapshot of a table or view. The provided
+        comment,
+
+        label, and activity ID will be applied to the current version thereby
+        creating
+
+        a snapshot and locking the current version. After the snapshot is
+        created a
+
+        new version will be started with an 'in-progress' label.
+      example:
+        snapshotActivityId: ...
+        snapshotComment: ...
+        snapshotLabel: ...
+      properties:
+        snapshotActivityId:
+          description: >
+            Optional. If createNewSnapshot=true, the Activity ID to be applied
+            to the
+
+            snapshot version. Null by default
+          type: string
+        snapshotComment:
+          description: >
+            Optional. If createNewSnapshot=true, the comment to be applied to
+            the
+
+            snapshot version. Null by default
+          type: string
+        snapshotLabel:
+          description: |
+            Optional. If createNewSnapshot=true, the label to be applied to the
+            snapshot version. Null by default
+          type: string
+      title: SnapshotRequest
+      type: object
+    SnapshotResponse:
+      description: Response to creating a snapshot of a table of view.
+      example:
+        snapshotVersionNumber: 12345
+      properties:
+        snapshotVersionNumber:
+          description: The version number of the resulting snapshot.
+          type: integer
+      title: SnapshotResponse
+      type: object
+    TableUpdateResponse:
+      description: Abstraction for a response to update a table.
+      example:
+        concreteType: ...
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+      title: TableUpdateResponse
+      type: object
+    TableUpdateTransactionResponse:
+      description: An AsynchronousResponseBody returned from a table update transaction.
+      example:
+        concreteType: ...
+        results:
+          - concreteType: ...
+          - concreteType: ...
+        snapshotVersionNumber: 12345
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        results:
+          description: >-
+            List of responses. There will be one response for each request in
+            the transaction.
+          items:
+            $ref: '#/components/schemas/TableUpdateResponse'
+          type: array
+        snapshotVersionNumber:
+          description: >-
+            The version number of the snapshot. Returned only, if a new snapshot
+            was requested.
+          type: number
+      title: TableUpdateTransactionResponse
+      type: object
+    TableUpdateRequest:
+      description: Abstraction for a request to update a table.
+      example:
+        concreteType: ...
+        entityId: ...
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        entityId:
+          description: Entity Id
+          type: string
+      title: TableUpdateRequest
+      type: object
+    TableUpdateTransactionRequest:
+      description: >
+        An AsynchronousRequestBody to used make multiple changes to a table as a
+        single 'transaction'.
+
+        All changes will either succeed or fail as a unit.
+      example:
+        changes:
+          - concreteType: ...
+            entityId: ...
+          - concreteType: ...
+            entityId: ...
+        concreteType: ...
+        createSnapshot: true
+        entityId: ...
+        snapshotOptions:
+          snapshotActivityId: ...
+          snapshotComment: ...
+          snapshotLabel: ...
+      properties:
+        changes:
+          description: List of changes that describes schema and/or row changes to a table.
+          items:
+            $ref: '#/components/schemas/TableUpdateRequest'
+          type: array
+        concreteType:
+          description: Concrete Type
+          type: string
+        createSnapshot:
+          description: >
+            When set to 'true', a snapshot of the table will be created after
+            the change
+
+            from this transaction request are applied to the table.
+          type: boolean
+        entityId:
+          description: Entity Id
+          type: string
+        snapshotOptions:
+          $ref: '#/components/schemas/SnapshotRequest'
+      title: TableUpdateTransactionRequest
+      type: object
+    DiscussionThreadBundle:
+      description: The Thread model object represents a single Thread.
+      example:
+        activeAuthors:
+          - ...
+          - ...
+        createdBy: ...
+        createdOn: ...
+        etag: ...
+        forumId: ...
+        id: ...
+        isDeleted: true
+        isEdited: true
+        isPinned: true
+        lastActivity: ...
+        messageKey: ...
+        modifiedOn: ...
+        numberOfReplies: 12345
+        numberOfViews: 12345
+        projectId: ...
+        title: ...
+      properties:
+        activeAuthors:
+          description: The list of userId whose most active on this Thread
+          items:
+            type: string
+          type: array
+        createdBy:
+          description: The id of the user that created this Thread
+          type: string
+        createdOn:
+          description: The timestamp when this Thread was created
+          type: string
+        etag:
+          $ref: '#/components/schemas/Etag'
+        forumId:
+          description: The ID of the forum this Thread belongs to
+          type: string
+        id:
+          description: The ID of the Thread
+          type: string
+        isDeleted:
+          description: Has this Thread been deleted?
+          type: boolean
+        isEdited:
+          description: Has the author edited this Thread?
+          type: boolean
+        isPinned:
+          description: Has this Thread been pinned?
+          type: boolean
+        lastActivity:
+          description: The timestamp when the last activity occurs on this Thread
+          type: string
+        messageKey:
+          description: The S3 key where the actual message stored
+          type: string
+        modifiedOn:
+          description: The timestamp when this Thread was last modified
+          type: string
+        numberOfReplies:
+          description: The number of replies to this thread
+          type: integer
+        numberOfViews:
+          description: The number of unique users who has viewed this thread
+          type: integer
+        projectId:
+          description: The ID of the project this Thread belongs to
+          type: string
+        title:
+          description: The title of the Thread
+          type: string
+      title: DiscussionThreadBundle
+      type: object
+    PaginatedResultsOfDiscussionThreadBundle:
+      description: Page of Discussion Thread Bundles
+      example:
+        results:
+          - activeAuthors:
+              - ...
+              - ...
+            createdBy: ...
+            createdOn: ...
+            etag: ...
+            forumId: ...
+            id: ...
+            isDeleted: true
+            isEdited: true
+            isPinned: true
+            lastActivity: ...
+            messageKey: ...
+            modifiedOn: ...
+            numberOfReplies: 12345
+            numberOfViews: 12345
+            projectId: ...
+            title: ...
+          - activeAuthors:
+              - ...
+              - ...
+            createdBy: ...
+            createdOn: ...
+            etag: ...
+            forumId: ...
+            id: ...
+            isDeleted: true
+            isEdited: true
+            isPinned: true
+            lastActivity: ...
+            messageKey: ...
+            modifiedOn: ...
+            numberOfReplies: 12345
+            numberOfViews: 12345
+            projectId: ...
+            title: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: Page of discussion thread bundles
+          items:
+            $ref: '#/components/schemas/DiscussionThreadBundle'
+          type: array
+        totalNumberOfResults:
+          $ref: '#/components/schemas/TotalNumberOfResults'
+      title: PaginatedResultsOfDiscussionThreadBundle
+      type: object
     EvaluationRoundLimitType:
       title: EvaluationRoundLimitType
       type: string
@@ -4914,79 +10517,6 @@ components:
         - ACCEPTED
       title: SubmissionStatusEnum
       type: string
-    AnnotationsValueType:
-      title: AnnotationsValueType
-      type: string
-      description: |
-        describes the type of a AnnotationV2's value
-      enum:
-        - STRING
-        - DOUBLE
-        - LONG
-        - TIMESTAMP_MS
-    AnnotationsValue:
-      description: |
-        Contains a AnnotationV2's value and its type
-      example:
-        type: DOUBLE
-        value:
-          - ...
-          - ...
-      properties:
-        type:
-          $ref: '#/components/schemas/AnnotationsValueType'
-        value:
-          description: >
-            List of values as strings. Clients should use the "type" field to
-            determine how to
-
-            interpret the strings. Single values Annotations are represented as
-            a list of size 1,
-
-            and multiple values size > 1. Empty list or null is not allowed
-          items:
-            type: string
-          type: array
-      title: AnnotationsValue
-      type: object
-    Annotations_v2:
-      description: >-
-        Annotations are additional key-value pair metadata that are associated
-        with an object.
-      example:
-        annotations:
-          property1:
-            type: STRING
-            value:
-              - ...
-              - ...
-          property2:
-            type: STRING
-            value:
-              - ...
-              - ...
-        etag: ...
-        id: ...
-      properties:
-        annotations:
-          additionalProperties:
-            $ref: '#/components/schemas/AnnotationsValue'
-          description: >-
-            Additional metadata associated with the object. The key is the name
-            of your desired annotations. The value is an object containing a
-            list of string values (use empty list to represent no values for
-            key) and the value type associated with all values in the list
-          type: object
-        etag:
-          description: >-
-            Etag of the object to which this annotation belongs. To update an
-            AnnotationV2, this field must match the current etag on the object.
-          type: string
-        id:
-          description: ID of the object to which this annotation belongs
-          type: string
-      title: Annotations
-      type: object
     SubmissionStatus_model:
       description: >
         A SubmissionStatus is a secondary, mutable object associated with a
@@ -5735,19 +11265,6 @@ components:
           type: string
       title: Team
       type: object
-    TotalNumberOfResults:
-      description: >
-        Calculating the actual totalNumberOfResults is not longer supported.
-
-        Therefore, for each page, the totalNumberOfResults is estimated using
-        the current page,
-
-        limit, and offset. When the page size equals the limit, the
-        totalNumberOfResults will
-
-        be offset+pageSize+ 1. Otherwise, the totalNumberOfResults will be
-        offset+pageSize.
-      type: integer
     PaginatedResultsOfTeam:
       description: List of Teams
       example:
@@ -5782,182 +11299,6 @@ components:
         totalNumberOfResults:
           $ref: '#/components/schemas/TotalNumberOfResults'
       title: PaginatedResultsOfTeam
-      type: object
-    RestrictableObjectType:
-      description: >-
-        JSON enum for the types of objects which can be restricted by an
-        AccessRequirement.
-      enum:
-        - ENTITY
-        - EVALUATION
-        - TEAM
-      title: RestrictableObjectType
-      type: string
-    RestrictableObjectDescriptor:
-      description: Restrictable object descriptor
-      example:
-        id: ...
-        type: EVALUATION
-      properties:
-        id:
-          description: Id
-          type: string
-        type:
-          $ref: '#/components/schemas/RestrictableObjectType'
-      title: RestrictableObjectDescriptor
-      type: object
-    AccessRequirement:
-      description: >
-        Interface for JSON schema for AccessRequirement. The Access Requirement
-        mechanism is
-
-        distinct from the access control list in that it is controlled not by
-        the entity
-
-        owner but by a separate authority: Access Requirements are created and
-        maintained
-
-        by the Synapse Access and Compliance Team (ACT). ACTAccessRequirements
-        can only be
-
-        approved by the ACT. Self-sign Access Requirements can be approved by
-        the user
-
-        desiring access, but said user first has to meet 'terms of use'
-        associated with the requirement.
-      example:
-        accessType: SUBMIT
-        concreteType: ...
-        createdBy: ...
-        createdOn: ...
-        description: ...
-        etag: ...
-        id: 12345
-        modifiedBy: ...
-        modifiedOn: ...
-        subjectIds:
-          - id: ...
-            type: EVALUATION
-          - id: ...
-            type: TEAM
-        versionNumber: 12345
-      properties:
-        accessType:
-          $ref: '#/components/schemas/ACCESS_TYPE'
-        concreteType:
-          description: >-
-            Indicates which type of AccessRequirement this object represents.
-            Provided by the system, the user may not set this field.
-          type: string
-        createdBy:
-          description: >-
-            The user that created this object. Provided by the system, the user
-            may not set this field.
-          type: string
-        createdOn:
-          description: >-
-            The date this object was created. Provided by the system, the user
-            may not set this field.
-          type: string
-        description:
-          description: Short optional description for the AR. Limited to 50 characters.
-          type: string
-        etag:
-          description: >
-            Synapse employs an Optimistic Concurrency Control (OCC) scheme to
-            handle concurrent
-
-            updates. Since the E-Tag changes every time an entity is updated it
-            is used to
-
-            detect when a client's current representation of an object is
-            out-of-date.
-          type: string
-        id:
-          description: >-
-            The unique immutable ID. Provided by the system, the user may not
-            set this field.
-          type: number
-        modifiedBy:
-          description: >-
-            The user that last modified this object. Provided by the system, the
-            user may not set this field.
-          type: string
-        modifiedOn:
-          description: >-
-            The date this object was last modified. Provided by the system, the
-            user may not set this field.
-          type: string
-        subjectIds:
-          description: >-
-            The IDs of the items controlled by this Access Requirement. Required
-            when creating or updating.
-          items:
-            $ref: '#/components/schemas/RestrictableObjectDescriptor'
-          type: array
-        versionNumber:
-          description: The version number issued to this version on the object.
-          type: integer
-      title: AccessRequirement
-      type: object
-    PaginatedResultsOfAccessRequirement:
-      description: >-
-        Retrieve paginated list of ALL Access Requirements associated with a
-        Team.
-      example:
-        results:
-          - accessType: READ
-            concreteType: ...
-            createdBy: ...
-            createdOn: ...
-            description: ...
-            etag: ...
-            id: 12345
-            modifiedBy: ...
-            modifiedOn: ...
-            subjectIds:
-              - id: ...
-                type: EVALUATION
-              - id: ...
-                type: TEAM
-            versionNumber: 12345
-          - accessType: UPLOAD
-            concreteType: ...
-            createdBy: ...
-            createdOn: ...
-            description: ...
-            etag: ...
-            id: 12345
-            modifiedBy: ...
-            modifiedOn: ...
-            subjectIds:
-              - id: ...
-                type: ENTITY
-              - id: ...
-                type: TEAM
-            versionNumber: 12345
-        totalNumberOfResults: 12345
-      properties:
-        results:
-          description: The the id of the entity to which this reference refers
-          items:
-            $ref: '#/components/schemas/AccessRequirement'
-          type: array
-        totalNumberOfResults:
-          description: >
-            Calculating the actual totalNumberOfResults is not longer supported.
-
-            Therefore, for each page, the totalNumberOfResults is estimated
-            using
-
-            the current page, limit, and offset. When the page size equals the
-            limit,
-
-            the totalNumberOfResults will be offset+pageSize+ 1. Otherwise, the
-
-            totalNumberOfResults will be offset+pageSize.
-          type: integer
-      title: PaginatedResultsOfAccessRequirement
       type: object
     UserGroupHeader:
       description: JSON schema for UserHeader POJO
@@ -6415,8 +11756,6 @@ components:
           type: integer
       title: Count
       type: object
-    Empty:
-      type: object
     TrashedEntity:
       description: >-
         JSON schema for the TrashEntity POJO. A trashed entity is an entity in
@@ -6471,18 +11810,6 @@ components:
           $ref: '#/components/schemas/TotalNumberOfResults'
       title: PaginatedResultsOfTrashedEntity
       type: object
-    Etag:
-      description: >
-        Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle
-
-        concurrent updates. Since the E-Tag changes every time an entity is
-        updated
-
-        it is used to detect when a client's current representation of an entity
-        is
-
-        out-of-date.
-      type: string
     Settings:
       description: |
         Contains a user's notification settings
