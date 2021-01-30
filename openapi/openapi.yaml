@@ -342,6 +342,8 @@ paths:
     $ref: paths/form@data@{id}@submit.yaml
   /form/data/list:
     $ref: paths/form@data@list.yaml
+  /form/data/list/reviewer:
+    $ref: paths/form@data@list@reviewer.yaml
 
   /team:
     $ref: paths/team.yaml
