@@ -281,6 +281,8 @@ paths:
     $ref: paths/entity@md5@{md5}.yaml
   /entity/threadcounts:
     $ref: paths/entity@threadcounts.yaml
+  /entity/type:
+    $ref: paths/entity@type.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
