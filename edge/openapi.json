@@ -59,6 +59,10 @@
       "description": "The Evaluation API is designed to support open-access data analysis and modeling\nchallenges in Synapse. This framework provides tools for administrators to collect\nand analyze data models from Synapse users created for a specific goal or purpose.\n"
     },
     {
+      "name": "Form Services",
+      "description": "Collection of APIs from managing and submitting form data.\n"
+    },
+    {
       "name": "Membership Invitation Services",
       "description": "The Membership Invitation Services create, retrieve and delete\nmembership invitations.\n"
     },
@@ -4878,6 +4882,416 @@
         "summary": "Updates a SubmissionStatus object.",
         "tags": [
           "Evaluation Services"
+        ]
+      }
+    },
+    "/form/data": {
+      "post": {
+        "description": "Create a new FormData object. The caller will own the resulting object\nand will have access to read, update, and delete the FormData object.\n\nNote: The caller must have the SUBMIT permission on the FormGrup to \nreate/update/submit FormData.\n",
+        "operationId": "createFormData",
+        "parameters": [
+          {
+            "description": "The identifier of the group that manages this data.\n",
+            "in": "query",
+            "name": "groupId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormChangeRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormData"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Create a new FormData object.",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/data/{id}": {
+      "parameters": [
+        {
+          "description": "The ID of the FormData.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "description": "Delete an existing FormData object. The caller must be the creator\nof the FormData object.\n\nNote: Cannot delete a FormData object once it has been submitted and caller\nmust have the SUBMIT permission on the identified group to update the group's ACL.\n",
+        "operationId": "deleteFormData",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Delete a FormData object.",
+        "tags": [
+          "Form Services"
+        ]
+      },
+      "put": {
+        "description": "Update an existing FormData object. The caller must be the creator\nof the FormData object. Once a FormData object has been submitted, it cannot be\nupdated until it has been processed. If the submission is accepted it becomes\nimmutable. Rejected submission are editable. Updating a rejected submission\nwill change its status back to waiting_for_submission.\n\nNote: The caller must have the SUBMIT permission on the FormGrup to\ncreate/update/submit FormData.\n",
+        "operationId": "updateFormData",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormChangeRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormData"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Update a FormData object.",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/data/{id}/accept": {
+      "parameters": [
+        {
+          "description": "The ID of the FormData.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Called by the form reviewing service to accept a submitted data.\n\nNote: The caller must have the READ_PRIVATE_SUBMISSION\npermission on the identified group to update the group's ACL.\n",
+        "operationId": "reviewerAcceptForm",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormData"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Called by the form reviewing service to accept a submitted data.",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/data/{id}/reject": {
+      "parameters": [
+        {
+          "description": "The ID of the FormData.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Called by the form reviewing service to reject a submitted data.\n\nNote: The caller must have the READ_PRIVATE_SUBMISSION\npermission on the identified group to update the group's ACL.\n",
+        "operationId": "reviewerRejectForm",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormRejection"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormData"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Called by the form reviewing service to reject a submitted data.",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/data/{id}/submit": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "The ID of the FormData.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "description": "Submit the identified FormData from review.\n\nNote: The caller must have the SUBMIT\npermission on the identified group to update the group's ACL.\n",
+        "operationId": "submitFormData",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormData"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Submit the identified FormData from review.",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/data/list": {
+      "post": {
+        "description": "List FormData objects and their associated status that match the filters\nof the provided request that are owned by the caller. Note: Only objects owned\nby the caller will be returned.\n",
+        "operationId": "listFormStatus",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "List FormData objects and their associated status.\n",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/data/list/reviewer": {
+      "post": {
+        "description": "List FormData objects and their associated status that match the filters\nof the provided request for the entire group. This is used by service accounts\nto review submissions. Filtering by WAITING_FOR_SUBMISSION is not allowed for\nthis call.\n\nNote: The caller must have the READ_PRIVATE_SUBMISSION\npermission on the identified group to update the group's ACL.\n",
+        "operationId": "listFormStatusReviewer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "List FormData objects and their associated status.\n",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/group": {
+      "post": {
+        "description": "Create a FormGroup with the provided name. This method is idempotent.\nIf a group with the provided name already exists and the caller has READ\npermission the existing FormGroup will be returned.\n\nThe created FormGroup will have an Access Control List (ACL)\nwith the creator listed as an administrator.\n",
+        "operationId": "createGroup",
+        "parameters": [
+          {
+            "description": "A globally unique name for the group. Required. Between 3 and\n256 characters.\n",
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256,
+              "minLength": 3
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormGroup"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Create a FormGroup with the provided name.",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/group/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "The ID to the FormGroup.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get a FormGroup with the provided ID.\n\nNote: The caller must have the READ permission on the identified group.\n",
+        "operationId": "getFormGroup",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormGroup"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get a FormGroup with the provided ID.",
+        "tags": [
+          "Form Services"
+        ]
+      }
+    },
+    "/form/group/{id}/acl": {
+      "parameters": [
+        {
+          "description": "The ID of the FormGroup.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the Access Control List (ACL) for a FormGroup.\n\nNote: The caller must have READ permission on the identified group.\n",
+        "operationId": "getGroupAcl",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessControlList"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the.",
+        "tags": [
+          "Form Services"
+        ]
+      },
+      "put": {
+        "description": "Update the Access Control List (ACL) for a FormGroup.\n\nThe following define the permissions in this context:\n\n* READ - Grants read access to the group. READ does not grant access to FormData of\nthe group.\n* CHANGE_PERMISSIONS - Grants access to update the group's ACL.\n* SUBMIT - Grants access to both create and submit FormData to the group.\n* READ_PRIVATE_SUBMISSION - Grants administrator's access to the submitted FormData,\nincluding both FormData reads and status updates. This permission should be\nreserved for the service account that evaluates submissions.\n\nUsers automatically have read/update access to FormData that they create.\n\nNote: The caller must have the CHANGE_PERMISSIONS permission on the identified\ngroup to update the group's ACL.\n",
+        "operationId": "updateGroupAcl",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessControlList"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessControlList"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Update the.",
+        "tags": [
+          "Form Services"
         ]
       }
     },
@@ -12468,6 +12882,261 @@
           }
         },
         "title": "TeamSubmissionEligibility",
+        "type": "object"
+      },
+      "FormChangeRequest": {
+        "description": "Request changes to a FormData object.",
+        "example": {
+          "fileHandleId": "...",
+          "name": "..."
+        },
+        "properties": {
+          "fileHandleId": {
+            "description": "The fileHandleId for the data of the form.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the form. Required for FormData create.\nOptional for FormData update. Between 3 and 256 characters'\n",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 256
+          }
+        },
+        "title": "FormChangeRequest",
+        "type": "object"
+      },
+      "StateEnum": {
+        "description": "The enumeration of possible FormData submission states.",
+        "enum": [
+          "WAITING_FOR_SUBMISSION",
+          "SUBMITTED_WAITING_FOR_REVIEW",
+          "ACCEPTED",
+          "REJECTED"
+        ],
+        "title": "StateEnum",
+        "type": "string"
+      },
+      "SubmissionStatus_form": {
+        "description": "The status of a a submitted FormData object.",
+        "example": {
+          "rejectionMessage": "...",
+          "reviewedBy": "...",
+          "reviewedOn": "...",
+          "state": "WAITING_FOR_SUBMISSION",
+          "submittedOn": "..."
+        },
+        "properties": {
+          "rejectionMessage": {
+            "description": "The message provided by the reviewer when a submission is rejected.",
+            "type": "string"
+          },
+          "reviewedBy": {
+            "description": "The id of the service user that reviewed the submission.",
+            "type": "string"
+          },
+          "reviewedOn": {
+            "description": "The date when this submission was reviewed.",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/StateEnum"
+          },
+          "submittedOn": {
+            "description": "The date when the object was submitted.",
+            "type": "string"
+          }
+        },
+        "title": "SubmissionStatus",
+        "type": "object"
+      },
+      "FormData": {
+        "description": "User's data gathered from a form template.\nAll FormData belongs to a single FormGroup.\n",
+        "example": {
+          "createdBy": "...",
+          "createdOn": "...",
+          "dataFileHandleId": "...",
+          "etag": "...",
+          "formDataId": "...",
+          "groupId": "...",
+          "modifiedOn": "...",
+          "name": "...",
+          "submissionStatus": {
+            "rejectionMessage": "...",
+            "reviewedBy": "...",
+            "reviewedOn": "...",
+            "state": "REJECTED",
+            "submittedOn": "..."
+          }
+        },
+        "properties": {
+          "createdBy": {
+            "description": "Id of the user that created this object",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this object was originally created.",
+            "type": "string"
+          },
+          "dataFileHandleId": {
+            "description": "The identifier of the data FileHandle for this object.",
+            "type": "string"
+          },
+          "etag": {
+            "description": "Will change whenever there is a change to the this data or its status.",
+            "type": "string"
+          },
+          "formDataId": {
+            "description": "The system issued identifier that uniquely identifies this object.",
+            "type": "string"
+          },
+          "groupId": {
+            "description": "The identifier of the group that manages this data. Required.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date this object was last modified.",
+            "type": "string"
+          },
+          "name": {
+            "description": "User provided name for this submission. Required.",
+            "type": "string"
+          },
+          "submissionStatus": {
+            "$ref": "#/components/schemas/SubmissionStatus_form"
+          }
+        },
+        "title": "FormData",
+        "type": "object"
+      },
+      "FormRejection": {
+        "description": "Form reviewer rejection data",
+        "example": {
+          "reason": "..."
+        },
+        "properties": {
+          "reason": {
+            "description": "The reason for the rejection. Limit 500 characters or less.",
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "title": "FormRejection",
+        "type": "object"
+      },
+      "ListRequest": {
+        "description": "Request for a list of FormData matching the provided filters.",
+        "example": {
+          "filterByState": [
+            "SUBMITTED_WAITING_FOR_REVIEW",
+            "ACCEPTED"
+          ],
+          "groupId": "...",
+          "nextPageToken": "..."
+        },
+        "properties": {
+          "filterByState": {
+            "description": "Only return results with a state that matches elements from this set.\nRequired. Must include at least one element.\n",
+            "items": {
+              "$ref": "#/components/schemas/StateEnum"
+            },
+            "type": "array"
+          },
+          "groupId": {
+            "description": "The group identifier. Required.",
+            "type": "string"
+          },
+          "nextPageToken": {
+            "description": "The results are automatically paginated. To get the next page,\nforward the nextPageToken returned from the last request.\n",
+            "type": "string"
+          }
+        },
+        "title": "ListRequest",
+        "type": "object"
+      },
+      "ListResponse": {
+        "description": "A single page of results from a ListRequest.",
+        "example": {
+          "nextPageToken": "...",
+          "page": [
+            {
+              "createdBy": "...",
+              "createdOn": "...",
+              "dataFileHandleId": "...",
+              "etag": "...",
+              "formDataId": "...",
+              "groupId": "...",
+              "modifiedOn": "...",
+              "name": "...",
+              "submissionStatus": {
+                "rejectionMessage": "...",
+                "reviewedBy": "...",
+                "reviewedOn": "...",
+                "state": "ACCEPTED",
+                "submittedOn": "..."
+              }
+            },
+            {
+              "createdBy": "...",
+              "createdOn": "...",
+              "dataFileHandleId": "...",
+              "etag": "...",
+              "formDataId": "...",
+              "groupId": "...",
+              "modifiedOn": "...",
+              "name": "...",
+              "submissionStatus": {
+                "rejectionMessage": "...",
+                "reviewedBy": "...",
+                "reviewedOn": "...",
+                "state": "ACCEPTED",
+                "submittedOn": "..."
+              }
+            }
+          ]
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "The results are automatically paginated. If another page of\nresults exists then a nextPageToken will be provided. Forward the\nprovided nextPageTokens in a subsequent list request to get the next page.\n",
+            "type": "string"
+          },
+          "page": {
+            "description": "A single page of results matching the request.",
+            "items": {
+              "$ref": "#/components/schemas/FormData"
+            },
+            "type": "array"
+          }
+        },
+        "title": "ListResponse",
+        "type": "object"
+      },
+      "FormGroup": {
+        "description": "All form data belongs to a form group. Access to the group is managed via the ACL of the group.",
+        "example": {
+          "createdBy": "...",
+          "createdOn": "...",
+          "groupId": "...",
+          "name": "..."
+        },
+        "properties": {
+          "createdBy": {
+            "description": "Id of the user that created this group",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this object was originally created.",
+            "type": "string"
+          },
+          "groupId": {
+            "description": "Unique identifier provided by the system.",
+            "type": "string"
+          },
+          "name": {
+            "description": "Unique name for the group provided by the caller.",
+            "type": "string"
+          }
+        },
+        "title": "FormGroup",
         "type": "object"
       },
       "Team": {
