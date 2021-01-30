@@ -394,6 +394,8 @@ paths:
     $ref: paths/thread@{threadId}@message.yaml
   /thread/{threadId}/pin:
     $ref: paths/thread@{threadId}@pin.yaml
+  /thread/{threadId}/replies:
+    $ref: paths/thread@{threadId}@replies.yaml
 
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
