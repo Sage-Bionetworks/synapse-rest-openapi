@@ -82,8 +82,9 @@ tags:
       The Evaluation API is designed to support open-access data analysis and modeling
       challenges in Synapse. This framework provides tools for administrators to collect
       and analyze data models from Synapse users created for a specific goal or purpose.
-  # - name: Form Services
-  #   description: Collection of APIs from managing and submitting form data.
+  - name: Form Services
+    description: |
+      Collection of APIs from managing and submitting form data.
   # - name: Health Check Services
   # - name: Json Schema Services
   #   description: |
@@ -283,7 +284,6 @@ paths:
     $ref: paths/entity@threadcounts.yaml
   /entity/type:
     $ref: paths/entity@type.yaml
-
   /evaluation:
     $ref: paths/evaluation.yaml
   /evaluation/{evalId}:
@@ -330,6 +330,9 @@ paths:
     $ref: paths/evaluation@submission@{subId}@file@{fileHandleId}.yaml
   /evaluation/submission/{subId}/status:
     $ref: paths/evaluation@submission@{subId}@status.yaml
+  /form/data:
+    $ref: paths/form@data.yaml
+
   /team:
     $ref: paths/team.yaml
   /teams:

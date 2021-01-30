@@ -1,0 +1,47 @@
+description: |
+  User's data gathered from a form template.
+  All FormData belongs to a single FormGroup.
+example:
+  createdBy: '...'
+  createdOn: '...'
+  dataFileHandleId: '...'
+  etag: '...'
+  formDataId: '...'
+  groupId: '...'
+  modifiedOn: '...'
+  name: '...'
+  submissionStatus:
+    rejectionMessage: '...'
+    reviewedBy: '...'
+    reviewedOn: '...'
+    state: REJECTED
+    submittedOn: '...'
+properties:
+  createdBy:
+    description: 'Id of the user that created this object'
+    type: string
+  createdOn:
+    description: 'The date this object was originally created.'
+    type: string
+  dataFileHandleId:
+    description: 'The identifier of the data FileHandle for this object.'
+    type: string
+  etag:
+    description: 'Will change whenever there is a change to the this data or its status.'
+    type: string
+  formDataId:
+    description: 'The system issued identifier that uniquely identifies this object.'
+    type: string
+  groupId:
+    description: 'The identifier of the group that manages this data. Required.'
+    type: string
+  modifiedOn:
+    description: 'The date this object was last modified.'
+    type: string
+  name:
+    description: 'User provided name for this submission. Required.'
+    type: string
+  submissionStatus:
+    $ref: 'SubmissionStatus_form.yaml'
+title: FormData
+type: object
