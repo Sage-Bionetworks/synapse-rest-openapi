@@ -1,0 +1,18 @@
+description: 'The model object represents a single Thread creation.'
+example:
+  forumId: '...'
+  messageMarkdown: '...'
+  title: '...'
+properties:
+  forumId:
+    description: 'The ID of the forum this CreateThread belongs to'
+    type: string
+  messageMarkdown:
+    description: |
+      The markdown of the Thread's message
+    type: string
+  title:
+    description: 'The title of the Thread'
+    type: string
+title: CreateDiscussionThread
+type: object

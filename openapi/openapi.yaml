@@ -386,6 +386,10 @@ paths:
     $ref: paths/teamMembers@{id}.yaml
   /teamMembers/count/{id}:
     $ref: paths/teamMembers@count@{id}.yaml
+  /thread:
+    $ref: paths/thread.yaml
+
+
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
   /trashcan/restore/{id}:
