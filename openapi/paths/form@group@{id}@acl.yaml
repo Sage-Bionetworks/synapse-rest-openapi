@@ -1,0 +1,58 @@
+parameters:
+  - description: The ID of the FormGroup.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the Access Control List (ACL) for a FormGroup.
+
+    Note: The caller must have READ permission on the identified group.
+  operationId: getGroupAcl
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Get the.
+  tags:
+  - Form Services
+put:
+  description: |
+    Update the Access Control List (ACL) for a FormGroup.
+
+    The following define the permissions in this context:
+
+    * READ - Grants read access to the group. READ does not grant access to FormData of
+    the group.
+    * CHANGE_PERMISSIONS - Grants access to update the group's ACL.
+    * SUBMIT - Grants access to both create and submit FormData to the group.
+    * READ_PRIVATE_SUBMISSION - Grants administrator's access to the submitted FormData,
+    including both FormData reads and status updates. This permission should be
+    reserved for the service account that evaluates submissions.
+
+    Users automatically have read/update access to FormData that they create.
+
+    Note: The caller must have the CHANGE_PERMISSIONS permission on the identified
+    group to update the group's ACL.
+  operationId: updateGroupAcl
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessControlList.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Update the.
+  tags:
+  - Form Services

@@ -348,6 +348,8 @@ paths:
     $ref: paths/form@group.yaml
   /form/group/{id}:
     $ref: paths/form@group@{id}.yaml
+  /form/group/{id}/acl:
+    $ref: paths/form@group@{id}@acl.yaml
 
   /team:
     $ref: paths/team.yaml
