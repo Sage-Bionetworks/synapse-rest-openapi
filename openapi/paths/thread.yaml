@@ -1,0 +1,22 @@
+post:
+  description: |
+    This API is used to create a new thread in a forum.
+
+    Target users: anyone who has READ permission to the project.
+  operationId: createThread
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/CreateDiscussionThread.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/DiscussionThreadBundle.yaml
+      description: Success
+  summary: Create a new thread in a forum.
+  tags:
+  - Discussion Services

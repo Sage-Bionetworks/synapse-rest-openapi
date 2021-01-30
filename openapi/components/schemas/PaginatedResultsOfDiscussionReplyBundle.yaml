@@ -1,0 +1,36 @@
+description: 'Page of Discussion Replies'
+example:
+  results:
+  - createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    forumId: '...'
+    id: '...'
+    isDeleted: true
+    isEdited: true
+    messageKey: '...'
+    modifiedOn: '...'
+    projectId: '...'
+    threadId: '...'
+  - createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    forumId: '...'
+    id: '...'
+    isDeleted: true
+    isEdited: true
+    messageKey: '...'
+    modifiedOn: '...'
+    projectId: '...'
+    threadId: '...'
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of Discussion Replies'
+    items:
+      $ref: 'DiscussionReplyBundle.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfDiscussionReplyBundle
+type: object

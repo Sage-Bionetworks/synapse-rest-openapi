@@ -386,6 +386,26 @@ paths:
     $ref: paths/teamMembers@{id}.yaml
   /teamMembers/count/{id}:
     $ref: paths/teamMembers@count@{id}.yaml
+  /thread:
+    $ref: paths/thread.yaml
+  /thread/{threadId}:
+    $ref: paths/thread@{threadId}.yaml
+  /thread/{threadId}/message:
+    $ref: paths/thread@{threadId}@message.yaml
+  /thread/{threadId}/pin:
+    $ref: paths/thread@{threadId}@pin.yaml
+  /thread/{threadId}/replies:
+    $ref: paths/thread@{threadId}@replies.yaml
+  /thread/{threadId}/replycount:
+    $ref: paths/thread@{threadId}@replycount.yaml
+  /thread/{threadId}/restore:
+    $ref: paths/thread@{threadId}@restore.yaml
+  /thread/{threadId}/title:
+    $ref: paths/thread@{threadId}@title.yaml
+  /thread/{threadId}/unpin:
+    $ref: paths/thread@{threadId}@unpin.yaml
+  /thread/messageUrl:
+    $ref: paths/thread@messageUrl.yaml
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
   /trashcan/restore/{id}:

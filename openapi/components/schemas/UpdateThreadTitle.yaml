@@ -1,0 +1,9 @@
+description: 'Update Thread Title'
+example:
+  title: '...'
+properties:
+  title:
+    description: 'New Thread Title'
+    type: string
+title: UpdateThreadTitle
+type: object

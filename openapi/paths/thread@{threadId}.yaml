@@ -1,0 +1,35 @@
+parameters:
+  - description: 'The ID of a thread.'
+    in: path
+    name: threadId
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    This API is used to mark a thread as deleted.
+
+    Target users: only forum's moderator can mark a thread as deleted.
+  operationId: deleteThread
+  responses:
+    204:
+      description: The resource has been deleted.
+  summary: Delete a Thread.
+  tags:
+  - Discussion Services
+get:
+  description: |
+    This API is used to get a thread and its statistic given its ID.
+
+    Target users: anyone who has READ permission to the project.
+  operationId: getThread
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/DiscussionThreadBundle.yaml
+      description: Success
+  summary: Get a thread.
+  tags:
+  - Discussion Services
