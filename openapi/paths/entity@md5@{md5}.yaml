@@ -1,0 +1,32 @@
+parameters:
+  - in: path
+    description: File MD5
+    name: md5
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Gets at most 200 FileEntities matching the given MD5 string which
+    the user has read access to.
+    NOTE: Another option is to create a file view that includes
+    MD5 values. https://docs.synapse.org/articles/views.html
+  operationId: getEntityHeaderByMd5
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfEntityHeader.yaml
+      description: Success
+  summary: |
+    Gets FileEntities matching the given MD5 string which the
+    user has read access to.
+  tags:
+  - Entity Services
