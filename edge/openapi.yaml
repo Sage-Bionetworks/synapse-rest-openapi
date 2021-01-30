@@ -6545,6 +6545,330 @@ paths:
       summary: Retrieve the number of Team members matching the supplied name prefix.
       tags:
         - Team Services
+  /thread:
+    post:
+      description: |
+        This API is used to create a new thread in a forum.
+
+        Target users: anyone who has READ permission to the project.
+      operationId: createThread
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDiscussionThread'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscussionThreadBundle'
+          description: Success
+      summary: Create a new thread in a forum.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    delete:
+      description: |
+        This API is used to mark a thread as deleted.
+
+        Target users: only forum's moderator can mark a thread as deleted.
+      operationId: deleteThread
+      responses:
+        '204':
+          description: The resource has been deleted.
+      summary: Delete a Thread.
+      tags:
+        - Discussion Services
+    get:
+      description: |
+        This API is used to get a thread and its statistic given its ID.
+
+        Target users: anyone who has READ permission to the project.
+      operationId: getThread
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscussionThreadBundle'
+          description: Success
+      summary: Get a thread.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}/message':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    put:
+      description: |
+        This API is used to update the message of a thread.
+
+        Target users: only the author of the thread can update its message.'
+      operationId: updateThreadMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateThreadMessage'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscussionThreadBundle'
+          description: Success
+      summary: Update the message of a thread.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}/pin':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    put:
+      description: |
+        This API is used to mark a thread as pinned.
+
+        Target users: only forum's moderator can mark a thread as pinned.
+      operationId: pinThread
+      responses:
+        '204':
+          description: Success
+      summary: Pin a Thread.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}/replies':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        This API is used to get N number of replies for a given thread ID.
+
+        Target users: anyone who has READ permission to the project.
+      operationId: getRepliesForThread
+      parameters:
+        - description: 'The direction of sort: true for ascending, and false for descending'
+          in: query
+          name: ascending
+          schema:
+            type: boolean
+        - description: Filter deleted not deleted replies.
+          in: query
+          name: filter
+          required: true
+          schema:
+            enum:
+              - DELETED_ONLY
+              - EXCLUDE_DELETED
+              - NO_FILTER
+            type: string
+        - description: |
+            Limits the size of the page returned. For example, a page size
+            of 10 require limit = 10.
+          in: query
+          name: limit
+          schema:
+            type: integer
+            maximum: 100
+            default: 10
+            minimum: 0
+        - description: >
+            The index of the pagination offset. For a page size of 10, the
+
+            first page would be at offset = 0, and the second page would be at
+            offset =
+
+            10.'
+          in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - description: |
+            The field to sort the resulting replies on.
+          in: query
+          name: sort
+          schema:
+            enum:
+              - CREATED_ON
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfDiscussionReplyBundle'
+          description: Success
+      summary: Get N number of replies for a given thread ID.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}/replycount':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        This API is used to get the total number of replies for a given thread
+        ID.
+
+        Target users: anyone who has READ permission to the project.'
+      operationId: getReplyCountForThread
+      parameters:
+        - description: Filter deleted not deleted replies.
+          in: query
+          name: filter
+          required: true
+          schema:
+            enum:
+              - DELETED_ONLY
+              - EXCLUDE_DELETED
+              - NO_FILTER
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplyCount'
+          description: Success
+      summary: |
+        Get the total number of replies for a given Thread.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}/restore':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    put:
+      description: |
+        This API is used to restore a deleted thread.
+
+        Target users: only forum's moderator can restore a deleted thread.
+      operationId: restoreDeletedThread
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: Restore a deleted thread.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}/title':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    put:
+      description: |
+        This API is used to update the title of a thread.
+
+        Target users: only the author of the thread can update its title.'
+      operationId: updateThreadTitle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateThreadTitle'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscussionThreadBundle'
+          description: Success
+      summary: Update the title of a Thread.
+      tags:
+        - Discussion Services
+  '/thread/{threadId}/unpin':
+    parameters:
+      - description: The ID of a thread.
+        in: path
+        name: threadId
+        required: true
+        schema:
+          type: string
+    put:
+      description: |
+        This API is used to unpin a thread.
+
+        Target users: only forum's moderator can unpin a thread.
+      operationId: unpinThread
+      responses:
+        '204':
+          description: Success
+      summary: Unpin a thread.
+      tags:
+        - Discussion Services
+  /thread/messageUrl:
+    get:
+      description: >
+        This API is used to get the message URL of a thread. The message URL
+
+        is the URL to download the file which contains the thread message.
+
+
+        Target users: anyone who has READ permission to the project.
+
+
+        The resulting URL will be signed with Content-Type ="text/plain;
+        charset=utf-8";
+
+        therefore, this header must be included with the GET on the URL.
+      operationId: getThreadUrl
+      parameters:
+        - in: query
+          name: messageKey
+          description: Message Key
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageURL'
+          description: Success
+      summary: Get the message URL of a thread.
+      tags:
+        - Discussion Services
   '/trashcan/purge/{id}':
     parameters:
       - description: The ID of an entity.
@@ -13257,6 +13581,151 @@ components:
           description: Count of items
           type: integer
       title: Count
+      type: object
+    CreateDiscussionThread:
+      description: The model object represents a single Thread creation.
+      example:
+        forumId: ...
+        messageMarkdown: ...
+        title: ...
+      properties:
+        forumId:
+          description: The ID of the forum this CreateThread belongs to
+          type: string
+        messageMarkdown:
+          description: |
+            The markdown of the Thread's message
+          type: string
+        title:
+          description: The title of the Thread
+          type: string
+      title: CreateDiscussionThread
+      type: object
+    UpdateThreadMessage:
+      description: Update Thread Message
+      example:
+        messageMarkdown: ...
+      properties:
+        messageMarkdown:
+          description: The new message markdown
+          type: string
+      title: UpdateThreadMessage
+      type: object
+    DiscussionReplyBundle:
+      description: The Reply model object represents a single reply in a thread.
+      example:
+        createdBy: ...
+        createdOn: ...
+        etag: ...
+        forumId: ...
+        id: ...
+        isDeleted: true
+        isEdited: true
+        messageKey: ...
+        modifiedOn: ...
+        projectId: ...
+        threadId: ...
+      properties:
+        createdBy:
+          description: The id of the user that created this Reply
+          type: string
+        createdOn:
+          description: The timestamp when this Reply was created
+          type: string
+        etag:
+          $ref: '#/components/schemas/Etag'
+        forumId:
+          description: The ID of the forum this Reply belongs to
+          type: string
+        id:
+          description: The ID of the reply
+          type: string
+        isDeleted:
+          description: Has this Reply been deleted?
+          type: boolean
+        isEdited:
+          description: Has the author edited this Reply?
+          type: boolean
+        messageKey:
+          description: The S3 key where the actual message stored
+          type: string
+        modifiedOn:
+          description: The timestamp when this Reply was last modified
+          type: string
+        projectId:
+          description: The ID of the project this Reply belongs to
+          type: string
+        threadId:
+          description: The ID of the thread this Reply belongs to
+          type: string
+      title: DiscussionReplyBundle
+      type: object
+    PaginatedResultsOfDiscussionReplyBundle:
+      description: Page of Discussion Replies
+      example:
+        results:
+          - createdBy: ...
+            createdOn: ...
+            etag: ...
+            forumId: ...
+            id: ...
+            isDeleted: true
+            isEdited: true
+            messageKey: ...
+            modifiedOn: ...
+            projectId: ...
+            threadId: ...
+          - createdBy: ...
+            createdOn: ...
+            etag: ...
+            forumId: ...
+            id: ...
+            isDeleted: true
+            isEdited: true
+            messageKey: ...
+            modifiedOn: ...
+            projectId: ...
+            threadId: ...
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: Page of Discussion Replies
+          items:
+            $ref: '#/components/schemas/DiscussionReplyBundle'
+          type: array
+        totalNumberOfResults:
+          $ref: '#/components/schemas/TotalNumberOfResults'
+      title: PaginatedResultsOfDiscussionReplyBundle
+      type: object
+    ReplyCount:
+      description: The total number of replies.
+      example:
+        count: 12345
+      properties:
+        count:
+          description: The total number of replies.
+          type: number
+      title: ReplyCount
+      type: object
+    UpdateThreadTitle:
+      description: Update Thread Title
+      example:
+        title: ...
+      properties:
+        title:
+          description: New Thread Title
+          type: string
+      title: UpdateThreadTitle
+      type: object
+    MessageURL:
+      description: The URL to download the file which contains the message.
+      example:
+        messageUrl: ...
+      properties:
+        messageUrl:
+          description: The URL to download the file which contains the message.
+          type: string
+      title: MessageURL
       type: object
     TrashedEntity:
       description: >-
