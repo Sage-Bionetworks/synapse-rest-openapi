@@ -275,6 +275,8 @@ paths:
     $ref: paths/entity@child.yaml
   /entity/children:
     $ref: paths/entity@children.yaml
+  /entity/header:
+    $ref: paths/entity@header.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

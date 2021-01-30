@@ -1,0 +1,34 @@
+description: 'Page of Entity Headers.'
+example:
+  results:
+  - benefactorId: 12345
+    createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    type: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+  - benefactorId: 12345
+    createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    type: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'A page of entity headers.'
+    items:
+      $ref: 'EntityHeader.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfEntityHeader
+type: object
