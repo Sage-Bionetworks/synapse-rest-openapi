@@ -19,4 +19,4 @@ post:
       description: Success
   summary: Retrieve an entityId for a given parent ID and entity name.
   tags:
-  - EntityController
+  - Entity Services

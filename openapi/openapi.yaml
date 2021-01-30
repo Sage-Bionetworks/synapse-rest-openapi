@@ -273,6 +273,8 @@ paths:
     $ref: paths/entity@bundle2@create.yaml
   /entity/child:
     $ref: paths/entity@child.yaml
+  /entity/children:
+    $ref: paths/entity@children.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

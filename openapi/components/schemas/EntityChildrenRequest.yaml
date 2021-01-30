@@ -1,0 +1,37 @@
+description: 'Request for EntityHeaders of the children of a given parent Entity'
+example:
+  includeSumFileSizes: true
+  includeTotalChildCount: true
+  includeTypes:
+  - entityview
+  - project
+  nextPageToken: '...'
+  parentId: '...'
+  sortBy: CREATED_ON
+  sortDirection: DESC
+properties:
+  includeSumFileSizes:
+    description: 'When true, the sum of the files sizes (bytes) with the given parentId and types will be included. False by default'
+    type: boolean
+    default: false
+  includeTotalChildCount:
+    description: 'When true, the total number of children with the givenparentId and types will be included. False by default'
+    type: boolean
+    default: false
+  includeTypes:
+    description: 'The types of children to be include. Must include at least one type.'
+    items:
+      $ref: '../definitions/EntityType.yaml'
+    type: array
+  nextPageToken:
+    description: 'Optional parameter used to fetch the next page of results. When NULL, the first page will be returned. The nextPageToken is provided with the results if there is another page of results.'
+    type: string
+  parentId:
+    description: 'The ID of the parent. Set to null to list projects.'
+    type: string
+  sortBy:
+    $ref: '../definitions/SortBy.yaml'
+  sortDirection:
+    $ref: '../definitions/SortDirection.yaml'
+title: EntityChildrenRequest
+type: object

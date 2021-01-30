@@ -1,0 +1,21 @@
+post:
+  description: |
+    Get a page of children for a given parent ID. This service can also
+    be used to list projects by setting the parentId to NULL in EntityChildrenRequest.
+  operationId: getChildren
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/EntityChildrenRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityChildrenResponse.yaml
+      description: Success
+  summary: Get a page of children for a given parent ID.
+  tags:
+  - Entity Services

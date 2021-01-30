@@ -1,0 +1,43 @@
+description: 'Response of EntityHeaders for the children of a given parent Entity'
+example:
+  nextPageToken: '...'
+  page:
+  - benefactorId: 12345
+    createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    type: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+  - benefactorId: 12345
+    createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    name: '...'
+    type: '...'
+    versionLabel: '...'
+    versionNumber: 12345
+  sumFileSizesBytes: 12345
+  totalChildCount: 12345
+properties:
+  nextPageToken:
+    description: 'Token that can be used to get the next page. Null if there are no more results.'
+    type: string
+  page:
+    description: 'The headers of each child.'
+    items:
+      $ref: 'EntityHeader.yaml'
+    type: array
+  sumFileSizesBytes:
+    description: 'The sum of the file sizes (bytes) with the requested parentId and types. Only returned if requested.'
+    type: integer
+  totalChildCount:
+    description: 'The total number of children with the requested parentId and types. Only returned if requested.'
+    type: integer
+title: EntityChildrenResponse
+type: object
