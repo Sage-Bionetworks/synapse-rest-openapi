@@ -1,0 +1,22 @@
+post:
+  description: |
+    Retrieve an entityId for a given parent ID and entity name. This service
+    can also be used to lookup projectId by setting the parentId to NULL in
+    EntityLookupRequest.
+  operationId: lookupChild
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/EntityLookupRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityId.yaml
+      description: Success
+  summary: Retrieve an entityId for a given parent ID and entity name.
+  tags:
+  - EntityController

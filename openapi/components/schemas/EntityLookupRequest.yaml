@@ -1,0 +1,13 @@
+description: 'A request to look up an entity given parentId and the entity name.'
+example:
+  entityName: '...'
+  parentId: '...'
+properties:
+  entityName:
+    description: 'The entity name'
+    type: string
+  parentId:
+    description: 'The parentID'
+    type: string
+title: EntityLookupRequest
+type: object
