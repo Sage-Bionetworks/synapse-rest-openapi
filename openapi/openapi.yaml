@@ -41,8 +41,11 @@ tags:
       specific to challenges.
   # - name: Data Access Services
   #   description: "."
-  # - name: Discussion Services
-  #   description: "."
+  - name: Discussion Services
+    description: |
+      Discussions in Synapse are captured in the Project's Forum.
+      Each Project has a Forum. Each Forum has a set of Moderators.
+      The Moderators manage the content of the Forum.
   # - name: Docker Authorization Services
   #   description: These services allow Synapse to act as an authorization service for
   #     a Docker Registry.
@@ -246,6 +249,8 @@ paths:
     $ref: paths/entity@{id}@table@transaction@async@start.yaml
   /entity/{id}/threads:
     $ref: paths/entity@{id}@threads.yaml
+  /entity/{id}/type:
+    $ref: paths/entity@{id}@type.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
