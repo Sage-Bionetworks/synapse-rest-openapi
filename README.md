@@ -1,4 +1,4 @@
-# Submission Service
+# Synapse Rest Service
 
 The OpenAPI specification for Synapse Rest Services.
 
