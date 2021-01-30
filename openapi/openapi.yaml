@@ -253,6 +253,8 @@ paths:
     $ref: paths/entity@{id}@type.yaml
   /entity/{id}/version:
     $ref: paths/entity@{id}@version.yaml
+  /entity/{id}/version/{versionNumber}:
+    $ref: paths/entity@{id}@version@{versionNumber}.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml

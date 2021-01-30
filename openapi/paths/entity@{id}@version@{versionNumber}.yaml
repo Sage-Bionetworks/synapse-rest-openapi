@@ -1,0 +1,47 @@
+parameters:
+  - description: The ID of the Entity
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+  - description: The version number of the Entity.
+    in: path
+    name: versionNumber
+    required: true
+    schema:
+      type: number
+delete:
+  description: Delete a specific version of a FileEntity.
+  operationId: deleteEntityVersion
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Empty.yaml
+    required: false
+  responses:
+    204:
+      description: The resource has been deleted.
+  summary: Delete a specific version of a FileEntity.
+  tags:
+  - Entity Services
+get:
+  description: |
+    Get a specific version of an Entity.
+
+    Note: Only the current version of the Entity can be used for an Entity
+    update. Therefore, only the current version of the Entity will be returned
+    with the actual etag. All older versions will be returned with an eTag
+    '00000000-0000-0000-0000-000000000000'.
+  operationId: getEntityForVersion
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Entity.yaml
+      description: Success
+  summary: Get a specific version of an Entity.
+  tags:
+  - Entity Services
