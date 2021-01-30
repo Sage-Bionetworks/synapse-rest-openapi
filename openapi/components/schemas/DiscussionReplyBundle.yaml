@@ -1,0 +1,48 @@
+description: 'The Reply model object represents a single reply in a thread.'
+example:
+  createdBy: '...'
+  createdOn: '...'
+  etag: '...'
+  forumId: '...'
+  id: '...'
+  isDeleted: true
+  isEdited: true
+  messageKey: '...'
+  modifiedOn: '...'
+  projectId: '...'
+  threadId: '...'
+properties:
+  createdBy:
+    description: 'The id of the user that created this Reply'
+    type: string
+  createdOn:
+    description: 'The timestamp when this Reply was created'
+    type: string
+  etag:
+    $ref: ../definitions/Etag.yaml
+  forumId:
+    description: 'The ID of the forum this Reply belongs to'
+    type: string
+  id:
+    description: 'The ID of the reply'
+    type: string
+  isDeleted:
+    description: 'Has this Reply been deleted?'
+    type: boolean
+  isEdited:
+    description: 'Has the author edited this Reply?'
+    type: boolean
+  messageKey:
+    description: 'The S3 key where the actual message stored'
+    type: string
+  modifiedOn:
+    description: 'The timestamp when this Reply was last modified'
+    type: string
+  projectId:
+    description: 'The ID of the project this Reply belongs to'
+    type: string
+  threadId:
+    description: 'The ID of the thread this Reply belongs to'
+    type: string
+title: DiscussionReplyBundle
+type: object

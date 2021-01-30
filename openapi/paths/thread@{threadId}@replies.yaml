@@ -1,0 +1,67 @@
+parameters:
+  - description: 'The ID of a thread.'
+    in: path
+    name: threadId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    This API is used to get N number of replies for a given thread ID.
+
+    Target users: anyone who has READ permission to the project.
+  operationId: getRepliesForThread
+  parameters:
+  - description: 'The direction of sort: true for ascending, and false for descending'
+    in: query
+    name: ascending
+    schema:
+      type: boolean
+  - description: Filter deleted not deleted replies.
+    in: query
+    name: filter
+    required: true
+    schema:
+      enum:
+      - DELETED_ONLY
+      - EXCLUDE_DELETED
+      - NO_FILTER
+      type: string
+  - description: |
+      Limits the size of the page returned. For example, a page size
+      of 10 require limit = 10.
+    in: query
+    name: limit
+    schema:
+      type: integer
+      maximum: 100
+      default: 10
+      minimum: 0
+  - description: |
+      The index of the pagination offset. For a page size of 10, the
+      first page would be at offset = 0, and the second page would be at offset =
+      10.'
+    in: query
+    name: offset
+    schema:
+      type: integer
+      default: 0
+      minimum: 0
+  - description: |
+      The field to sort the resulting replies on.
+    in: query
+    name: sort
+    schema:
+      enum:
+      - CREATED_ON
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfDiscussionReplyBundle.yaml
+      description: Success
+  summary: Get N number of replies for a given thread ID.
+  tags:
+  - Discussion Services

@@ -1,0 +1,23 @@
+parameters:
+  - description: 'The ID of a thread.'
+    in: path
+    name: threadId
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    This API is used to restore a deleted thread.
+
+    Target users: only forum's moderator can restore a deleted thread.
+  operationId: restoreDeletedThread
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Restore a deleted thread.
+  tags:
+  - Discussion Services

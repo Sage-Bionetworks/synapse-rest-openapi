@@ -1,0 +1,29 @@
+parameters:
+  - description: 'The ID of a thread.'
+    in: path
+    name: threadId
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    This API is used to update the title of a thread.
+
+    Target users: only the author of the thread can update its title.'
+  operationId: updateThreadTitle
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/UpdateThreadTitle.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/DiscussionThreadBundle.yaml
+      description: Success
+  summary: Update the title of a Thread.
+  tags:
+  - Discussion Services
