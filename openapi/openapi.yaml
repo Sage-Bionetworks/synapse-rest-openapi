@@ -404,7 +404,8 @@ paths:
     $ref: paths/thread@{threadId}@title.yaml
   /thread/{threadId}/unpin:
     $ref: paths/thread@{threadId}@unpin.yaml
-
+  /thread/messageUrl:
+    $ref: paths/thread@messageUrl.yaml
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
   /trashcan/restore/{id}:

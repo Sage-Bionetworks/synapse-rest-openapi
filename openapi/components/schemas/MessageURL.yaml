@@ -1,0 +1,9 @@
+description: 'The URL to download the file which contains the message.'
+example:
+  messageUrl: '...'
+properties:
+  messageUrl:
+    description: 'The URL to download the file which contains the message.'
+    type: string
+title: MessageURL
+type: object
