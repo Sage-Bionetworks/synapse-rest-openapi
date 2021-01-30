@@ -1,0 +1,32 @@
+post:
+  description: |
+    Create a new FormData object. The caller will own the resulting object
+    and will have access to read, update, and delete the FormData object.
+
+    Note: The caller must have the SUBMIT permission on the FormGrup to 
+    reate/update/submit FormData.
+  operationId: createFormData
+  parameters:
+  - description: |
+      The identifier of the group that manages this data.
+    in: query
+    name: groupId
+    required: true
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/FormChangeRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FormData.yaml
+      description: Success
+  summary: Create a new FormData object.
+  tags:
+  - Form Services

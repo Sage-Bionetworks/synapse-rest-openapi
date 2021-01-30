@@ -1,0 +1,27 @@
+post:
+  description: |
+    List FormData objects and their associated status that match the filters
+    of the provided request for the entire group. This is used by service accounts
+    to review submissions. Filtering by WAITING_FOR_SUBMISSION is not allowed for
+    this call.
+
+    Note: The caller must have the READ_PRIVATE_SUBMISSION
+    permission on the identified group to update the group's ACL.
+  operationId: listFormStatusReviewer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ListRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListResponse.yaml
+      description: Success
+  summary: |
+    List FormData objects and their associated status.
+  tags:
+  - Form Services

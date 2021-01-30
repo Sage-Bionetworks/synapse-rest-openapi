@@ -1,0 +1,10 @@
+description: 'Form reviewer rejection data'
+example:
+  reason: '...'
+properties:
+  reason:
+    description: 'The reason for the rejection. Limit 500 characters or less.'
+    type: string
+    maxLength: 500
+title: FormRejection
+type: object

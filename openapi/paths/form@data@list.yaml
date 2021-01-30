@@ -1,0 +1,23 @@
+post:
+  description: |
+    List FormData objects and their associated status that match the filters
+    of the provided request that are owned by the caller. Note: Only objects owned
+    by the caller will be returned.
+  operationId: listFormStatus
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ListRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListResponse.yaml
+      description: Success
+  summary: |
+    List FormData objects and their associated status.
+  tags:
+  - Form Services

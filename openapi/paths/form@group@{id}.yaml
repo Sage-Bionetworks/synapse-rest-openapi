@@ -1,0 +1,23 @@
+parameters:
+  - in: path
+    name: id
+    description: The ID to the FormGroup.
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get a FormGroup with the provided ID.
+
+    Note: The caller must have the READ permission on the identified group.
+  operationId: getFormGroup
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FormGroup.yaml
+      description: Success
+  summary: Get a FormGroup with the provided ID.
+  tags:
+  - Form Services

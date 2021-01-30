@@ -1,0 +1,30 @@
+post:
+  description: |
+    Create a FormGroup with the provided name. This method is idempotent.
+    If a group with the provided name already exists and the caller has READ
+    permission the existing FormGroup will be returned.
+
+    The created FormGroup will have an Access Control List (ACL)
+    with the creator listed as an administrator.
+  operationId: createGroup
+  parameters:
+  - description: |
+      A globally unique name for the group. Required. Between 3 and
+      256 characters.
+    in: query
+    name: name
+    required: true
+    schema:
+      type: string
+      maxLength: 256
+      minLength: 3
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FormGroup.yaml
+      description: Success
+  summary: Create a FormGroup with the provided name.
+  tags:
+  - Form Services

@@ -1,0 +1,8 @@
+description: 'The enumeration of possible FormData submission states.'
+enum:
+- WAITING_FOR_SUBMISSION
+- SUBMITTED_WAITING_FOR_REVIEW
+- ACCEPTED
+- REJECTED
+title: StateEnum
+type: string
