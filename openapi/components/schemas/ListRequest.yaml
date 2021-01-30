@@ -1,0 +1,25 @@
+description: 'Request for a list of FormData matching the provided filters.'
+example:
+  filterByState:
+  - SUBMITTED_WAITING_FOR_REVIEW
+  - ACCEPTED
+  groupId: '...'
+  nextPageToken: '...'
+properties:
+  filterByState:
+    description: |
+      Only return results with a state that matches elements from this set.
+      Required. Must include at least one element.
+    items:
+      $ref: '../definitions/StateEnum.yaml'
+    type: array
+  groupId:
+    description: 'The group identifier. Required.'
+    type: string
+  nextPageToken:
+    description: |
+      The results are automatically paginated. To get the next page,
+      forward the nextPageToken returned from the last request.
+    type: string
+title: ListRequest
+type: object

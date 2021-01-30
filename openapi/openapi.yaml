@@ -340,6 +340,8 @@ paths:
     $ref: paths/form@data@{id}@reject.yaml
   /form/data/{id}/submit:
     $ref: paths/form@data@{id}@submit.yaml
+  /form/data/list:
+    $ref: paths/form@data@list.yaml
 
   /team:
     $ref: paths/team.yaml
