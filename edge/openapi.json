@@ -35,6 +35,10 @@
       "description": "A Challenge is a special object that supplements a project, providing additional features\nspecific to challenges.\n"
     },
     {
+      "name": "Discussion Services",
+      "description": "Discussions in Synapse are captured in the Project's Forum.\nEach Project has a Forum. Each Forum has a set of Moderators.\nThe Moderators manage the content of the Forum.\n"
+    },
+    {
       "name": "Docker Commit Services",
       "description": "These services relate to the 'commits' to Docker repositories.\nNote that create, update and delete of the Docker repositories themselves\nare done using the Entity Services, for external/unmanaged repositories,\nor by direct integration with the Docker registry, for managed Docker\nrepositories. Tagged commits for both managed and external/unmanaged repositories\nmay be retrieved using the 'listDockerTags' API included in this service.\n"
     },
@@ -2875,6 +2879,742 @@
         "summary": "This API is used to get N number of threads that belongs to projects user\ncan view and references the given entity.\n",
         "tags": [
           "Discussion Services"
+        ]
+      }
+    },
+    "/entity/{id}/type": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the EntityHeader of an Entity given its ID. The EntityHeader is\na light weight object with basic information about an Entity includes its type.\n",
+        "operationId": "getEntityType",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityHeader"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the EntityHeader of an Entity given its ID.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/{id}/version": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get all versions of an Entity one page at a time.",
+        "operationId": "getAllVersionsOfEntity",
+        "parameters": [
+          {
+            "description": "Limits the number of entities that will be fetched for\nthis page. When null it will default to 10.\n",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 10,
+              "type": "integer",
+              "minimum": 10
+            }
+          },
+          {
+            "description": "The offset index determines where this page will start\nfrom. When null it will default to 0.\n",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfVersionInfo"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get all versions of an Entity one page at a time.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/{id}/version/{versionNumber}": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The version number of the Entity.",
+          "in": "path",
+          "name": "versionNumber",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "delete": {
+        "description": "Delete a specific version of a FileEntity.",
+        "operationId": "deleteEntityVersion",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "204": {
+            "description": "The resource has been deleted."
+          }
+        },
+        "summary": "Delete a specific version of a FileEntity.",
+        "tags": [
+          "Entity Services"
+        ]
+      },
+      "get": {
+        "description": "Get a specific version of an Entity.\n\nNote: Only the current version of the Entity can be used for an Entity\nupdate. Therefore, only the current version of the Entity will be returned\nwith the actual etag. All older versions will be returned with an eTag\n'00000000-0000-0000-0000-000000000000'.\n",
+        "operationId": "getEntityForVersion",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entity"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get a specific version of an Entity.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/{id}/version/{versionNumber}/annotations2": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The version number of the Entity.",
+          "in": "path",
+          "name": "versionNumber",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get an Entity's annotations for a specific version of a FileEntity.",
+        "operationId": "getEntityAnnotationsV2ForVersion",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Annotations_v2"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get an Entity's annotations for a specific version of a FileEntity.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/{id}/version/{versionNumber}/bundle2": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The version number of the Entity.",
+          "in": "path",
+          "name": "versionNumber",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "post": {
+        "description": "Get an entity at a specific version and its related data with a single POST.",
+        "operationId": "getEntityBundle2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityBundleRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityBundle_v2"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get an entity at a specific version and its related data with a single\nPOST.\n",
+        "tags": [
+          "Entity Bundle V2 Services"
+        ]
+      }
+    },
+    "/entity/{id}/version/{versionNumber}/filehandle": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The version number of the Entity.",
+          "in": "path",
+          "name": "versionNumber",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "put": {
+        "description": "Updates the FileHandle associated with the FileEntity\nwith the provided entity id and version.\n",
+        "operationId": "updateEntityFileHandle",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FileHandleUpdateRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Updates the filehandle.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/{id}/version/{versionNumber}/filehandles": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The version number of the Entity.",
+          "in": "path",
+          "name": "versionNumber",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the FileHandles of the file associated with a specific version\nof a FileEntity.\n\nIf a preview exists for the file then the handle of the preview and the file\nwill be returned with this call.\n",
+        "operationId": "getEntityFileHandlesForVersion",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileHandleResults"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the FileHandles of the file associated with a specific version of\na FileEntity.\n",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/{id}/version/{versionNumber}/filepreview": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The version number of the Entity.",
+          "in": "path",
+          "name": "versionNumber",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get the URL of the preview file associated with a specific version\nof a FileEntity.\n\nNote: This call will result in a HTTP temporary redirect (307), to the actual\nfile URL if the caller meets all of the download requirements.\n",
+        "operationId": "filePreviewRedirectUrlForVersion",
+        "parameters": [
+          {
+            "description": "When set to false, the URL will be returned as\ntext/plain instead of redirecting.\n",
+            "in": "query",
+            "name": "redirect",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the URL of the preview file associated with a specific version of\na FileEntity.\n",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/{id}/version/{versionNumber}/generatedBy": {
+      "parameters": [
+        {
+          "description": "The ID of the Entity.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "The version number of the Entity.",
+          "in": "path",
+          "name": "versionNumber",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "description": "Get an existing activity for a specific version of an Entity.",
+        "operationId": "getActivityForEntityVersion",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "description": "Get an existing activity for a specific version of an Entity.",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activity"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get an existing activity for a specific version of an Entity.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/alias/{alias}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "alias",
+          "description": "Alias of an Entity",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Lookup an Entity ID using an alias.",
+        "operationId": "getEntityIdByAlias",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityId"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Lookup an Entity ID using an alias.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/bundle2/create": {
+      "post": {
+        "description": "Create an entity and associated components with a single POST.\nSpecifically, this operation supports creation of an Entity, its\nAnnotations, and its ACL.\n\nUpon successful creation, an EntityBundle is returned containing the\nrequested components, as defined by the partsMask in the request object.'\n",
+        "operationId": "createEntityBundle2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "generatedBy",
+            "description": "Generated By",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityBundleCreate_v2"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityBundle_v2"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Create an entity and associated components with a single POST.",
+        "tags": [
+          "Entity Bundle V2 Services"
+        ]
+      }
+    },
+    "/entity/child": {
+      "post": {
+        "description": "Retrieve an entityId for a given parent ID and entity name. This service\ncan also be used to lookup projectId by setting the parentId to NULL in\nEntityLookupRequest.\n",
+        "operationId": "lookupChild",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityLookupRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityId"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve an entityId for a given parent ID and entity name.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/children": {
+      "post": {
+        "description": "Get a page of children for a given parent ID. This service can also\nbe used to list projects by setting the parentId to NULL in EntityChildrenRequest.\n",
+        "operationId": "getChildren",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityChildrenRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityChildrenResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get a page of children for a given parent ID.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/header": {
+      "post": {
+        "description": "Get the EntityHeader for a list of references with a POST. If any\nitem in the batch fails (e.g., with a 404) it will be EXCLUDED in the result set.\n",
+        "operationId": "getEntityVersionedTypeBatch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceList"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfEntityHeader"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get the EntityHeader for a list of references with a POST.",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/md5/{md5}": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "File MD5",
+          "name": "md5",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Gets at most 200 FileEntities matching the given MD5 string which\nthe user has read access to.\nNOTE: Another option is to create a file view that includes\nMD5 values. https://docs.synapse.org/articles/views.html\n",
+        "operationId": "getEntityHeaderByMd5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfEntityHeader"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Gets FileEntities matching the given MD5 string which the\nuser has read access to.\n",
+        "tags": [
+          "Entity Services"
+        ]
+      }
+    },
+    "/entity/threadcounts": {
+      "post": {
+        "description": "This API is used to get list of entity and count pairs, with count\nis the number of threads that belong to projects user can view and references\nthe given entity.\n\nTarget users: anyone who has READ permission to the project.\n",
+        "operationId": "getThreadCounts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityIdList"
+              }
+            }
+          },
+          "description": "The requested list. Limit size 20.",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityThreadCounts"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get number of threads that belong to projects user can view and references\nthe given entity.\n",
+        "tags": [
+          "Discussion Services"
+        ]
+      }
+    },
+    "/entity/type": {
+      "get": {
+        "description": "Get a batch of EntityHeader given multile Entity IDs. The EntityHeader\nis a light weight object with basic information about an Entity includes its type.\n",
+        "operationId": "getEntityTypeBatch",
+        "parameters": [
+          {
+            "description": "A comma separated list of Entity IDs to get EntityHeaders\nfor.\n",
+            "in": "query",
+            "name": "batch",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResultsOfEntityHeader"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get a batch of EntityHeader given multile Entity IDs.",
+        "tags": [
+          "Entity Services"
         ]
       }
     },
@@ -10184,6 +10924,429 @@
           }
         },
         "title": "PaginatedResultsOfDiscussionThreadBundle",
+        "type": "object"
+      },
+      "VersionInfo": {
+        "description": "JSON schema for VersionInfo POJO",
+        "example": {
+          "contentMd5": "...",
+          "contentSize": "...",
+          "id": "...",
+          "modifiedBy": "...",
+          "modifiedByPrincipalId": "...",
+          "modifiedOn": "...",
+          "versionComment": "...",
+          "versionLabel": "...",
+          "versionNumber": 12345
+        },
+        "properties": {
+          "contentMd5": {
+            "description": "Calculated md5 of the associated file (when applicable and available).",
+            "type": "string"
+          },
+          "contentSize": {
+            "description": "The size of the associated file (when applicable and available).",
+            "type": "string"
+          },
+          "id": {
+            "description": "The id of the entity",
+            "type": "string"
+          },
+          "modifiedBy": {
+            "description": "The display name of the user that last modified this entity.",
+            "type": "string"
+          },
+          "modifiedByPrincipalId": {
+            "description": "The user that last modified this entity.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date this entity was last modified.",
+            "type": "string"
+          },
+          "versionComment": {
+            "description": "The user defined version label of the entity",
+            "type": "string"
+          },
+          "versionLabel": {
+            "description": "The user defined version label of the entity",
+            "type": "string"
+          },
+          "versionNumber": {
+            "description": "The version number of the entity",
+            "type": "integer"
+          }
+        },
+        "title": "VersionInfo",
+        "type": "object"
+      },
+      "PaginatedResultsOfVersionInfo": {
+        "description": "JSON schema for Row POJO",
+        "example": {
+          "results": [
+            {
+              "contentMd5": "...",
+              "contentSize": "...",
+              "id": "...",
+              "modifiedBy": "...",
+              "modifiedByPrincipalId": "...",
+              "modifiedOn": "...",
+              "versionComment": "...",
+              "versionLabel": "...",
+              "versionNumber": 12345
+            },
+            {
+              "contentMd5": "...",
+              "contentSize": "...",
+              "id": "...",
+              "modifiedBy": "...",
+              "modifiedByPrincipalId": "...",
+              "modifiedOn": "...",
+              "versionComment": "...",
+              "versionLabel": "...",
+              "versionNumber": 12345
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "Page of version info",
+            "items": {
+              "$ref": "#/components/schemas/VersionInfo"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "$ref": "#/components/schemas/TotalNumberOfResults"
+          }
+        },
+        "title": "PaginatedResultsOfVersionInfo",
+        "type": "object"
+      },
+      "FileHandleUpdateRequest": {
+        "description": "Reuqest that can be used to update the file handle of an FileEntity",
+        "example": {
+          "newFileHandleId": "...",
+          "oldFileHandleId": "..."
+        },
+        "properties": {
+          "newFileHandleId": {
+            "description": "The id of the new file handle to be associated with the FileEntity.\nThe user performing the request must be the owner of the file handle.\n",
+            "type": "string"
+          },
+          "oldFileHandleId": {
+            "description": "The id of the file handle currently associated to the FileEntity.\nUsed to avoid conflicting cuncurrent updates, if the id does not match\nthe current file handle id the request will be rejected with a\nPRECONDITION_FAILED (412) response.\n",
+            "type": "string"
+          }
+        },
+        "title": "FileHandleUpdateRequest",
+        "type": "object"
+      },
+      "EntityId": {
+        "description": "JSON schema for EntityId POJO",
+        "example": {
+          "id": "..."
+        },
+        "properties": {
+          "id": {
+            "description": "The id of an entity.",
+            "type": "string"
+          }
+        },
+        "title": "EntityId",
+        "type": "object"
+      },
+      "EntityLookupRequest": {
+        "description": "A request to look up an entity given parentId and the entity name.",
+        "example": {
+          "entityName": "...",
+          "parentId": "..."
+        },
+        "properties": {
+          "entityName": {
+            "description": "The entity name",
+            "type": "string"
+          },
+          "parentId": {
+            "description": "The parentID",
+            "type": "string"
+          }
+        },
+        "title": "EntityLookupRequest",
+        "type": "object"
+      },
+      "SortBy": {
+        "description": "How results should be sorted.",
+        "enum": [
+          "NAME",
+          "CREATED_ON",
+          "MODIFIED_ON"
+        ],
+        "title": "SortBy",
+        "type": "string"
+      },
+      "EntityChildrenRequest": {
+        "description": "Request for EntityHeaders of the children of a given parent Entity",
+        "example": {
+          "includeSumFileSizes": true,
+          "includeTotalChildCount": true,
+          "includeTypes": [
+            "entityview",
+            "project"
+          ],
+          "nextPageToken": "...",
+          "parentId": "...",
+          "sortBy": "CREATED_ON",
+          "sortDirection": "DESC"
+        },
+        "properties": {
+          "includeSumFileSizes": {
+            "description": "When true, the sum of the files sizes (bytes) with the given parentId and types will be included. False by default",
+            "type": "boolean",
+            "default": false
+          },
+          "includeTotalChildCount": {
+            "description": "When true, the total number of children with the givenparentId and types will be included. False by default",
+            "type": "boolean",
+            "default": false
+          },
+          "includeTypes": {
+            "description": "The types of children to be include. Must include at least one type.",
+            "items": {
+              "$ref": "#/components/schemas/EntityType"
+            },
+            "type": "array"
+          },
+          "nextPageToken": {
+            "description": "Optional parameter used to fetch the next page of results. When NULL, the first page will be returned. The nextPageToken is provided with the results if there is another page of results.",
+            "type": "string"
+          },
+          "parentId": {
+            "description": "The ID of the parent. Set to null to list projects.",
+            "type": "string"
+          },
+          "sortBy": {
+            "$ref": "#/components/schemas/SortBy"
+          },
+          "sortDirection": {
+            "$ref": "#/components/schemas/SortDirection"
+          }
+        },
+        "title": "EntityChildrenRequest",
+        "type": "object"
+      },
+      "EntityChildrenResponse": {
+        "description": "Response of EntityHeaders for the children of a given parent Entity",
+        "example": {
+          "nextPageToken": "...",
+          "page": [
+            {
+              "benefactorId": 12345,
+              "createdBy": "...",
+              "createdOn": "...",
+              "id": "...",
+              "modifiedBy": "...",
+              "modifiedOn": "...",
+              "name": "...",
+              "type": "...",
+              "versionLabel": "...",
+              "versionNumber": 12345
+            },
+            {
+              "benefactorId": 12345,
+              "createdBy": "...",
+              "createdOn": "...",
+              "id": "...",
+              "modifiedBy": "...",
+              "modifiedOn": "...",
+              "name": "...",
+              "type": "...",
+              "versionLabel": "...",
+              "versionNumber": 12345
+            }
+          ],
+          "sumFileSizesBytes": 12345,
+          "totalChildCount": 12345
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "Token that can be used to get the next page. Null if there are no more results.",
+            "type": "string"
+          },
+          "page": {
+            "description": "The headers of each child.",
+            "items": {
+              "$ref": "#/components/schemas/EntityHeader"
+            },
+            "type": "array"
+          },
+          "sumFileSizesBytes": {
+            "description": "The sum of the file sizes (bytes) with the requested parentId and types. Only returned if requested.",
+            "type": "integer"
+          },
+          "totalChildCount": {
+            "description": "The total number of children with the requested parentId and types. Only returned if requested.",
+            "type": "integer"
+          }
+        },
+        "title": "EntityChildrenResponse",
+        "type": "object"
+      },
+      "Reference": {
+        "description": "JSON schema for Reference POJO",
+        "example": {
+          "targetId": "...",
+          "targetVersionNumber": 12345
+        },
+        "properties": {
+          "targetId": {
+            "description": "The the id of the entity to which this reference refers",
+            "type": "string"
+          },
+          "targetVersionNumber": {
+            "description": "The version number of the entity to which this reference refers",
+            "type": "number"
+          }
+        },
+        "title": "Reference",
+        "type": "object"
+      },
+      "ReferenceList": {
+        "description": "An array of Reference objects",
+        "example": {
+          "references": [
+            {
+              "targetId": "...",
+              "targetVersionNumber": 12345
+            },
+            {
+              "targetId": "...",
+              "targetVersionNumber": 12345
+            }
+          ]
+        },
+        "properties": {
+          "references": {
+            "description": "The list of references",
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            },
+            "type": "array"
+          }
+        },
+        "title": "ReferenceList",
+        "type": "object"
+      },
+      "PaginatedResultsOfEntityHeader": {
+        "description": "Page of Entity Headers.",
+        "example": {
+          "results": [
+            {
+              "benefactorId": 12345,
+              "createdBy": "...",
+              "createdOn": "...",
+              "id": "...",
+              "modifiedBy": "...",
+              "modifiedOn": "...",
+              "name": "...",
+              "type": "...",
+              "versionLabel": "...",
+              "versionNumber": 12345
+            },
+            {
+              "benefactorId": 12345,
+              "createdBy": "...",
+              "createdOn": "...",
+              "id": "...",
+              "modifiedBy": "...",
+              "modifiedOn": "...",
+              "name": "...",
+              "type": "...",
+              "versionLabel": "...",
+              "versionNumber": 12345
+            }
+          ],
+          "totalNumberOfResults": 12345
+        },
+        "properties": {
+          "results": {
+            "description": "A page of entity headers.",
+            "items": {
+              "$ref": "#/components/schemas/EntityHeader"
+            },
+            "type": "array"
+          },
+          "totalNumberOfResults": {
+            "$ref": "#/components/schemas/TotalNumberOfResults"
+          }
+        },
+        "title": "PaginatedResultsOfEntityHeader",
+        "type": "object"
+      },
+      "EntityIdList": {
+        "description": "List of Entity Ids",
+        "example": {
+          "idList": [
+            "...",
+            "..."
+          ]
+        },
+        "properties": {
+          "idList": {
+            "description": "List of Entity Ids",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "EntityIdList",
+        "type": "object"
+      },
+      "EntityThreadCount": {
+        "description": "The model object represents the number of threads that mentioned a particular entity.",
+        "example": {
+          "count": 12345,
+          "entityId": "..."
+        },
+        "properties": {
+          "count": {
+            "description": "The number of threads that the current user can view.",
+            "type": "number"
+          },
+          "entityId": {
+            "description": "The ID of an Entity.",
+            "type": "string"
+          }
+        },
+        "title": "EntityThreadCount",
+        "type": "object"
+      },
+      "EntityThreadCounts": {
+        "description": "The model object represents a list of EntityThreadCounts",
+        "example": {
+          "list": [
+            {
+              "count": 12345,
+              "entityId": "..."
+            },
+            {
+              "count": 12345,
+              "entityId": "..."
+            }
+          ]
+        },
+        "properties": {
+          "list": {
+            "description": "List of Entity Thread Counts.",
+            "items": {
+              "$ref": "#/components/schemas/EntityThreadCount"
+            },
+            "type": "array"
+          }
+        },
+        "title": "EntityThreadCounts",
         "type": "object"
       },
       "EvaluationRoundLimitType": {
