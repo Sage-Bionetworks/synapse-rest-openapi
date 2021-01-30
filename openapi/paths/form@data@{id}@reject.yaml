@@ -27,4 +27,4 @@ put:
       description: Success
   summary: Called by the form reviewing service to reject a submitted data.
   tags:
-  - FormController
+  - Form Services
