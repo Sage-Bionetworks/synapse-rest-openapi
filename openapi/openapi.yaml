@@ -398,6 +398,8 @@ paths:
     $ref: paths/thread@{threadId}@replies.yaml
   /thread/{threadId}/replycount:
     $ref: paths/thread@{threadId}@replycount.yaml
+  /thread/{threadId}/restore:
+    $ref: paths/thread@{threadId}@restore.yaml
 
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
