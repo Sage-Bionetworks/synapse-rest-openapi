@@ -10,7 +10,7 @@ parameters:
     name: versionNumber
     required: true
     schema:
-      type: number
+      type: integer
 delete:
   description: Delete a specific version of a FileEntity.
   operationId: deleteEntityVersion
