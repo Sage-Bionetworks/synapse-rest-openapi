@@ -1,0 +1,13 @@
+description: 'The model object represents the number of threads that mentioned a particular entity.'
+example:
+  count: 12345
+  entityId: '...'
+properties:
+  count:
+    description: 'The number of threads that the current user can view.'
+    type: number
+  entityId:
+    description: 'The ID of an Entity.'
+    type: string
+title: EntityThreadCount
+type: object

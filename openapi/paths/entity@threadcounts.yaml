@@ -1,0 +1,27 @@
+post:
+  description: |
+    This API is used to get list of entity and count pairs, with count
+    is the number of threads that belong to projects user can view and references
+    the given entity.
+
+    Target users: anyone who has READ permission to the project.
+  operationId: getThreadCounts
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/EntityIdList.yaml'
+    description: 'The requested list. Limit size 20.'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EntityThreadCounts.yaml
+      description: Success
+  summary: | 
+    Get number of threads that belong to projects user can view and references
+    the given entity.
+  tags:
+  - Discussion Services

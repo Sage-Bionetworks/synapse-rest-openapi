@@ -1,0 +1,13 @@
+description: 'List of Entity Ids'
+example:
+  idList:
+  - '...'
+  - '...'
+properties:
+  idList:
+    description: 'List of Entity Ids'
+    items:
+      type: string
+    type: array
+title: EntityIdList
+type: object

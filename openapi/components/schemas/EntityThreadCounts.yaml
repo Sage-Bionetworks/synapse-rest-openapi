@@ -1,0 +1,15 @@
+description: 'The model object represents a list of EntityThreadCounts'
+example:
+  list:
+  - count: 12345
+    entityId: '...'
+  - count: 12345
+    entityId: '...'
+properties:
+  list:
+    description: 'List of Entity Thread Counts.'
+    items:
+      $ref: 'EntityThreadCount.yaml'
+    type: array
+title: EntityThreadCounts
+type: object
