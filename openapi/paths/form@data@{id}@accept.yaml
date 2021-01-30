@@ -1,0 +1,24 @@
+parameters:
+  - description: The ID of the FormData.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    Called by the form reviewing service to accept a submitted data.
+
+    Note: The caller must have the READ_PRIVATE_SUBMISSION
+    permission on the identified group to update the group's ACL.
+  operationId: reviewerAcceptForm
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FormData.yaml
+      description: Success
+  summary: Called by the form reviewing service to accept a submitted data.
+  tags:
+  - Form Services

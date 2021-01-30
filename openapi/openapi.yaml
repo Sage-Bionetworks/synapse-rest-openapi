@@ -334,6 +334,8 @@ paths:
     $ref: paths/form@data.yaml
   /form/data/{id}:
     $ref: paths/form@data@{id}.yaml
+  /form/data/{id}/accept:
+    $ref: paths/form@data@{id}@accept.yaml
 
   /team:
     $ref: paths/team.yaml
