@@ -251,6 +251,8 @@ paths:
     $ref: paths/entity@{id}@threads.yaml
   /entity/{id}/type:
     $ref: paths/entity@{id}@type.yaml
+  /entity/{id}/version:
+    $ref: paths/entity@{id}@version.yaml
 
   /evaluation:
     $ref: paths/evaluation.yaml
