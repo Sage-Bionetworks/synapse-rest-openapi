@@ -402,6 +402,8 @@ paths:
     $ref: paths/thread@{threadId}@restore.yaml
   /thread/{threadId}/title:
     $ref: paths/thread@{threadId}@title.yaml
+  /thread/{threadId}/unpin:
+    $ref: paths/thread@{threadId}@unpin.yaml
 
   /trashcan/purge/{id}:
     $ref: paths/trashcan@purge@{id}.yaml
