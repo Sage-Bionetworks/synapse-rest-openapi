@@ -1,0 +1,27 @@
+parameters:
+  - description: Forward the token returned when the job was started.
+    in: path
+    name: asyncToken
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the results of an asynchronous job that was started to compile
+    a 'validation' schema for a JSON schema.
+
+    Note: If the job has not completed, this method will return a status code of
+    202 (ACCEPTED) and the response body will be a AsynchronousJobStatus object.
+  operationId: getValidationSchemaResults
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetValidationSchemaResponse.yaml
+      description: Success
+  summary: |
+    Get the results of an asynchronous job that was started to compile a
+    'validation' schema for a JSON schema.
+  tags:
+  - Json Schema Services
