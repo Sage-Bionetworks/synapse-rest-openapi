@@ -1,0 +1,14 @@
+description: 'Request to list a single page of JsonSchemaInfo for the given organization name.'
+example:
+  nextPageToken: '...'
+  organizationName: '...'
+properties:
+  nextPageToken:
+    description: |
+      Forward the returned 'nextPageToken' to get the next page of results.
+    type: string
+  organizationName:
+    description: 'The name of the Organization to list schemas for.'
+    type: string
+title: ListJsonSchemaInfoRequest
+type: object

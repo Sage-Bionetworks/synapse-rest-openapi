@@ -42,8 +42,8 @@ properties:
     type: string
   name:
     description: |
-      The name of this entity. Must be 256 characters or less. Names may
-      only contain: letters, numbers, spaces, underscores, hyphens, periods,
+      The name of this entity. Names may only contain:
+      letters, numbers, spaces, underscores, hyphens, periods,
       plus signs, apostrophes, and parentheses
     type: string
     maxLength: 256

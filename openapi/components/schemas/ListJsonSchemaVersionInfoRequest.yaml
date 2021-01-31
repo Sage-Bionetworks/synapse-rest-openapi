@@ -1,0 +1,18 @@
+description: 'Request to get a single page of schema version metadata for the given organization and schema name.'
+example:
+  nextPageToken: '...'
+  organizationName: '...'
+  schemaName: '...'
+properties:
+  nextPageToken:
+    description: |
+      Forward the returned 'nextPageToken' to get the next page of results.
+    type: string
+  organizationName:
+    description: 'The name of the Organization.'
+    type: string
+  schemaName:
+    description: 'The name of the JsonSchema to list versions to list schemas for.'
+    type: string
+title: ListJsonSchemaVersionInfoRequest
+type: object

@@ -1,0 +1,29 @@
+description: 'Information about a single JSON schema.'
+example:
+  createdBy: '...'
+  createdOn: '...'
+  organizationId: '...'
+  organizationName: '...'
+  schemaId: '...'
+  schemaName: '...'
+properties:
+  createdBy:
+    description: 'The ID of the user that created this JsonSchema.'
+    type: string
+  createdOn:
+    description: 'The date this JsonSchema was created.'
+    type: string
+  organizationId:
+    description: 'The Synapse identifier issued to the Organization to which this JsonSchema belongs.'
+    type: string
+  organizationName:
+    description: 'The name of the Organization to which this JsonSchema belongs.'
+    type: string
+  schemaId:
+    description: 'The Synapse identifier issued to the JsonSchema.'
+    type: string
+  schemaName:
+    description: 'The name of the JsonSchema.'
+    type: string
+title: JsonSchemaInfo
+type: object

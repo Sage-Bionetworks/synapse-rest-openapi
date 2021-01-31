@@ -1,0 +1,21 @@
+post:
+  description: |
+    List all JSON schemas for an Organization. Each call will return a
+    single page of schemas. Forward the provided nextPageToken to get the next page.
+  operationId: listJsonSchemas
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ListJsonSchemaInfoRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListJsonSchemaInfoResponse.yaml
+      description: Success
+  summary: List all JSON schemas for an Organization.
+  tags:
+  - Json Schema Services

@@ -1,0 +1,25 @@
+parameters:
+  - description: The ID of the Organization.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Delete the identified Organization. All schemas defined within the
+    Organization''s name-space must first be deleted before an Organization can be
+    deleted.
+
+    Note: The caller must be granted the DELETE permission on the Organization.
+  operationId: deleteOrganization
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Delete the identified Organization.
+  tags:
+  - Json Schema Services

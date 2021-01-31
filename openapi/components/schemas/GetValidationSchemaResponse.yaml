@@ -1,0 +1,9 @@
+description: 'Response body containing the resulting compiled validation schema.'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  validationSchema:
+    $ref: 'JsonSchema.yaml'
+title: GetValidationSchemaResponse
+type: object

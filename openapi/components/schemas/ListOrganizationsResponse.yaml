@@ -1,0 +1,23 @@
+description: 'A single page of the currently registered Organizations'
+example:
+  nextPageToken: '...'
+  page:
+  - createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    name: '...'
+  - createdBy: '...'
+    createdOn: '...'
+    id: '...'
+    name: '...'
+properties:
+  nextPageToken:
+    description: 'Forward this token to get the next page of results.'
+    type: string
+  page:
+    description: 'Page of Organizations.'
+    items:
+      $ref: 'Organization.yaml'
+    type: array
+title: ListOrganizationsResponse
+type: object
