@@ -1,0 +1,31 @@
+post:
+  description: |
+    To use a JSON schema for validation, the JSON schema plus all of its
+    dependency schemas must be provided to a JSON schema validator. The
+    'validation' schema is simply a JSON schema with all of its dependencies
+    added to the 'definitions' section of the schema, making the schema
+    self-contained.
+
+    Use this call to start an asynchronous job that will compile the 'validation'
+    schema for a given JSON schema $id.
+
+    To monitor the progress of the job and to get the final results use:
+    GET /schema/type/validation/async/get/{asyncToken}
+  operationId: startGetValidationSchema
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/GetValidationSchemaRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AsyncJobId.yaml
+      description: Success
+  summary: |
+    Start validating JSON schema
+  tags:
+  - Json Schema Services

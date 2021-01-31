@@ -413,6 +413,8 @@ paths:
     $ref: paths/schema@type@registered@{id}.yaml
   /schema/type/validation/async/get/{asyncToken}:
     $ref: paths/schema@type@validation@async@get@{asyncToken}.yaml
+  /schema/type/validation/async/start:
+    $ref: paths/schema@type@validation@async@start.yaml
 
   /team:
     $ref: paths/team.yaml
