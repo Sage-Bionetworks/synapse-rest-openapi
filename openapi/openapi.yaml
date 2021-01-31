@@ -407,6 +407,8 @@ paths:
     $ref: paths/schema@organization@list.yaml
   /schema/type/create/async/get/{asyncToken}:
     $ref: paths/schema@type@create@async@get@{asyncToken}.yaml
+  /schema/type/create/async/start:
+    $ref: paths/schema@type@create@async@start.yaml
 
   /team:
     $ref: paths/team.yaml
