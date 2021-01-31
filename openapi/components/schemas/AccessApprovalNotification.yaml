@@ -1,0 +1,20 @@
+description: 'Information about the a notification for an access approval.'
+example:
+  notificationType: FIRST_RENEWAL_REMINDER
+  recipientId: 12345
+  requirementId: 12345
+  sentOn: '...'
+properties:
+  notificationType:
+    $ref: '../definitions/NotificationType.yaml'
+  recipientId:
+    description: 'The id of the recipient.'
+    type: number
+  requirementId:
+    description: 'The id of the access requirement.'
+    type: number
+  sentOn:
+    description: 'When the notification was sent.'
+    type: string
+title: AccessApprovalNotification
+type: object

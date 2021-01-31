@@ -1,0 +1,7 @@
+description: 'Access Restriction Notification Type'
+enum:
+- REVOCATION
+- FIRST_RENEWAL_REMINDER
+- SECOND_RENEWAL_REMINDER
+title: NotificationType
+type: string

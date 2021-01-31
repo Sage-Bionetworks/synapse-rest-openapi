@@ -1,0 +1,18 @@
+put:
+  description: |
+    Revoke a group of accessors.
+
+    Only ACT can perform this action.
+  operationId: revokeGroup
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessorGroupRevokeRequest.yaml'
+    required: false
+  responses:
+    204:
+      description: Success
+  summary: Revoke a group of accessors.
+  tags:
+  - Access Approval Services
