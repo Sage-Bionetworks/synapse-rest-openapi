@@ -1,0 +1,35 @@
+description: 'A single page of schema version metadata for the provided organization and schema name'
+example:
+  nextPageToken: '...'
+  page:
+  - $id: '...'
+    createdBy: '...'
+    createdOn: '...'
+    jsonSHA256Hex: '...'
+    organizationId: '...'
+    organizationName: '...'
+    schemaId: '...'
+    schemaName: '...'
+    semanticVersion: '...'
+    versionId: '...'
+  - $id: '...'
+    createdBy: '...'
+    createdOn: '...'
+    jsonSHA256Hex: '...'
+    organizationId: '...'
+    organizationName: '...'
+    schemaId: '...'
+    schemaName: '...'
+    semanticVersion: '...'
+    versionId: '...'
+properties:
+  nextPageToken:
+    description: 'Forward this token to get the next page of results.'
+    type: string
+  page:
+    description: 'Page of JSON Schema version info'
+    items:
+      $ref: 'JsonSchemaVersionInfo.yaml'
+    type: array
+title: ListJsonSchemaVersionInfoResponse
+type: object

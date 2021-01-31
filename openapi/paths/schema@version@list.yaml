@@ -1,0 +1,22 @@
+post:
+  description: |
+    List the version information for each version of a given schema. Each
+    call will return a single page of results. Forward the provide nextPageToken to
+    get the next page of results.
+  operationId: listJsonSchemasVersions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ListJsonSchemaVersionInfoRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListJsonSchemaVersionInfoResponse.yaml
+      description: Success
+  summary: List the version information for each version of a given schema.
+  tags:
+  - Json Schema Services
