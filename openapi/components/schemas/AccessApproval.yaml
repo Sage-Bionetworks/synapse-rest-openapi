@@ -1,0 +1,51 @@
+description: 'JSON schema for AccessApproval POJO'
+example:
+  accessorId: '...'
+  createdBy: '...'
+  createdOn: '...'
+  etag: '...'
+  expiredOn: '...'
+  id: 12345
+  modifiedBy: '...'
+  modifiedOn: '...'
+  requirementId: 12345
+  requirementVersion: 12345
+  state: APPROVED
+  submitterId: '...'
+properties:
+  accessorId:
+    description: 'The ID of the principal (user or group) approved for access'
+    type: string
+  createdBy:
+    description: 'The user that created this object.'
+    type: string
+  createdOn:
+    description: 'The date this object was created.'
+    type: string
+  etag:
+    $ref: ../definitions/Etag.yaml
+  expiredOn:
+    description: 'The date this object will be expired.'
+    type: string
+  id:
+    description: 'The unique immutable ID'
+    type: integer
+  modifiedBy:
+    description: 'The user that last modified this object.'
+    type: string
+  modifiedOn:
+    description: 'The date this object was last modified.'
+    type: string
+  requirementId:
+    description: 'The ID of the Access Requirement.'
+    type: integer
+  requirementVersion:
+    description: 'The version of the Access Requirement.'
+    type: integer
+  state:
+    $ref: '../definitions/ApprovalState.yaml'
+  submitterId:
+    description: 'The user who performed the necessary action(s) to gain this approval.'
+    type: string
+title: AccessApproval
+type: object

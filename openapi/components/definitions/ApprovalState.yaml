@@ -1,0 +1,6 @@
+description: 'JSON enum for the state of AccessApproval'
+enum:
+- APPROVED
+- REVOKED
+title: ApprovalState
+type: string
