@@ -1,0 +1,21 @@
+post:
+  description: |
+    List all organizations. Each call will return a single page of Organizations.
+    Forward the provided nextPageToken to get the next page.
+  operationId: listOrganizations
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/ListOrganizationsRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListOrganizationsResponse.yaml
+      description: Success
+  summary: List all organizations.
+  tags:
+  - Json Schema Services

@@ -403,6 +403,8 @@ paths:
     $ref: paths/schema@organization@{id}.yaml
   /schema/organization/{id}/acl:
     $ref: paths/schema@organization@{id}@acl.yaml
+  /schema/organization/list:
+    $ref: paths/schema@organization@list.yaml
 
   /team:
     $ref: paths/team.yaml
