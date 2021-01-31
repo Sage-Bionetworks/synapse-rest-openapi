@@ -181,6 +181,8 @@ paths:
     $ref: paths/accessApproval@notifications.yaml
   /accessRequirement:
     $ref: paths/accessRequirement.yaml
+  /accessRequirement/{requirementId}:
+    $ref: paths/accessRequirement@{requirementId}.yaml
 
   /activity:
     $ref: paths/activity.yaml

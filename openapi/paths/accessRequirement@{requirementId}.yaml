@@ -1,0 +1,58 @@
+parameters:
+  - description: the ID of the requirement.
+    in: path
+    name: requirementId
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Delete an Access Requirement.
+    This service may only be used by the Synapse Access and Compliance Team.
+  operationId: deleteAccessRequirements
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Delete an Access Requirement.
+  tags:
+  - Access Requirement Services
+get:
+  description: Get an Access Requirement to an Entity, or Team based on its ID.
+  operationId: getAccessRequirement
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessRequirement.yaml
+      description: Success
+  summary: Get an Access Requirement.
+  tags:
+  - Access Requirement Services
+put:
+  description: |
+    Modify an existing Access Requirement.
+
+    This service may only be used by the Synapse Access and Compliance Team.
+  operationId: updateAccessRequirement
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessRequirement.yaml'
+    description: The modified Access Requirement.
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessRequirement.yaml
+      description: Success
+  summary: Modify an existing Access Requirement.
+  tags:
+  - Access Requirement Services
