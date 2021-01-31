@@ -60,8 +60,13 @@ tags:
     description: |
       A Challenge is a special object that supplements a project, providing additional features
       specific to challenges.
-  # - name: Data Access Services
-  #   description: "."
+  - name: Data Access Services
+    description: |
+      Some data in Synapse are governed by an ACTAccessRequirement. To gain access to
+      these data, a user must meet all requirements specified in the ACTAccessRequirement.
+
+      These services provide the APIs for users to create request to gain access to
+      controlled data, and APIs for the ACT to review and grant access to users.
   - name: Discussion Services
     description: |
       Discussions in Synapse are captured in the Project's Forum.
@@ -183,6 +188,8 @@ paths:
     $ref: paths/accessRequirement.yaml
   /accessRequirement/{requirementId}:
     $ref: paths/accessRequirement@{requirementId}.yaml
+  /accessRequirement/{requirementId}/approvedSubmissionInfo:
+    $ref: paths/accessRequirement@{requirementId}@approvedSubmissionInfo.yaml
 
   /activity:
     $ref: paths/activity.yaml

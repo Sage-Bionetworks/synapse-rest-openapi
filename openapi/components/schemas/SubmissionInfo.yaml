@@ -1,0 +1,21 @@
+description: 'Information about a request to access controlled data and its related Research Project'
+example:
+  institution: '...'
+  intendedDataUseStatement: '...'
+  modifiedOn: '...'
+  projectLead: '...'
+properties:
+  institution:
+    description: 'The institution that the research project belongs to.'
+    type: string
+  intendedDataUseStatement:
+    description: 'A few short paragraph that explains how the controlled data will be used.'
+    type: string
+  modifiedOn:
+    description: 'The date the request submission was last modified.'
+    type: string
+  projectLead:
+    description: 'The person who is leading the research project.'
+    type: string
+title: SubmissionInfo
+type: object
