@@ -1,0 +1,9 @@
+description: 'The total number of threads.'
+example:
+  count: 12345
+properties:
+  count:
+    description: 'The total number of threads.'
+    type: number
+title: ThreadCount
+type: object

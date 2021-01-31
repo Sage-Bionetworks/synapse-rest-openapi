@@ -354,6 +354,8 @@ paths:
     $ref: paths/forum@{forumId}.yaml
   /forum/{forumId}/moderators:
     $ref: paths/forum@{forumId}@moderators.yaml
+  /forum/{forumId}/threadcount:
+    $ref: paths/forum@{forumId}@threadcount.yaml
 
   /reply:
     $ref: paths/reply.yaml
