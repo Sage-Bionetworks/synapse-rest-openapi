@@ -171,6 +171,9 @@ tags:
 paths:
   /activity:
     $ref: paths/activity.yaml
+  /activity/{id}:
+    $ref: paths/activity@{id}.yaml
+
   /challenge:
     $ref: paths/challenge.yaml
   /challenge/{challengeId}:
