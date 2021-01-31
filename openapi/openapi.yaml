@@ -358,6 +358,8 @@ paths:
     $ref: paths/forum@{forumId}@threadcount.yaml
   /forum/{forumId}/threads:
     $ref: paths/forum@{forumId}@threads.yaml
+  /project/{projectId}/forum:
+    $ref: paths/project@{projectId}@forum.yaml
 
   /reply:
     $ref: paths/reply.yaml
