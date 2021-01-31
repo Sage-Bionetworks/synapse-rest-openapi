@@ -171,6 +171,9 @@ tags:
 paths:
   /accessApproval:
     $ref: paths/accessApproval.yaml
+  /accessApproval/{approvalId}:
+    $ref: paths/accessApproval@{approvalId}.yaml
+
   /activity:
     $ref: paths/activity.yaml
   /activity/{id}:
