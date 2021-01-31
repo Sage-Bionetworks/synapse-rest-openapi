@@ -1,0 +1,11 @@
+description: 'The response of a create JsonSchema request.'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  newVersionInfo:
+    $ref: 'JsonSchemaVersionInfo.yaml'
+  validationSchema:
+    $ref: 'JsonSchema.yaml'
+title: CreateSchemaResponse
+type: object

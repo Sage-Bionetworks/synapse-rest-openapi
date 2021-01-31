@@ -1,0 +1,105 @@
+description: 'The JSON schema is defined by: json-schema.org, specifically draft-07. Only features listed here are currently supported.'
+properties:
+  $id:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.8.2.2
+    type: string
+  $ref:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.8.2.4.1
+    type: string
+  $schema:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.8.1.1
+    type: string
+  _const:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.6.1.3
+    type: string
+  _else:
+    $ref: 'JsonSchema.yaml'
+  _enum:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.6.1.2
+    items:
+      type: string
+    type: array
+  _if:
+    $ref: 'JsonSchema.yaml'
+  allOf:
+    description: |
+      Use allOf to 'extend' or 'implement' one or more schemas.
+      https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.9.2.1.1
+    items:
+      $ref: 'JsonSchema.yaml'
+    type: array
+  anyOf:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.9.2.1.2
+    items:
+      $ref: 'JsonSchema.yaml'
+    type: array
+  definitions:
+    additionalProperties:
+      $ref: 'JsonSchema.yaml'
+    description: |
+      In an effort to support draft-07 implementations, we are using 'definitions'
+      instead of '$defs'.
+      https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.appendix.A
+    type: object
+  description:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-hypermedia.html#rfc.section.6.5.2'
+    type: string
+  format:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.7.3'
+    type: string
+  items:
+    $ref: 'JsonSchema.yaml'
+  maxLength:
+    description: 
+      https://tools.ietf.org/html/draft-handrews-json-schema-validation-02#section-6.3.1'
+    type: integer
+  minLength:
+    description: |
+      https://tools.ietf.org/html/draft-handrews-json-schema-validation-02#section-6.3.2'
+    type: integer
+  oneOf:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.9.2.1.3'
+    items:
+      $ref: 'JsonSchema.yaml'
+    type: array
+  pattern:
+    description: |
+      https://tools.ietf.org/html/draft-handrews-json-schema-validation-02#section-6.3.3
+    type: string
+  properties:
+    additionalProperties:
+      $ref: 'JsonSchema.yaml'
+    description: 
+      https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.9.3.2.1
+    type: object
+  required:
+    description: 
+      https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.6.5.3
+    items:
+      type: string
+    type: array
+  source:
+    description: |
+      Used to indicate that this schema is derived from another object/schema.
+      The value should be a URL reference to the original work. The 'source' is
+      solely descriptive and should have no impact on validation.
+    type: string
+  then:
+    $ref: 'JsonSchema.yaml'
+  title:
+    description: |
+      https://json-schema.org/draft/2019-09/json-schema-hypermedia.html#rfc.section.6.5.1
+    type: string
+  type:
+    $ref: '../definitions/TYPE.yaml'
+title: JsonSchema
+type: object
