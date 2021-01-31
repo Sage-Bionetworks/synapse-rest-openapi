@@ -1,0 +1,46 @@
+parameters:
+  - description: The ID of the Organization.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the AcessControlList (ACL) associated with the identified Organization.
+
+    Note: The caller must be granted the READ permission to get an Organization's ACL.
+  operationId: getOrganizationAcl
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Get the ACL associated of an Organization.
+  tags:
+  - Json Schema Services
+put:
+  description: |
+    Update the AccessControlList (ACL) for the identified Organization.
+
+    Note: The caller must be granted the CHANGE_PERMISSIONS permission to
+    update an Organization's ACL.
+  operationId: updateOrganizationAcl
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessControlList.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessControlList.yaml
+      description: Success
+  summary: Update the AccessControlList (ACL) for the identified Organization.
+  tags:
+  - Json Schema Services
