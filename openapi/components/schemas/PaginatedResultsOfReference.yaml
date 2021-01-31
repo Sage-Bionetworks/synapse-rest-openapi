@@ -1,0 +1,18 @@
+description: 'Page of References.'
+example:
+  results:
+  - targetId: '...'
+    targetVersionNumber: 12345
+  - targetId: '...'
+    targetVersionNumber: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of References'
+    items:
+      $ref: 'Reference.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfReference
+type: object

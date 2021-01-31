@@ -1,0 +1,41 @@
+parameters:
+  - description: The id of an Activity.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the Entities that were generatedBy an Activity. Returns a PaginatedResults of
+    Reference objects.
+
+    This service will return References to all generatedBy Entities,
+    regardless of whether you have access to resolve them into full
+    Entity objects.
+  operationId: getEntitiesGeneratedBy
+  parameters:
+  - in: query
+    name: limit
+    description: Limit of query
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+  - in: query
+    name: offset
+    description: Offset of query
+    schema:
+      default: 0
+      minimum: 0
+      type: integer
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfReference.yaml
+      description: Success
+  summary: 'Get the Entities that were generatedBy an Activity.'
+  tags:
+  - Activity Services

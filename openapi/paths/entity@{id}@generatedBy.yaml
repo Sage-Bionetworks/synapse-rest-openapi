@@ -9,7 +9,7 @@ delete:
   description: |
     Deletes the activity relationship for the current version of an
     Entity.
-  operationId: deleteActivity
+  operationId: deleteActivityForEntity
   requestBody:
     content:
       application/json:
@@ -24,7 +24,7 @@ delete:
   - Entity Services
 get:
   description: Get an existing activity for the current version of an Entity.
-  operationId: getActivity
+  operationId: getActivityForEntity
   requestBody:
     content:
       application/json:
@@ -48,8 +48,7 @@ put:
   parameters:
   - description: |
       The id of the activity to connect to the entity. You must
-      be the creator of the
-      <a href="${org.sagebionetworks.repo.model.provenance.Activity}">Activity</a> used here.'
+      be the creator of the Activity used here.'
     in: query
     name: generatedBy
     required: true
