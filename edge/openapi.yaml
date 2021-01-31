@@ -5630,6 +5630,206 @@ paths:
       summary: Update the ACL for a FormGroup.
       tags:
         - Form Services
+  '/forum/{forumId}':
+    parameters:
+      - description: The ID of the Forum.
+        in: path
+        name: forumId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        This API is used to get the Forum''s metadata for a given its ID.
+
+        Target users: anyone who has READ permission to the project.'
+      operationId: getForum
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forum'
+          description: Success
+      summary: |
+        Get a Forum.
+      tags:
+        - Discussion Services
+  '/forum/{forumId}/moderators':
+    parameters:
+      - description: The ID of the Forum.
+        in: path
+        name: forumId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Returns a page of moderators for a given forum ID.
+
+        Target users: anyone who has READ permission to the project.
+      operationId: getForumModerators
+      parameters:
+        - description: Limits the size of the page returned.
+          in: query
+          name: limit
+          schema:
+            type: integer
+            maximum: 100
+            default: 10
+            minimum: 10
+        - description: >
+            The index of the pagination offset. For a page size of 10, the
+
+            first page would be at offset = 0, and the second page would be at
+            offset =
+
+            10.'
+          in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedIds'
+          description: Success
+      summary: Returns a page of Forum moderators.
+      tags:
+        - Discussion Services
+  '/forum/{forumId}/threadcount':
+    parameters:
+      - description: The ID of the Forum.
+        in: path
+        name: forumId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        This API is used to get the total number of threads for a given forum
+        ID.
+
+        Target users: anyone who has READ permission to the project.
+      operationId: getThreadCount
+      parameters:
+        - description: Filter deleted or not deleted threads.
+          in: query
+          name: filter
+          schema:
+            enum:
+              - DELETED_ONLY
+              - EXCLUDE_DELETED
+              - NO_FILTER
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreadCount'
+          description: Success
+      summary: Get the total number of threads for a Forum.
+      tags:
+        - Discussion Services
+  '/forum/{forumId}/threads':
+    parameters:
+      - description: The ID of a Forum.
+        in: path
+        name: forumId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        This API is used to get N number of threads for a given forum ID.
+
+        Target users: anyone who has READ permission to the project.'
+      operationId: getThreads
+      parameters:
+        - description: 'The direction of sort: true for ascending, and false for descending'
+          in: query
+          name: ascending
+          schema:
+            type: boolean
+        - description: Filter deleted or not deleted threads.
+          in: query
+          name: filter
+          schema:
+            enum:
+              - DELETED_ONLY
+              - EXCLUDE_DELETED
+              - NO_FILTER
+            type: string
+        - description: |
+            Limits the size of the page returned. For example, a page size
+            of 10 require limit = 10.
+          in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 20
+        - description: >-
+            - The index of the pagination offset. For a page size of 10, the
+            first page would be at offset = 0, and the second page would be at
+            offset = 10.
+          in: query
+          name: offset
+          schema:
+            type: number
+            default: 0
+            minimum: 0
+        - description: The field to sort the resulting threads on.
+          in: query
+          name: sort
+          schema:
+            enum:
+              - NUMBER_OF_REPLIES
+              - NUMBER_OF_VIEWS
+              - PINNED_AND_LAST_ACTIVITY
+              - THREAD_TITLE
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfDiscussionThreadBundle'
+          description: Success
+      summary: Get N number of threads for a Forum.
+      tags:
+        - Discussion Services
+  '/project/{projectId}/forum':
+    parameters:
+      - description: The ID of a Project.
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        This API is used to get the Forum's metadata for a given project
+        ID.
+
+        Target users: anyone who has READ permission to the project.'
+      operationId: getForumByProjectId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forum'
+          description: Success
+      summary: Get the Forum of a Project.
+      tags:
+        - Discussion Services
   /reply:
     post:
       description: |
@@ -5652,6 +5852,104 @@ paths:
                 $ref: '#/components/schemas/DiscussionReplyBundle'
           description: Success
       summary: Create a new reply to a thread.
+      tags:
+        - Discussion Services
+  '/reply/{replyId}':
+    parameters:
+      - description: The ID of the Reply.
+        in: path
+        name: replyId
+        required: true
+        schema:
+          type: string
+    delete:
+      description: |
+        This API is used to mark a reply as deleted.
+
+        Target users: only forum's moderator can mark a reply as deleted.
+      operationId: deleteReply
+      responses:
+        '204':
+          description: This resource was deleted.
+      summary: Delete Reply
+      tags:
+        - Discussion Services
+    get:
+      description: |
+        This API is used to get a reply and its statistic given its ID.
+
+        Target users: anyone who has READ permission to the project.
+      operationId: getReply
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscussionReplyBundle'
+          description: Success
+      summary: Get a Reply.
+      tags:
+        - Discussion Services
+  '/reply/{replyId}/message':
+    parameters:
+      - description: The ID of the Reply.
+        in: path
+        name: replyId
+        required: true
+        schema:
+          type: string
+    put:
+      description: |
+        This API is used to update the message of a reply.
+
+        Target users: only the author of the reply can update its message.'
+      operationId: updateReplyMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReplyMessage'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscussionReplyBundle'
+          description: Success
+      summary: Update the message of a reply.
+      tags:
+        - Discussion Services
+  /reply/messageUrl:
+    get:
+      description: >
+        This API is used to get the message URL of a reply. The message URL
+
+        is the URL to download the file which contains the reply message.
+
+
+        Target users: anyone who has READ permission to the project.
+
+        The resulting URL will be signed with Content-Type ="text/plain;
+        charset=utf-8";
+
+        therefore, this header must be included with the GET on the URL.
+      operationId: getReplyUrl
+      parameters:
+        - description: DiscussionReplyBundle.messageKey
+          in: query
+          name: messageKey
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageURL'
+          description: Success
+      summary: Get the message URL of a reply.
       tags:
         - Discussion Services
   /team:
@@ -13059,6 +13357,35 @@ components:
           type: string
       title: FormGroup
       type: object
+    Forum:
+      description: A Forum schema
+      example:
+        etag: ...
+        id: ...
+        projectId: ...
+      properties:
+        etag:
+          $ref: '#/components/schemas/Etag'
+        id:
+          description: The ID of this object
+          type: string
+        projectId:
+          description: |
+            The ID of the project to which this forum belongs.
+            This ID may or may not start with prefix 'syn'.
+          type: string
+      title: Forum
+      type: object
+    ThreadCount:
+      description: The total number of threads.
+      example:
+        count: 12345
+      properties:
+        count:
+          description: The total number of threads.
+          type: number
+      title: ThreadCount
+      type: object
     CreateDiscussionReply:
       description: The model object represents a single Reply creation.
       example:
@@ -13122,6 +13449,26 @@ components:
           description: The ID of the thread this Reply belongs to
           type: string
       title: DiscussionReplyBundle
+      type: object
+    UpdateReplyMessage:
+      description: The new message markdown
+      example:
+        messageMarkdown: ...
+      properties:
+        messageMarkdown:
+          description: The new message markdown
+          type: string
+      title: UpdateReplyMessage
+      type: object
+    MessageURL:
+      description: The URL to download the file which contains the message.
+      example:
+        messageUrl: ...
+      properties:
+        messageUrl:
+          description: The URL to download the file which contains the message.
+          type: string
+      title: MessageURL
       type: object
     Team:
       description: JSON schema for Team POJO
@@ -13755,16 +14102,6 @@ components:
           description: New Thread Title
           type: string
       title: UpdateThreadTitle
-      type: object
-    MessageURL:
-      description: The URL to download the file which contains the message.
-      example:
-        messageUrl: ...
-      properties:
-        messageUrl:
-          description: The URL to download the file which contains the message.
-          type: string
-      title: MessageURL
       type: object
     TrashedEntity:
       description: >-
