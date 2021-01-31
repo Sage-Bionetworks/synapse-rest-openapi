@@ -6,16 +6,20 @@ example:
   submitterId: '...'
 properties:
   accessRequirementId:
-    description: 'The condition to filter by AccessRequirement. Use NULL to ignore this filter.'
+    description: |
+      The condition to filter by AccessRequirement. Use null to ignore this filter.'
     type: string
   expireBefore:
-    description: 'The condition to filter by expiration. Use NULL to ignore this filter.'
+    description: |
+      The condition to filter by expiration. Use null to ignore this filter.'
     type: string
   nextPageToken:
-    description: 'The token to get the next page result. Use NULL to get the first page.'
+    description: |
+      The token to get the next page result. Use null to get the first page.'
     type: string
   submitterId:
-    description: 'The condition to filter by submitter. Use NULL to ignore this filter.'
+    description: |
+      The condition to filter by submitter. Use null to ignore this filter.'
     type: string
 title: AccessorGroupRequest
 type: object
