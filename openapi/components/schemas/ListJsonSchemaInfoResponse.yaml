@@ -1,0 +1,27 @@
+description: 'A single page of the currently registered Organizations'
+example:
+  nextPageToken: '...'
+  page:
+  - createdBy: '...'
+    createdOn: '...'
+    organizationId: '...'
+    organizationName: '...'
+    schemaId: '...'
+    schemaName: '...'
+  - createdBy: '...'
+    createdOn: '...'
+    organizationId: '...'
+    organizationName: '...'
+    schemaId: '...'
+    schemaName: '...'
+properties:
+  nextPageToken:
+    description: 'Forward this token to get the next page of results.'
+    type: string
+  page:
+    description: 'Page of JsonSchemaInfo.'
+    items:
+      $ref: 'JsonSchemaInfo.yaml'
+    type: array
+title: ListJsonSchemaInfoResponse
+type: object
