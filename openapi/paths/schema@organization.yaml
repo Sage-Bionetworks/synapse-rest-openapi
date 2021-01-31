@@ -1,0 +1,42 @@
+get:
+  description: Lookup an Organization by name.
+  operationId: getOrganizationByName
+  parameters:
+  - description: The name of the Organization to lookup.
+    in: query
+    name: name
+    required: true
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Organization.yaml
+      description: Success
+  summary: Lookup an Organization by name.
+  tags:
+  - Json Schema Services
+post:
+  description: |
+    Create a new Organization by providing a unique organization name.
+    The new Organization will have an auto-generated AcessControlList (ACL)
+    granting the caller all relevant permission on the newly created Organization.
+  operationId: createOrganziation
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/CreateOrganizationRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Organization.yaml
+      description: Success
+  summary: Create a new Organization.
+  tags:
+  - Json Schema Services

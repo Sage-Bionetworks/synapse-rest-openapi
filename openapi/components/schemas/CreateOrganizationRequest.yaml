@@ -1,0 +1,16 @@
+description: 'Request to create a new Organization.'
+example:
+  organizationName: testing0983
+properties:
+  organizationName:
+    description: |
+      An organization name must be one or more alphanumeric strings
+      each separated by a dot [ ('.')]. An alphanumeric string must start
+      with a letter followed by one or more letters or digits a-z.
+      Names are case insensitive. Names cannot contain the reserved word 'sagebionetworks'
+    type: string
+    minLength: 6
+    maxLength: 250
+    pattern: ^((?!sagebionetworks)[a-zA-Z0-9.])*$
+title: CreateOrganizationRequest
+type: object
