@@ -5630,6 +5630,30 @@ paths:
       summary: Update the ACL for a FormGroup.
       tags:
         - Form Services
+  /reply:
+    post:
+      description: |
+        This API is used to create a new reply to a thread.
+
+        Target users: anyone who has READ permission to the project.
+      operationId: createReply
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDiscussionReply'
+        description: '- This object contains information needed to create a reply.'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscussionReplyBundle'
+          description: Success
+      summary: Create a new reply to a thread.
+      tags:
+        - Discussion Services
   /team:
     post:
       description: >
@@ -13035,6 +13059,70 @@ components:
           type: string
       title: FormGroup
       type: object
+    CreateDiscussionReply:
+      description: The model object represents a single Reply creation.
+      example:
+        messageMarkdown: ...
+        threadId: ...
+      properties:
+        messageMarkdown:
+          description: |
+            The markdown of the Reply's message
+          type: string
+        threadId:
+          description: The ID of the thread this Reply belongs to
+          type: string
+      title: CreateDiscussionReply
+      type: object
+    DiscussionReplyBundle:
+      description: The Reply model object represents a single reply in a thread.
+      example:
+        createdBy: ...
+        createdOn: ...
+        etag: ...
+        forumId: ...
+        id: ...
+        isDeleted: true
+        isEdited: true
+        messageKey: ...
+        modifiedOn: ...
+        projectId: ...
+        threadId: ...
+      properties:
+        createdBy:
+          description: The id of the user that created this Reply
+          type: string
+        createdOn:
+          description: The timestamp when this Reply was created
+          type: string
+        etag:
+          $ref: '#/components/schemas/Etag'
+        forumId:
+          description: The ID of the forum this Reply belongs to
+          type: string
+        id:
+          description: The ID of the reply
+          type: string
+        isDeleted:
+          description: Has this Reply been deleted?
+          type: boolean
+        isEdited:
+          description: Has the author edited this Reply?
+          type: boolean
+        messageKey:
+          description: The S3 key where the actual message stored
+          type: string
+        modifiedOn:
+          description: The timestamp when this Reply was last modified
+          type: string
+        projectId:
+          description: The ID of the project this Reply belongs to
+          type: string
+        threadId:
+          description: The ID of the thread this Reply belongs to
+          type: string
+      title: DiscussionReplyBundle
+      type: object
     Team:
       description: JSON schema for Team POJO
       example:
@@ -13610,55 +13698,6 @@ components:
           description: The new message markdown
           type: string
       title: UpdateThreadMessage
-      type: object
-    DiscussionReplyBundle:
-      description: The Reply model object represents a single reply in a thread.
-      example:
-        createdBy: ...
-        createdOn: ...
-        etag: ...
-        forumId: ...
-        id: ...
-        isDeleted: true
-        isEdited: true
-        messageKey: ...
-        modifiedOn: ...
-        projectId: ...
-        threadId: ...
-      properties:
-        createdBy:
-          description: The id of the user that created this Reply
-          type: string
-        createdOn:
-          description: The timestamp when this Reply was created
-          type: string
-        etag:
-          $ref: '#/components/schemas/Etag'
-        forumId:
-          description: The ID of the forum this Reply belongs to
-          type: string
-        id:
-          description: The ID of the reply
-          type: string
-        isDeleted:
-          description: Has this Reply been deleted?
-          type: boolean
-        isEdited:
-          description: Has the author edited this Reply?
-          type: boolean
-        messageKey:
-          description: The S3 key where the actual message stored
-          type: string
-        modifiedOn:
-          description: The timestamp when this Reply was last modified
-          type: string
-        projectId:
-          description: The ID of the project this Reply belongs to
-          type: string
-        threadId:
-          description: The ID of the thread this Reply belongs to
-          type: string
-      title: DiscussionReplyBundle
       type: object
     PaginatedResultsOfDiscussionReplyBundle:
       description: Page of Discussion Replies
