@@ -1,0 +1,24 @@
+parameters:
+  - description: 'The ID of a Project.'
+    in: path
+    name: projectId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    This API is used to get the Forum's metadata for a given project
+    ID.
+
+    Target users: anyone who has READ permission to the project.'
+  operationId: getForumByProjectId
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Forum.yaml
+      description: Success
+  summary: Get the Forum of a Project.
+  tags:
+  - Discussion Services

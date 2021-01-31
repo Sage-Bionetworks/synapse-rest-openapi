@@ -1,0 +1,42 @@
+parameters:
+  - description: 'The ID of the Forum.'
+    in: path
+    name: forumId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Returns a page of moderators for a given forum ID.
+
+    Target users: anyone who has READ permission to the project.
+  operationId: getForumModerators
+  parameters:
+  - description: 'Limits the size of the page returned.'
+    in: query
+    name: limit
+    schema:
+      type: integer
+      maximum: 100
+      default: 10
+      minimum: 10
+  - description: |
+      The index of the pagination offset. For a page size of 10, the
+      first page would be at offset = 0, and the second page would be at offset =
+      10.'
+    in: query
+    name: offset
+    schema:
+      type: integer
+      minimum: 0
+      default: 0
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedIds.yaml
+      description: Success
+  summary: Returns a page of Forum moderators.
+  tags:
+  - Discussion Services

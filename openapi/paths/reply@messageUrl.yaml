@@ -1,0 +1,26 @@
+get:
+  description: |
+    This API is used to get the message URL of a reply. The message URL
+    is the URL to download the file which contains the reply message.
+
+    Target users: anyone who has READ permission to the project.
+    The resulting URL will be signed with Content-Type ="text/plain; charset=utf-8";
+    therefore, this header must be included with the GET on the URL.
+  operationId: getReplyUrl
+  parameters:
+  - description: 'DiscussionReplyBundle.messageKey'
+    in: query
+    name: messageKey
+    required: true
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/MessageURL.yaml
+      description: Success
+  summary: Get the message URL of a reply.
+  tags:
+  - Discussion Services

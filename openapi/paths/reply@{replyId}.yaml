@@ -1,0 +1,35 @@
+parameters:
+  - description: 'The ID of the Reply.'
+    in: path
+    name: replyId
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    This API is used to mark a reply as deleted.
+
+    Target users: only forum's moderator can mark a reply as deleted.
+  operationId: deleteReply
+  responses:
+    204:
+      description: This resource was deleted.
+  summary: Delete Reply
+  tags:
+  - Discussion Services
+get:
+  description: |
+    This API is used to get a reply and its statistic given its ID.
+
+    Target users: anyone who has READ permission to the project.
+  operationId: getReply
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/DiscussionReplyBundle.yaml
+      description: Success
+  summary: Get a Reply.
+  tags:
+  - Discussion Services

@@ -1,0 +1,24 @@
+parameters:
+  - description: 'The ID of the Forum.'
+    in: path
+    name: forumId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    This API is used to get the Forum''s metadata for a given its ID.
+
+    Target users: anyone who has READ permission to the project.'
+  operationId: getForum
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Forum.yaml
+      description: Success
+  summary: |
+    Get a Forum.
+  tags:
+  - Discussion Services
