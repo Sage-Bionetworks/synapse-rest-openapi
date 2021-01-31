@@ -148,6 +148,8 @@ tags:
   # - name: Wiki Services
   #   description: "."
 paths:
+  /activity:
+    $ref: paths/activity.yaml
   /challenge:
     $ref: paths/challenge.yaml
   /challenge/{challengeId}:
@@ -360,7 +362,6 @@ paths:
     $ref: paths/forum@{forumId}@threads.yaml
   /project/{projectId}/forum:
     $ref: paths/project@{projectId}@forum.yaml
-
   /reply:
     $ref: paths/reply.yaml
   /reply/{replyId}:
