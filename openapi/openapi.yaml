@@ -173,6 +173,8 @@ paths:
     $ref: paths/accessApproval.yaml
   /accessApproval/{approvalId}:
     $ref: paths/accessApproval@{approvalId}.yaml
+  /accessApproval/group:
+    $ref: paths/accessApproval@group.yaml
 
   /activity:
     $ref: paths/activity.yaml
