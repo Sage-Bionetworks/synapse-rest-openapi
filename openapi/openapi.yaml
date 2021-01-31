@@ -354,6 +354,8 @@ paths:
     $ref: paths/reply.yaml
   /reply/{replyId}:
     $ref: paths/reply@{replyId}.yaml
+  /reply/{replyId}/message:
+    $ref: paths/reply@{replyId}@message.yaml
 
   /team:
     $ref: paths/team.yaml

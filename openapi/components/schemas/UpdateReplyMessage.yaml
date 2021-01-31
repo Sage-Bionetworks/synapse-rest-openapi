@@ -1,0 +1,9 @@
+description: 'The new message markdown'
+example:
+  messageMarkdown: '...'
+properties:
+  messageMarkdown:
+    description: 'The new message markdown'
+    type: string
+title: UpdateReplyMessage
+type: object

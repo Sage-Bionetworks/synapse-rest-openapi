@@ -1,0 +1,29 @@
+parameters:
+  - description: 'The ID of the Reply.'
+    in: path
+    name: replyId
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    This API is used to update the message of a reply.
+
+    Target users: only the author of the reply can update its message.'
+  operationId: updateReplyMessage
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/UpdateReplyMessage.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/DiscussionReplyBundle.yaml
+      description: Success
+  summary: Update the message of a reply.
+  tags:
+  - Discussion Services
