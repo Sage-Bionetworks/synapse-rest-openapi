@@ -1,0 +1,34 @@
+parameters:
+  - description: The $id of the schema to delete.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Delete the given schema using its $id. If the $id excludes a semantic
+    version, all versions of the schema will be deleted. If the $id includes a
+    semantic version then just that version will be deleted. Caution: This
+    operation cannot be undone.
+
+    Note: The caller must be granted the DELETE permission on the schema's organization.
+  operationId: deleteJsonSchema
+  responses:
+    204:
+      description: The resource has been deleted.
+  tags:
+  - Json Schema Services
+get:
+  description: Get a registered JSON schema using its $id.
+  operationId: getJsonSchema
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/JsonSchema.yaml
+      description: Success
+  summary: Get a registered JSON schema using its $id.
+  tags:
+  - Json Schema Services
