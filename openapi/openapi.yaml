@@ -399,6 +399,9 @@ paths:
     $ref: paths/schema@list.yaml
   /schema/organization:
     $ref: paths/schema@organization.yaml
+  /schema/organization/{id}:
+    $ref: paths/schema@organization@{id}.yaml
+
   /team:
     $ref: paths/team.yaml
   /teams:
