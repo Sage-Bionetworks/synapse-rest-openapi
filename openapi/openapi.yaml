@@ -350,6 +350,9 @@ paths:
     $ref: paths/form@group@{id}.yaml
   /form/group/{id}/acl:
     $ref: paths/form@group@{id}@acl.yaml
+  /forum/{forumId}:
+    $ref: paths/forum@{forumId}.yaml
+
   /reply:
     $ref: paths/reply.yaml
   /reply/{replyId}:

@@ -1,0 +1,18 @@
+description: 'A Forum schema'
+example:
+  etag: '...'
+  id: '...'
+  projectId: '...'
+properties:
+  etag:
+    $ref: ../definitions/Etag.yaml
+  id:
+    description: 'The ID of this object'
+    type: string
+  projectId:
+    description: |
+      The ID of the project to which this forum belongs.
+      This ID may or may not start with prefix 'syn'.
+    type: string
+title: Forum
+type: object
