@@ -175,7 +175,6 @@ paths:
     $ref: paths/activity@{id}.yaml
   /activity/{id}/generated:
     $ref: paths/activity@{id}@generated.yaml
-
   /challenge:
     $ref: paths/challenge.yaml
   /challenge/{challengeId}:
