@@ -1,0 +1,14 @@
+description: 'The model object represents a single Reply creation.'
+example:
+  messageMarkdown: '...'
+  threadId: '...'
+properties:
+  messageMarkdown:
+    description: |
+      The markdown of the Reply's message
+    type: string
+  threadId:
+    description: 'The ID of the thread this Reply belongs to'
+    type: string
+title: CreateDiscussionReply
+type: object
