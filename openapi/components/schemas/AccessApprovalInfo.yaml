@@ -1,0 +1,19 @@
+description: |
+  Information about whether or not a user has an AccessApproval
+  for an AccessRequirement.
+example:
+  accessRequirementId: '...'
+  hasAccessApproval: true
+  userId: '...'
+properties:
+  accessRequirementId:
+    description: 'The ID of the access requirement.'
+    type: string
+  hasAccessApproval:
+    description: 'True if userId has an AccessApproval for the specified accessRequirementId; false otherwise.'
+    type: boolean
+  userId:
+    description: 'The ID of the user.'
+    type: string
+title: AccessApprovalInfo
+type: object

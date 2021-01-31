@@ -1,0 +1,19 @@
+post:
+  description: Retrieve a batch of AccessApprovalInfo for a single user.
+  operationId: getBatchAccessApprovalInfo
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/BatchAccessApprovalInfoRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/BatchAccessApprovalInfoResponse.yaml
+      description: Success
+  summary: Retrieve a batch of AccessApprovalInfo for a single user.
+  tags:
+  - Access Approval Services

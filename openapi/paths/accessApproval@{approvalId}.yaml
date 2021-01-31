@@ -1,0 +1,32 @@
+parameters:
+  - description: The ID of the approval.
+    in: path
+    name: approvalId
+    required: true
+    schema:
+      type: string
+delete:
+  deprecated: true
+  description: |
+    Delete a selected Access Approval.  This service is only available
+    to the ACT.
+  operationId: deleteAccessApproval
+  responses:
+    204:
+      description: The resource has been deleted.
+  summary: Delete an Access Approval.
+  tags:
+  - Access Approval Services
+get:
+  description: Retrieving an AccessApproval given its ID.
+  operationId: getAccessApproval
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessApproval.yaml
+      description: Success
+  summary: Retrieving an AccessApproval given its ID.
+  tags:
+  - Access Approval Services

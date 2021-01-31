@@ -1,0 +1,13 @@
+description: 'A request to revoke access of an accessor group. Accessors will be group by submitter and access requirement.'
+example:
+  accessRequirementId: '...'
+  submitterId: '...'
+properties:
+  accessRequirementId:
+    description: 'The ID of an AccessRequirement.'
+    type: string
+  submitterId:
+    description: 'The ID of the submitter.'
+    type: string
+title: AccessorGroupRevokeRequest
+type: object

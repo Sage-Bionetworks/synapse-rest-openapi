@@ -1,0 +1,23 @@
+description: 'Contains the response for an AccessApprovalNotificationRequest.'
+example:
+  requirementId: 12345
+  results:
+  - notificationType: REVOCATION
+    recipientId: 12345
+    requirementId: 12345
+    sentOn: '...'
+  - notificationType: REVOCATION
+    recipientId: 12345
+    requirementId: 12345
+    sentOn: '...'
+properties:
+  requirementId:
+    description: 'The id of the requested access requirement.'
+    type: number
+  results:
+    description: 'The list of notifications, sorted by the recipient and the sentOn date.'
+    items:
+      $ref: 'AccessApprovalNotification.yaml'
+    type: array
+title: AccessApprovalNotificationResponse
+type: object

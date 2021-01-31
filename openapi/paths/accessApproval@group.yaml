@@ -1,0 +1,24 @@
+post:
+  description: |
+    Retrieving a page of AccessorGroup.
+
+    This service is only available for ACT.
+    ACT can filter on AccessRequirementId, submitterId, and expiredOn by setting
+    the associated fields in AccessorGroupRequest.'
+  operationId: listAccessorGroup
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessorGroupRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessorGroupResponse.yaml
+      description: Success
+  summary: Retrieving a page of AccessorGroup.
+  tags:
+  - Access Approval Services

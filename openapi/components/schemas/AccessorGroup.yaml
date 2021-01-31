@@ -1,0 +1,25 @@
+description: 'A group of accessors who gained access by the same submitter.'
+example:
+  accessRequirementId: '...'
+  accessorIds:
+  - '...'
+  - '...'
+  expiredOn: '...'
+  submitterId: '...'
+properties:
+  accessRequirementId:
+    description: 'The ID of an AccessRequirement.'
+    type: string
+  accessorIds:
+    description: 'The ID of accessors.'
+    items:
+      type: string
+    type: array
+  expiredOn:
+    description: 'The date this group will be expired.'
+    type: string
+  submitterId:
+    description: 'The ID of the submitter.'
+    type: string
+title: AccessorGroup
+type: object

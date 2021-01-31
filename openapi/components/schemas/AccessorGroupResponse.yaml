@@ -1,0 +1,27 @@
+description: 'A page of AccessorGroup.'
+example:
+  nextPageToken: '...'
+  results:
+  - accessRequirementId: '...'
+    accessorIds:
+    - '...'
+    - '...'
+    expiredOn: '...'
+    submitterId: '...'
+  - accessRequirementId: '...'
+    accessorIds:
+    - '...'
+    - '...'
+    expiredOn: '...'
+    submitterId: '...'
+properties:
+  nextPageToken:
+    description: 'The token to get the next page result.'
+    type: string
+  results:
+    description: 'A page of AccessorGroup.'
+    items:
+      $ref: 'AccessorGroup.yaml'
+    type: array
+title: AccessorGroupResponse
+type: object

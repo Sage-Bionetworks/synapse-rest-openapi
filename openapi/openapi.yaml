@@ -169,6 +169,17 @@ tags:
   # - name: Wiki Services
   #   description: "."
 paths:
+  /accessApproval:
+    $ref: paths/accessApproval.yaml
+  /accessApproval/{approvalId}:
+    $ref: paths/accessApproval@{approvalId}.yaml
+  /accessApproval/group:
+    $ref: paths/accessApproval@group.yaml
+  /accessApproval/information:
+    $ref: paths/accessApproval@information.yaml
+  /accessApproval/notifications:
+    $ref: paths/accessApproval@notifications.yaml
+
   /activity:
     $ref: paths/activity.yaml
   /activity/{id}:

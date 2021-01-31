@@ -1,0 +1,17 @@
+description: 'Request for a batch of AccessApprovalInfo.'
+example:
+  accessRequirementIds:
+  - '...'
+  - '...'
+  userId: '...'
+properties:
+  accessRequirementIds:
+    description: 'The ID of the access requirements.'
+    items:
+      type: string
+    type: array
+  userId:
+    description: 'The ID of the user.'
+    type: string
+title: BatchAccessApprovalInfoRequest
+type: object

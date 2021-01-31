@@ -1,0 +1,17 @@
+description: 'Response for an AccessApprovalInfoRequest.'
+example:
+  results:
+  - accessRequirementId: '...'
+    hasAccessApproval: true
+    userId: '...'
+  - accessRequirementId: '...'
+    hasAccessApproval: true
+    userId: '...'
+properties:
+  results:
+    description: 'The list of resulting AccessApprovalInfo.'
+    items:
+      $ref: 'AccessApprovalInfo.yaml'
+    type: array
+title: BatchAccessApprovalInfoResponse
+type: object

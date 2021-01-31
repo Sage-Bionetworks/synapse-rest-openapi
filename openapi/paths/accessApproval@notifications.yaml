@@ -1,0 +1,25 @@
+post:
+  description: |
+    Fetches the notifications sent for an access requirement and a list
+    of recipients.
+
+    This service is only available for ACT.
+  operationId: listNotifications
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessApprovalNotificationRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessApprovalNotificationResponse.yaml
+      description: Success
+  summary: |
+    Fetches the notifications sent for an access requirement and a list of
+    recipients.
+  tags:
+  - Access Approval Services
