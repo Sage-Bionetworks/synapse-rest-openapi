@@ -1,0 +1,72 @@
+description: 'This is the base interface that all Request implements.'
+example:
+  accessRequirementId: '...'
+  accessorChanges:
+  - type: RENEW_ACCESS
+    userId: '...'
+  - type: RENEW_ACCESS
+    userId: '...'
+  attachments:
+  - '...'
+  - '...'
+  concreteType: '...'
+  createdBy: '...'
+  createdOn: 12345
+  ducFileHandleId: '...'
+  etag: '...'
+  id: '...'
+  irbFileHandleId: '...'
+  modifiedBy: '...'
+  modifiedOn: 12345
+  researchProjectId: '...'
+properties:
+  accessRequirementId:
+    description: |
+      The ID of the Access Requirement which requires a request to be
+      submitted to gain access to a dataset. This request contains information
+      that satisfies those requirements.
+    type: string
+  accessorChanges:
+    description: 'List of user changes. A user can gain access, renew access or have access revoked.'
+    items:
+      $ref: 'AccessorChange.yaml'
+    type: array
+  attachments:
+    description: 'The set of file handle ID of attached files to this request.'
+    items:
+      type: string
+    type: array
+  concreteType:
+    description: 'Indicates which implementation of RequestInterface this object represents.'
+    type: string
+  createdBy:
+    description: 'The ID of the user that created this request.'
+    type: string
+  createdOn:
+    description: 'The date this request was created.'
+    type: number
+  ducFileHandleId:
+    description: 'The Data Use Certificate uploaded by user.'
+    type: string
+  etag:
+    $ref: ../definitions/Etag.yaml
+  id:
+    description: |
+      The unique immutable ID for this request. A new ID will be generated
+      for new Request. Once issued, this ID is guaranteed to never change
+      or be re-issued.
+    type: string
+  irbFileHandleId:
+    description: 'The Institutional Review Board Approval document uploaded by user.'
+    type: string
+  modifiedBy:
+    description: 'The ID of the user that last modified this request.'
+    type: string
+  modifiedOn:
+    description: 'The date this request was last modified.'
+    type: number
+  researchProjectId:
+    description: 'The ID of the research project associated with this request.'
+    type: string
+title: RequestInterface
+type: object
