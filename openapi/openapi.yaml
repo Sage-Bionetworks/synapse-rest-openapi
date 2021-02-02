@@ -11,6 +11,10 @@ info:
   version: develop-SNAPSHOT
 servers:
   - url: https://repo-prod.prod.sagebase.org/repo/v1
+    description: Production server
+  - url: https://repo-staging.prod.sagebase.org/repo/v1
+    description: Staging server
+
 tags:
   - name: Access Approval Services
     description: |
