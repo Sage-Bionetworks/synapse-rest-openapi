@@ -1,0 +1,61 @@
+description: 'Page of message bundles'
+example:
+  effectiveSchema: '...'
+  results:
+  - message:
+      bcc: '...'
+      cc: '...'
+      createdBy: '...'
+      createdOn: '...'
+      fileHandleId: '...'
+      id: '...'
+      inReplyTo: '...'
+      inReplyToRoot: '...'
+      isNotificationMessage: true
+      notificationUnsubscribeEndpoint: '...'
+      recipients:
+      - '...'
+      - '...'
+      subject: '...'
+      to: '...'
+      userProfileSettingEndpoint: '...'
+      withProfileSettingLink: true
+      withUnsubscribeLink: true
+    status:
+      messageId: '...'
+      recipientId: '...'
+      status: ARCHIVED
+  - message:
+      bcc: '...'
+      cc: '...'
+      createdBy: '...'
+      createdOn: '...'
+      fileHandleId: '...'
+      id: '...'
+      inReplyTo: '...'
+      inReplyToRoot: '...'
+      isNotificationMessage: true
+      notificationUnsubscribeEndpoint: '...'
+      recipients:
+      - '...'
+      - '...'
+      subject: '...'
+      to: '...'
+      userProfileSettingEndpoint: '...'
+      withProfileSettingLink: true
+      withUnsubscribeLink: true
+    status:
+      messageId: '...'
+      recipientId: '...'
+      status: ARCHIVED
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of message bundles'
+    items:
+      $ref: 'MessageBundle.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfMessageBundle
+type: object

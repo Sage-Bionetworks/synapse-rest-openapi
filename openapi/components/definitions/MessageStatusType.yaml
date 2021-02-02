@@ -1,0 +1,8 @@
+description: |
+  The status of the message, from the RECIPIENT'S standpoint
+enum:
+- READ
+- UNREAD
+- ARCHIVED
+title: MessageStatusType
+type: string

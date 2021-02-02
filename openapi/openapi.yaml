@@ -438,6 +438,8 @@ paths:
     $ref: paths/message@{messageId}@file.yaml
   /message/{messageId}/forward:
     $ref: paths/message@{messageId}@forward.yaml
+  /message/inbox:
+    $ref: paths/message@inbox.yaml
 
   /project/{projectId}/forum:
     $ref: paths/project@{projectId}@forum.yaml
