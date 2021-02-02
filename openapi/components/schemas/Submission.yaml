@@ -1,0 +1,106 @@
+description: 'A submission to request access to controlled data.'
+example:
+  accessRequirementId: '...'
+  accessRequirementVersion: 12345
+  accessorChanges:
+  - type: REVOKE_ACCESS
+    userId: '...'
+  - type: REVOKE_ACCESS
+    userId: '...'
+  attachments:
+  - '...'
+  - '...'
+  ducFileHandleId: '...'
+  etag: '...'
+  id: '...'
+  irbFileHandleId: '...'
+  isRenewalSubmission: true
+  modifiedBy: '...'
+  modifiedOn: '...'
+  publication: '...'
+  rejectedReason: '...'
+  requestId: '...'
+  researchProjectSnapshot:
+    accessRequirementId: '...'
+    createdBy: '...'
+    createdOn: '...'
+    etag: '...'
+    id: '...'
+    institution: '...'
+    intendedDataUseStatement: '...'
+    modifiedBy: '...'
+    modifiedOn: '...'
+    projectLead: '...'
+  state: SUBMITTED
+  subjectId: '...'
+  subjectType: TEAM
+  submittedBy: '...'
+  submittedOn: '...'
+  summaryOfUse: '...'
+properties:
+  accessRequirementId:
+    description: 'The ID of the Access Requirement which requires a request to be submitted to gain access to a dataset. This submission contains information that satisfies those requirements.'
+    type: string
+  accessRequirementVersion:
+    description: 'The version of the Access Requirement which requires a request to be submitted to gain access to a dataset. This submission contains information that satisfies those requirements.'
+    type: integer
+  accessorChanges:
+    description: 'List of user changes. A user can gain access, renew access or have access revoked.'
+    items:
+      $ref: 'AccessorChange.yaml'
+    type: array
+  attachments:
+    description: 'The set of file handle ID of attached files to this request.'
+    items:
+      type: string
+    type: array
+  ducFileHandleId:
+    description: 'The Data Use Certificate uploaded by user.'
+    type: string
+  etag:
+    $ref: ../definitions/Etag.yaml
+  id:
+    description: 'The unique immutable ID for this submission. A new ID will be generated for new Submission. Once issued, this ID is guaranteed to never change or be re-issued.'
+    type: string
+  irbFileHandleId:
+    description: 'The Institutional Review Board Approval document uploaded by user.'
+    type: string
+  isRenewalSubmission:
+    description: 'True if this submission is a renewal submission.'
+    type: boolean
+  modifiedBy:
+    description: 'The ID of the user that last modified the status of this submission.'
+    type: string
+  modifiedOn:
+    description: 'The date this submission was reviewed or was cancelled.'
+    type: string
+  publication:
+    description: 'Link(s) to publication that used the controlled data.'
+    type: string
+  rejectedReason:
+    description: |
+      The reason this submission is rejected, if it's rejected.
+    type: string
+  requestId:
+    description: 'The ID of the Request which is used to create this submission.'
+    type: string
+  researchProjectSnapshot:
+    $ref: 'ResearchProject.yaml'
+  state:
+    $ref: '../definitions/SubmissionState.yaml'
+  subjectId:
+    description: 'The ID of the subject user interested in. This information will be used to help user navigate back to where they were to continue their work.'
+    type: string
+  subjectType:
+    $ref: 'RestrictableObjectType.yaml'
+  submittedBy:
+    description: 'The ID of the user that submit this submission.'
+    type: string
+  submittedOn:
+    description: 'The date this submission was created.'
+    type: string
+  summaryOfUse:
+    description: 'Summary of how the data has been used.'
+    type: string
+title: Submission
+type: object

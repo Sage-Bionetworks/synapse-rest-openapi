@@ -1,0 +1,89 @@
+description: 'Page of AR submissions'
+example:
+  nextPageToken: '...'
+  results:
+  - accessRequirementId: '...'
+    accessRequirementVersion: 12345
+    accessorChanges:
+    - type: GAIN_ACCESS
+      userId: '...'
+    - type: REVOKE_ACCESS
+      userId: '...'
+    attachments:
+    - '...'
+    - '...'
+    ducFileHandleId: '...'
+    etag: '...'
+    id: '...'
+    irbFileHandleId: '...'
+    isRenewalSubmission: true
+    modifiedBy: '...'
+    modifiedOn: '...'
+    publication: '...'
+    rejectedReason: '...'
+    requestId: '...'
+    researchProjectSnapshot:
+      accessRequirementId: '...'
+      createdBy: '...'
+      createdOn: '...'
+      etag: '...'
+      id: '...'
+      institution: '...'
+      intendedDataUseStatement: '...'
+      modifiedBy: '...'
+      modifiedOn: '...'
+      projectLead: '...'
+    state: REJECTED
+    subjectId: '...'
+    subjectType: EVALUATION
+    submittedBy: '...'
+    submittedOn: '...'
+    summaryOfUse: '...'
+  - accessRequirementId: '...'
+    accessRequirementVersion: 12345
+    accessorChanges:
+    - type: GAIN_ACCESS
+      userId: '...'
+    - type: RENEW_ACCESS
+      userId: '...'
+    attachments:
+    - '...'
+    - '...'
+    ducFileHandleId: '...'
+    etag: '...'
+    id: '...'
+    irbFileHandleId: '...'
+    isRenewalSubmission: true
+    modifiedBy: '...'
+    modifiedOn: '...'
+    publication: '...'
+    rejectedReason: '...'
+    requestId: '...'
+    researchProjectSnapshot:
+      accessRequirementId: '...'
+      createdBy: '...'
+      createdOn: '...'
+      etag: '...'
+      id: '...'
+      institution: '...'
+      intendedDataUseStatement: '...'
+      modifiedBy: '...'
+      modifiedOn: '...'
+      projectLead: '...'
+    state: APPROVED
+    subjectId: '...'
+    subjectType: ENTITY
+    submittedBy: '...'
+    submittedOn: '...'
+    summaryOfUse: '...'
+properties:
+  nextPageToken:
+    description: 'The token to get the next page result.'
+    type: string
+  results:
+    description: 'Page of AR submissions'
+    items:
+      $ref: 'Submission.yaml'
+    type: array
+title: SubmissionPage
+type: object
