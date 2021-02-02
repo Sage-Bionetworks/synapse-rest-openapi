@@ -1,0 +1,50 @@
+description: 'Page of messages'
+example:
+  results:
+  - bcc: '...'
+    cc: '...'
+    createdBy: '...'
+    createdOn: '...'
+    fileHandleId: '...'
+    id: '...'
+    inReplyTo: '...'
+    inReplyToRoot: '...'
+    isNotificationMessage: true
+    notificationUnsubscribeEndpoint: '...'
+    recipients:
+    - '...'
+    - '...'
+    subject: '...'
+    to: '...'
+    userProfileSettingEndpoint: '...'
+    withProfileSettingLink: true
+    withUnsubscribeLink: true
+  - bcc: '...'
+    cc: '...'
+    createdBy: '...'
+    createdOn: '...'
+    fileHandleId: '...'
+    id: '...'
+    inReplyTo: '...'
+    inReplyToRoot: '...'
+    isNotificationMessage: true
+    notificationUnsubscribeEndpoint: '...'
+    recipients:
+    - '...'
+    - '...'
+    subject: '...'
+    to: '...'
+    userProfileSettingEndpoint: '...'
+    withProfileSettingLink: true
+    withUnsubscribeLink: true
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of messages'
+    items:
+      $ref: 'MessageToUser.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfMessageToUser
+type: object

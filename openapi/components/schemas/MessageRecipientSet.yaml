@@ -1,0 +1,13 @@
+description: 'Contains a set of IDs of the intended recipients of a message'
+example:
+  recipients:
+  - '...'
+  - '...'
+properties:
+  recipients:
+    description: 'The unique identifiers of the intended recipients of a message'
+    items:
+      type: string
+    type: array
+title: MessageRecipientSet
+type: object

@@ -1,0 +1,65 @@
+parameters:
+  - in: path
+    description: The ID of the message.
+    name: messageId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieves messages belonging to the same thread as the given message.
+
+    The current authenticated user will be either the sender or receiver of all returned
+    messages.
+
+    By default, the most recent messages are returned first.
+    To flip the ordering, set the "descending" parameter to "false".
+    To change the way the messages are ordered, set the "orderBy" parameter to
+    either "SEND_DATE" or "SUBJECT".
+  operationId: getConversation
+  parameters:
+  - in: query
+    name: descending
+    description: If true, returns the most recent messages.
+    schema:
+      default: true
+      type: boolean
+  - in: query
+    name: limit
+    description: Limits the number of messages
+    schema:
+      default: 10
+      type: integer
+      minimum: 10
+  - in: query
+    name: offset
+    description: The offset index determines where this page will start from.
+    schema:
+      default: 0
+      type: integer
+      minimum: 0
+  - in: query
+    name: orderBy
+    description: Order by
+    schema:
+      default: SEND_DATE
+      type: string
+      enum:
+        - SUBJECT
+        - SEND_DATE
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Empty.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/PaginatedResultsOfMessageToUser.yaml'
+      description: Success
+  summary: Retrieves messages belonging to the same thread as the given message.
+  tags:
+  - Message Services

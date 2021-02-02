@@ -428,6 +428,22 @@ paths:
     $ref: paths/forum@{forumId}@threadcount.yaml
   /forum/{forumId}/threads:
     $ref: paths/forum@{forumId}@threads.yaml
+  /message:
+    $ref: paths/message.yaml
+  /message/{messageId}:
+    $ref: paths/message@{messageId}.yaml
+  /message/{messageId}/conversation:
+    $ref: paths/message@{messageId}@conversation.yaml
+  /message/{messageId}/file:
+    $ref: paths/message@{messageId}@file.yaml
+  /message/{messageId}/forward:
+    $ref: paths/message@{messageId}@forward.yaml
+  /message/inbox:
+    $ref: paths/message@inbox.yaml
+  /message/outbox:
+    $ref: paths/message@outbox.yaml
+  /message/status:
+    $ref: paths/message@status.yaml
   /project/{projectId}/forum:
     $ref: paths/project@{projectId}@forum.yaml
   /reply:

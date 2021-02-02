@@ -1,0 +1,25 @@
+put:
+  description: |
+    Updates the current status of a message relative to the current authenticated
+    user.
+
+    Note: the "recipientId" field of the request body will be ignored.'
+  operationId: updateMessageStatus
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MessageStatus.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary:
+    Updates the current status of a message relative to the current authenticated
+    user.
+  tags:
+  - Message Services

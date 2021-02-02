@@ -1,0 +1,32 @@
+description: 'JSON schema for a user message bundled with a status'
+example:
+  message:
+    bcc: '...'
+    cc: '...'
+    createdBy: '...'
+    createdOn: '...'
+    fileHandleId: '...'
+    id: '...'
+    inReplyTo: '...'
+    inReplyToRoot: '...'
+    isNotificationMessage: true
+    notificationUnsubscribeEndpoint: '...'
+    recipients:
+    - '...'
+    - '...'
+    subject: '...'
+    to: '...'
+    userProfileSettingEndpoint: '...'
+    withProfileSettingLink: true
+    withUnsubscribeLink: true
+  status:
+    messageId: '...'
+    recipientId: '...'
+    status: UNREAD
+properties:
+  message:
+    $ref: 'MessageToUser.yaml'
+  status:
+    $ref: 'MessageStatus.yaml'
+title: MessageBundle
+type: object
