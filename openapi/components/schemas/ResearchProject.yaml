@@ -1,0 +1,44 @@
+description: 'A research project describes a project at an institution that used a controlled data set for the purposes that are stated in the Intended Data Use Statement.'
+example:
+  accessRequirementId: '...'
+  createdBy: '...'
+  createdOn: '...'
+  etag: '...'
+  id: '...'
+  institution: '...'
+  intendedDataUseStatement: '...'
+  modifiedBy: '...'
+  modifiedOn: '...'
+  projectLead: '...'
+properties:
+  accessRequirementId:
+    description: 'The ID of the Access Requirement which this research project needs to meet to gain access to the data.'
+    type: string
+  createdBy:
+    description: 'The ID of the user that created this research project.'
+    type: string
+  createdOn:
+    description: 'The date this research project was created.'
+    type: string
+  etag:
+    $ref: ../definitions/Etag.yaml
+  id:
+    description: 'The unique immutable ID for this research project.'
+    type: string
+  institution:
+    description: 'The institution that this research project belongs to.'
+    type: string
+  intendedDataUseStatement:
+    description: 'A few short paragraph that explains how the controlled data will be used.'
+    type: string
+  modifiedBy:
+    description: 'The ID of the user that last modified this research project.'
+    type: string
+  modifiedOn:
+    description: 'The date this research project was last modified.'
+    type: string
+  projectLead:
+    description: 'The person who is leading the project.'
+    type: string
+title: ResearchProject
+type: object
