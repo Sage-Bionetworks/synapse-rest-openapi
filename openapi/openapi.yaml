@@ -204,7 +204,8 @@ paths:
     $ref: paths/accessRequirement@{requirementId}@subjects.yaml
   /accessRequirement/{requirementId}/submissions:
     $ref: paths/accessRequirement@{requirementId}@submissions.yaml
-
+  /accessRequirement/conversion:
+    $ref: paths/accessRequirement@conversion.yaml
   /activity:
     $ref: paths/activity.yaml
   /activity/{id}:

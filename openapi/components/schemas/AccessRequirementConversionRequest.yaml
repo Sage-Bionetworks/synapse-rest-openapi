@@ -1,0 +1,17 @@
+description: 'A request to convert an ACTAccessRequirement to a ManagedACTAccessRequirement.'
+example:
+  accessRequirementId: '...'
+  currentVersion: 12345
+  etag: '...'
+properties:
+  accessRequirementId:
+    description: 'The ID of an ACTAccessRequirement.'
+    type: string
+  currentVersion:
+    description: 'The current version of the AccessRequirement. This field is used for concurrency check.'
+    type: number
+  etag:
+    description: 'The etag of the AccessRequirement. This field is used for concurrency check.'
+    type: string
+title: AccessRequirementConversionRequest
+type: object

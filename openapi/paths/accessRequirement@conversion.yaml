@@ -1,0 +1,22 @@
+put:
+  description: |
+    Convert an ACTAccessRequirement to a ManagedACTAccessRequirement.
+
+    Only ACT member can perform this action.
+  operationId: convertAccessRequirement
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessRequirementConversionRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessRequirement.yaml
+      description: Success
+  summary: Convert an ACTAccessRequirement to a ManagedACTAccessRequirement.
+  tags:
+  - Access Requirement Services
