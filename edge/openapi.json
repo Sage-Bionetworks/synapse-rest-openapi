@@ -44,6 +44,10 @@
       "description": "A Challenge is a special object that supplements a project, providing additional features\nspecific to challenges.\n"
     },
     {
+      "name": "Data Access Services",
+      "description": "Some data in Synapse are governed by an ACTAccessRequirement. To gain access to\nthese data, a user must meet all requirements specified in the ACTAccessRequirement.\n\nThese services provide the APIs for users to create request to gain access to\ncontrolled data, and APIs for the ACT to review and grant access to users.\n"
+    },
+    {
       "name": "Discussion Services",
       "description": "Discussions in Synapse are captured in the Project's Forum.\nEach Project has a Forum. Each Forum has a set of Moderators.\nThe Moderators manage the content of the Forum.\n"
     },
@@ -314,6 +318,383 @@
         "summary": "Fetches the notifications sent for an access requirement and a list of\nrecipients.\n",
         "tags": [
           "Access Approval Services"
+        ]
+      }
+    },
+    "/accessRequirement": {
+      "post": {
+        "description": "Add an Access Requirement to an Entity, or Team.\nThis service may only be used by the Synapse Access and Compliance Team.\n",
+        "operationId": "createAccessRequirement",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessRequirement"
+              }
+            }
+          },
+          "description": "the Access Requirement to create",
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessRequirement"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Add an Access Requirement to an Entity, or Team.",
+        "tags": [
+          "Access Requirement Services"
+        ]
+      }
+    },
+    "/accessRequirement/{requirementId}": {
+      "parameters": [
+        {
+          "description": "the ID of the requirement.",
+          "in": "path",
+          "name": "requirementId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "description": "Delete an Access Requirement.\nThis service may only be used by the Synapse Access and Compliance Team.\n",
+        "operationId": "deleteAccessRequirements",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Delete an Access Requirement.",
+        "tags": [
+          "Access Requirement Services"
+        ]
+      },
+      "get": {
+        "description": "Get an Access Requirement to an Entity, or Team based on its ID.",
+        "operationId": "getAccessRequirement",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessRequirement"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get an Access Requirement.",
+        "tags": [
+          "Access Requirement Services"
+        ]
+      },
+      "put": {
+        "description": "Modify an existing Access Requirement.\n\nThis service may only be used by the Synapse Access and Compliance Team.\n",
+        "operationId": "updateAccessRequirement",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessRequirement"
+              }
+            }
+          },
+          "description": "The modified Access Requirement.",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessRequirement"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Modify an existing Access Requirement.",
+        "tags": [
+          "Access Requirement Services"
+        ]
+      }
+    },
+    "/accessRequirement/{requirementId}/approvedSubmissionInfo": {
+      "parameters": [
+        {
+          "description": "the ID of the requirement.",
+          "in": "path",
+          "name": "requirementId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "description": "Return the research project info for approved data access submissions,\nordered by submission modified-on date, ascending\n",
+        "operationId": "listInfoForApprovedSubmissions",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmissionInfoPageRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionInfoPage"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Return approved data access submissions",
+        "tags": [
+          "Data Access Services"
+        ]
+      }
+    },
+    "/accessRequirement/{requirementId}/dataAccessRequestForUpdate": {
+      "parameters": [
+        {
+          "description": "the ID of the requirement.",
+          "in": "path",
+          "name": "requirementId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve the Request for update.\n\nIf one does not exist, an Request with some re-filled information is returned.\nIf a submission associated with the request is approved, and the requirement\nrequires renewal, a refilled Renewal is returned.\nOnly the owner of the request can perform this action.\n",
+        "operationId": "getRequestForUpdate",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestInterface"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve the Request for update.",
+        "tags": [
+          "Data Access Services"
+        ]
+      }
+    },
+    "/accessRequirement/{requirementId}/researchProjectForUpdate": {
+      "parameters": [
+        {
+          "description": "the ID of the requirement.",
+          "in": "path",
+          "name": "requirementId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve an existing ResearchProject that the user owns.\n\nIf none exists, a ResearchProject with some re-filled information is returned\nto the user.\nOnly the owner of the researchProject can perform this action.\n",
+        "operationId": "getUserOwnResearchProjectForUpdate",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchProject"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve an existing ResearchProject that the user owns.",
+        "tags": [
+          "Data Access Services"
+        ]
+      }
+    },
+    "/accessRequirement/{requirementId}/status": {
+      "parameters": [
+        {
+          "description": "the ID of the requirement.",
+          "in": "path",
+          "name": "requirementId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve an access requirement status for a given access requirement ID.",
+        "operationId": "getAccessRequirementStatus",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessRequirementStatus"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve an access requirement status for a given access requirement ID.",
+        "tags": [
+          "Data Access Services"
+        ]
+      }
+    },
+    "/accessRequirement/{requirementId}/subjects": {
+      "parameters": [
+        {
+          "description": "the ID of the requirement.",
+          "in": "path",
+          "name": "requirementId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Retrieve a page of subjects for a given Access Requirement ID.",
+        "operationId": "getSubjects",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Next page",
+            "name": "nextPageToken",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestrictableObjectDescriptorResponse"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve a page of subjects for a given Access Requirement ID.",
+        "tags": [
+          "Access Requirement Services"
+        ]
+      }
+    },
+    "/accessRequirement/{requirementId}/submissions": {
+      "parameters": [
+        {
+          "description": "the ID of the requirement.",
+          "in": "path",
+          "name": "requirementId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "description": "Retrieve a list of submissions for a given access requirement ID.\n\nOnly ACT member can perform this action.\n",
+        "operationId": "listArSubmissions",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmissionPageRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionPage"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve a list of submissions for a given access requirement ID.",
+        "tags": [
+          "Data Access Services"
+        ]
+      }
+    },
+    "/accessRequirement/conversion": {
+      "put": {
+        "description": "Convert an ACTAccessRequirement to a ManagedACTAccessRequirement.\n\nOnly ACT member can perform this action.\n",
+        "operationId": "convertAccessRequirement",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessRequirementConversionRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessRequirement"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Convert an ACTAccessRequirement to a ManagedACTAccessRequirement.",
+        "tags": [
+          "Access Requirement Services"
         ]
       }
     },
@@ -8991,6 +9372,782 @@
         "title": "AccessApprovalNotificationResponse",
         "type": "object"
       },
+      "ACCESS_TYPE": {
+        "title": "ACCESS_TYPE",
+        "type": "string",
+        "description": "The enumeration of possible permission.",
+        "enum": [
+          "CREATE",
+          "READ",
+          "UPDATE",
+          "DELETE",
+          "CHANGE_PERMISSIONS",
+          "DOWNLOAD",
+          "UPLOAD",
+          "PARTICIPATE",
+          "SUBMIT",
+          "READ_PRIVATE_SUBMISSION",
+          "UPDATE_SUBMISSION",
+          "DELETE_SUBMISSION",
+          "TEAM_MEMBERSHIP_UPDATE",
+          "SEND_MESSAGE",
+          "CHANGE_SETTINGS",
+          "MODERATE"
+        ]
+      },
+      "RestrictableObjectType": {
+        "description": "JSON enum for the types of objects which can be restricted by an AccessRequirement.",
+        "enum": [
+          "ENTITY",
+          "EVALUATION",
+          "TEAM"
+        ],
+        "title": "RestrictableObjectType",
+        "type": "string"
+      },
+      "RestrictableObjectDescriptor": {
+        "description": "Restrictable object descriptor",
+        "example": {
+          "id": "...",
+          "type": "EVALUATION"
+        },
+        "properties": {
+          "id": {
+            "description": "Id",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/RestrictableObjectType"
+          }
+        },
+        "title": "RestrictableObjectDescriptor",
+        "type": "object"
+      },
+      "AccessRequirement": {
+        "description": "Interface for JSON schema for AccessRequirement. The Access Requirement mechanism is\ndistinct from the access control list in that it is controlled not by the entity\nowner but by a separate authority: Access Requirements are created and maintained\nby the Synapse Access and Compliance Team (ACT). ACTAccessRequirements can only be\napproved by the ACT. Self-sign Access Requirements can be approved by the user\ndesiring access, but said user first has to meet 'terms of use' associated with the requirement.\n",
+        "example": {
+          "accessType": "SUBMIT",
+          "concreteType": "...",
+          "createdBy": "...",
+          "createdOn": "...",
+          "description": "...",
+          "etag": "...",
+          "id": 12345,
+          "modifiedBy": "...",
+          "modifiedOn": "...",
+          "subjectIds": [
+            {
+              "id": "...",
+              "type": "EVALUATION"
+            },
+            {
+              "id": "...",
+              "type": "TEAM"
+            }
+          ],
+          "versionNumber": 12345
+        },
+        "properties": {
+          "accessType": {
+            "$ref": "#/components/schemas/ACCESS_TYPE"
+          },
+          "concreteType": {
+            "description": "Indicates which type of AccessRequirement this object represents. Provided by the system, the user may not set this field.",
+            "type": "string"
+          },
+          "createdBy": {
+            "description": "The user that created this object. Provided by the system, the user may not set this field.",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this object was created. Provided by the system, the user may not set this field.",
+            "type": "string"
+          },
+          "description": {
+            "description": "Short optional description for the AR. Limited to 50 characters.",
+            "type": "string"
+          },
+          "etag": {
+            "description": "Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent\nupdates. Since the E-Tag changes every time an entity is updated it is used to\ndetect when a client's current representation of an object is out-of-date.\n",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique immutable ID. Provided by the system, the user may not set this field.",
+            "type": "number"
+          },
+          "modifiedBy": {
+            "description": "The user that last modified this object. Provided by the system, the user may not set this field.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date this object was last modified. Provided by the system, the user may not set this field.",
+            "type": "string"
+          },
+          "subjectIds": {
+            "description": "The IDs of the items controlled by this Access Requirement. Required when creating or updating.",
+            "items": {
+              "$ref": "#/components/schemas/RestrictableObjectDescriptor"
+            },
+            "type": "array"
+          },
+          "versionNumber": {
+            "description": "The version number issued to this version on the object.",
+            "type": "integer"
+          }
+        },
+        "title": "AccessRequirement",
+        "type": "object"
+      },
+      "SubmissionInfoPageRequest": {
+        "description": "A request to retrieve a page of Submission Information",
+        "example": {
+          "accessRequirementId": "...",
+          "nextPageToken": "..."
+        },
+        "properties": {
+          "accessRequirementId": {
+            "description": "The ID of an AccessRequirement.",
+            "type": "string"
+          },
+          "nextPageToken": {
+            "description": "The token to get the next page result.",
+            "type": "string"
+          }
+        },
+        "title": "SubmissionInfoPageRequest",
+        "type": "object"
+      },
+      "SubmissionInfo": {
+        "description": "Information about a request to access controlled data and its related Research Project",
+        "example": {
+          "institution": "...",
+          "intendedDataUseStatement": "...",
+          "modifiedOn": "...",
+          "projectLead": "..."
+        },
+        "properties": {
+          "institution": {
+            "description": "The institution that the research project belongs to.",
+            "type": "string"
+          },
+          "intendedDataUseStatement": {
+            "description": "A few short paragraph that explains how the controlled data will be used.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date the request submission was last modified.",
+            "type": "string"
+          },
+          "projectLead": {
+            "description": "The person who is leading the research project.",
+            "type": "string"
+          }
+        },
+        "title": "SubmissionInfo",
+        "type": "object"
+      },
+      "SubmissionInfoPage": {
+        "description": "A page of Submission Information",
+        "example": {
+          "nextPageToken": "...",
+          "results": [
+            {
+              "institution": "...",
+              "intendedDataUseStatement": "...",
+              "modifiedOn": "...",
+              "projectLead": "..."
+            },
+            {
+              "institution": "...",
+              "intendedDataUseStatement": "...",
+              "modifiedOn": "...",
+              "projectLead": "..."
+            }
+          ]
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "The token to get the next page result.",
+            "type": "string"
+          },
+          "results": {
+            "description": "A page of Submission Information",
+            "items": {
+              "$ref": "#/components/schemas/SubmissionInfo"
+            },
+            "type": "array"
+          }
+        },
+        "title": "SubmissionInfoPage",
+        "type": "object"
+      },
+      "AccessType": {
+        "description": "The type of access change for this user. Users can gain access, renew access, or have access revoked.",
+        "enum": [
+          "GAIN_ACCESS",
+          "RENEW_ACCESS",
+          "REVOKE_ACCESS"
+        ],
+        "title": "AccessType",
+        "type": "string"
+      },
+      "AccessorChange": {
+        "description": "Request for a single user change access to a resource.",
+        "example": {
+          "type": "RENEW_ACCESS",
+          "userId": "..."
+        },
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AccessType"
+          },
+          "userId": {
+            "description": "The ID of the user.",
+            "type": "string"
+          }
+        },
+        "title": "AccessorChange",
+        "type": "object"
+      },
+      "RequestInterface": {
+        "description": "This is the base interface that all Request implements.",
+        "example": {
+          "accessRequirementId": "...",
+          "accessorChanges": [
+            {
+              "type": "RENEW_ACCESS",
+              "userId": "..."
+            },
+            {
+              "type": "RENEW_ACCESS",
+              "userId": "..."
+            }
+          ],
+          "attachments": [
+            "...",
+            "..."
+          ],
+          "concreteType": "...",
+          "createdBy": "...",
+          "createdOn": 12345,
+          "ducFileHandleId": "...",
+          "etag": "...",
+          "id": "...",
+          "irbFileHandleId": "...",
+          "modifiedBy": "...",
+          "modifiedOn": 12345,
+          "researchProjectId": "..."
+        },
+        "properties": {
+          "accessRequirementId": {
+            "description": "The ID of the Access Requirement which requires a request to be\nsubmitted to gain access to a dataset. This request contains information\nthat satisfies those requirements.\n",
+            "type": "string"
+          },
+          "accessorChanges": {
+            "description": "List of user changes. A user can gain access, renew access or have access revoked.",
+            "items": {
+              "$ref": "#/components/schemas/AccessorChange"
+            },
+            "type": "array"
+          },
+          "attachments": {
+            "description": "The set of file handle ID of attached files to this request.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "concreteType": {
+            "description": "Indicates which implementation of RequestInterface this object represents.",
+            "type": "string"
+          },
+          "createdBy": {
+            "description": "The ID of the user that created this request.",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this request was created.",
+            "type": "number"
+          },
+          "ducFileHandleId": {
+            "description": "The Data Use Certificate uploaded by user.",
+            "type": "string"
+          },
+          "etag": {
+            "$ref": "#/components/schemas/Etag"
+          },
+          "id": {
+            "description": "The unique immutable ID for this request. A new ID will be generated\nfor new Request. Once issued, this ID is guaranteed to never change\nor be re-issued.\n",
+            "type": "string"
+          },
+          "irbFileHandleId": {
+            "description": "The Institutional Review Board Approval document uploaded by user.",
+            "type": "string"
+          },
+          "modifiedBy": {
+            "description": "The ID of the user that last modified this request.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date this request was last modified.",
+            "type": "number"
+          },
+          "researchProjectId": {
+            "description": "The ID of the research project associated with this request.",
+            "type": "string"
+          }
+        },
+        "title": "RequestInterface",
+        "type": "object"
+      },
+      "ResearchProject": {
+        "description": "A research project describes a project at an institution that used a controlled data set for the purposes that are stated in the Intended Data Use Statement.",
+        "example": {
+          "accessRequirementId": "...",
+          "createdBy": "...",
+          "createdOn": "...",
+          "etag": "...",
+          "id": "...",
+          "institution": "...",
+          "intendedDataUseStatement": "...",
+          "modifiedBy": "...",
+          "modifiedOn": "...",
+          "projectLead": "..."
+        },
+        "properties": {
+          "accessRequirementId": {
+            "description": "The ID of the Access Requirement which this research project needs to meet to gain access to the data.",
+            "type": "string"
+          },
+          "createdBy": {
+            "description": "The ID of the user that created this research project.",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this research project was created.",
+            "type": "string"
+          },
+          "etag": {
+            "$ref": "#/components/schemas/Etag"
+          },
+          "id": {
+            "description": "The unique immutable ID for this research project.",
+            "type": "string"
+          },
+          "institution": {
+            "description": "The institution that this research project belongs to.",
+            "type": "string"
+          },
+          "intendedDataUseStatement": {
+            "description": "A few short paragraph that explains how the controlled data will be used.",
+            "type": "string"
+          },
+          "modifiedBy": {
+            "description": "The ID of the user that last modified this research project.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date this research project was last modified.",
+            "type": "string"
+          },
+          "projectLead": {
+            "description": "The person who is leading the project.",
+            "type": "string"
+          }
+        },
+        "title": "ResearchProject",
+        "type": "object"
+      },
+      "AccessRequirementStatus": {
+        "description": "The status of a user meeting an AccessRequirement.",
+        "example": {
+          "accessRequirementId": "...",
+          "concreteType": "...",
+          "expiredOn": "...",
+          "isApproved": true
+        },
+        "properties": {
+          "accessRequirementId": {
+            "description": "The ID of the requested AccessRequirement.",
+            "type": "string"
+          },
+          "concreteType": {
+            "description": "Indicates which implementation of AccessRequirementStatus this object represents.",
+            "type": "string"
+          },
+          "expiredOn": {
+            "description": "The date that the user no longer have access to the data.",
+            "type": "string"
+          },
+          "isApproved": {
+            "description": "True if there is an AccessApproval for the user for the given AccessRequirement.",
+            "type": "boolean"
+          }
+        },
+        "title": "AccessRequirementStatus",
+        "type": "object"
+      },
+      "RestrictableObjectDescriptorResponse": {
+        "description": "A page of subjects",
+        "example": {
+          "nextPageToken": "...",
+          "subjects": [
+            {
+              "id": "...",
+              "type": "TEAM"
+            },
+            {
+              "id": "...",
+              "type": "EVALUATION"
+            }
+          ]
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "Token that can be used to get the next page. Null if there are no more results.",
+            "type": "string"
+          },
+          "subjects": {
+            "description": "a page of subjects",
+            "items": {
+              "$ref": "#/components/schemas/RestrictableObjectDescriptor"
+            },
+            "type": "array"
+          }
+        },
+        "title": "RestrictableObjectDescriptorResponse",
+        "type": "object"
+      },
+      "SubmissionState": {
+        "description": "The state of a Submission.",
+        "enum": [
+          "SUBMITTED",
+          "APPROVED",
+          "REJECTED",
+          "CANCELLED"
+        ],
+        "title": "SubmissionState",
+        "type": "string"
+      },
+      "SubmissionOrder": {
+        "description": "Submission Order",
+        "enum": [
+          "CREATED_ON",
+          "MODIFIED_ON"
+        ],
+        "title": "SubmissionOrder",
+        "type": "string"
+      },
+      "SubmissionPageRequest": {
+        "description": "A request to retrieve a page of a Submission.",
+        "example": {
+          "accessRequirementId": "...",
+          "filterBy": "APPROVED",
+          "isAscending": true,
+          "nextPageToken": "...",
+          "orderBy": "MODIFIED_ON"
+        },
+        "properties": {
+          "accessRequirementId": {
+            "description": "The ID of an AccessRequirement.",
+            "type": "string"
+          },
+          "filterBy": {
+            "$ref": "#/components/schemas/SubmissionState"
+          },
+          "isAscending": {
+            "description": "If true, order the returned result in ascending order. Otherwise, order the returned result in descending order.",
+            "type": "boolean"
+          },
+          "nextPageToken": {
+            "description": "The token to get the next page result.",
+            "type": "string"
+          },
+          "orderBy": {
+            "$ref": "#/components/schemas/SubmissionOrder"
+          }
+        },
+        "title": "SubmissionPageRequest",
+        "type": "object"
+      },
+      "Submission": {
+        "description": "A submission to request access to controlled data.",
+        "example": {
+          "accessRequirementId": "...",
+          "accessRequirementVersion": 12345,
+          "accessorChanges": [
+            {
+              "type": "REVOKE_ACCESS",
+              "userId": "..."
+            },
+            {
+              "type": "REVOKE_ACCESS",
+              "userId": "..."
+            }
+          ],
+          "attachments": [
+            "...",
+            "..."
+          ],
+          "ducFileHandleId": "...",
+          "etag": "...",
+          "id": "...",
+          "irbFileHandleId": "...",
+          "isRenewalSubmission": true,
+          "modifiedBy": "...",
+          "modifiedOn": "...",
+          "publication": "...",
+          "rejectedReason": "...",
+          "requestId": "...",
+          "researchProjectSnapshot": {
+            "accessRequirementId": "...",
+            "createdBy": "...",
+            "createdOn": "...",
+            "etag": "...",
+            "id": "...",
+            "institution": "...",
+            "intendedDataUseStatement": "...",
+            "modifiedBy": "...",
+            "modifiedOn": "...",
+            "projectLead": "..."
+          },
+          "state": "SUBMITTED",
+          "subjectId": "...",
+          "subjectType": "TEAM",
+          "submittedBy": "...",
+          "submittedOn": "...",
+          "summaryOfUse": "..."
+        },
+        "properties": {
+          "accessRequirementId": {
+            "description": "The ID of the Access Requirement which requires a request to be submitted to gain access to a dataset. This submission contains information that satisfies those requirements.",
+            "type": "string"
+          },
+          "accessRequirementVersion": {
+            "description": "The version of the Access Requirement which requires a request to be submitted to gain access to a dataset. This submission contains information that satisfies those requirements.",
+            "type": "integer"
+          },
+          "accessorChanges": {
+            "description": "List of user changes. A user can gain access, renew access or have access revoked.",
+            "items": {
+              "$ref": "#/components/schemas/AccessorChange"
+            },
+            "type": "array"
+          },
+          "attachments": {
+            "description": "The set of file handle ID of attached files to this request.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "ducFileHandleId": {
+            "description": "The Data Use Certificate uploaded by user.",
+            "type": "string"
+          },
+          "etag": {
+            "$ref": "#/components/schemas/Etag"
+          },
+          "id": {
+            "description": "The unique immutable ID for this submission. A new ID will be generated for new Submission. Once issued, this ID is guaranteed to never change or be re-issued.",
+            "type": "string"
+          },
+          "irbFileHandleId": {
+            "description": "The Institutional Review Board Approval document uploaded by user.",
+            "type": "string"
+          },
+          "isRenewalSubmission": {
+            "description": "True if this submission is a renewal submission.",
+            "type": "boolean"
+          },
+          "modifiedBy": {
+            "description": "The ID of the user that last modified the status of this submission.",
+            "type": "string"
+          },
+          "modifiedOn": {
+            "description": "The date this submission was reviewed or was cancelled.",
+            "type": "string"
+          },
+          "publication": {
+            "description": "Link(s) to publication that used the controlled data.",
+            "type": "string"
+          },
+          "rejectedReason": {
+            "description": "The reason this submission is rejected, if it's rejected.\n",
+            "type": "string"
+          },
+          "requestId": {
+            "description": "The ID of the Request which is used to create this submission.",
+            "type": "string"
+          },
+          "researchProjectSnapshot": {
+            "$ref": "#/components/schemas/ResearchProject"
+          },
+          "state": {
+            "$ref": "#/components/schemas/SubmissionState"
+          },
+          "subjectId": {
+            "description": "The ID of the subject user interested in. This information will be used to help user navigate back to where they were to continue their work.",
+            "type": "string"
+          },
+          "subjectType": {
+            "$ref": "#/components/schemas/RestrictableObjectType"
+          },
+          "submittedBy": {
+            "description": "The ID of the user that submit this submission.",
+            "type": "string"
+          },
+          "submittedOn": {
+            "description": "The date this submission was created.",
+            "type": "string"
+          },
+          "summaryOfUse": {
+            "description": "Summary of how the data has been used.",
+            "type": "string"
+          }
+        },
+        "title": "Submission",
+        "type": "object"
+      },
+      "SubmissionPage": {
+        "description": "Page of AR submissions",
+        "example": {
+          "nextPageToken": "...",
+          "results": [
+            {
+              "accessRequirementId": "...",
+              "accessRequirementVersion": 12345,
+              "accessorChanges": [
+                {
+                  "type": "GAIN_ACCESS",
+                  "userId": "..."
+                },
+                {
+                  "type": "REVOKE_ACCESS",
+                  "userId": "..."
+                }
+              ],
+              "attachments": [
+                "...",
+                "..."
+              ],
+              "ducFileHandleId": "...",
+              "etag": "...",
+              "id": "...",
+              "irbFileHandleId": "...",
+              "isRenewalSubmission": true,
+              "modifiedBy": "...",
+              "modifiedOn": "...",
+              "publication": "...",
+              "rejectedReason": "...",
+              "requestId": "...",
+              "researchProjectSnapshot": {
+                "accessRequirementId": "...",
+                "createdBy": "...",
+                "createdOn": "...",
+                "etag": "...",
+                "id": "...",
+                "institution": "...",
+                "intendedDataUseStatement": "...",
+                "modifiedBy": "...",
+                "modifiedOn": "...",
+                "projectLead": "..."
+              },
+              "state": "REJECTED",
+              "subjectId": "...",
+              "subjectType": "EVALUATION",
+              "submittedBy": "...",
+              "submittedOn": "...",
+              "summaryOfUse": "..."
+            },
+            {
+              "accessRequirementId": "...",
+              "accessRequirementVersion": 12345,
+              "accessorChanges": [
+                {
+                  "type": "GAIN_ACCESS",
+                  "userId": "..."
+                },
+                {
+                  "type": "RENEW_ACCESS",
+                  "userId": "..."
+                }
+              ],
+              "attachments": [
+                "...",
+                "..."
+              ],
+              "ducFileHandleId": "...",
+              "etag": "...",
+              "id": "...",
+              "irbFileHandleId": "...",
+              "isRenewalSubmission": true,
+              "modifiedBy": "...",
+              "modifiedOn": "...",
+              "publication": "...",
+              "rejectedReason": "...",
+              "requestId": "...",
+              "researchProjectSnapshot": {
+                "accessRequirementId": "...",
+                "createdBy": "...",
+                "createdOn": "...",
+                "etag": "...",
+                "id": "...",
+                "institution": "...",
+                "intendedDataUseStatement": "...",
+                "modifiedBy": "...",
+                "modifiedOn": "...",
+                "projectLead": "..."
+              },
+              "state": "APPROVED",
+              "subjectId": "...",
+              "subjectType": "ENTITY",
+              "submittedBy": "...",
+              "submittedOn": "...",
+              "summaryOfUse": "..."
+            }
+          ]
+        },
+        "properties": {
+          "nextPageToken": {
+            "description": "The token to get the next page result.",
+            "type": "string"
+          },
+          "results": {
+            "description": "Page of AR submissions",
+            "items": {
+              "$ref": "#/components/schemas/Submission"
+            },
+            "type": "array"
+          }
+        },
+        "title": "SubmissionPage",
+        "type": "object"
+      },
+      "AccessRequirementConversionRequest": {
+        "description": "A request to convert an ACTAccessRequirement to a ManagedACTAccessRequirement.",
+        "example": {
+          "accessRequirementId": "...",
+          "currentVersion": 12345,
+          "etag": "..."
+        },
+        "properties": {
+          "accessRequirementId": {
+            "description": "The ID of an ACTAccessRequirement.",
+            "type": "string"
+          },
+          "currentVersion": {
+            "description": "The current version of the AccessRequirement. This field is used for concurrency check.",
+            "type": "number"
+          },
+          "etag": {
+            "description": "The etag of the AccessRequirement. This field is used for concurrency check.",
+            "type": "string"
+          }
+        },
+        "title": "AccessRequirementConversionRequest",
+        "type": "object"
+      },
       "Empty": {
         "type": "object"
       },
@@ -9766,132 +10923,6 @@
           }
         },
         "title": "BooleanResult",
-        "type": "object"
-      },
-      "ACCESS_TYPE": {
-        "title": "ACCESS_TYPE",
-        "type": "string",
-        "description": "The enumeration of possible permission.",
-        "enum": [
-          "CREATE",
-          "READ",
-          "UPDATE",
-          "DELETE",
-          "CHANGE_PERMISSIONS",
-          "DOWNLOAD",
-          "UPLOAD",
-          "PARTICIPATE",
-          "SUBMIT",
-          "READ_PRIVATE_SUBMISSION",
-          "UPDATE_SUBMISSION",
-          "DELETE_SUBMISSION",
-          "TEAM_MEMBERSHIP_UPDATE",
-          "SEND_MESSAGE",
-          "CHANGE_SETTINGS",
-          "MODERATE"
-        ]
-      },
-      "RestrictableObjectType": {
-        "description": "JSON enum for the types of objects which can be restricted by an AccessRequirement.",
-        "enum": [
-          "ENTITY",
-          "EVALUATION",
-          "TEAM"
-        ],
-        "title": "RestrictableObjectType",
-        "type": "string"
-      },
-      "RestrictableObjectDescriptor": {
-        "description": "Restrictable object descriptor",
-        "example": {
-          "id": "...",
-          "type": "EVALUATION"
-        },
-        "properties": {
-          "id": {
-            "description": "Id",
-            "type": "string"
-          },
-          "type": {
-            "$ref": "#/components/schemas/RestrictableObjectType"
-          }
-        },
-        "title": "RestrictableObjectDescriptor",
-        "type": "object"
-      },
-      "AccessRequirement": {
-        "description": "Interface for JSON schema for AccessRequirement. The Access Requirement mechanism is\ndistinct from the access control list in that it is controlled not by the entity\nowner but by a separate authority: Access Requirements are created and maintained\nby the Synapse Access and Compliance Team (ACT). ACTAccessRequirements can only be\napproved by the ACT. Self-sign Access Requirements can be approved by the user\ndesiring access, but said user first has to meet 'terms of use' associated with the requirement.\n",
-        "example": {
-          "accessType": "SUBMIT",
-          "concreteType": "...",
-          "createdBy": "...",
-          "createdOn": "...",
-          "description": "...",
-          "etag": "...",
-          "id": 12345,
-          "modifiedBy": "...",
-          "modifiedOn": "...",
-          "subjectIds": [
-            {
-              "id": "...",
-              "type": "EVALUATION"
-            },
-            {
-              "id": "...",
-              "type": "TEAM"
-            }
-          ],
-          "versionNumber": 12345
-        },
-        "properties": {
-          "accessType": {
-            "$ref": "#/components/schemas/ACCESS_TYPE"
-          },
-          "concreteType": {
-            "description": "Indicates which type of AccessRequirement this object represents. Provided by the system, the user may not set this field.",
-            "type": "string"
-          },
-          "createdBy": {
-            "description": "The user that created this object. Provided by the system, the user may not set this field.",
-            "type": "string"
-          },
-          "createdOn": {
-            "description": "The date this object was created. Provided by the system, the user may not set this field.",
-            "type": "string"
-          },
-          "description": {
-            "description": "Short optional description for the AR. Limited to 50 characters.",
-            "type": "string"
-          },
-          "etag": {
-            "description": "Synapse employs an Optimistic Concurrency Control (OCC) scheme to handle concurrent\nupdates. Since the E-Tag changes every time an entity is updated it is used to\ndetect when a client's current representation of an object is out-of-date.\n",
-            "type": "string"
-          },
-          "id": {
-            "description": "The unique immutable ID. Provided by the system, the user may not set this field.",
-            "type": "number"
-          },
-          "modifiedBy": {
-            "description": "The user that last modified this object. Provided by the system, the user may not set this field.",
-            "type": "string"
-          },
-          "modifiedOn": {
-            "description": "The date this object was last modified. Provided by the system, the user may not set this field.",
-            "type": "string"
-          },
-          "subjectIds": {
-            "description": "The IDs of the items controlled by this Access Requirement. Required when creating or updating.",
-            "items": {
-              "$ref": "#/components/schemas/RestrictableObjectDescriptor"
-            },
-            "type": "array"
-          },
-          "versionNumber": {
-            "description": "The version number issued to this version on the object.",
-            "type": "integer"
-          }
-        },
-        "title": "AccessRequirement",
         "type": "object"
       },
       "PaginatedResultsOfAccessRequirement": {
