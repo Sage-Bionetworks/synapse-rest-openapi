@@ -1,0 +1,32 @@
+parameters:
+  - in: path
+    description: The ID of the message.
+    name: messageId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Get the actual URL of the file associated with the message
+
+    Note: This call will result in a HTTP temporary redirect (307), to the
+    actual file URL if the caller meets all of the download requirements.
+  operationId: fileRedirectForMessage
+  parameters:
+  - description: |
+      When set to false, the URL will be returned as text/plain
+      instead of redirecting.'
+    in: query
+    name: redirect
+    schema:
+      type: boolean
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Get the actual URL of the file associated with the message.
+  tags:
+  - Message Services

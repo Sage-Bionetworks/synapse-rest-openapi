@@ -434,6 +434,8 @@ paths:
     $ref: paths/message@{messageId}.yaml
   /message/{messageId}/conversation:
     $ref: paths/message@{messageId}@conversation.yaml
+  /message/{messageId}/file:
+    $ref: paths/message@{messageId}@file.yaml
 
   /project/{projectId}/forum:
     $ref: paths/project@{projectId}@forum.yaml
