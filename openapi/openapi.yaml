@@ -194,6 +194,8 @@ paths:
     $ref: paths/accessRequirement@{requirementId}.yaml
   /accessRequirement/{requirementId}/approvedSubmissionInfo:
     $ref: paths/accessRequirement@{requirementId}@approvedSubmissionInfo.yaml
+  /accessRequirement/{requirementId}/dataAccessRequestForUpdate:
+    $ref: paths/accessRequirement@{requirementId}@dataAccessRequestForUpdate.yaml
 
   /activity:
     $ref: paths/activity.yaml

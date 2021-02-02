@@ -4,7 +4,7 @@ example:
   userId: '...'
 properties:
   type:
-    $ref: '../defintions/AccessType.yaml'
+    $ref: '../definitions/AccessType.yaml'
   userId:
     description: 'The ID of the user.'
     type: string
