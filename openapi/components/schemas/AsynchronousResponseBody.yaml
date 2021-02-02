@@ -1,0 +1,9 @@
+description: 'The body of an Asynchronous job response.'
+example:
+  concreteType: '...'
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+title: AsynchronousResponseBody
+type: object

@@ -1,0 +1,74 @@
+description: 'Object used to track the status of an Asynchronous Job.'
+example:
+  changedOn: '...'
+  errorDetails: '...'
+  errorMessage: '...'
+  etag: '...'
+  exception: '...'
+  jobCanceling: true
+  jobId: '...'
+  jobState: PROCESSING
+  progressCurrent: 12345
+  progressMessage: '...'
+  progressTotal: 12345
+  requestBody:
+    concreteType: '...'
+  responseBody:
+    concreteType: '...'
+  runtimeMS: 12345
+  startedByUserId: 12345
+  startedOn: '...'
+properties:
+  changedOn:
+    description: 'The date-time when the status of this table last changed.'
+    type: string
+  errorDetails:
+    description: 'When processing fails, this is the full stack trace of the error.'
+    type: string
+  errorMessage:
+    description: 'When processing fails, this is a one line error message.'
+    type: string
+  etag:
+    description: 'The etag of the status will change whenever the status changes.'
+    type: string
+  exception:
+    description: 'The exception that needs to be thrown'
+    type: string
+  jobCanceling:
+    description: 'Was the job being asked to cancel.'
+    type: boolean
+  jobId:
+    description: 'The ID if the job issued when this job request was issued.'
+    type: string
+  jobState:
+    $ref: '../definitions/AsynchJobState.yaml'
+  progressCurrent:
+    description: |
+      The progress current value indicates how much progress has been made.
+      For example: If progressTotal = 100; and progressCurrent = 50; then
+      the work is 50% complete.
+    type: integer
+  progressMessage:
+    description: 'The current message of the progress tracker.'
+    type: string
+  progressTotal:
+    description: |
+      The progress total indicates the total amount of work to complete.
+      For example: If progressTotal = 100; and progressCurrent = 50; then
+      the work is 50% complete.
+    type: integer
+  requestBody:
+    $ref: 'AsynchronousRequestBody.yaml'
+  responseBody:
+    $ref: 'AsynchronousResponseBody.yaml'
+  runtimeMS:
+    description: 'The number of milliseconds from the start to completion of this job.'
+    type: number
+  startedByUserId:
+    description: 'The ID of the user that started the job'
+    type: integer
+  startedOn:
+    description: 'The date-time when the status of this table last changed to PROCESSING.'
+    type: string
+title: AsynchronousJobStatus
+type: object

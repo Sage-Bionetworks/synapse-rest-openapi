@@ -1,0 +1,22 @@
+parameters:
+  - description: 'The ID of a Asynchronous Job.'
+    in: path
+    name: jobId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Once a job is launched its progress can be monitored by getting its
+    status with this method.
+  operationId: getJobStatus
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AsynchronousJobStatus.yaml
+      description: Success
+  summary: Get Asynchronous Job.
+  tags:
+  - Asynchronous Job Services
