@@ -440,7 +440,10 @@ paths:
     $ref: paths/message@{messageId}@forward.yaml
   /message/inbox:
     $ref: paths/message@inbox.yaml
-
+  /message/outbox:
+    $ref: paths/message@outbox.yaml
+  /message/status:
+    $ref: paths/message@status.yaml
   /project/{projectId}/forum:
     $ref: paths/project@{projectId}@forum.yaml
   /reply:
