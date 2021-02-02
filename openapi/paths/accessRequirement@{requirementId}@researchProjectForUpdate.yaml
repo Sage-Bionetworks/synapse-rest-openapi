@@ -1,0 +1,25 @@
+parameters:
+  - description: the ID of the requirement.
+    in: path
+    name: requirementId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieve an existing ResearchProject that the user owns.
+
+    If none exists, a ResearchProject with some re-filled information is returned
+    to the user.
+    Only the owner of the researchProject can perform this action.
+  operationId: getUserOwnResearchProjectForUpdate
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResearchProject.yaml
+      description: Success
+  summary: Retrieve an existing ResearchProject that the user owns.
+  tags:
+  - Data Access Services

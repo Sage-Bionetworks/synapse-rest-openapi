@@ -1,0 +1,26 @@
+parameters:
+  - description: the ID of the requirement.
+    in: path
+    name: requirementId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Retrieve the Request for update.
+
+    If one does not exist, an Request with some re-filled information is returned.
+    If a submission associated with the request is approved, and the requirement
+    requires renewal, a refilled Renewal is returned.
+    Only the owner of the request can perform this action.
+  operationId: getRequestForUpdate
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/RequestInterface.yaml
+      description: Success
+  summary: Retrieve the Request for update.
+  tags:
+  - Data Access Services

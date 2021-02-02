@@ -1,0 +1,23 @@
+description: 'A request to retrieve a page of a Submission.'
+example:
+  accessRequirementId: '...'
+  filterBy: APPROVED
+  isAscending: true
+  nextPageToken: '...'
+  orderBy: MODIFIED_ON
+properties:
+  accessRequirementId:
+    description: 'The ID of an AccessRequirement.'
+    type: string
+  filterBy:
+    $ref: '../definitions/SubmissionState.yaml'
+  isAscending:
+    description: 'If true, order the returned result in ascending order. Otherwise, order the returned result in descending order.'
+    type: boolean
+  nextPageToken:
+    description: 'The token to get the next page result.'
+    type: string
+  orderBy:
+    $ref: '../definitions/SubmissionOrder.yaml'
+title: SubmissionPageRequest
+type: object

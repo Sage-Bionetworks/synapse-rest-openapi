@@ -1,0 +1,8 @@
+description: 'The state of a Submission.'
+enum:
+- SUBMITTED
+- APPROVED
+- REJECTED
+- CANCELLED
+title: SubmissionState
+type: string

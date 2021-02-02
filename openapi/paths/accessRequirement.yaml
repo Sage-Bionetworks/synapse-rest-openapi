@@ -1,0 +1,22 @@
+post:
+  description: |
+    Add an Access Requirement to an Entity, or Team.
+    This service may only be used by the Synapse Access and Compliance Team.
+  operationId: createAccessRequirement
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccessRequirement.yaml'
+    description: the Access Requirement to create
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessRequirement.yaml
+      description: Success
+  summary: Add an Access Requirement to an Entity, or Team.
+  tags:
+  - Access Requirement Services

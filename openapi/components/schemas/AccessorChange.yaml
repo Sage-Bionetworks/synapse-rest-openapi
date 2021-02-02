@@ -1,0 +1,12 @@
+description: 'Request for a single user change access to a resource.'
+example:
+  type: RENEW_ACCESS
+  userId: '...'
+properties:
+  type:
+    $ref: '../definitions/AccessType.yaml'
+  userId:
+    description: 'The ID of the user.'
+    type: string
+title: AccessorChange
+type: object

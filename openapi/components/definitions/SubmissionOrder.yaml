@@ -1,0 +1,6 @@
+description: 'Submission Order'
+enum:
+- CREATED_ON
+- MODIFIED_ON
+title: SubmissionOrder
+type: string

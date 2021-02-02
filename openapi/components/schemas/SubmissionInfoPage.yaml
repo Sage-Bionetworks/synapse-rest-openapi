@@ -1,0 +1,23 @@
+description: 'A page of Submission Information'
+example:
+  nextPageToken: '...'
+  results:
+  - institution: '...'
+    intendedDataUseStatement: '...'
+    modifiedOn: '...'
+    projectLead: '...'
+  - institution: '...'
+    intendedDataUseStatement: '...'
+    modifiedOn: '...'
+    projectLead: '...'
+properties:
+  nextPageToken:
+    description: 'The token to get the next page result.'
+    type: string
+  results:
+    description: 'A page of Submission Information'
+    items:
+      $ref: 'SubmissionInfo.yaml'
+    type: array
+title: SubmissionInfoPage
+type: object

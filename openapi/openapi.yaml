@@ -64,8 +64,13 @@ tags:
     description: |
       A Challenge is a special object that supplements a project, providing additional features
       specific to challenges.
-  # - name: Data Access Services
-  #   description: "."
+  - name: Data Access Services
+    description: |
+      Some data in Synapse are governed by an ACTAccessRequirement. To gain access to
+      these data, a user must meet all requirements specified in the ACTAccessRequirement.
+
+      These services provide the APIs for users to create request to gain access to
+      controlled data, and APIs for the ACT to review and grant access to users.
   - name: Discussion Services
     description: |
       Discussions in Synapse are captured in the Project's Forum.
@@ -183,6 +188,24 @@ paths:
     $ref: paths/accessApproval@information.yaml
   /accessApproval/notifications:
     $ref: paths/accessApproval@notifications.yaml
+  /accessRequirement:
+    $ref: paths/accessRequirement.yaml
+  /accessRequirement/{requirementId}:
+    $ref: paths/accessRequirement@{requirementId}.yaml
+  /accessRequirement/{requirementId}/approvedSubmissionInfo:
+    $ref: paths/accessRequirement@{requirementId}@approvedSubmissionInfo.yaml
+  /accessRequirement/{requirementId}/dataAccessRequestForUpdate:
+    $ref: paths/accessRequirement@{requirementId}@dataAccessRequestForUpdate.yaml
+  /accessRequirement/{requirementId}/researchProjectForUpdate:
+    $ref: paths/accessRequirement@{requirementId}@researchProjectForUpdate.yaml
+  /accessRequirement/{requirementId}/status:
+    $ref: paths/accessRequirement@{requirementId}@status.yaml
+  /accessRequirement/{requirementId}/subjects:
+    $ref: paths/accessRequirement@{requirementId}@subjects.yaml
+  /accessRequirement/{requirementId}/submissions:
+    $ref: paths/accessRequirement@{requirementId}@submissions.yaml
+  /accessRequirement/conversion:
+    $ref: paths/accessRequirement@conversion.yaml
   /activity:
     $ref: paths/activity.yaml
   /activity/{id}:

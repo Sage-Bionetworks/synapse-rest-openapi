@@ -1,0 +1,28 @@
+parameters:
+  - description: the ID of the requirement.
+    in: path
+    name: requirementId
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Return the research project info for approved data access submissions,
+    ordered by submission modified-on date, ascending
+  operationId: listInfoForApprovedSubmissions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/SubmissionInfoPageRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SubmissionInfoPage.yaml
+      description: Success
+  summary: Return approved data access submissions
+  tags:
+  - Data Access Services

@@ -1,0 +1,29 @@
+parameters:
+  - description: the ID of the requirement.
+    in: path
+    name: requirementId
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Retrieve a list of submissions for a given access requirement ID.
+
+    Only ACT member can perform this action.
+  operationId: listArSubmissions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/SubmissionPageRequest.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SubmissionPage.yaml
+      description: Success
+  summary: Retrieve a list of submissions for a given access requirement ID.
+  tags:
+  - Data Access Services

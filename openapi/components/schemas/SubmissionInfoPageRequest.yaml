@@ -1,0 +1,13 @@
+description: 'A request to retrieve a page of Submission Information'
+example:
+  accessRequirementId: '...'
+  nextPageToken: '...'
+properties:
+  accessRequirementId:
+    description: 'The ID of an AccessRequirement.'
+    type: string
+  nextPageToken:
+    description: 'The token to get the next page result.'
+    type: string
+title: SubmissionInfoPageRequest
+type: object

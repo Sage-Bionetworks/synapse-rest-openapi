@@ -1,0 +1,26 @@
+parameters:
+  - description: the ID of the requirement.
+    in: path
+    name: requirementId
+    required: true
+    schema:
+      type: string
+get:
+  description: Retrieve a page of subjects for a given Access Requirement ID.
+  operationId: getSubjects
+  parameters:
+  - in: query
+    description: Next page
+    name: nextPageToken
+    schema:
+      type: string
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/RestrictableObjectDescriptorResponse.yaml
+      description: Success
+  summary: Retrieve a page of subjects for a given Access Requirement ID.
+  tags:
+  - Access Requirement Services
