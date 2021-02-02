@@ -6566,6 +6566,411 @@ paths:
       summary: Get N number of threads for a Forum.
       tags:
         - Discussion Services
+  /message:
+    post:
+      description: >
+        Sends a message.
+
+
+        The "fileHandleId" field should point to a plain text file containing
+        the body
+
+        of the message. The file should be uploaded prior to this call.
+
+
+        The "recipients" field should hold a set of IDs corresponding to the
+        recipients
+
+        of the message.
+
+
+        All other fields are optional, including the "subject" field.
+
+
+        To chain messages together into a conversation, specify the message you
+        are replying
+
+        to via the "inReplyTo" field.
+
+
+        See the MessageToUser, MessageContent, and MessageRecipientSet schema
+        for more information.
+
+
+        In most cases, message delivery is asynchronous to message creation.
+
+
+        i.e. It may take several seconds for a message to appear in a user's
+        inbox.
+
+
+        Notes:
+
+
+        Unauthorized delivery, such as messaging a team you are not affiliated
+        with,
+
+        will result in a bounce message being sent to your email.
+
+
+        There are limits on the number of message recipients you can specify
+        (50) and
+
+        the rate at which you can send messages (10 per minute).  Neither these
+        restrictions,
+
+        nor the restriction that you can''t message a Team with which you are
+        unaffiliated,
+
+        apply if you are a member of the Trusted Message Senders Team.
+      operationId: createMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageToUser'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageToUser'
+          description: Success
+      summary: Send a message
+      tags:
+        - Message Services
+  '/message/{messageId}':
+    parameters:
+      - in: path
+        description: The ID of the message.
+        name: messageId
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Fetches the specified message.
+
+
+        The authenticated user must be either the sender or receiver of the
+        message.
+      operationId: getMessage
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageToUser'
+          description: Success
+      summary: Get the specified message.
+      tags:
+        - Message Services
+  '/message/{messageId}/conversation':
+    parameters:
+      - in: path
+        description: The ID of the message.
+        name: messageId
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Retrieves messages belonging to the same thread as the given message.
+
+
+        The current authenticated user will be either the sender or receiver of
+        all returned
+
+        messages.
+
+
+        By default, the most recent messages are returned first.
+
+        To flip the ordering, set the "descending" parameter to "false".
+
+        To change the way the messages are ordered, set the "orderBy" parameter
+        to
+
+        either "SEND_DATE" or "SUBJECT".
+      operationId: getConversation
+      parameters:
+        - in: query
+          name: descending
+          description: 'If true, returns the most recent messages.'
+          schema:
+            default: true
+            type: boolean
+        - in: query
+          name: limit
+          description: Limits the number of messages
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+        - in: query
+          name: offset
+          description: The offset index determines where this page will start from.
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+        - in: query
+          name: orderBy
+          description: Order by
+          schema:
+            default: SEND_DATE
+            type: string
+            enum:
+              - SUBJECT
+              - SEND_DATE
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfMessageToUser'
+          description: Success
+      summary: Retrieves messages belonging to the same thread as the given message.
+      tags:
+        - Message Services
+  '/message/{messageId}/file':
+    parameters:
+      - in: path
+        description: The ID of the message.
+        name: messageId
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Get the actual URL of the file associated with the message
+
+        Note: This call will result in a HTTP temporary redirect (307), to the
+        actual file URL if the caller meets all of the download requirements.
+      operationId: fileRedirectForMessage
+      parameters:
+        - description: |
+            When set to false, the URL will be returned as text/plain
+            instead of redirecting.'
+          in: query
+          name: redirect
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: Get the actual URL of the file associated with the message.
+      tags:
+        - Message Services
+  '/message/{messageId}/forward':
+    parameters:
+      - in: path
+        description: The ID of the message.
+        name: messageId
+        required: true
+        schema:
+          type: string
+    post:
+      description: >
+        Forwards a message to the specified set of recipients.
+
+
+        The authenticated user must be either the sender or receiver of the
+        forwarded
+
+        message.
+      operationId: forwardMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageRecipientSet'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageToUser'
+          description: Success
+      summary: Forwards a message to the specified set of recipients.
+      tags:
+        - Message Services
+  /message/inbox:
+    get:
+      description: >
+        Retrieves the current authenticated user's inbox.
+
+
+        It may take several seconds for a message to appear in the inbox after
+        creation.
+
+        By default, the most recent unread messages are returned first.
+
+        To flip the ordering, set the "descending" parameter to "false".
+
+        To change the way the messages are ordered, set the "orderBy" parameter
+        to
+
+        either "SEND_DATE" or "SUBJECT".
+
+
+        To retrieve messages that have been read or archived, set the
+        "inboxFilter" parameter
+
+        to a comma-separated list of values defined in the MessageStatusType
+      operationId: getInbox
+      parameters:
+        - in: query
+          name: descending
+          description: 'By default, returns most recent unread messages.'
+          schema:
+            default: true
+            type: boolean
+        - in: query
+          name: inboxFilter
+          description: Inbox filter
+          schema:
+            default: UNREAD
+            type: string
+        - in: query
+          name: limit
+          description: Limits the number of messages
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+        - in: query
+          name: offset
+          description: The offset index determines where this page will start from.
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+        - in: query
+          name: orderBy
+          description: Order by
+          schema:
+            default: SEND_DATE
+            type: string
+            enum:
+              - SUBJECT
+              - SEND_DATE
+      requestBody:
+        content:
+          application/json:
+            schema: $ref ../components/schemas/Empty.yaml
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfMessageBundle'
+          description: Success
+      summary: Retrieves the current authenticated user's inbox.
+      tags:
+        - Message Services
+  /message/outbox:
+    get:
+      description: >
+        Retrieves the current authenticated user''s outbox.
+
+
+        By default, the most recent messages are returned first.
+
+        To flip the ordering, set the "descending" parameter to "false".
+
+        To change the way the messages are ordered, set the "orderBy" parameter
+        to
+
+        either "SEND_DATE" or "SUBJECT".
+      operationId: getOutbox
+      parameters:
+        - in: query
+          name: descending
+          description: 'By default, the most recent message are returned.'
+          schema:
+            default: true
+            type: boolean
+        - in: query
+          name: limit
+          description: Limits the number of messages
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+        - in: query
+          name: offset
+          description: The offset index determines where this page will start from.
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+        - in: query
+          name: orderBy
+          description: Order by
+          schema:
+            default: SEND_DATE
+            type: string
+            enum:
+              - SUBJECT
+              - SEND_DATE
+      requestBody:
+        content:
+          application/json:
+            schema: $ref ../components/schemas/Empty.yaml
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultsOfMessageToUser'
+          description: Success
+      summary: Retrieves the current authenticated user's outbox.
+      tags:
+        - Message Services
+  /message/status:
+    put:
+      description: >
+        Updates the current status of a message relative to the current
+        authenticated
+
+        user.
+
+
+        Note: the "recipientId" field of the request body will be ignored.'
+      operationId: updateMessageStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageStatus'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: >-
+        Updates the current status of a message relative to the current
+        authenticated user.
+      tags:
+        - Message Services
   '/project/{projectId}/forum':
     parameters:
       - description: The ID of a Project.
@@ -15560,6 +15965,192 @@ components:
           description: The total number of threads.
           type: number
       title: ThreadCount
+      type: object
+    PaginatedResultsOfMessageToUser:
+      description: Page of messages
+      example:
+        results:
+          - bcc: ...
+            cc: ...
+            createdBy: ...
+            createdOn: ...
+            fileHandleId: ...
+            id: ...
+            inReplyTo: ...
+            inReplyToRoot: ...
+            isNotificationMessage: true
+            notificationUnsubscribeEndpoint: ...
+            recipients:
+              - ...
+              - ...
+            subject: ...
+            to: ...
+            userProfileSettingEndpoint: ...
+            withProfileSettingLink: true
+            withUnsubscribeLink: true
+          - bcc: ...
+            cc: ...
+            createdBy: ...
+            createdOn: ...
+            fileHandleId: ...
+            id: ...
+            inReplyTo: ...
+            inReplyToRoot: ...
+            isNotificationMessage: true
+            notificationUnsubscribeEndpoint: ...
+            recipients:
+              - ...
+              - ...
+            subject: ...
+            to: ...
+            userProfileSettingEndpoint: ...
+            withProfileSettingLink: true
+            withUnsubscribeLink: true
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: Page of messages
+          items:
+            $ref: '#/components/schemas/MessageToUser'
+          type: array
+        totalNumberOfResults:
+          $ref: '#/components/schemas/TotalNumberOfResults'
+      title: PaginatedResultsOfMessageToUser
+      type: object
+    MessageRecipientSet:
+      description: Contains a set of IDs of the intended recipients of a message
+      example:
+        recipients:
+          - ...
+          - ...
+      properties:
+        recipients:
+          description: The unique identifiers of the intended recipients of a message
+          items:
+            type: string
+          type: array
+      title: MessageRecipientSet
+      type: object
+    MessageStatusType:
+      description: |
+        The status of the message, from the RECIPIENT'S standpoint
+      enum:
+        - READ
+        - UNREAD
+        - ARCHIVED
+      title: MessageStatusType
+      type: string
+    MessageStatus:
+      description: JSON schema for a user message bundled with a status
+      example:
+        messageId: ...
+        recipientId: ...
+        status: ARCHIVED
+      properties:
+        messageId:
+          description: The unique identifier of the message.
+          type: string
+        recipientId:
+          description: The unique identifier of the recipient of this message.
+          type: string
+        status:
+          $ref: '#/components/schemas/MessageStatusType'
+      title: MessageStatus
+      type: object
+    MessageBundle:
+      description: JSON schema for a user message bundled with a status
+      example:
+        message:
+          bcc: ...
+          cc: ...
+          createdBy: ...
+          createdOn: ...
+          fileHandleId: ...
+          id: ...
+          inReplyTo: ...
+          inReplyToRoot: ...
+          isNotificationMessage: true
+          notificationUnsubscribeEndpoint: ...
+          recipients:
+            - ...
+            - ...
+          subject: ...
+          to: ...
+          userProfileSettingEndpoint: ...
+          withProfileSettingLink: true
+          withUnsubscribeLink: true
+        status:
+          messageId: ...
+          recipientId: ...
+          status: UNREAD
+      properties:
+        message:
+          $ref: '#/components/schemas/MessageToUser'
+        status:
+          $ref: '#/components/schemas/MessageStatus'
+      title: MessageBundle
+      type: object
+    PaginatedResultsOfMessageBundle:
+      description: Page of message bundles
+      example:
+        effectiveSchema: ...
+        results:
+          - message:
+              bcc: ...
+              cc: ...
+              createdBy: ...
+              createdOn: ...
+              fileHandleId: ...
+              id: ...
+              inReplyTo: ...
+              inReplyToRoot: ...
+              isNotificationMessage: true
+              notificationUnsubscribeEndpoint: ...
+              recipients:
+                - ...
+                - ...
+              subject: ...
+              to: ...
+              userProfileSettingEndpoint: ...
+              withProfileSettingLink: true
+              withUnsubscribeLink: true
+            status:
+              messageId: ...
+              recipientId: ...
+              status: ARCHIVED
+          - message:
+              bcc: ...
+              cc: ...
+              createdBy: ...
+              createdOn: ...
+              fileHandleId: ...
+              id: ...
+              inReplyTo: ...
+              inReplyToRoot: ...
+              isNotificationMessage: true
+              notificationUnsubscribeEndpoint: ...
+              recipients:
+                - ...
+                - ...
+              subject: ...
+              to: ...
+              userProfileSettingEndpoint: ...
+              withProfileSettingLink: true
+              withUnsubscribeLink: true
+            status:
+              messageId: ...
+              recipientId: ...
+              status: ARCHIVED
+        totalNumberOfResults: 12345
+      properties:
+        results:
+          description: Page of message bundles
+          items:
+            $ref: '#/components/schemas/MessageBundle'
+          type: array
+        totalNumberOfResults:
+          $ref: '#/components/schemas/TotalNumberOfResults'
+      title: PaginatedResultsOfMessageBundle
       type: object
     CreateDiscussionReply:
       description: The model object represents a single Reply creation.
