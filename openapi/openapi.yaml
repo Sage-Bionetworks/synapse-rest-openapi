@@ -430,6 +430,8 @@ paths:
     $ref: paths/forum@{forumId}@threads.yaml
   /message:
     $ref: paths/message.yaml
+  /message/{messageId}:
+    $ref: paths/message@{messageId}.yaml
 
   /project/{projectId}/forum:
     $ref: paths/project@{projectId}@forum.yaml
