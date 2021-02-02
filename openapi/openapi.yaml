@@ -116,11 +116,11 @@ tags:
     description: |
       Collection of APIs from managing and submitting form data.
   # - name: Health Check Services
-  # - name: Json Schema Services
-  #   description: |
-  #     This set of services provide project designers with tools to define their own
-  #     schemas to control and validate metadata applied to Projects, Folders, and
-  #     Files.
+  - name: Json Schema Services
+    description: |
+      This set of services provide project designers with tools to define their own
+      schemas to control and validate metadata applied to Projects, Folders, and
+      Files.
   # - name: Log Services
   #   description: https://sagebionetworks.
   - name: Membership Invitation Services
