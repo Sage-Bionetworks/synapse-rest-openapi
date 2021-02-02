@@ -166,6 +166,14 @@ tags:
   - name: Form Services
     description: |
       Collection of APIs from managing and submitting form data.
+  - name: Json Schema Services
+    description: >
+      This set of services provide project designers with tools to define their
+      own
+
+      schemas to control and validate metadata applied to Projects, Folders, and
+
+      Files.
   - name: Membership Invitation Services
     description: |
       The Membership Invitation Services create, retrieve and delete

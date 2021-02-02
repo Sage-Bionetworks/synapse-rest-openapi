@@ -76,6 +76,10 @@
       "description": "Collection of APIs from managing and submitting form data.\n"
     },
     {
+      "name": "Json Schema Services",
+      "description": "This set of services provide project designers with tools to define their own\nschemas to control and validate metadata applied to Projects, Folders, and\nFiles.\n"
+    },
+    {
       "name": "Membership Invitation Services",
       "description": "The Membership Invitation Services create, retrieve and delete\nmembership invitations.\n"
     },
