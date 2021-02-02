@@ -1,0 +1,19 @@
+description: 'A page of subjects'
+example:
+  nextPageToken: '...'
+  subjects:
+  - id: '...'
+    type: TEAM
+  - id: '...'
+    type: EVALUATION
+properties:
+  nextPageToken:
+    description: 'Token that can be used to get the next page. Null if there are no more results.'
+    type: string
+  subjects:
+    description: 'a page of subjects'
+    items:
+      $ref: 'RestrictableObjectDescriptor.yaml'
+    type: array
+title: RestrictableObjectDescriptorResponse
+type: object

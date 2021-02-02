@@ -200,6 +200,8 @@ paths:
     $ref: paths/accessRequirement@{requirementId}@researchProjectForUpdate.yaml
   /accessRequirement/{requirementId}/status:
     $ref: paths/accessRequirement@{requirementId}@status.yaml
+  /accessRequirement/{requirementId}/subjects:
+    $ref: paths/accessRequirement@{requirementId}@subjects.yaml
 
   /activity:
     $ref: paths/activity.yaml
