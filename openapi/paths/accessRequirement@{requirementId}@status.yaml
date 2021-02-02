@@ -1,0 +1,21 @@
+parameters:
+  - description: the ID of the requirement.
+    in: path
+    name: requirementId
+    required: true
+    schema:
+      type: string
+get:
+  description: Retrieve an access requirement status for a given access requirement
+    ID.
+  operationId: getAccessRequirementStatus
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AccessRequirementStatus.yaml
+      description: Success
+  summary: Retrieve an access requirement status for a given access requirement ID.
+  tags:
+  - Data Access Services

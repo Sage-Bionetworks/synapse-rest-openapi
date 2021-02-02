@@ -198,6 +198,8 @@ paths:
     $ref: paths/accessRequirement@{requirementId}@dataAccessRequestForUpdate.yaml
   /accessRequirement/{requirementId}/researchProjectForUpdate:
     $ref: paths/accessRequirement@{requirementId}@researchProjectForUpdate.yaml
+  /accessRequirement/{requirementId}/status:
+    $ref: paths/accessRequirement@{requirementId}@status.yaml
 
   /activity:
     $ref: paths/activity.yaml
