@@ -1,0 +1,8 @@
+description: |
+  The job's state
+enum:
+- PROCESSING
+- FAILED
+- COMPLETE
+title: AsynchJobState
+type: string

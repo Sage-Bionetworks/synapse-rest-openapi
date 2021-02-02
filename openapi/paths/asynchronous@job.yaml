@@ -1,0 +1,30 @@
+post:
+  description: |
+    This method is used to launch new jobs. The type of job that will be launched
+    is determined by the passed
+
+    AsynchronousJobBody.
+
+    The following are the currently supported job types:
+
+    * UploadToTableRequest
+    * DownloadFromTableRequest
+
+    Note: Each job types has different access requirements.
+  operationId: launchNewJob
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AsynchronousRequestBody.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AsynchronousJobStatus.yaml
+      description: Success
+  summary: Launch new Asynchronous jobs.
+  tags:
+  - Asynchronous Job Services

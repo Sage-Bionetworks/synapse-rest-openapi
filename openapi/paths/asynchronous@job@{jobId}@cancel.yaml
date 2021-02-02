@@ -1,0 +1,18 @@
+parameters:
+  - description: 'The ID of a Asynchronous Job.'
+    in: path
+    name: jobId
+    required: true
+    schema:
+      type: string
+get:
+  description: |
+    Once a job is launched it can be cancelled if the job is set up to
+    be cancelable.
+  operationId: stopJob
+  responses:
+    204:
+      description: The resource has been deleted.
+  summary: Stop a Asynchronous Job.
+  tags:
+  - Asynchronous Job Services
