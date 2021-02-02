@@ -1,0 +1,30 @@
+parameters:
+  - in: path
+    description: The ID of the message.
+    name: messageId
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Forwards a message to the specified set of recipients.
+
+    The authenticated user must be either the sender or receiver of the forwarded
+    message.
+  operationId: forwardMessage
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MessageRecipientSet.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/MessageToUser.yaml
+      description: Success
+  summary: Forwards a message to the specified set of recipients.
+  tags:
+  - Message Services
