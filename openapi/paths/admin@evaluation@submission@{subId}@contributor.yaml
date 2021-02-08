@@ -1,0 +1,28 @@
+parameters:
+  - in: path
+    name: subId
+    description: The ID of a submission.
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    Add a contributor to an existing Submission.  This service is available
+    to administrators only.
+  operationId: addSubmissionContributor
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/SubmissionContributor.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SubmissionContributor.yaml
+      description: Success
+  summary: Add a contributor to an existing Submission.
+  tags:
+  - Evaluation Services
