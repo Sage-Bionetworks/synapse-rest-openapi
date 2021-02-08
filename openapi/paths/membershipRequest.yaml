@@ -1,0 +1,51 @@
+post:
+  description: |
+    Create a membership request and send an email notification to the
+    administrators of the team.
+
+    The Team must be specified. Optionally, the creator may include a message and/or
+    expiration date for the request.
+
+    If no expiration date is specified then the request never expires.
+  operationId: createRequest
+  parameters:
+  - description: |
+      The portal end-point for one-click acceptance of the membership
+
+      request.  A signed, serialized token is appended to create the complete:
+      JoinTeamSignedToken
+
+      In normal operation, this parameter should be omitted.
+    in: query
+    name: acceptRequestEndpoint
+    schema:
+      default: https://www.synapse.org/#!SignedToken:JoinTeam/
+      type: string
+  - description: |
+      The portal prefix for one-click email unsubscription.
+
+      A signed, serialized token is appended to create the complete:
+      NotificationSettingsSignedToken
+
+      In normal operation, this parameter should be omitted.
+    in: query
+    name: notificationUnsubscribeEndpoint
+    schema:
+      default: https://www.synapse.org/#!SignedToken:Settings/
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MembershipRequest.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/MembershipRequest.yaml
+      description: Success
+  summary: .
+  tags:
+  - Membership Request Services

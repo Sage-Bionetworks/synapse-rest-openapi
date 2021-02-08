@@ -1,0 +1,15 @@
+get:
+  description: |
+    Retrieve the number of pending Membership Requests for teams that user
+    is admin
+  operationId: getOpenMembershipRequestCount
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Count.yaml
+      description: Success
+  summary: Get pending Membership Requests count
+  tags:
+  - Membership Request Services
