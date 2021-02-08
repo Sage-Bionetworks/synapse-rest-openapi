@@ -1,0 +1,41 @@
+get:
+  description: |
+    Get the Certified User test responses in the system, optionally filtered
+    by the one who took the test.
+
+    Note:  This service is available to Synapse administrators only.
+  operationId: getQuizResponses
+  parameters:
+  - description: |
+      Limits the size of the page returned. For example, a page size of
+      10 requires limit = 10.
+    in: query
+    name: limit
+    schema:
+      default: 10
+      minimum: 10
+      type: integer
+  - description: |
+      The index of the pagination offset. For a page size of 10, the first
+      page would be at offset = 0, and the second page would be at offset = 10.
+    in: query
+    name: offset
+    schema:
+      default: 0
+      minimum: 0
+      type: integer
+  - description: If specified, only retrieve the quiz for this user, if it exists.
+    in: query
+    name: principalId
+    schema:
+      type: number
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaginatedResultsOfQuizResponse.yaml
+      description: Success
+  summary: Get the Certified User test responses.
+  tags:
+  - Certified User Services

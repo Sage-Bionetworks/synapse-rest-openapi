@@ -212,6 +212,9 @@ paths:
     $ref: paths/account@{id}@emailValidation.yaml
   /account/emailValidation:
     $ref: paths/account@emailValidation.yaml
+  /admin/certifiedUserTestResponse:
+    $ref: paths/admin@certifiedUserTestResponse.yaml
+
   /activity:
     $ref: paths/activity.yaml
   /activity/{id}:
