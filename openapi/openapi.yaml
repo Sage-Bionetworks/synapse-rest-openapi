@@ -218,6 +218,8 @@ paths:
     $ref: paths/admin@certifiedUserTestResponse@{id}.yaml
   /admin/evaluation/submission/{subId}/contributor:
     $ref: paths/admin@evaluation@submission@{subId}@contributor.yaml
+  /admin/message/{messageId}:
+    $ref: paths/admin@message@{messageId}.yaml
 
   /activity:
     $ref: paths/activity.yaml
