@@ -206,6 +206,12 @@ paths:
     $ref: paths/accessRequirement@{requirementId}@submissions.yaml
   /accessRequirement/conversion:
     $ref: paths/accessRequirement@conversion.yaml
+  /account:
+    $ref: paths/account.yaml
+  /account/{id}/emailValidation:
+    $ref: paths/account@{id}@emailValidation.yaml
+  /account/emailValidation:
+    $ref: paths/account@emailValidation.yaml
   /activity:
     $ref: paths/activity.yaml
   /activity/{id}:

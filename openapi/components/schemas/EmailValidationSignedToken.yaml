@@ -1,0 +1,33 @@
+description: 'Signed token containing the the information necessary to create a new account or add an email address to an existing account.'
+example:
+  concreteType: '...'
+  createdOn: '...'
+  email: '...'
+  expiresOn: '...'
+  hmac: '...'
+  userId: '...'
+  version: 12345
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  createdOn:
+    description: 'The date-time the token was generated.'
+    type: string
+  email:
+    description: 'The email address.'
+    type: string
+  expiresOn:
+    description: 'The date-time when this token expires.'
+    type: string
+  hmac:
+    description: 'The hash message authentication code for the message.'
+    type: string
+  userId:
+    description: 'The ID of the user account to which the email address will be added. Null if creating a new account.'
+    type: string
+  version:
+    description: 'The version of the key used to generate the HMAC.'
+    type: integer
+title: EmailValidationSignedToken
+type: object

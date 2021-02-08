@@ -1,0 +1,34 @@
+post:
+  description: |
+    This service starts the process of creating a new account by sending
+    a 'validation email' message to the provided
+    email address. The email contains a link back to the application calling the service
+    which the user follows to complete the account creation process.
+  operationId: newAccountEmailValidation
+  parameters:
+  - description: |
+      the beginning of the URL included in the email verification message.
+      When concatenated with a list of ampersand (&) separated request parameters, must become a well formed
+      URL. The concatenated
+      string must be included with the POST /account request.'
+    in: query
+    name: portalEndpoint
+    required: true
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/NewUser.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: '../components/definitions/String.yaml'
+      description: Success
+  summary: Create a new Synapse Account
+  tags:
+  - Principal Services
