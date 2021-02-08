@@ -214,6 +214,8 @@ paths:
     $ref: paths/account@emailValidation.yaml
   /admin/certifiedUserTestResponse:
     $ref: paths/admin@certifiedUserTestResponse.yaml
+  /admin/certifiedUserTestResponse/{id}:
+    $ref: paths/admin@certifiedUserTestResponse@{id}.yaml
 
   /activity:
     $ref: paths/activity.yaml
