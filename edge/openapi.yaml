@@ -6566,6 +6566,361 @@ paths:
       summary: Get N number of threads for a Forum.
       tags:
         - Discussion Services
+  /membershipInvitation:
+    post:
+      description: >
+        Create a membership invitation and send an email notification to
+
+        the invitee. The team must be specified.
+
+
+        Also, either an inviteeId or an inviteeEmail must be specified.
+        Optionally, the
+
+        creator may include an invitation message and/or expiration date for the
+        invitation.
+
+        If no expiration date is specified then the
+
+        invitation never expires.
+
+
+        Note: The client must be an team manager of the specified Team to make
+        this
+
+        request.
+      operationId: createInvitation
+      parameters:
+        - description: >
+            The portal endpoint prefix for one-click acceptance of the
+            membership
+
+            invitation.
+
+
+            A signed, serialized token is appended to create the complete URL:
+            JoinTeamSignedToken
+
+            if an inviteeId is specified, or MembershipInvtnSignedToken
+
+            if an inviteeEmail is specified.
+
+            In normal operation, this parameter should be omitted.
+          in: query
+          name: acceptInvitationEndpoint
+          schema:
+            type: string
+        - description: |
+            The portal endpoint prefix for one-click email unsubscription.
+            A signed, serialized token is appended to create the complete URL:
+            NotificationSettingsSignedToken
+
+            In normal operation, this parameter should be omitted.
+          in: query
+          name: notificationUnsubscribeEndpoint
+          schema:
+            default: 'https://www.synapse.org/#!SignedToken:Settings/'
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipInvitation'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipInvitation'
+          description: Success
+      summary: Create membership invitation
+      tags:
+        - Membership Invitation Services
+  '/membershipInvitation/{id}':
+    parameters:
+      - description: the ID of the invitation.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    delete:
+      description: >
+        Delete an invitation
+
+
+        Note:  The client must be an administrator of the Team referenced by the
+        invitation
+
+        or the invitee to make this request.
+      operationId: deleteInvitation
+      responses:
+        '204':
+          description: The resource was deleted
+      summary: Delete an invitation
+      tags:
+        - Membership Invitation Services
+    get:
+      description: >
+        Retrieve an invitation by ID
+
+
+        Note:  The client must be an administrator of the Team referenced by the
+        invitation
+
+        or the invitee to make this request.
+      operationId: getInvitation
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipInvitation'
+          description: Success
+      summary: Retrieve an invitation by ID.
+      tags:
+        - Membership Invitation Services
+    post:
+      description: |
+        Retrieve an invitation by ID using a MembershipInvtnSignedToken for
+        authorization
+      operationId: getInvitationByToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipInvtnSignedToken'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipInvitation'
+          description: Success
+      summary: Retrieve an invitation by ID using a MembershipInvtnSignedToken.
+      tags:
+        - Membership Invitation Services
+  '/membershipInvitation/{id}/inviteeId':
+    parameters:
+      - description: the ID of the invitation.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    put:
+      description: >
+        Set the inviteeId of a MembershipInvitation.
+
+
+        A valid InviteeVerificationSignedToken must have an inviteeId equal to
+        the id
+
+        of the authenticated user and a membershipInvitationId equal to the id
+        in the URI.
+
+        This call will only succeed if the indicated MembershipInvitation has a
+
+        null inviteeId and a non null inviteeEmail.
+
+
+        See
+        https://sagebionetworks.jira.com/wiki/spaces/PLFM/pages/143628166/Invite+a+new+user+to+join+a+team
+
+        for more information.
+      operationId: updateInviteeId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteeVerificationSignedToken'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/String'
+          description: Success
+      summary: Set the inviteeId of a MembershipInvitation.
+      tags:
+        - Membership Invitation Services
+  '/membershipInvitation/{id}/inviteeVerificationSignedToken':
+    parameters:
+      - description: the ID of the invitation.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      description: >
+        Verify whether the inviteeEmail of the indicated MembershipInvitation
+
+        is associated with the authenticated user.
+
+
+        If it is, the response body will contain an
+        InviteeVerificationSignedToken.
+
+        If it is not, a response status 403 Forbidden will be returned.
+
+        InviteeVerificationSignedTokens generated by this service expire 24
+        hours from
+
+        creation.
+
+
+        See
+        https://sagebionetworks.jira.com/wiki/spaces/PLFM/pages/143628166/Invite+a+new+user+to+join+a+team
+
+        for more information.
+      operationId: getInviteeVerificationSignedToken
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteeVerificationSignedToken'
+          description: Success
+      summary: |
+        Verify whether the inviteeEmail of the indicated MembershipInvitation is
+        associated with the authenticated user.
+      tags:
+        - Membership Invitation Services
+  /membershipInvitation/openInvitationCount:
+    get:
+      description: Retrieve the number of pending Membership Invitations
+      operationId: getOpenInvitationCount
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Count'
+          description: Success
+      summary: Retrieve the number of pending Membership Invitations.
+      tags:
+        - Membership Invitation Services
+  /membershipRequest:
+    post:
+      description: >
+        Create a membership request and send an email notification to the
+
+        administrators of the team.
+
+
+        The Team must be specified. Optionally, the creator may include a
+        message and/or
+
+        expiration date for the request.
+
+
+        If no expiration date is specified then the request never expires.
+      operationId: createRequest
+      parameters:
+        - description: >
+            The portal end-point for one-click acceptance of the membership
+
+
+            request.  A signed, serialized token is appended to create the
+            complete:
+
+            JoinTeamSignedToken
+
+
+            In normal operation, this parameter should be omitted.
+          in: query
+          name: acceptRequestEndpoint
+          schema:
+            default: 'https://www.synapse.org/#!SignedToken:JoinTeam/'
+            type: string
+        - description: |
+            The portal prefix for one-click email unsubscription.
+
+            A signed, serialized token is appended to create the complete:
+            NotificationSettingsSignedToken
+
+            In normal operation, this parameter should be omitted.
+          in: query
+          name: notificationUnsubscribeEndpoint
+          schema:
+            default: 'https://www.synapse.org/#!SignedToken:Settings/'
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipRequest'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipRequest'
+          description: Success
+      summary: .
+      tags:
+        - Membership Request Services
+  '/membershipRequest/{id}':
+    parameters:
+      - in: path
+        description: The ID for a membership request.
+        name: id
+        required: true
+        schema:
+          type: string
+    delete:
+      description: >
+        Delete a request
+
+
+        Note:  The client must be the creator of the membership request to make
+        this request.
+      operationId: deleteRequest
+      responses:
+        '204':
+          description: The resource has been deleted
+      summary: Delete a request
+      tags:
+        - Membership Request Services
+    get:
+      description: >
+        Retrieve an request by ID
+
+
+        Note:  The client must be the creator of the membership request to make
+        this request.'
+      operationId: getRequest
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipRequest'
+          description: Success
+      summary: Retrieve an request by ID
+      tags:
+        - Membership Request Services
+  /membershipRequest/openRequestCount:
+    get:
+      description: |
+        Retrieve the number of pending Membership Requests for teams that user
+        is admin
+      operationId: getOpenMembershipRequestCount
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Count'
+          description: Success
+      summary: Get pending Membership Requests count
+      tags:
+        - Membership Request Services
   /message:
     post:
       description: >
@@ -7585,47 +7940,14 @@ paths:
   /team:
     post:
       description: >
-        Create a new Team. The passed request body may contain the following
-
-        fields:
-
-
-        <ul>
-
-
-        <li>name - Give your new Team a name.  The name must be unique, not used
-        by an
-
-        existing Team (required).</li>
-
-
-        <li>description - a short text description of the Team''s purpose
-        (optional).</li>
-
-
-        <li>icon - a fileHandle ID for an icon image file previously uploaded to
-        Synapse
-
-        (optional).</li>
-
-
-        </ul>
-
-
-        <p>
+        Create a new Team.
 
 
         To specify a Team icon, the icon file must first be uploaded to Synapse
         as
 
-        <a
-        href="${org.sagebionetworks.repo.model.file.FileHandle}">FileHandle</a>
-        (see
-
-        <a href="${org.sagebionetworks.file.controller.UploadController}">File
-        Services</a>).
-
-        The FileHandle ID can then be put into the Team''s icon field.
+        FileHandle.  The FileHandle ID can then be put into the Team's icon
+        field.
       operationId: createTeam
       requestBody:
         content:
@@ -15966,6 +16288,156 @@ components:
           type: number
       title: ThreadCount
       type: object
+    MembershipInvitation:
+      description: JSON schema for MembershipInvitation POJO
+      example:
+        createdBy: ...
+        createdOn: ...
+        expiresOn: ...
+        id: ...
+        inviteeEmail: ...
+        inviteeId: ...
+        message: ...
+        teamId: ...
+      properties:
+        createdBy:
+          description: The ID of the user that created this MembershipInvitation.
+          type: string
+        createdOn:
+          description: The date this MembershipInvitation was created.
+          type: string
+        expiresOn:
+          description: The date this invitation expires (optional).
+          type: string
+        id:
+          description: The id of the MembershipInvitation.
+          type: string
+        inviteeEmail:
+          description: The email address of the user being invited to join the Team.
+          type: string
+        inviteeId:
+          description: The principal ID of the user being invited to join the Team.
+          type: string
+        message:
+          description: The invitation message (optional).
+          type: string
+        teamId:
+          description: The id of the Team which the user is invited to join.
+          type: string
+      title: MembershipInvitation
+      type: object
+    MembershipInvtnSignedToken:
+      description: >-
+        Signed token containing the information needed to retrieve a membership
+        invitation.
+      example:
+        concreteType: ...
+        createdOn: ...
+        expiresOn: ...
+        hmac: ...
+        membershipInvitationId: ...
+        version: 12345
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        createdOn:
+          description: The date-time the token was generated.
+          type: string
+        expiresOn:
+          description: The date-time when this token expires.
+          type: string
+        hmac:
+          description: The hash message authentication code for the message.
+          type: string
+        membershipInvitationId:
+          description: The ID of the membership invitation.
+          type: string
+        version:
+          description: The version of the key used to generate the HMAC.
+          type: integer
+      title: MembershipInvtnSignedToken
+      type: object
+    InviteeVerificationSignedToken:
+      description: >-
+        Signed token containing the information needed to update the inviteeId
+        of a MembershipInvitation.
+      example:
+        concreteType: ...
+        createdOn: ...
+        expiresOn: ...
+        hmac: ...
+        inviteeId: ...
+        membershipInvitationId: ...
+        version: 12345
+      properties:
+        concreteType:
+          description: Concrete Type
+          type: string
+        createdOn:
+          description: The date-time the token was generated.
+          type: string
+        expiresOn:
+          description: The date-time when this token expires.
+          type: string
+        hmac:
+          description: The hash message authentication code for the message.
+          type: string
+        inviteeId:
+          description: The ID of the invitee.
+          type: string
+        membershipInvitationId:
+          description: The ID of the MembershipInvitation to update.
+          type: string
+        version:
+          description: The version of the key used to generate the HMAC.
+          type: integer
+      title: InviteeVerificationSignedToken
+      type: object
+    Count:
+      description: Count of items
+      example:
+        count: 12345
+      properties:
+        count:
+          description: Count of items
+          type: integer
+      title: Count
+      type: object
+    MembershipRequest:
+      description: JSON schema for MembershipRequest POJO
+      example:
+        createdBy: ...
+        createdOn: ...
+        expiresOn: ...
+        id: ...
+        message: ...
+        teamId: ...
+        userId: ...
+      properties:
+        createdBy:
+          description: The ID of the user that created this MembershipRequest.
+          type: string
+        createdOn:
+          description: The date this MembershipRequest was created.
+          type: string
+        expiresOn:
+          description: The date this MembershipRequest expires (optional).
+          type: string
+        id:
+          description: The id of the MembershipRequest.
+          type: string
+        message:
+          description: The request message (optional).
+          type: string
+        teamId:
+          description: The id of the Team to which the request is sent.
+          type: string
+        userId:
+          description: The id of the user for whom membership is requested.
+          type: string
+      title: MembershipRequest
+      type: object
     PaginatedResultsOfMessageToUser:
       description: Page of messages
       example:
@@ -16915,44 +17387,6 @@ components:
           type: array
       title: ListWrapperOfTeamMember
       type: object
-    MembershipInvitation:
-      description: JSON schema for MembershipInvitation POJO
-      example:
-        createdBy: ...
-        createdOn: ...
-        expiresOn: ...
-        id: ...
-        inviteeEmail: ...
-        inviteeId: ...
-        message: ...
-        teamId: ...
-      properties:
-        createdBy:
-          description: The ID of the user that created this MembershipInvitation.
-          type: string
-        createdOn:
-          description: The date this MembershipInvitation was created.
-          type: string
-        expiresOn:
-          description: The date this invitation expires (optional).
-          type: string
-        id:
-          description: The id of the MembershipInvitation.
-          type: string
-        inviteeEmail:
-          description: The email address of the user being invited to join the Team.
-          type: string
-        inviteeId:
-          description: The principal ID of the user being invited to join the Team.
-          type: string
-        message:
-          description: The invitation message (optional).
-          type: string
-        teamId:
-          description: The id of the Team which the user is invited to join.
-          type: string
-      title: MembershipInvitation
-      type: object
     PaginatedResultsOfMembershipInvitation:
       description: >
         Retrieve the open invitations from a Team, optionally filtering by the
@@ -17004,40 +17438,6 @@ components:
             totalNumberOfResults will be offset+pageSize.
           type: integer
       title: PaginatedResultsOfMembershipInvitation
-      type: object
-    MembershipRequest:
-      description: JSON schema for MembershipRequest POJO
-      example:
-        createdBy: ...
-        createdOn: ...
-        expiresOn: ...
-        id: ...
-        message: ...
-        teamId: ...
-        userId: ...
-      properties:
-        createdBy:
-          description: The ID of the user that created this MembershipRequest.
-          type: string
-        createdOn:
-          description: The date this MembershipRequest was created.
-          type: string
-        expiresOn:
-          description: The date this MembershipRequest expires (optional).
-          type: string
-        id:
-          description: The id of the MembershipRequest.
-          type: string
-        message:
-          description: The request message (optional).
-          type: string
-        teamId:
-          description: The id of the Team to which the request is sent.
-          type: string
-        userId:
-          description: The id of the user for whom membership is requested.
-          type: string
-      title: MembershipRequest
       type: object
     PaginatedResultsOfMembershipRequest:
       description: List of Membership Requests
@@ -17204,16 +17604,6 @@ components:
         totalNumberOfResults:
           $ref: '#/components/schemas/TotalNumberOfResults'
       title: PaginatedResultsOfTeamMember
-      type: object
-    Count:
-      description: Count of items
-      example:
-        count: 12345
-      properties:
-        count:
-          description: Count of items
-          type: integer
-      title: Count
       type: object
     CreateDiscussionThread:
       description: The model object represents a single Thread creation.
