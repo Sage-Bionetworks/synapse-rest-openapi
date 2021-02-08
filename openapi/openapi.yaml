@@ -430,6 +430,8 @@ paths:
     $ref: paths/forum@{forumId}@threads.yaml
   /membershipInvitation:
     $ref: paths/membershipInvitation.yaml
+  /membershipInvitation/{id}:
+    $ref: paths/membershipInvitation@{id}.yaml
 
   /message:
     $ref: paths/message.yaml

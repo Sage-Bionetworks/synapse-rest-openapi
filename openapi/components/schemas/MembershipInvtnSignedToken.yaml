@@ -1,0 +1,29 @@
+description: 'Signed token containing the information needed to retrieve a membership invitation.'
+example:
+  concreteType: '...'
+  createdOn: '...'
+  expiresOn: '...'
+  hmac: '...'
+  membershipInvitationId: '...'
+  version: 12345
+properties:
+  concreteType:
+    description: 'Concrete Type'
+    type: string
+  createdOn:
+    description: 'The date-time the token was generated.'
+    type: string
+  expiresOn:
+    description: 'The date-time when this token expires.'
+    type: string
+  hmac:
+    description: 'The hash message authentication code for the message.'
+    type: string
+  membershipInvitationId:
+    description: 'The ID of the membership invitation.'
+    type: string
+  version:
+    description: 'The version of the key used to generate the HMAC.'
+    type: number
+title: MembershipInvtnSignedToken
+type: object
