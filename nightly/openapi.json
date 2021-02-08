@@ -6411,6 +6411,351 @@
         ]
       }
     },
+    "/membershipInvitation": {
+      "post": {
+        "description": "Create a membership invitation and send an email notification to\nthe invitee. The team must be specified.\n\nAlso, either an inviteeId or an inviteeEmail must be specified. Optionally, the\ncreator may include an invitation message and/or expiration date for the invitation.\nIf no expiration date is specified then the\ninvitation never expires.\n\nNote: The client must be an team manager of the specified Team to make this\nrequest.\n",
+        "operationId": "createInvitation",
+        "parameters": [
+          {
+            "description": "The portal endpoint prefix for one-click acceptance of the membership\ninvitation.\n\nA signed, serialized token is appended to create the complete URL: JoinTeamSignedToken\nif an inviteeId is specified, or MembershipInvtnSignedToken\nif an inviteeEmail is specified.\nIn normal operation, this parameter should be omitted.\n",
+            "in": "query",
+            "name": "acceptInvitationEndpoint",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The portal endpoint prefix for one-click email unsubscription.\nA signed, serialized token is appended to create the complete URL:\nNotificationSettingsSignedToken\n\nIn normal operation, this parameter should be omitted.\n",
+            "in": "query",
+            "name": "notificationUnsubscribeEndpoint",
+            "schema": {
+              "default": "https://www.synapse.org/#!SignedToken:Settings/",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MembershipInvitation"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipInvitation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Create membership invitation",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      }
+    },
+    "/membershipInvitation/{id}": {
+      "parameters": [
+        {
+          "description": "the ID of the invitation.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "description": "Delete an invitation\n\nNote:  The client must be an administrator of the Team referenced by the invitation\nor the invitee to make this request.\n",
+        "operationId": "deleteInvitation",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted"
+          }
+        },
+        "summary": "Delete an invitation",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      },
+      "get": {
+        "description": "Retrieve an invitation by ID\n\nNote:  The client must be an administrator of the Team referenced by the invitation\nor the invitee to make this request.\n",
+        "operationId": "getInvitation",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipInvitation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve an invitation by ID.",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      },
+      "post": {
+        "description": "Retrieve an invitation by ID using a MembershipInvtnSignedToken for\nauthorization\n",
+        "operationId": "getInvitationByToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MembershipInvtnSignedToken"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipInvitation"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve an invitation by ID using a MembershipInvtnSignedToken.",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      }
+    },
+    "/membershipInvitation/{id}/inviteeId": {
+      "parameters": [
+        {
+          "description": "the ID of the invitation.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "description": "Set the inviteeId of a MembershipInvitation.\n\nA valid InviteeVerificationSignedToken must have an inviteeId equal to the id\nof the authenticated user and a membershipInvitationId equal to the id in the URI.\nThis call will only succeed if the indicated MembershipInvitation has a\nnull inviteeId and a non null inviteeEmail.\n\nSee https://sagebionetworks.jira.com/wiki/spaces/PLFM/pages/143628166/Invite+a+new+user+to+join+a+team\nfor more information.\n",
+        "operationId": "updateInviteeId",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteeVerificationSignedToken"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/String"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Set the inviteeId of a MembershipInvitation.",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      }
+    },
+    "/membershipInvitation/{id}/inviteeVerificationSignedToken": {
+      "parameters": [
+        {
+          "description": "the ID of the invitation.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Verify whether the inviteeEmail of the indicated MembershipInvitation\nis associated with the authenticated user.\n\nIf it is, the response body will contain an InviteeVerificationSignedToken.\nIf it is not, a response status 403 Forbidden will be returned.\nInviteeVerificationSignedTokens generated by this service expire 24 hours from\ncreation.\n\nSee https://sagebionetworks.jira.com/wiki/spaces/PLFM/pages/143628166/Invite+a+new+user+to+join+a+team\nfor more information.\n",
+        "operationId": "getInviteeVerificationSignedToken",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InviteeVerificationSignedToken"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Verify whether the inviteeEmail of the indicated MembershipInvitation is\nassociated with the authenticated user.\n",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      }
+    },
+    "/membershipInvitation/openInvitationCount": {
+      "get": {
+        "description": "Retrieve the number of pending Membership Invitations",
+        "operationId": "getOpenInvitationCount",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Count"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve the number of pending Membership Invitations.",
+        "tags": [
+          "Membership Invitation Services"
+        ]
+      }
+    },
+    "/membershipRequest": {
+      "post": {
+        "description": "Create a membership request and send an email notification to the\nadministrators of the team.\n\nThe Team must be specified. Optionally, the creator may include a message and/or\nexpiration date for the request.\n\nIf no expiration date is specified then the request never expires.\n",
+        "operationId": "createRequest",
+        "parameters": [
+          {
+            "description": "The portal end-point for one-click acceptance of the membership\n\nrequest.  A signed, serialized token is appended to create the complete:\nJoinTeamSignedToken\n\nIn normal operation, this parameter should be omitted.\n",
+            "in": "query",
+            "name": "acceptRequestEndpoint",
+            "schema": {
+              "default": "https://www.synapse.org/#!SignedToken:JoinTeam/",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The portal prefix for one-click email unsubscription.\n\nA signed, serialized token is appended to create the complete:\nNotificationSettingsSignedToken\n\nIn normal operation, this parameter should be omitted.\n",
+            "in": "query",
+            "name": "notificationUnsubscribeEndpoint",
+            "schema": {
+              "default": "https://www.synapse.org/#!SignedToken:Settings/",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MembershipRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipRequest"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": ".",
+        "tags": [
+          "Membership Request Services"
+        ]
+      }
+    },
+    "/membershipRequest/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "description": "The ID for a membership request.",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "delete": {
+        "description": "Delete a request\n\nNote:  The client must be the creator of the membership request to make this request.\n",
+        "operationId": "deleteRequest",
+        "responses": {
+          "204": {
+            "description": "The resource has been deleted"
+          }
+        },
+        "summary": "Delete a request",
+        "tags": [
+          "Membership Request Services"
+        ]
+      },
+      "get": {
+        "description": "Retrieve an request by ID\n\nNote:  The client must be the creator of the membership request to make this request.'\n",
+        "operationId": "getRequest",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipRequest"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Retrieve an request by ID",
+        "tags": [
+          "Membership Request Services"
+        ]
+      }
+    },
+    "/membershipRequest/openRequestCount": {
+      "get": {
+        "description": "Retrieve the number of pending Membership Requests for teams that user\nis admin\n",
+        "operationId": "getOpenMembershipRequestCount",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Count"
+                }
+              }
+            },
+            "description": "Success"
+          }
+        },
+        "summary": "Get pending Membership Requests count",
+        "tags": [
+          "Membership Request Services"
+        ]
+      }
+    },
     "/message": {
       "post": {
         "description": "Sends a message.\n\nThe \"fileHandleId\" field should point to a plain text file containing the body\nof the message. The file should be uploaded prior to this call.\n\nThe \"recipients\" field should hold a set of IDs corresponding to the recipients\nof the message.\n\nAll other fields are optional, including the \"subject\" field.\n\nTo chain messages together into a conversation, specify the message you are replying\nto via the \"inReplyTo\" field.\n\nSee the MessageToUser, MessageContent, and MessageRecipientSet schema for more information.\n\nIn most cases, message delivery is asynchronous to message creation.\n\ni.e. It may take several seconds for a message to appear in a user's inbox.\n\nNotes:\n\nUnauthorized delivery, such as messaging a team you are not affiliated with,\nwill result in a bounce message being sent to your email.\n\nThere are limits on the number of message recipients you can specify (50) and\nthe rate at which you can send messages (10 per minute).  Neither these restrictions,\nnor the restriction that you can''t message a Team with which you are unaffiliated,\napply if you are a member of the Trusted Message Senders Team.\n",
@@ -7458,7 +7803,7 @@
     },
     "/team": {
       "post": {
-        "description": "Create a new Team. The passed request body may contain the following\nfields:\n\n<ul>\n\n<li>name - Give your new Team a name.  The name must be unique, not used by an\nexisting Team (required).</li>\n\n<li>description - a short text description of the Team''s purpose (optional).</li>\n\n<li>icon - a fileHandle ID for an icon image file previously uploaded to Synapse\n(optional).</li>\n\n</ul>\n\n<p>\n\nTo specify a Team icon, the icon file must first be uploaded to Synapse as\n<a href=\"${org.sagebionetworks.repo.model.file.FileHandle}\">FileHandle</a> (see\n<a href=\"${org.sagebionetworks.file.controller.UploadController}\">File Services</a>).\nThe FileHandle ID can then be put into the Team''s icon field.\n",
+        "description": "Create a new Team.\n\nTo specify a Team icon, the icon file must first be uploaded to Synapse as\nFileHandle.  The FileHandle ID can then be put into the Team's icon field.\n",
         "operationId": "createTeam",
         "requestBody": {
           "content": {
@@ -16922,6 +17267,196 @@
         "title": "ThreadCount",
         "type": "object"
       },
+      "MembershipInvitation": {
+        "description": "JSON schema for MembershipInvitation POJO",
+        "example": {
+          "createdBy": "...",
+          "createdOn": "...",
+          "expiresOn": "...",
+          "id": "...",
+          "inviteeEmail": "...",
+          "inviteeId": "...",
+          "message": "...",
+          "teamId": "..."
+        },
+        "properties": {
+          "createdBy": {
+            "description": "The ID of the user that created this MembershipInvitation.",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this MembershipInvitation was created.",
+            "type": "string"
+          },
+          "expiresOn": {
+            "description": "The date this invitation expires (optional).",
+            "type": "string"
+          },
+          "id": {
+            "description": "The id of the MembershipInvitation.",
+            "type": "string"
+          },
+          "inviteeEmail": {
+            "description": "The email address of the user being invited to join the Team.",
+            "type": "string"
+          },
+          "inviteeId": {
+            "description": "The principal ID of the user being invited to join the Team.",
+            "type": "string"
+          },
+          "message": {
+            "description": "The invitation message (optional).",
+            "type": "string"
+          },
+          "teamId": {
+            "description": "The id of the Team which the user is invited to join.",
+            "type": "string"
+          }
+        },
+        "title": "MembershipInvitation",
+        "type": "object"
+      },
+      "MembershipInvtnSignedToken": {
+        "description": "Signed token containing the information needed to retrieve a membership invitation.",
+        "example": {
+          "concreteType": "...",
+          "createdOn": "...",
+          "expiresOn": "...",
+          "hmac": "...",
+          "membershipInvitationId": "...",
+          "version": 12345
+        },
+        "properties": {
+          "concreteType": {
+            "description": "Concrete Type",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date-time the token was generated.",
+            "type": "string"
+          },
+          "expiresOn": {
+            "description": "The date-time when this token expires.",
+            "type": "string"
+          },
+          "hmac": {
+            "description": "The hash message authentication code for the message.",
+            "type": "string"
+          },
+          "membershipInvitationId": {
+            "description": "The ID of the membership invitation.",
+            "type": "string"
+          },
+          "version": {
+            "description": "The version of the key used to generate the HMAC.",
+            "type": "integer"
+          }
+        },
+        "title": "MembershipInvtnSignedToken",
+        "type": "object"
+      },
+      "InviteeVerificationSignedToken": {
+        "description": "Signed token containing the information needed to update the inviteeId of a MembershipInvitation.",
+        "example": {
+          "concreteType": "...",
+          "createdOn": "...",
+          "expiresOn": "...",
+          "hmac": "...",
+          "inviteeId": "...",
+          "membershipInvitationId": "...",
+          "version": 12345
+        },
+        "properties": {
+          "concreteType": {
+            "description": "Concrete Type",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date-time the token was generated.",
+            "type": "string"
+          },
+          "expiresOn": {
+            "description": "The date-time when this token expires.",
+            "type": "string"
+          },
+          "hmac": {
+            "description": "The hash message authentication code for the message.",
+            "type": "string"
+          },
+          "inviteeId": {
+            "description": "The ID of the invitee.",
+            "type": "string"
+          },
+          "membershipInvitationId": {
+            "description": "The ID of the MembershipInvitation to update.",
+            "type": "string"
+          },
+          "version": {
+            "description": "The version of the key used to generate the HMAC.",
+            "type": "integer"
+          }
+        },
+        "title": "InviteeVerificationSignedToken",
+        "type": "object"
+      },
+      "Count": {
+        "description": "Count of items",
+        "example": {
+          "count": 12345
+        },
+        "properties": {
+          "count": {
+            "description": "Count of items",
+            "type": "integer"
+          }
+        },
+        "title": "Count",
+        "type": "object"
+      },
+      "MembershipRequest": {
+        "description": "JSON schema for MembershipRequest POJO",
+        "example": {
+          "createdBy": "...",
+          "createdOn": "...",
+          "expiresOn": "...",
+          "id": "...",
+          "message": "...",
+          "teamId": "...",
+          "userId": "..."
+        },
+        "properties": {
+          "createdBy": {
+            "description": "The ID of the user that created this MembershipRequest.",
+            "type": "string"
+          },
+          "createdOn": {
+            "description": "The date this MembershipRequest was created.",
+            "type": "string"
+          },
+          "expiresOn": {
+            "description": "The date this MembershipRequest expires (optional).",
+            "type": "string"
+          },
+          "id": {
+            "description": "The id of the MembershipRequest.",
+            "type": "string"
+          },
+          "message": {
+            "description": "The request message (optional).",
+            "type": "string"
+          },
+          "teamId": {
+            "description": "The id of the Team to which the request is sent.",
+            "type": "string"
+          },
+          "userId": {
+            "description": "The id of the user for whom membership is requested.",
+            "type": "string"
+          }
+        },
+        "title": "MembershipRequest",
+        "type": "object"
+      },
       "PaginatedResultsOfMessageToUser": {
         "description": "Page of messages",
         "example": {
@@ -18027,55 +18562,6 @@
         "title": "ListWrapperOfTeamMember",
         "type": "object"
       },
-      "MembershipInvitation": {
-        "description": "JSON schema for MembershipInvitation POJO",
-        "example": {
-          "createdBy": "...",
-          "createdOn": "...",
-          "expiresOn": "...",
-          "id": "...",
-          "inviteeEmail": "...",
-          "inviteeId": "...",
-          "message": "...",
-          "teamId": "..."
-        },
-        "properties": {
-          "createdBy": {
-            "description": "The ID of the user that created this MembershipInvitation.",
-            "type": "string"
-          },
-          "createdOn": {
-            "description": "The date this MembershipInvitation was created.",
-            "type": "string"
-          },
-          "expiresOn": {
-            "description": "The date this invitation expires (optional).",
-            "type": "string"
-          },
-          "id": {
-            "description": "The id of the MembershipInvitation.",
-            "type": "string"
-          },
-          "inviteeEmail": {
-            "description": "The email address of the user being invited to join the Team.",
-            "type": "string"
-          },
-          "inviteeId": {
-            "description": "The principal ID of the user being invited to join the Team.",
-            "type": "string"
-          },
-          "message": {
-            "description": "The invitation message (optional).",
-            "type": "string"
-          },
-          "teamId": {
-            "description": "The id of the Team which the user is invited to join.",
-            "type": "string"
-          }
-        },
-        "title": "MembershipInvitation",
-        "type": "object"
-      },
       "PaginatedResultsOfMembershipInvitation": {
         "description": "Retrieve the open invitations from a Team, optionally filtering by the invitee.\nAn invitation is only open if it has not expired and if the user has not joined\nthe Team. Note: certain fields may be omitted when returned if the field value is null\n",
         "example": {
@@ -18118,50 +18604,6 @@
           }
         },
         "title": "PaginatedResultsOfMembershipInvitation",
-        "type": "object"
-      },
-      "MembershipRequest": {
-        "description": "JSON schema for MembershipRequest POJO",
-        "example": {
-          "createdBy": "...",
-          "createdOn": "...",
-          "expiresOn": "...",
-          "id": "...",
-          "message": "...",
-          "teamId": "...",
-          "userId": "..."
-        },
-        "properties": {
-          "createdBy": {
-            "description": "The ID of the user that created this MembershipRequest.",
-            "type": "string"
-          },
-          "createdOn": {
-            "description": "The date this MembershipRequest was created.",
-            "type": "string"
-          },
-          "expiresOn": {
-            "description": "The date this MembershipRequest expires (optional).",
-            "type": "string"
-          },
-          "id": {
-            "description": "The id of the MembershipRequest.",
-            "type": "string"
-          },
-          "message": {
-            "description": "The request message (optional).",
-            "type": "string"
-          },
-          "teamId": {
-            "description": "The id of the Team to which the request is sent.",
-            "type": "string"
-          },
-          "userId": {
-            "description": "The id of the user for whom membership is requested.",
-            "type": "string"
-          }
-        },
-        "title": "MembershipRequest",
         "type": "object"
       },
       "PaginatedResultsOfMembershipRequest": {
@@ -18357,20 +18799,6 @@
           }
         },
         "title": "PaginatedResultsOfTeamMember",
-        "type": "object"
-      },
-      "Count": {
-        "description": "Count of items",
-        "example": {
-          "count": 12345
-        },
-        "properties": {
-          "count": {
-            "description": "Count of items",
-            "type": "integer"
-          }
-        },
-        "title": "Count",
         "type": "object"
       },
       "CreateDiscussionThread": {
