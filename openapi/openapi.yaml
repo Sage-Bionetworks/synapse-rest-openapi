@@ -432,6 +432,12 @@ paths:
     $ref: paths/membershipInvitation.yaml
   /membershipInvitation/{id}:
     $ref: paths/membershipInvitation@{id}.yaml
+  /membershipInvitation/{id}/inviteeId:
+    $ref: paths/membershipInvitation@{id}@inviteeId.yaml
+  /membershipInvitation/{id}/inviteeVerificationSignedToken:
+    $ref: paths/membershipInvitation@{id}@inviteeVerificationSignedToken.yaml
+  /membershipInvitation/openInvitationCount:
+    $ref: paths/membershipInvitation@openInvitationCount.yaml
 
   /message:
     $ref: paths/message.yaml
