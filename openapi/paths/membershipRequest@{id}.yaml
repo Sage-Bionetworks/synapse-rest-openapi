@@ -1,0 +1,35 @@
+parameters:
+  - in: path
+    description: The ID for a membership request.
+    name: id
+    required: true
+    schema:
+      type: string
+delete:
+  description: |
+    Delete a request
+
+    Note:  The client must be the creator of the membership request to make this request.
+  operationId: deleteRequest
+  responses:
+    204:
+      description: The resource has been deleted
+  summary: 'Delete a request'
+  tags:
+  - Membership Request Services
+get:
+  description: |
+    Retrieve an request by ID
+
+    Note:  The client must be the creator of the membership request to make this request.'
+  operationId: getRequest
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/MembershipRequest.yaml
+      description: Success
+  summary: 'Retrieve an request by ID'
+  tags:
+  - Membership Request Services

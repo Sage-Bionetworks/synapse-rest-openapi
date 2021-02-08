@@ -428,6 +428,22 @@ paths:
     $ref: paths/forum@{forumId}@threadcount.yaml
   /forum/{forumId}/threads:
     $ref: paths/forum@{forumId}@threads.yaml
+  /membershipInvitation:
+    $ref: paths/membershipInvitation.yaml
+  /membershipInvitation/{id}:
+    $ref: paths/membershipInvitation@{id}.yaml
+  /membershipInvitation/{id}/inviteeId:
+    $ref: paths/membershipInvitation@{id}@inviteeId.yaml
+  /membershipInvitation/{id}/inviteeVerificationSignedToken:
+    $ref: paths/membershipInvitation@{id}@inviteeVerificationSignedToken.yaml
+  /membershipInvitation/openInvitationCount:
+    $ref: paths/membershipInvitation@openInvitationCount.yaml
+  /membershipRequest:
+    $ref: paths/membershipRequest.yaml
+  /membershipRequest/{id}:
+    $ref: paths/membershipRequest@{id}.yaml
+  /membershipRequest/openRequestCount:
+    $ref: paths/membershipRequest@openRequestCount.yaml
   /message:
     $ref: paths/message.yaml
   /message/{messageId}:

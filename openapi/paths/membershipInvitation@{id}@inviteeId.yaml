@@ -1,0 +1,35 @@
+parameters:
+  - description: the ID of the invitation.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+put:
+  description: |
+    Set the inviteeId of a MembershipInvitation.
+
+    A valid InviteeVerificationSignedToken must have an inviteeId equal to the id
+    of the authenticated user and a membershipInvitationId equal to the id in the URI.
+    This call will only succeed if the indicated MembershipInvitation has a
+    null inviteeId and a non null inviteeEmail.
+  
+    See https://sagebionetworks.jira.com/wiki/spaces/PLFM/pages/143628166/Invite+a+new+user+to+join+a+team
+    for more information.
+  operationId: updateInviteeId
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/InviteeVerificationSignedToken.yaml'
+    required: false
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Set the inviteeId of a MembershipInvitation.
+  tags:
+  - Membership Invitation Services

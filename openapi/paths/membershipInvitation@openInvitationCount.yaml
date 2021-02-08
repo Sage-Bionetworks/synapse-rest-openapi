@@ -1,0 +1,13 @@
+get:
+  description: Retrieve the number of pending Membership Invitations
+  operationId: getOpenInvitationCount
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Count.yaml
+      description: Success
+  summary: Retrieve the number of pending Membership Invitations.
+  tags:
+  - Membership Invitation Services
