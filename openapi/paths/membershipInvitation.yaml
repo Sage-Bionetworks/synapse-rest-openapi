@@ -1,0 +1,53 @@
+post:
+  description: |
+    Create a membership invitation and send an email notification to
+    the invitee. The team must be specified.
+
+    Also, either an inviteeId or an inviteeEmail must be specified. Optionally, the
+    creator may include an invitation message and/or expiration date for the invitation.
+    If no expiration date is specified then the
+    invitation never expires.
+
+    Note: The client must be an team manager of the specified Team to make this
+    request.
+  operationId: createInvitation
+  parameters:
+  - description: |
+      The portal endpoint prefix for one-click acceptance of the membership
+      invitation.
+
+      A signed, serialized token is appended to create the complete URL: JoinTeamSignedToken
+      if an inviteeId is specified, or MembershipInvtnSignedToken
+      if an inviteeEmail is specified.
+      In normal operation, this parameter should be omitted.
+    in: query
+    name: acceptInvitationEndpoint
+    schema:
+      type: string
+  - description: |
+      The portal endpoint prefix for one-click email unsubscription.
+      A signed, serialized token is appended to create the complete URL:
+      NotificationSettingsSignedToken
+
+      In normal operation, this parameter should be omitted.
+    in: query
+    name: notificationUnsubscribeEndpoint
+    schema:
+      default: https://www.synapse.org/#!SignedToken:Settings/
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MembershipInvitation.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/MembershipInvitation.yaml
+      description: Success
+  summary: Create membership invitation
+  tags:
+  - Membership Invitation Services

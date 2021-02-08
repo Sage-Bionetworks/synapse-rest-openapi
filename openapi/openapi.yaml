@@ -428,6 +428,9 @@ paths:
     $ref: paths/forum@{forumId}@threadcount.yaml
   /forum/{forumId}/threads:
     $ref: paths/forum@{forumId}@threads.yaml
+  /membershipInvitation:
+    $ref: paths/membershipInvitation.yaml
+
   /message:
     $ref: paths/message.yaml
   /message/{messageId}:
