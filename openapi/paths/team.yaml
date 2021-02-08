@@ -1,27 +1,9 @@
 post:
   description: |
-    Create a new Team. The passed request body may contain the following
-    fields:
-
-    <ul>
-
-    <li>name - Give your new Team a name.  The name must be unique, not used by an
-    existing Team (required).</li>
-
-    <li>description - a short text description of the Team''s purpose (optional).</li>
-
-    <li>icon - a fileHandle ID for an icon image file previously uploaded to Synapse
-    (optional).</li>
-
-    </ul>
-
-    <p>
+    Create a new Team.
 
     To specify a Team icon, the icon file must first be uploaded to Synapse as
-    <a href="${org.sagebionetworks.repo.model.file.FileHandle}">FileHandle</a> (see
-    <a href="${org.sagebionetworks.file.controller.UploadController}">File Services</a>).
-    The FileHandle ID can then be put into the Team''s icon field.
-
+    FileHandle.  The FileHandle ID can then be put into the Team's icon field.
   operationId: createTeam
   requestBody:
     content:
