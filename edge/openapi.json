@@ -7054,7 +7054,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": "$ref ../components/schemas/Empty.yaml"
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
             }
           },
           "required": false
@@ -7128,7 +7130,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": "$ref ../components/schemas/Empty.yaml"
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
             }
           },
           "required": false
@@ -11980,7 +11984,10 @@
           "objectId"
         ],
         "title": "DoiAssociation",
-        "type": "object"
+        "type": "object",
+        "discriminator": {
+          "propertyName": "objectId"
+        }
       },
       "NameIdentifierScheme": {
         "description": "Describes the scheme of the nameIdentifier. Required if nameIdentifier is used.",
@@ -14472,7 +14479,13 @@
           }
         },
         "title": "Query",
-        "type": "object"
+        "type": "object",
+        "required": [
+          "limit"
+        ],
+        "discriminator": {
+          "propertyName": "limit"
+        }
       },
       "CsvTableDescriptor": {
         "description": "The description of a csv for upload or download.",
@@ -14514,6 +14527,7 @@
             "$ref": "#/components/schemas/Query"
           },
           {
+            "type": "object",
             "properties": {
               "concreteType": {
                 "description": "Concrete Type",
@@ -14536,8 +14550,7 @@
                 "type": "boolean",
                 "default": true
               }
-            },
-            "type": "object"
+            }
           }
         ],
         "description": "A CSV table download request.",
