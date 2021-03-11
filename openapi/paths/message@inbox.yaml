@@ -51,7 +51,7 @@ get:
     content:
       application/json:
         schema:
-          $ref ../components/schemas/Empty.yaml
+          $ref: ../components/schemas/Empty.yaml
     required: false
   responses:
     200:

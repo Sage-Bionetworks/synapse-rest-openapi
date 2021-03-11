@@ -50,3 +50,5 @@ required:
 - objectId
 title: DoiAssociation
 type: object
+discriminator:
+  propertyName: objectId

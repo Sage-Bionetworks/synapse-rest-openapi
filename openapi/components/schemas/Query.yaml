@@ -54,3 +54,7 @@ properties:
     type: string
 title: Query
 type: object
+required:
+  - limit
+discriminator:
+  propertyName: limit
