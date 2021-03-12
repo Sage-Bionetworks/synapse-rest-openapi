@@ -7225,7 +7225,8 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: $ref ../components/schemas/Empty.yaml
+            schema:
+              $ref: '#/components/schemas/Empty'
         required: false
       responses:
         '200':
@@ -7285,7 +7286,8 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: $ref ../components/schemas/Empty.yaml
+            schema:
+              $ref: '#/components/schemas/Empty'
         required: false
       responses:
         '200':
@@ -11554,6 +11556,8 @@ components:
         - objectId
       title: DoiAssociation
       type: object
+      discriminator:
+        propertyName: objectId
     NameIdentifierScheme:
       description: >-
         Describes the scheme of the nameIdentifier. Required if nameIdentifier
@@ -13974,6 +13978,10 @@ components:
           type: string
       title: Query
       type: object
+      required:
+        - limit
+      discriminator:
+        propertyName: limit
     CsvTableDescriptor:
       description: The description of a csv for upload or download.
       example:
@@ -14027,7 +14035,8 @@ components:
     DownloadFromTableRequest:
       allOf:
         - $ref: '#/components/schemas/Query'
-        - properties:
+        - type: object
+          properties:
             concreteType:
               description: Concrete Type
               type: string
@@ -14051,7 +14060,6 @@ components:
                 value is 'true'.
               type: boolean
               default: true
-          type: object
       description: A CSV table download request.
       title: DownloadFromTableRequest
     RowReference:
