@@ -220,6 +220,8 @@ paths:
     $ref: paths/admin@evaluation@submission@{subId}@contributor.yaml
   /admin/message/{messageId}:
     $ref: paths/admin@message@{messageId}.yaml
+  /admin/user/{id}/certificationStatus:
+    $ref: paths/admin@user@{id}@certificationStatus.yaml
 
   /activity:
     $ref: paths/activity.yaml

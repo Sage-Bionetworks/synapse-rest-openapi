@@ -1,0 +1,21 @@
+parameters:
+  - in: path
+    name: id
+    required: true
+    description:  The Id of the user
+    schema:
+      type: int
+put:
+  operationId: adminSetUserCertificationStatus
+  parameters:
+  - in: query
+    name: isCertified
+    description: Whether a person is certified or not.
+    required: true
+    schema:
+      type: boolean
+  responses:
+    204:
+      description: The resource was updated
+  tags:
+  - CertifiedUserController
