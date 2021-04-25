@@ -1,0 +1,13 @@
+description: 'Holds a session token used for short-term authentication with Synapse'
+example:
+  acceptsTermsOfUse: true
+  sessionToken: '...'
+properties:
+  acceptsTermsOfUse:
+    description: 'Does the user accept the terms of use?'
+    type: boolean
+  sessionToken:
+    description: 'A token that identifies the user'
+    type: string
+title: Session
+type: object

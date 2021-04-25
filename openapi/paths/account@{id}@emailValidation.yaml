@@ -1,0 +1,44 @@
+parameters:
+  - description: The ID of a user account.
+    in: path
+    name: id
+    required: true
+    schema:
+      type: string
+post:
+  description: |
+    This service starts the process of adding a new email address to an
+    existing account by sending a 'validation
+    email' message to the provided email address. The email contains a link back
+    to the application calling the
+    service which the user follows to complete the process'
+  operationId: additionalEmailValidation
+  parameters:
+  - description: |
+      The beginning of the URL included in the email verification message.
+      When concatenated with
+      a list of ampersand (&) separated request parameters, must become a well formed
+      URL. The concatenated string must be included with the 
+      POST /email request.
+    in: query
+    name: portalEndpoint
+    required: true
+    schema:
+      type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Username.yaml'
+    description: the email address to be added to the account
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: '../components/definitions/String.yaml'
+      description: Success
+  summary: Adding a new email address to an existing account
+  tags:
+  - Principal Services

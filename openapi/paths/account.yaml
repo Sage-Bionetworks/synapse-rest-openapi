@@ -1,0 +1,25 @@
+post:
+  description: |
+    This service completes the email validation process for setting up
+    a new account. The client must provide the
+    validation token which was sent by email. The request will be rejected if the
+    validation token is missing or
+    invalid or if the requested user name is not available. After successful account
+    creation the user is logged in and a session token returned to the client.
+  operationId: createNewAccount
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/AccountSetupInfo.yaml'
+    required: false
+  responses:
+    201:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Session.yaml
+      description: Success
+  summary: Completes the email validation process for setting up a new account.
+  tags:
+  - Principal Services

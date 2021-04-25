@@ -1,0 +1,33 @@
+description: 'Information needed to establish a new user account, following email validation.'
+example:
+  emailValidationSignedToken:
+    concreteType: '...'
+    createdOn: '...'
+    email: '...'
+    expiresOn: '...'
+    hmac: '...'
+    userId: '...'
+    version: 12345
+  firstName: '...'
+  lastName: '...'
+  password: '...'
+  username: '...'
+properties:
+  emailValidationSignedToken:
+    $ref: 'EmailValidationSignedToken.yaml'
+  firstName:
+    description: |
+      The user's first name
+    type: string
+  lastName:
+    description: |
+      The user's last name
+    type: string
+  password:
+    description: 'The password to be applied to the new account.'
+    type: string
+  username:
+    description: 'The requested account user name.'
+    type: string
+title: AccountSetupInfo
+type: object

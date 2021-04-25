@@ -1,0 +1,20 @@
+parameters:
+  - in: path
+    name: messageId
+    description: The ID of a message.
+    required: true
+    schema:
+      type: string
+delete:
+  description: Deletes a message.  Only accessible to administrators.
+  operationId: deleteMessage
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Deletes a message.
+  tags:
+  - Message Services

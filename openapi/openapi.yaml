@@ -206,6 +206,23 @@ paths:
     $ref: paths/accessRequirement@{requirementId}@submissions.yaml
   /accessRequirement/conversion:
     $ref: paths/accessRequirement@conversion.yaml
+  /account:
+    $ref: paths/account.yaml
+  /account/{id}/emailValidation:
+    $ref: paths/account@{id}@emailValidation.yaml
+  /account/emailValidation:
+    $ref: paths/account@emailValidation.yaml
+  /admin/certifiedUserTestResponse:
+    $ref: paths/admin@certifiedUserTestResponse.yaml
+  /admin/certifiedUserTestResponse/{id}:
+    $ref: paths/admin@certifiedUserTestResponse@{id}.yaml
+  /admin/evaluation/submission/{subId}/contributor:
+    $ref: paths/admin@evaluation@submission@{subId}@contributor.yaml
+  /admin/message/{messageId}:
+    $ref: paths/admin@message@{messageId}.yaml
+  /admin/user/{id}/certificationStatus:
+    $ref: paths/admin@user@{id}@certificationStatus.yaml
+
   /activity:
     $ref: paths/activity.yaml
   /activity/{id}:

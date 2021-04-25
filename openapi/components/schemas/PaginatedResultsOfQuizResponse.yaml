@@ -1,0 +1,32 @@
+description: 'Page of Quiz responses.'
+example:
+  results:
+  - createdBy: '...'
+    createdOn: '...'
+    id: 12345
+    questionResponses:
+    - concreteType: '...'
+      questionIndex: 12345
+    - concreteType: '...'
+      questionIndex: 12345
+    quizId: 12345
+  - createdBy: '...'
+    createdOn: '...'
+    id: 12345
+    questionResponses:
+    - concreteType: '...'
+      questionIndex: 12345
+    - concreteType: '...'
+      questionIndex: 12345
+    quizId: 12345
+  totalNumberOfResults: 12345
+properties:
+  results:
+    description: 'Page of Quiz responses.'
+    items:
+      $ref: 'QuizResponse.yaml'
+    type: array
+  totalNumberOfResults:
+    $ref: ../definitions/TotalNumberOfResults.yaml
+title: PaginatedResultsOfQuizResponse
+type: object

@@ -1,0 +1,11 @@
+description: |
+  Contains the user's email
+example:
+  email: '...'
+properties:
+  email:
+    description: |
+      The user's email
+    type: string
+title: Username
+type: object

@@ -1,0 +1,22 @@
+parameters:
+  - in: path
+    name: id
+    description: The ID of a Certification Quiz Response.
+    required: true
+    schema:
+      type: number
+delete:
+  description: |
+    Delete a test response.  Note:  This service is available to Synapse
+    administrators only.
+  operationId: deleteQuizResponse
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            $ref: ../components/definitions/String.yaml
+      description: Success
+  summary: Delete a test response.
+  tags:
+  - Certified User Services
