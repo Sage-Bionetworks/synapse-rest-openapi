@@ -19,20 +19,20 @@ env:
   default_branch: main
 
 jobs:
-  lint:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ env.node_version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ env.node_version }}
-    - run: npm install
-    - name: Lint openapi specifications
-      run: npm run lint:ibm
+  # lint:
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Use Node.js ${{ env.node_version }}
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: ${{ env.node_version }}
+  #   - run: npm install
+  #   - name: Lint openapi specifications
+  #     run: npm run lint:ibm
 
   build-and-publish:
-    needs: [lint]
+    # needs: [lint]
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2

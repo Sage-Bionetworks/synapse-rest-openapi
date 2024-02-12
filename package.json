@@ -1,16 +1,16 @@
 {
-  "name": "rocc-schemas",
+  "name": "synapse-rest-openapi",
   "version": "0.1.2",
   "devDependencies": {
     "@redocly/openapi-cli": "^1.0.0-beta.25",
     "gh-openapi-docs-ts": "^0.3.4",
-    "ibm-openapi-validator": "^0.31.1"
+    "ibm-openapi-validator": "^1.16.2"
   },
   "private": true,
   "scripts": {
-    "start": "openapi preview-docs openapi/openapi.yaml",
-    "build": "openapi bundle -o dist openapi/openapi.yaml",
-    "lint": "openapi lint openapi/openapi.yaml",
+    "start": "openapi preview-docs https://rest-docs.synapse.org/rest/openapi/openapispecification.json",
+    "build": "openapi bundle -o dist https://rest-docs.synapse.org/rest/openapi/openapispecification.json",
+    "lint": "openapi lint https://rest-docs.synapse.org/rest/openapi/openapispecification.json",
     "lint:ibm": "npm run build && lint-openapi -e dist.yaml"
   }
 }
